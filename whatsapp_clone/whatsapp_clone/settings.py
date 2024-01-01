@@ -46,7 +46,7 @@ THIRD_APPS = [
 ]
 
 CREATED_APPS = [
-
+    'register',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_APPS + CREATED_APPS
@@ -151,3 +151,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "rest_framework.schemas.coreapi.AutoSchema",
 }
+
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'
