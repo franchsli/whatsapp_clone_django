@@ -10,7 +10,7 @@ class Message(models.Model):
     date = models.DateTimeField(default=timezone.now)
 
 class Chat(models.Model):
-    users = models.ForeignKey(User, on_delte=models.CASCADE)
+    users = models.ForeignKey(User, on_delete=models.CASCADE)
     messages = models.ForeignKey(Message, on_delete=models.CASCADE)
 
 class Profile(models.Model):

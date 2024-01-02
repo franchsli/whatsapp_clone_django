@@ -36,6 +36,7 @@ THIRD_APPS = [
 
 CREATED_APPS = [
     'register',
+    'home',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_APPS + CREATED_APPS
