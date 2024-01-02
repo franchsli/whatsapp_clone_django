@@ -9,6 +9,7 @@ TODO:
     - Allow images in messages.
     - Add status page.
     - Add status logic
+    - Add read and unread logic.
 
 ## Template
 
