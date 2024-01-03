@@ -4,16 +4,23 @@
 
 {% block content %}
 {% if request.user.is_authenticated %}
-<h1>Hola {{ user }}</h1>
-<a href="{% url 'exit' %}">log out</a>
+{% comment %} <h1>Hola {{ user }}</h1>
+<a href="{% url 'exit' %}">log out</a> {% endcomment %}
+
+
+<div class="card mt-3 mb-3" style="width: 90vh; height: 90vh;">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+  </div>
+</div>
+
+{% else %}
+<h1>Log in</h1>
+<a href="{% url 'login' %}"></a>
 {% endif %}
 
-<div class="card" style="width: 50rem;">
-    <div class="card-body">
-      <h5 class="card-title">Card title</h5>
-      <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    </div>
-  </div>
+
 
 {% endblock content %}
