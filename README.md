@@ -12,6 +12,7 @@ TODO:
     - Add status logic
     - Add read and unread logic.
     - Center the login and register forms
+    - Use collapse for the pages.
 
 ## Template
 
