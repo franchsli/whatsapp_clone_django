@@ -1,0 +1,10 @@
+.container-fluid {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+main,  #base {
+    display: flex;
+    flex: 1;
+}
