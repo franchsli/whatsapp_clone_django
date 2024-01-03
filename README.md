@@ -11,6 +11,7 @@ TODO:
     - Add status page.
     - Add status logic
     - Add read and unread logic.
+    - Center the login and register forms
 
 ## Template
 
