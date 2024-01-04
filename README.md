@@ -13,7 +13,8 @@ TODO:
     - Add read and unread logic.
     - Center the login and register forms
     - Use collapse for the pages.
-    - Incremetn the padding on the list items.
+    - Increment the padding on the list items.
+    - Create the search message logic.
 
 ## Template
 
