@@ -17,6 +17,7 @@ TODO:
     - Create the search message logic.
     - Add dark mode logic.
     - Add the "read more" function to messages.
+    - Add the archived chats logic.
 
 ## Template
 
