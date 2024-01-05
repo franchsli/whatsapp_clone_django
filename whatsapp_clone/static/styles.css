@@ -4,7 +4,7 @@
     min-height: 100vh;
   }
   
-main,  #base, .row, .card-body {
+main,  #base {
     display: flex;
     flex: 1;
 }

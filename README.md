@@ -11,7 +11,7 @@ TODO:
     - Add status page.
     - Add status logic
     - Add read and unread logic.
-    - Center the login and register forms
+    - Redesign the login and register views.
     - Use collapse for the pages.
     - Increment the padding on the list items.
     - Create the search message logic.
