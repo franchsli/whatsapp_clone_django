@@ -17,6 +17,7 @@ TODO:
     - Add dark mode logic.
     - Add the "read more" function to messages.
     - Add the archived chats logic.
+    - Re organize the api urls (create a separate app for that).
 
 ## Template
 
