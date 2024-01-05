@@ -20,3 +20,7 @@ main,  #base {
 .message {
   max-width: 50%;
 }
+
+.chat:hover {
+  background-color: var(--bs-tertiary-bg);
+}
