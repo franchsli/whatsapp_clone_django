@@ -17,3 +17,4 @@ TODO:
     - Add dark mode logic.
     - Add the "read more" function to messages.
     - Add the archived chats logic.
+    - Use text truncation for the messages.
