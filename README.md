@@ -17,8 +17,3 @@ TODO:
     - Add dark mode logic.
     - Add the "read more" function to messages.
     - Add the archived chats logic.
-    - Re organize the api urls (create a separate app for that).
-
-## Template
-
-This project used the template at <https://github.com/anishghosh103/whatsapp> and <https://www.oflox.com/blog/whatsapp-web-template-free-download/>
