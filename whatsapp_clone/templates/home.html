@@ -7,39 +7,44 @@
 {% comment %} <h1>Hola {{ user }}</h1>
 <a href="{% url 'exit' %}">log out</a> {% endcomment %}
 
-
 <div class="card mt-3 mb-3" id="base">
   <div class="card-body w-100 h-100">
     <div class="row h-100">
+      {% comment "User chats and more" %}{% endcomment %}
         <div class="col-4 border border-black p-0" id="chats-and-more">
           <nav class="navbar border d-flex align-items-center bg-body-tertiary">
+            {% comment "user profile pic" %}{% endcomment %}
             <div class="col-4 border" id="profile-pic">
               <img class="ms-3" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNBNdcMDNS2r9df1IWFVc8AY0QNtfNhEJv7fGS5TdhUWrlBqfGu1PCCn9lKpL-FqF9dWc&usqp=CAU" alt="" style="max-width: 50px;">
             </div>
+            {% comment "new chat and settings" %}{% endcomment %}
             <nav class="navbar d-flex justify-content-end col-8 borde">
-              <h5><i class="bi bi-chat-left-dots p-2"></i></h5>
-              <h5><i class="me-3 bi bi-three-dots-vertical p-2"></i></h5>
+              <h5 role="button"><i class="bi bi-chat-left-dots p-2"></i></h5>
+              <h5 role="button"><i class="me-3 bi bi-three-dots-vertical p-2"></i></h5>
             </nav>
           </nav>
-          <div class="border d-flex align-items-center justify-content-between p-3">
+          {% comment "archived chats" %}{% endcomment %}
+          <div role="button" class="border d-flex align-items-center justify-content-between p-3">
             <div>
               <i class="bi bi-archive"></i>
               <span class="ms-3">Archive</span>
             </div>
             <div>
+              {% comment "num of archived chats that have unread messages" %}{% endcomment %}
               <span class="badge bg-success">1</span>
             </div>
-
-            
           </div>
+          {% comment "chats list" %}{% endcomment %}
           <ul class="list-group list-group-flush overflow-y-scroll" style="max-height: 615px;">
             <li class="list-group-item p-3  d-flex flex-inline align-items-center">
+              {% comment "contact profile photo" %}{% endcomment %}
               <img class="ms-1" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNBNdcMDNS2r9df1IWFVc8AY0QNtfNhEJv7fGS5TdhUWrlBqfGu1PCCn9lKpL-FqF9dWc&usqp=CAU" alt="" style="max-width: 45px;">
               <div class="d-flex flex-column ms-3 w-100">
                 <div class="d-flex justify-content-between">
                   <span>Contact name</span>
                   <span>Date</span>
                 </div>
+                {% comment "last message in the chat" %}{% endcomment %}
                 <span>contact message</span>
               </div>
             </li>
@@ -54,22 +59,22 @@
                   <span>contact message</span>
                   <span class="badge rounded-pill bg-success">10</span>
                 </div>
-                
               </div>
             </li>
-
- 
           </ul>
         </div>
+        {% comment "selected chat" %}{% endcomment %}
         <div class="col-8 d-flex flex-column border border-black p-0" id="chat-diplay">
           <nav class="navbar bg-body-tertiary justify-content-between">
             <div class="d-flex align-items-center ms-3 col-6">
+              {% comment "chat contact info" %}{% endcomment %}
               <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNBNdcMDNS2r9df1IWFVc8AY0QNtfNhEJv7fGS5TdhUWrlBqfGu1PCCn9lKpL-FqF9dWc&usqp=CAU" alt="" style="max-width: 50px;">
               <p class="ms-3 my-auto">Contact name</p>
             </div>
-              <i class="me-3 bi bi-three-dots-vertical"></i>
+              {% comment "settings or details of contacts" %}{% endcomment %}
+              <h5 class="me-3" role="button"><i class="bi bi-three-dots-vertical"></i></h5>
           </nav>
-          
+          {% comment "messages in the chat with the contact" %}{% endcomment %}
           <ul class="list-unstyled flex-column overflow-y-scroll" id="chat-messages">
             <li class="list-unstyled-item d-flex align-self-start ms-3 mt-3 bg-white rounded message">
               <span class="p-2">Contact message</span>
@@ -88,15 +93,13 @@
                 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis ipsa provident placeat natus laudantium commodi aliquid sunt accusantium minima debitis beatae, veritatis non qui nobis perspiciatis dolores unde eaque nam!
               </span>
             </li>
-            
-
-
           </ul>
+          {% comment "send message" %}{% endcomment %}
           <footer class="d-flex flex-inline align-items-center bg-body-tertiary p-1">
-            <h5 class="p-3"><i class="bi bi-emoji-smile"></i></h5>
-            <h5 class="p-3"><i class="bi bi-plus"></i></h5>
+            <h5 class="p-3" role="button"><i class="bi bi-emoji-smile"></i></h5>
+            <h5 class="p-3" role="button"><i class="bi bi-plus"></i></h5>
             <input class="form-control" type="text" style="">
-            <h5 class="p-3"><i class="bi bi-mic"></i></h5>
+            <h5 class="p-3" role="button"><i class="bi bi-mic"></i></h5>
           </footer>
 
         </div>
