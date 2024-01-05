@@ -9,3 +9,14 @@ main,  #base {
     flex: 1;
 }
 
+#chat-messages {
+  display: flex;
+  flex: 1;
+  max-height: 570px;
+  margin: 0;
+  background-color: #ece9df;
+}
+
+.message {
+  max-width: 50%;
+}

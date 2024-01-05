@@ -15,6 +15,8 @@ TODO:
     - Use collapse for the pages.
     - Increment the padding on the list items.
     - Create the search message logic.
+    - Add dark mode logic.
+    - Add the "read more" function to messages.
 
 ## Template
 
