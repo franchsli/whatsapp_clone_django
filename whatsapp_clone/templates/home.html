@@ -19,8 +19,10 @@
             </div>
             {% comment "new chat and settings" %}{% endcomment %}
             <nav class="navbar d-flex justify-content-end col-8 borde">
-              <h5 role="button"><i class="bi bi-chat-left-dots p-2"></i></h5>
-              <h5 role="button"><i class="me-3 bi bi-three-dots-vertical p-2"></i></h5>
+              <button onclick="switch_theme()" id="theme-toggler" class="btn rounded-fill me-3"><span><i id="theme-icon"
+                class="bi bi-moon-fill"></i></span></button>
+              <button id="create-chat" class="me-3 btn"><span><i class="bi bi-chat-left-dots"></i></span></button>
+              <button id="settings" class="me-3 btn"><span><i class="bi bi-three-dots-vertical"></i></span></button>
             </nav>
           </nav>
           {% comment "archived chats" %}{% endcomment %}
