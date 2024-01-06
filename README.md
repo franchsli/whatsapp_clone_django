@@ -13,7 +13,6 @@ TODO:
     - Redesign the login and register views.
     - Use collapse for the pages.
     - Create the search message logic.
-    - Add dark mode logic.
     - Add the "read more" function to messages.
     - Add the archived chats logic.
     - Use text truncation for the messages.
