@@ -21,6 +21,10 @@ main,  #base {
   max-width: 50%;
 }
 
-.chat:hover {
+.chat:hover, .btn:hover {
   background-color: var(--bs-tertiary-bg);
+}
+
+.action:hover{
+  background-color: var(--bs-tertiary-color);
 }
