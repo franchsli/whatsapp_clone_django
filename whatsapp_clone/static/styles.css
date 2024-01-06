@@ -14,7 +14,7 @@ main,  #base {
   flex: 1;
   max-height: 570px;
   margin: 0;
-  background-color: #ece9df;
+  background-color: var(--bs-body-bg);
 }
 
 .message {
