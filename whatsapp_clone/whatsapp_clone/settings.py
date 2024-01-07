@@ -32,6 +32,7 @@ THIRD_APPS = [
     'crispy_forms',
     'crispy_bootstrap5',
     'phonenumber_field',
+    'daphne',
     'channels',
 ]
 
@@ -41,7 +42,7 @@ CREATED_APPS = [
     'apis',
 ]
 
-INSTALLED_APPS = DJANGO_APPS + THIRD_APPS + CREATED_APPS
+INSTALLED_APPS = THIRD_APPS + DJANGO_APPS + CREATED_APPS
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
