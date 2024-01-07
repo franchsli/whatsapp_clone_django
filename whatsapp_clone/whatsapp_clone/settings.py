@@ -78,6 +78,7 @@ TEMPLATES = [
     },
 ]
 
+ASGI_APPLICATION = 'whatsapp_clone.asgi.application'
 WSGI_APPLICATION = 'whatsapp_clone.wsgi.application'
 
 
