@@ -17,3 +17,4 @@ TODO:
     - Add the archived chats logic.
     - Use text truncation for the messages.
     - Divide all the HTML in templates in partials and include them.
+    - Rename home app to chat.
