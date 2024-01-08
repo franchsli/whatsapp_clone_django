@@ -17,7 +17,7 @@ class ChatConsumer(WebsocketConsumer):
         # You can call:
         self.send(text_data="Hello world!")
         # Or, to send a binary frame:
-        self.send(bytes_data="Hello world!")
+        #self.send(bytes_data="Hello world!")
         # Want to force-close the connection? Call:
         #self.close()
         # Or add a custom WebSocket error code!
