@@ -19,7 +19,14 @@ main,  #base {
 
 .message {
   max-width: 50%;
-  background-color: #198754;
+}
+
+.contact-message {
+  background-color: var(--bs-primary-bg-subtle);
+
+}
+.user-message {
+  background-color: var(--bs-success-bg-subtle);
 }
 
 .chat:hover, .btn:hover {
