@@ -19,3 +19,5 @@ TODO:
     - Divide all the HTML in templates in partials and include them.
     - Rename home app to chat.
     - Change user message interaction with background color.
+    - Rename sender user field from message.
+    - Create a function that loads the message list calling the api.

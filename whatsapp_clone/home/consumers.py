@@ -1,5 +1,6 @@
 from channels.generic.websocket import WebsocketConsumer
 
+
 class ChatConsumer(WebsocketConsumer):
     def connect(self):
         # Called on connection.
@@ -15,7 +16,11 @@ class ChatConsumer(WebsocketConsumer):
     def receive(self, text_data=None, bytes_data=None):
         # Called with either text_data or bytes_data for each frame
         # You can call:
-        self.send(text_data="Hello world!")
+        self.send(f'message sended to server {text_data}')
+        print(self.scope['user'])
+        print(dict(self.scope['session']))
+        print(self.scope['user'].id)
+        #print(self.scope['session'].pollo)
         # Or, to send a binary frame:
         #self.send(bytes_data="Hello world!")
         # Want to force-close the connection? Call:

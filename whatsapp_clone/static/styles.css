@@ -19,14 +19,17 @@ main,  #base {
 
 .message {
   max-width: 50%;
+  display: flex;
 }
 
 .contact-message {
   background-color: var(--bs-primary-bg-subtle);
+  align-self: self-start;
 
 }
 .user-message {
   background-color: var(--bs-success-bg-subtle);
+  align-self: self-end;
 }
 
 .chat:hover, .btn:hover {
