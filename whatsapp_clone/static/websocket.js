@@ -20,8 +20,6 @@ socket.addEventListener('open', () => {
         if (event.key === 'Enter' && new_message_input.value !== ''){
             //console.log(new_message_input.value)
             socket.send(new_message_input.value)
-            create_message_html(new_message_input.value)
-            new_message_input.value = ''
         }
     
     })
@@ -29,4 +27,6 @@ socket.addEventListener('open', () => {
 
 socket.addEventListener('message', (event) => {
     console.log('message from server', event.data )
+    create_message_html(event.data)
+    new_message_input.value = ''
 })
