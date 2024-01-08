@@ -8,7 +8,7 @@ class ProfileAdmin(admin.ModelAdmin):
 
 
 class ChatAdmin(admin.ModelAdmin):
-    search_fields = ('users',)
+    search_fields = ('profiles',)
 
 class MessageAdmin(admin.ModelAdmin):
     search_fields = ('sender_user', 'text')
