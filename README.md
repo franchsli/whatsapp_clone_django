@@ -21,3 +21,5 @@ TODO:
     - Change user message interaction with background color.
     - Rename sender user field from message.
     - Create a function that loads the message list calling the api.
+    - Make it so the chat in the chats list display the name of the other contact that is related to the chat, excluding the authenticated user.
+    - Add the create chats logic.
