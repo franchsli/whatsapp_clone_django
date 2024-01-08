@@ -19,3 +19,4 @@ TODO:
     - Use text truncation for the messages.
     - Divide all the HTML in templates in partials and include them.
     - Rename home app to chat.
+    - Change user message interaction with background color.

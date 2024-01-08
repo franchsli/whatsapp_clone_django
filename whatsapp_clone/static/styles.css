@@ -19,6 +19,7 @@ main,  #base {
 
 .message {
   max-width: 50%;
+  background-color: #198754;
 }
 
 .chat:hover, .btn:hover {
