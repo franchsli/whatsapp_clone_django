@@ -9,11 +9,11 @@ class Profile(models.Model):
     phone_number = PhoneNumberField(blank=True)
 
     def __str__(self) -> str:
-        return self.phone_number
+        return self.user.username
 
 
 class Chat(models.Model):
-    profiles = models.ManyToManyField(Profile, related_name='profiles')
+    profiles = models.ManyToManyField(Profile, related_name='chats')
 
 
 class Message(models.Model):
