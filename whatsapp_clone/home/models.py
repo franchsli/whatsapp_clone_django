@@ -11,7 +11,7 @@ class Message(models.Model):
 
 class Chat(models.Model):
     users = models.ForeignKey(User, on_delete=models.CASCADE)
-    messages = models.ForeignKey(Message, on_delete=models.CASCADE)
+    messages = models.ForeignKey(Message, on_delete=models.CASCADE, blank=True, null=True)
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
