@@ -11,8 +11,20 @@ function create_message_html(text){
 
 }
 
+function select_chat(chat_id, contact){
+    const contact_name_display = document.getElementById('contact-name')
+    contact_name_display.innerHTML = contact
+}
+
 const new_message_input = document.getElementById('new-message') 
 const socket = new WebSocket(`ws://${window.location.host}/`)
+const chats = document.querySelectorAll('.chat')
+
+chats.forEach( chat => {
+    chat.onclick = function(){
+        select_chat(chat.dataset.chat, chat.dataset.contact)
+    }
+})
 
 socket.addEventListener('open', () => {
 
@@ -23,6 +35,8 @@ socket.addEventListener('open', () => {
         }
     
     })
+
+
 })
 
 socket.addEventListener('message', (event) => {
