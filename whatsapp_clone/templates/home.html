@@ -1,6 +1,7 @@
 {% extends "layouts/base.html" %}
 {% block title %}Home{% endblock title %}
 {% load static %}
+{% load filters %}
 
 {% block content %}
 {% if request.user.is_authenticated %}
@@ -44,7 +45,8 @@
               <img class="ms-1" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNBNdcMDNS2r9df1IWFVc8AY0QNtfNhEJv7fGS5TdhUWrlBqfGu1PCCn9lKpL-FqF9dWc&usqp=CAU" alt="" style="max-width: 45px;">
               <div class="d-flex flex-column ms-3 w-100">
                 <div class="d-flex justify-content-between">
-                  <span>{{ chat.profiles.all }}</span>
+                  <span>{{ chat.profiles.all|exclude_user:request.user }}</span>
+                  {% comment %} <span>{{ chat.profiles.all }}</span> {% endcomment %}
                   <span>Date</span>
                 </div>
                 {% comment "last message in the chat" %}{% endcomment %}
