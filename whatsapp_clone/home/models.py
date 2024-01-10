@@ -17,7 +17,7 @@ class Chat(models.Model):
 
 
 class Message(models.Model):
-    sender_user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    sender_user = models.ForeignKey(User, on_delete=models.CASCADE)
     text = models.TextField(blank=False, null=False)
     date = models.DateTimeField(default=timezone.now)
     chat = models.ForeignKey(Chat, on_delete=models.CASCADE, blank=True, null=True)

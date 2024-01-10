@@ -30,7 +30,10 @@ socket.addEventListener('open', () => {
     
     chats.forEach( chat => {
         chat.onclick = function(){
-        console.log(chat.dataset.messages)
+        chat.dataset.messages = chat.dataset.messages.replace('[', '')
+        chat.dataset.messages = chat.dataset.messages.replace(']', '')
+        //chat.dataset.messages = JSON.parse("[" + chat.dataset.messages + "]")
+        console.log(chat.dataset.messages.split())
         console.log(typeof(chat.dataset.messages))
         display_chat(chat.dataset.chat, chat.dataset.contact)
 
