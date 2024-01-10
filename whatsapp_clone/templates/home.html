@@ -40,7 +40,7 @@
           {% comment "chats list" %}{% endcomment %}
           <ul class="list-group list-group-flush overflow-y-scroll" style="max-height: 615px;">
             {% for chat in chats %}
-            <li class="list-group-item p-3  d-flex flex-inline align-items-center chat" role="button" data-chat={{chat.id}} data-contact={{ chat.profiles.all|exclude_user:request.user }}>
+            <li class="list-group-item p-3  d-flex flex-inline align-items-center chat" role="button" data-chat={{chat.id}} data-contact={{ chat.profiles.all|exclude_user:request.user }} data-messages='{{chat.message_set.all|to_list}}'>
               {% comment "contact profile photo" %}{% endcomment %}
               <img class="ms-1" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNBNdcMDNS2r9df1IWFVc8AY0QNtfNhEJv7fGS5TdhUWrlBqfGu1PCCn9lKpL-FqF9dWc&usqp=CAU" alt="" style="max-width: 45px;">
               <div class="d-flex flex-column ms-3 w-100">

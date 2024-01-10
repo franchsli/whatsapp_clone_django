@@ -2,6 +2,7 @@
 # Whatsapp clone
 
 TODO:
+    - **IMPORTANT** DELETE THE LIST() FUNCTION IN FILTERS.to_list bc it is not recommended.
     - Custom the clase User to have phonenumber and a list of chats.
     - Make it so when you create an account, you need to put your phonenumber.
     - Make phonenumber blank=False.

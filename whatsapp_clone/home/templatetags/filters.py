@@ -10,3 +10,6 @@ def exclude_user(value, user):
     #print(user.username)
     return value[1].user if value[1].user != user else value[0].user
  
+@register.filter
+def to_list(value):
+    return list(value.values_list('sender_user', 'text').order_by('-date'))
