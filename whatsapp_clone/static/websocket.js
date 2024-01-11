@@ -21,15 +21,6 @@ async function display_chat(contact, messages){
     contact_name_display.innerHTML = contact
     let message_data
 
-    // messages.forEach(async message_id => {
-    //     message_data = await get(`/api/messages/${message_id}/`)
-    //     console.log(message_data)
-    //     console.log(message_data.text)
-    //     console.log(typeof(message_data.sender_user))
-    //     console.log(typeof(parseInt(user_id)))
-    //     create_message_html(message_data.text, message_data.sender_user === parseInt(user_id))
-        
-    // });
     let cleaned = false
     for (let index = 0; index < messages.length; index++) {
         let message_id = messages[index];
@@ -63,11 +54,6 @@ socket.addEventListener('open', () => {
         chat.dataset.messages = chat.dataset.messages.replace('[', '')
         chat.dataset.messages = chat.dataset.messages.replace(']', '')
         chat.dataset.messages = chat.dataset.messages.replace(',', '')
-        //const messages = chat.dataset.messages.split(' ')
-        //chat.dataset.messages = chat.dataset.messages.split(' ')
-        //console.log(chat.dataset.messages.split(' '))
-        //console.log(typeof(chat.dataset.messages))
-        //console.log(messages)
         display_chat(chat.dataset.contact, chat.dataset.messages.split(' '))
 
     }})
