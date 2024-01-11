@@ -15,7 +15,7 @@
         <div class="col-4 border border-black p-0" id="chats-and-more">
           <nav class="navbar border d-flex align-items-center bg-body-tertiary">
             {% comment "user profile pic" %}{% endcomment %}
-            <div class="col-4 border" id="profile-pic">
+            <div class="col-4 border" id="profile-pic" data-user={{request.user.id}}>
               <img class="ms-3" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNBNdcMDNS2r9df1IWFVc8AY0QNtfNhEJv7fGS5TdhUWrlBqfGu1PCCn9lKpL-FqF9dWc&usqp=CAU" alt="" style="max-width: 50px;" role="button">
             </div>
             {% comment "new chat and settings" %}{% endcomment %}

@@ -15,4 +15,4 @@ def to_list(value):
     # you CAN ALSO use list comprehension (super effective)
     #print(value.values_list('sender_user', 'text').order_by('-date'))
     #list(value.values_list('sender_user', 'text').order_by('-date'))
-    return list(value.values_list('id', flat=True).order_by('-date'))
+    return list(value.values_list('id', flat=True).order_by('date'))
