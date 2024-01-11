@@ -3,6 +3,8 @@
 
 TODO:
     - **IMPORTANT** Make it so when you send a message to the server, it stores in the db.
+    - **MUST DO** Make it so the messages data get stored in the localstorage once the API get called
+    so the next time  tries to load the messages from local storage, reducing the API calls.
     - Custom the clase User to have phonenumber and a list of chats.
     - Make it so when you create an account, you need to put your phonenumber.
     - Make phonenumber blank=False.
