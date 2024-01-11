@@ -30,7 +30,7 @@ async function display_chat(contact, messages){
     //     create_message_html(message_data.text, message_data.sender_user === parseInt(user_id))
         
     // });
-
+    let cleaned = false
     for (let index = 0; index < messages.length; index++) {
         let message_id = messages[index];
         message_data = await get(`/api/messages/${message_id}/`)
@@ -38,6 +38,9 @@ async function display_chat(contact, messages){
         console.log(message_data.text)
         console.log(typeof(message_data.sender_user))
         console.log(typeof(parseInt(user_id)))
+        if (!cleaned) {
+            chat_messages_display.innerHTML = ''
+            cleaned = true}
         create_message_html(message_data.text, message_data.sender_user === parseInt(user_id))
         
     }
