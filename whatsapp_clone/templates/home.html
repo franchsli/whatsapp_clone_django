@@ -4,9 +4,6 @@
 {% load filters %}
 
 {% block content %}
-{% if request.user.is_authenticated %}
-{% comment %} <h1>Hola {{ user }}</h1>
-<a href="{% url 'exit' %}">log out</a> {% endcomment %}
 
 <div class="card mt-3 mb-3" id="base">
   <div class="card-body w-100 h-100">
@@ -114,9 +111,7 @@
   </div>
 </div>
 
-{% else %}
-<a href="{% url 'login' %}"><h1>Log in</h1></a>
-{% endif %}
+
 
 
 
