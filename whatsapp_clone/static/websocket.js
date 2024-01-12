@@ -12,12 +12,13 @@ function create_message_html(text, user_message=true){
     messages.scroll(0, 10000)
 
 }
+const user = document.getElementById('profile-pic')
+const user_id = user.getAttribute('data-user')
 
 async function display_chat(contact, messages){
     const contact_name_display = document.getElementById('contact-name')
     const chat_messages_display = document.getElementById('chat-messages')
-    const user = document.getElementById('profile-pic')
-    const user_id = user.getAttribute('data-user')
+
     contact_name_display.innerHTML = contact
     let message_data
 
@@ -49,8 +50,8 @@ socket.addEventListener('open', () => {
 
     new_message_input.addEventListener('keypress', (event) => {
         if (event.key === 'Enter' && new_message_input.value !== ''){
-            socket.send(`chat_message${new_message_input.value}`)
-            create_message_html(new_message_input.value)
+            socket.send(`chat_message${user_id}${new_message_input.value}`)
+            //create_message_html(new_message_input.value)
             new_message_input.value = ''}})
     
     chats.forEach( chat => {
@@ -67,11 +68,13 @@ socket.addEventListener('open', () => {
 
 socket.addEventListener('message', (event) => {
     console.log('message from server', event.data , 'type:', event.type)
-    create_message_html(event.data.replace('chat_message', ''), false)
+    let message = event.data.replace('chat_message', '')
+    let sender_id = message[0]
+    message = message.replace(sender_id, '')
+    create_message_html(message, user_id === sender_id)
 
 })
 
 socket.addEventListener('error', (error) => {
     console.error(error)
 })
-//window.addEventListener('unload', socket.close())

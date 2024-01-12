@@ -16,7 +16,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
 
     async def receive(self, text_data):
-        if 'chat_message' in text_data:
+        if 'message' in text_data:
             await self.channel_layer.group_send(
                 self.room_group_name,
                 {
