@@ -49,7 +49,7 @@ socket.addEventListener('open', () => {
 
     new_message_input.addEventListener('keypress', (event) => {
         if (event.key === 'Enter' && new_message_input.value !== ''){
-            socket.send(new_message_input.value)
+            socket.send(`chat_message${new_message_input.value}`)
             create_message_html(new_message_input.value)
             new_message_input.value = ''}})
     
@@ -59,6 +59,7 @@ socket.addEventListener('open', () => {
         chat.dataset.messages = chat.dataset.messages.replace(']', '')
         chat.dataset.messages = chat.dataset.messages.replace(',', '')
         display_chat(chat.dataset.contact, chat.dataset.messages.split(' '))
+        socket.send(`reconnect${chat.dataset.chat}`)
 
     }})
 
@@ -66,5 +67,6 @@ socket.addEventListener('open', () => {
 
 socket.addEventListener('message', (event) => {
     console.log('message from server', event.data , 'type:', event.type)
+    create_message_html(event.data.replace('chat_message', ''), false)
 
 })
