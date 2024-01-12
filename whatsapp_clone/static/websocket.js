@@ -70,3 +70,8 @@ socket.addEventListener('message', (event) => {
     create_message_html(event.data.replace('chat_message', ''), false)
 
 })
+
+socket.addEventListener('error', (error) => {
+    console.error(error)
+})
+//window.addEventListener('unload', socket.close())
