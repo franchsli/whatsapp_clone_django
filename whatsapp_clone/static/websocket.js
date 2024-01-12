@@ -49,7 +49,9 @@ socket.addEventListener('open', () => {
 
     new_message_input.addEventListener('keypress', (event) => {
         if (event.key === 'Enter' && new_message_input.value !== ''){
-            socket.send(new_message_input.value)}})
+            socket.send(new_message_input.value)
+            create_message_html(new_message_input.value)
+            new_message_input.value = ''}})
     
     chats.forEach( chat => {
         chat.onclick = function(){
@@ -60,11 +62,9 @@ socket.addEventListener('open', () => {
 
     }})
 
-
 })
 
 socket.addEventListener('message', (event) => {
     console.log('message from server', event.data , 'type:', event.type)
-    create_message_html(event.data)
-    new_message_input.value = ''
+
 })
