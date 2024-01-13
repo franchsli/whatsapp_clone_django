@@ -37,6 +37,15 @@ async function display_chat(contact, messages){
         
     }
 }
+const toastNotification = document.getElementById('liveToast')
+
+function modifyNotification(contact_name, message){
+    let contact_name_display = toastNotification.querySelector('strong')
+    let message_display = toastNotification.querySelector('.toast-body')
+    contact_name_display.innerHTML = contact_name
+    message_display.innerHTML = message
+
+}
 
 const new_message_input = document.getElementById('new-message') 
 const socket = new WebSocket(`ws://${window.location.host}/`)
@@ -91,9 +100,13 @@ socket.addEventListener('message', (event) => {
         sender_id = message[0]
         message = message.replace(sender_id, '')
         //create_message_html(message, user_id === sender_id)
-        alert(message)
+        //alert(message)
         console.warn(message)
-        console.log(message)}
+        console.log(message)
+        modifyNotification('Your mom', message)
+        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
+        toastBootstrap.show()
+    }
 
 
 })
