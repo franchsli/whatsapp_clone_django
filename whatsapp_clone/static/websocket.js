@@ -14,6 +14,7 @@ function create_message_html(text, user_message=true){
 }
 const user = document.getElementById('profile-pic')
 const user_id = user.getAttribute('data-user')
+const user_username = user.getAttribute('data-username')
 
 async function display_chat(contact, messages){
     const contact_name_display = document.getElementById('contact-name')
@@ -85,7 +86,7 @@ socket.addEventListener('open', () => {
 
 })
 
-socket.addEventListener('message', (event) => {
+socket.addEventListener('message',async (event) => {
     console.log('message from server', event.data , 'type:', event.type)
     let message
     let sender_id
@@ -101,9 +102,11 @@ socket.addEventListener('message', (event) => {
         message = message.replace(sender_id, '')
         //create_message_html(message, user_id === sender_id)
         //alert(message)
+        let sender_user_data = await get(`/api/users/${sender_id}`)
+
         console.warn(message)
         console.log(message)
-        modifyNotification('Your mom', message)
+        modifyNotification(sender_user_data.username, message)
         const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
         toastBootstrap.show()
     }
