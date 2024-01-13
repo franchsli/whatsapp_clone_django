@@ -41,8 +41,7 @@ async function display_chat(contact, messages){
 const new_message_input = document.getElementById('new-message') 
 const socket = new WebSocket(`ws://${window.location.host}/`)
 const chats = document.querySelectorAll('.chat')
-const chat_display = document.getElementById('chat-display')
-const chat_messages_display = document.getElementById('chat-messages')
+
 
 
 
