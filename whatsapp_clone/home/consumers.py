@@ -16,6 +16,10 @@ class ChatConsumer(AsyncWebsocketConsumer):
             self.room_group_name,
             self.channel_name
         )
+        await self.channel_layer.group_add(
+            self.user_specific_group_name,
+            self.channel_name
+        )
         await self.accept()
 
 
@@ -29,7 +33,16 @@ class ChatConsumer(AsyncWebsocketConsumer):
                     "text": f"{text_data_json['sender_user_id']}{text_data_json['message']}",
                 },
             )
-            #self.receiver_id = await  database_sync_to_async(self.get_user_id(text_data[0]))()
+            self.receiver_id = await self.get_user_id(text_data_json['receiver_username'])
+            print(self.receiver_id)
+            await self.channel_layer.group_send(
+                f"user_group_{self.receiver_id}",
+                {
+                    "type": "chat_notification",
+                    "text": f"{text_data_json['sender_user_id']}{text_data_json['message']}"
+                }
+
+            )
 
         elif 'reconnect' in text_data_json['type']:
             group_name = text_data_json['reconnect_to']
@@ -43,8 +56,12 @@ class ChatConsumer(AsyncWebsocketConsumer):
     async def chat_message(self, event):
         await self.send(text_data=f"chat_message{event['text']}")
     
+    async def chat_notification(self, event):
+        await self.send(text_data=f"chat_notification{event['text']}")
+    
+    @database_sync_to_async
     def get_user_id(self, username):
-        pass        
+        return User.objects.get(username=username).id      
 
     async def disconnect(self, close_code):
         await self.channel_layer.group_discard(self.room_group_name, self.channel_name)

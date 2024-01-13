@@ -91,7 +91,9 @@ socket.addEventListener('message', (event) => {
         sender_id = message[0]
         message = message.replace(sender_id, '')
         //create_message_html(message, user_id === sender_id)
-        alert(message)}
+        alert(message)
+        console.warn(message)
+        console.log(message)}
 
 
 })
