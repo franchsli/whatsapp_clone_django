@@ -30,3 +30,4 @@ TODO:
     - Rename home app to chat.
     - Rename sender user field from message.
     - Add the create chats logic.
+    - Improve readibility and scalability of consumers.
