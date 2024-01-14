@@ -1,0 +1,59 @@
+{% load filters %}
+
+<div class="col-4 border border-black p-0" id="chats-and-more">
+    <nav class="navbar border d-flex align-items-center bg-body-tertiary">
+      {% comment "user profile pic" %}{% endcomment %}
+      <div class="col-4 border" id="profile-pic" data-user={{request.user.id}} data-username={{request.user.username}}>
+        <img class="ms-3" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNBNdcMDNS2r9df1IWFVc8AY0QNtfNhEJv7fGS5TdhUWrlBqfGu1PCCn9lKpL-FqF9dWc&usqp=CAU" alt="" style="max-width: 50px;" role="button">
+      </div>
+      {% comment "new chat and settings" %}{% endcomment %}
+      <nav class="navbar d-flex justify-content-end col-8 borde">
+        <button onclick="switch_theme()" id="theme-toggler" class="btn rounded-fill me-3 action"><span><i id="theme-icon"
+          class="bi bi-moon-fill"></i></span></button>
+        <button id="create-chat" class="action me-3 btn"><span><i class="bi bi-chat-left-dots"></i></span></button>
+        <button id="settings" class="action me-3 btn"><span><i class="bi bi-three-dots-vertical"></i></span></button>
+      </nav>
+    </nav>
+    {% comment "archived chats" %}{% endcomment %}
+    <div role="button" class="btn border d-flex align-items-center justify-content-between p-3">
+      <div>
+        <i class="bi bi-archive"></i>
+        <span class="ms-3">Archived</span>
+      </div>
+      <div>
+        {% comment "num of archived chats that have unread messages" %}{% endcomment %}
+        <span class="badge bg-success">1</span>
+      </div>
+    </div>
+    {% comment "chats list" %}{% endcomment %}
+    <ul class="list-group list-group-flush overflow-y-scroll" style="max-height: 615px;">
+      {% for chat in chats %}
+      <li class="list-group-item p-3  d-flex flex-inline align-items-center chat" role="button" data-chat={{chat.id}} data-contact={{ chat.profiles.all|exclude_user:request.user }} data-messages='{{chat.message_set.all|to_list}}'>
+        {% comment "contact profile photo" %}{% endcomment %}
+        <img class="ms-1" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNBNdcMDNS2r9df1IWFVc8AY0QNtfNhEJv7fGS5TdhUWrlBqfGu1PCCn9lKpL-FqF9dWc&usqp=CAU" alt="" style="max-width: 45px;">
+        <div class="d-flex flex-column ms-3 w-100">
+          <div class="d-flex justify-content-between">
+            <span>{{ chat.profiles.all|exclude_user:request.user }}</span>
+            {% comment %} <span>{{ chat.profiles.all }}</span> {% endcomment %}
+            <span id="last-chat-message-date">Date</span>
+          </div>
+          {% comment "last message in the chat" %}{% endcomment %}
+          <span id="last-chat-message">contact message</span>
+        </div>
+      </li>
+      {% endfor %}
+      {% comment %} <li class="list-group-item p-3  d-flex flex-inline align-items-center chat" role="button">
+        <img class="ms-1" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNBNdcMDNS2r9df1IWFVc8AY0QNtfNhEJv7fGS5TdhUWrlBqfGu1PCCn9lKpL-FqF9dWc&usqp=CAU" alt="" style="max-width: 45px;">
+        <div class="d-flex flex-column ms-3 w-100">
+          <div class="d-flex justify-content-between">
+            <span>Contact name</span>
+            <span>Date</span>
+          </div>
+          <div class="d-flex justify-content-between">
+            <span>contact message</span>
+            <span class="badge rounded-pill bg-success">10</span>
+          </div>
+        </div>
+      </li> {% endcomment %}
+    </ul>
+  </div>
