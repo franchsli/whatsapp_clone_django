@@ -1,4 +1,5 @@
 {% load filters %}
+{% load crispy_forms_tags %}
 
 <div class="col-4 border border-black p-0" id="chats-and-more">
     <nav class="navbar border d-flex align-items-center bg-body-tertiary">
@@ -10,7 +11,8 @@
       <nav class="navbar d-flex justify-content-end col-8 borde">
         <button onclick="switch_theme()" id="theme-toggler" class="btn rounded-fill me-3 action"><span><i id="theme-icon"
           class="bi bi-moon-fill"></i></span></button>
-        <button id="create-chat" class="action me-3 btn"><span><i class="bi bi-chat-left-dots"></i></span></button>
+          {% comment "Trigger new chat form modal" %}{% endcomment %}
+        <button id="create-chat" class="action me-3 btn" type="button" data-bs-toggle="modal" data-bs-target="#NewChat"><span><i class="bi bi-chat-left-dots"></i></span></button>
         <button id="settings" class="action me-3 btn"><span><i class="bi bi-three-dots-vertical"></i></span></button>
       </nav>
     </nav>
@@ -26,9 +28,9 @@
       </div>
     </div>
     {% comment "chats list" %}{% endcomment %}
-    <ul class="list-group list-group-flush overflow-y-scroll" style="max-height: 615px;">
+    <ul id="chat-list" class="list-group list-group-flush overflow-y-scroll" style="max-height: 615px;">
       {% for chat in chats %}
-      <li class="list-group-item p-3  d-flex flex-inline align-items-center chat" role="button" data-chat={{chat.id}} data-contact={{ chat.profiles.all|exclude_user:request.user }} data-messages='{{chat.message_set.all|to_list}}'>
+      <li class="list-group-item p-3  d-flex flex-inline align-items-center chat" role="button" data-chat={{chat.id}} data-contact={{ chat.users.all|exclude_user:request.user }} data-messages='{{chat.message_set.all|to_list}}'>
         {% comment "contact profile photo" %}{% endcomment %}
         <img class="ms-1" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNBNdcMDNS2r9df1IWFVc8AY0QNtfNhEJv7fGS5TdhUWrlBqfGu1PCCn9lKpL-FqF9dWc&usqp=CAU" alt="" style="max-width: 45px;">
         <div class="d-flex flex-column ms-3 w-100">
@@ -56,4 +58,25 @@
         </div>
       </li> {% endcomment %}
     </ul>
+</div>
+
+
+  
+  <!-- New Chat Form Modal -->
+  <div class="modal fade" id="NewChat" tabindex="-1" aria-labelledby="NewChatLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="NewChatLabel">Start new chat</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+        {{ chat_form | crispy }}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button hx-post="{% url 'chat' %}" hx-target="#chat-list" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' type="button" class="btn btn-success">Create chat</button>
+        </div>
+      </div>
+    </div>
   </div>

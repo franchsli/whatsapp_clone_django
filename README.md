@@ -17,7 +17,7 @@ TODO:
     - Create the search message logic.
     - Add the "read more" function to messages.
     - Add the archived chats logic.
-    - Use text truncation for the messages.
+    - Use text truncation for the last messages.
     - Rename sender user field from message.
     - Add the create chats logic.
     - Improve readibility and scalability of consumers.
