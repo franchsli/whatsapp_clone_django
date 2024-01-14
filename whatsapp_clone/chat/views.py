@@ -16,4 +16,4 @@ def chat(request):
             chat_form.save()
         else:
             return HttpResponse(chat_form.errors)
-    return render(request, 'home.html', {'chats':chats, 'chat_form': ChatForm()})
+    return render(request, 'index.html', {'chats':chats, 'chat_form': ChatForm()})
