@@ -21,3 +21,4 @@ TODO:
     - Rename sender user field from message.
     - Add the create chats logic.
     - Improve readibility and scalability of consumers.
+    **MUST DO** Make it so you can add contacts and create chats selecting contacts.
