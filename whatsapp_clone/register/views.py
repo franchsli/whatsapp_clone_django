@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout
 from .forms import CustomUserCreationForm
 from django.http import HttpResponse
-from home.models import Profile
 
 # Create your views here.
 def register(request):
@@ -14,8 +13,6 @@ def register(request):
         if new_user_form.is_valid():
             new_user = new_user_form.save()
             login(request, new_user)
-            profile = Profile(user=new_user)
-            profile.save()
             return redirect('home')
         else:
             return HttpResponse(f'INVALID FORM: {new_user_form.errors}')

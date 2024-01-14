@@ -1,11 +1,10 @@
 from rest_framework.serializers import ModelSerializer
-from django.contrib.auth.models import User
-from home.models import Message, Chat, Profile
+from home.models import Message, Chat, User
 
 class UserSerializer(ModelSerializer):
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name', 'email')
+        fields = ('username', 'first_name', 'last_name', 'email', 'phone_number')
 
 class MessageSerializer(ModelSerializer):
     class Meta:
@@ -15,9 +14,4 @@ class MessageSerializer(ModelSerializer):
 class ChatSerializer(ModelSerializer):
     class Meta:
         model = Chat
-        fields = '__all__'
-
-class ProfileSerializer(ModelSerializer):
-    class Meta:
-        model = Profile
         fields = '__all__'

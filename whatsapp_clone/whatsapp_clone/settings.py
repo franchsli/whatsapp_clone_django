@@ -68,6 +68,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'whatsapp_clone.urls'
+AUTH_USER_MODEL = 'home.User'
 
 TEMPLATES = [
     {

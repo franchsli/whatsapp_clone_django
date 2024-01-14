@@ -11,12 +11,9 @@ message_router.register(r'messages', views.MessageViewSet, 'messages')
 chat_router = DefaultRouter()
 chat_router.register(r'chats', views.ChatViewSet, 'chats')
 
-profile_router = DefaultRouter()
-profile_router.register(r'profiles', views.ProfileViewSet, 'profiles')
 
 urlpatterns = [
     path('', include(user_router.urls)),
     path('', include(message_router.urls)),
     path('', include(chat_router.urls)),
-    path('', include(profile_router.urls)),
 ]
