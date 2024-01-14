@@ -6,7 +6,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
     path('register/', include('register.urls')),
-    path('', include('home.urls')),
+    path('', include('chat.urls')),
     path('api/', include('apis.urls')),
     path('docs/', include_docs_urls(title='APIs documentation.'))
 ]

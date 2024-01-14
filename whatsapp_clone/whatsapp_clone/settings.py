@@ -38,7 +38,7 @@ THIRD_APPS = [
 
 CREATED_APPS = [
     'register',
-    'home',
+    'chat',
     'apis',
 ]
 
@@ -68,7 +68,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'whatsapp_clone.urls'
-AUTH_USER_MODEL = 'home.User'
+AUTH_USER_MODEL = 'chat.User'
 
 TEMPLATES = [
     {
@@ -155,5 +155,5 @@ REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "rest_framework.schemas.coreapi.AutoSchema",
 }
 
-LOGIN_REDIRECT_URL = 'home'
-LOGOUT_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'chat'
+LOGOUT_REDIRECT_URL = 'chat'

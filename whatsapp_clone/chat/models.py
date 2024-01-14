@@ -11,7 +11,7 @@ class User(AbstractUser, UserManager):
     USERNAME_FIELD = 'username'
     EMAIL_FIELD = 'email'
 
-    REQUIRED_FIELDS = ['password', 'email', 'phone_number']
+    #REQUIRED_FIELDS += ['phone_number']
 
 
 class Chat(models.Model):

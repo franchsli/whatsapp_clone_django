@@ -1,4 +1,4 @@
-from home.models import User
+from chat.models import User
 from django.contrib.auth.forms import UserCreationForm
 
 class CustomUserCreationForm(UserCreationForm):

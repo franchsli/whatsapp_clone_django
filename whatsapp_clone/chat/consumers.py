@@ -1,7 +1,7 @@
 from channels.generic.websocket import WebsocketConsumer, AsyncWebsocketConsumer
 from asgiref.sync import async_to_sync
 from channels.db import database_sync_to_async
-from django.contrib.auth.models import User
+from .models import User
 import json
 
 class ChatConsumer(AsyncWebsocketConsumer):

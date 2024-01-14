@@ -1,4 +1,4 @@
-from home.models import Message, Chat, User
+from chat.models import Message, Chat, User
 from .serializers import UserSerializer, MessageSerializer, ChatSerializer
 from rest_framework.viewsets import ModelViewSet
 # Create your views here.
