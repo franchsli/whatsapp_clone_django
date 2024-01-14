@@ -2,6 +2,7 @@
 # Whatsapp clone
 
 TODO:
+    - **ADD THE LAST MESSAGE LOGIC**
     - **IMPORTANT** Make it so when you send a message to the server, it stores in the db.
     - **MUST DO** Make it so the messages data get stored in the localstorage once the API get called
     so the next time  tries to load the messages from local storage, reducing the API calls.

@@ -6,7 +6,9 @@ const user_username = user.getAttribute('data-username')
 const new_message_input = document.getElementById('new-message') 
 const socket = new WebSocket(`ws://${window.location.host}/`)
 const chats = document.querySelectorAll('.chat')
-
+let last_chat_message
+let last_chat_message_date
+let last_message_id
 
 
 
@@ -24,11 +26,26 @@ socket.addEventListener('open', () => {
             //create_message_html(new_message_input.value)
             new_message_input.value = ''}})
     
-    chats.forEach( chat => {
-        chat.onclick = function(){
+    chats.forEach(async chat => {
         chat.dataset.messages = chat.dataset.messages.replace('[', '')
         chat.dataset.messages = chat.dataset.messages.replace(']', '')
         chat.dataset.messages = chat.dataset.messages.replace(',', '')
+        //last_chat_message = chat.getElementsByClassName('last_chat_message')
+        //last_chat_message_date = chat.getElementsByClassName('last_chat_message_date')
+
+        //console.log(last_chat_message, last_chat_message_date)
+        
+        //last_message_id = chat.dataset.messages[chat.dataset.messages.length - 1]
+        //let last_message_data = await get(`/api/messages/${last_message_id}`)
+        //last_chat_message.innerHTML = last_message_data.text
+        //last_chat_message_date.innerHTML = last_message_data.date
+        
+        //chat.getElementsByTagName('span')[1].setAttribute('hx-get', `/api/messages/${chat.dataset.messages[ chat.dataset.messages.length - 1]}`)
+        //chat.getElementsByTagName('span').setAttribute('hx-target', '')
+        //chat.getElementsByTagName('span')[1].setAttribute('hx-trigger', 'every 2s')
+        
+        chat.onclick = function(){
+
         display_chat(chat.dataset.contact, chat.dataset.messages.split(' '))
         //socket.send(`reconnect${chat.dataset.chat}`)
         socket.send(JSON.stringify({

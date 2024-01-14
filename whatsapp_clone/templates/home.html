@@ -44,10 +44,10 @@
                 <div class="d-flex justify-content-between">
                   <span>{{ chat.profiles.all|exclude_user:request.user }}</span>
                   {% comment %} <span>{{ chat.profiles.all }}</span> {% endcomment %}
-                  <span>Date</span>
+                  <span id="last-chat-message-date">Date</span>
                 </div>
                 {% comment "last message in the chat" %}{% endcomment %}
-                <span>contact message</span>
+                <span id="last-chat-message">contact message</span>
               </div>
             </li>
             {% endfor %}
@@ -67,7 +67,7 @@
           </ul>
         </div>
         {% comment "selected chat" %}{% endcomment %}
-        <div class="col-8 d-flex flex-column border border-black p-0" id="chat-diplay">
+        <div class="col-8 d-flex flex-column border border-black p-0" id="chat-display">
           <nav class="navbar bg-body-tertiary justify-content-between">
             <div class="d-flex align-items-center ms-3 col-6" role="button">
               {% comment "chat contact info" %}{% endcomment %}
