@@ -11,8 +11,11 @@ class User(AbstractUser, UserManager):
     USERNAME_FIELD = 'username'
     EMAIL_FIELD = 'email'
 
-    #REQUIRED_FIELDS += ['phone_number']
 
+class Contact(models.Model):
+    name = models.CharField(max_length=36, blank=False, null=False)
+    phone_number = PhoneNumberField()
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
 class Chat(models.Model):
     users = models.ManyToManyField(User, related_name='chats')
@@ -22,7 +25,7 @@ class Message(models.Model):
     sender_user = models.ForeignKey(User, on_delete=models.CASCADE)
     text = models.TextField(blank=False, null=False)
     date = models.DateTimeField(default=timezone.now)
-    chat = models.ForeignKey(Chat, on_delete=models.CASCADE, blank=True, null=True)
+    chat = models.ForeignKey(Chat, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
         return self.text

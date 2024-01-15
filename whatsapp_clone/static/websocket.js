@@ -28,12 +28,12 @@ socket.addEventListener('open', () => {
             new_message_input.value = ''}})
     
     chats.forEach(async chat => {
-        chat.dataset.messages = chat.dataset.messages.replace('[', '')
-        chat.dataset.messages = chat.dataset.messages.replace(']', '')
-        chat.dataset.messages = chat.dataset.messages.replace(',', '')
+
         
         chat.onclick = function(){
-
+        chat.dataset.messages = chat.dataset.messages.replace('[', '')
+        chat.dataset.messages = chat.dataset.messages.replace(']', '')
+        chat.dataset.messages = chat.dataset.messages.replaceAll(',', '')
         display_chat(chat.dataset.contact, chat.dataset.messages.split(' '))
         //socket.send(`reconnect${chat.dataset.chat}`)
         socket.send(JSON.stringify({
