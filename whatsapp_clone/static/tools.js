@@ -4,6 +4,18 @@ async function get(url){
     return data
 }
 
+function post(url, data){
+    const csrf_token = document.querySelector('input[name="csrfmiddlewaretoken"]').value
+    fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {'content-type':'aplication/json', 
+        'X-CSRFToken': csrf_token }
+    })
+    .then(response => console.log(response.json))
+    .catch(error => console.log(error.message))
+}
+
 function create_message_html(text, user_message=true){
     const messages = document.getElementById('chat-messages')
     const new_message = document.createElement('li')
@@ -51,4 +63,4 @@ async function display_chat(contact, messages){
     }
 }
 
-export {get, create_message_html, modifyNotification, display_chat}
+export {get, post, create_message_html, modifyNotification, display_chat}

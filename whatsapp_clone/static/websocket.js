@@ -1,4 +1,4 @@
-import { get, create_message_html, modifyNotification, display_chat } from  './tools.js';
+import { get, post, create_message_html, modifyNotification, display_chat } from  './tools.js';
 
 const user = document.getElementById('profile-pic')
 const user_id = user.getAttribute('data-user')
