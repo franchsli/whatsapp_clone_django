@@ -30,19 +30,6 @@ socket.addEventListener('open', () => {
         chat.dataset.messages = chat.dataset.messages.replace('[', '')
         chat.dataset.messages = chat.dataset.messages.replace(']', '')
         chat.dataset.messages = chat.dataset.messages.replace(',', '')
-        //last_chat_message = chat.getElementsByClassName('last_chat_message')
-        //last_chat_message_date = chat.getElementsByClassName('last_chat_message_date')
-
-        //console.log(last_chat_message, last_chat_message_date)
-        
-        //last_message_id = chat.dataset.messages[chat.dataset.messages.length - 1]
-        //let last_message_data = await get(`/api/messages/${last_message_id}`)
-        //last_chat_message.innerHTML = last_message_data.text
-        //last_chat_message_date.innerHTML = last_message_data.date
-        
-        //chat.getElementsByTagName('span')[1].setAttribute('hx-get', `/api/messages/${chat.dataset.messages[ chat.dataset.messages.length - 1]}`)
-        //chat.getElementsByTagName('span').setAttribute('hx-target', '')
-        //chat.getElementsByTagName('span')[1].setAttribute('hx-trigger', 'every 2s')
         
         chat.onclick = function(){
 

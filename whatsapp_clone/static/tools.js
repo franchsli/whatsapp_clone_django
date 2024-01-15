@@ -38,7 +38,7 @@ async function display_chat(contact, messages){
     let cleaned = false
     for (let index = 0; index < messages.length; index++) {
         let message_id = messages[index];
-        message_data = await get(`/api/messages/${message_id}/`)
+        message_data = await get(`/api/messages/${message_id}`)
         console.log(message_data)
         console.log(message_data.text)
         console.log(typeof(message_data.sender_user))
