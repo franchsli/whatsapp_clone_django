@@ -6,7 +6,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 # Create your models here.
 class User(AbstractUser, UserManager):
     # custom fields
-    phone_number = PhoneNumberField()
+    phone_number = PhoneNumberField(unique=True)
 
     USERNAME_FIELD = 'username'
     EMAIL_FIELD = 'email'
@@ -14,8 +14,11 @@ class User(AbstractUser, UserManager):
 
 class Contact(models.Model):
     name = models.CharField(max_length=36, blank=False, null=False)
-    phone_number = PhoneNumberField()
+    phone_number = models.CharField(max_length=10)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self) -> str:
+        return self.name
 
 class Chat(models.Model):
     users = models.ManyToManyField(User, related_name='chats')

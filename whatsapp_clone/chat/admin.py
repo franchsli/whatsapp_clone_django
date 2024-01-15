@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import UserChangeForm
-from .models import User, Chat, Message
+from .models import User, Chat, Message, Contact
 # Register your models here.
 
 #custom models for displaying custom user fields in admin
@@ -26,6 +26,12 @@ class MessageAdmin(admin.ModelAdmin):
     list_display = ('sender_user', 'text')
     list_filter = ('sender_user', 'date')
 
+
+class ContactAdmin(admin.ModelAdmin):
+    search_fields = ('name', 'phone_number')
+    list_display = ('name', 'phone_number')
+
 admin.site.register(User, CustomUserAdmin)
 admin.site.register(Chat, ChatAdmin)
 admin.site.register(Message, MessageAdmin)
+admin.site.register(Contact, ContactAdmin)
