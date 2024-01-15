@@ -2,6 +2,7 @@ from channels.generic.websocket import AsyncWebsocketConsumer
 from asgiref.sync import async_to_sync
 from channels.db import database_sync_to_async
 from .models import User, Chat, Message
+from django.utils import timezone
 import json
 
 class ChatConsumer(AsyncWebsocketConsumer):
@@ -43,6 +44,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 }
 
             )
+            await self.create_message(text_data_json['sender_user_id'],
+                                    text_data_json['message'], 
+                                    text_data_json['chat_id'])
 
         elif 'reconnect' in text_data_json['type']:
             group_name = text_data_json['reconnect_to']
@@ -61,7 +65,13 @@ class ChatConsumer(AsyncWebsocketConsumer):
     
     @database_sync_to_async
     def get_user_id(self, username):
-        return User.objects.get(username=username).id      
+        return User.objects.get(username=username).id
+
+    @database_sync_to_async
+    def create_message(self, sender_user_id, text, chat_id):
+        sender_user_instance = User.objects.get(id=sender_user_id)
+        chat_instance = Chat.objects.get(id=chat_id)
+        new_message = Message.objects.create(sender_user=sender_user_instance, text=text, date=timezone.now(), chat=chat_instance)      
 
     async def disconnect(self, close_code):
         await self.channel_layer.group_discard(self.room_group_name, self.channel_name)
