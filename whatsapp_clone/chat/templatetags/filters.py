@@ -3,7 +3,8 @@ register = template.Library()
 
 @register.filter
 def exclude_user(value, user):
-    return value[1].user if value[1].user != user else value[0].user
+    user_list = list(value.values_list('username', flat=True))
+    return user_list[1] if user_list[1] != user.username else user_list[0]
  
 @register.filter
 def to_list(value):

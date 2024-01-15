@@ -22,3 +22,4 @@ TODO:
     - Add the create chats logic.
     - Improve readibility and scalability of consumers.
     **MUST DO** Make it so you can add contacts and create chats selecting contacts.
+    - You can use FILTER ELEMENTS WITH `SHOW ... WHEN` from Hyperscript

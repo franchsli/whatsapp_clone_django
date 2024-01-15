@@ -9,11 +9,11 @@ from django.http import HttpResponse
 def chat(request):
     user_instance = User(id=request.user.id)
     chats = user_instance.chats.all()
-    chat_form = ChatForm()
+    chat_form = ChatForm(initial={'users':user_instance})
     if request.method == 'POST':
         chat_form = ChatForm(request.POST)
         if chat_form.is_valid():
             chat_form.save()
         else:
             return HttpResponse(chat_form.errors)
-    return render(request, 'index.html', {'chats':chats, 'chat_form': ChatForm()})
+    return render(request, 'index.html', {'chats':chats, 'chat_form': chat_form})
