@@ -14,7 +14,8 @@ class User(AbstractUser, UserManager):
 
 class Contact(models.Model):
     name = models.CharField(max_length=36, blank=False, null=False)
-    phone_number = models.CharField(max_length=10)
+    #phone_number = models.CharField(max_length=10)
+    phone_number = PhoneNumberField()
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
