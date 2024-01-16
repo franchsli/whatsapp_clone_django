@@ -1,10 +1,14 @@
-from chat.models import Message, Chat, User
-from .serializers import UserSerializer, MessageSerializer, ChatSerializer
+from chat.models import Message, Chat, User, Contact
+from .serializers import UserSerializer, MessageSerializer, ChatSerializer, ContactSerializer
 from rest_framework.viewsets import ModelViewSet
 # Create your views here.
 class UserViewSet(ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+class ContactViewSet(ModelViewSet):
+    queryset = Contact.objects.all()
+    serializer_class = ContactSerializer
 
 class MessageViewSet(ModelViewSet):
     queryset = Message.objects.all()
