@@ -81,11 +81,21 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-        {{ chat_form | crispy }}
+        <form action="" id="chat-creation-form">
+          <ul id="new-chat-contact-select-inputs" class="list-group list-group-flush overflow-y-scroll" style="max-height: 615px;">
+          {% for contact in contacts %}
+            <li class="list-group-item p-3  d-flex flex-inline align-items-center contact" role="button" data-contact={{contact.id}} >
+            <input type="checkbox" class="form-check-input" id={{ contact.phone_number }}>
+            <label class="form-check-label ms-3" for={{ contact.id }}>{{contact.name}}</label>
+            </li>
+          {% endfor %}
+          </ul>
+          <button type="submit" class="btn btn-success float-end mt-3">Create chat</button>
+          <button type="button" class="btn btn-secondary float-end mt-3 me-3" data-bs-dismiss="modal">Close</button>
+          
+        </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-success">Create chat</button>
         </div>
       </div>
     </div>

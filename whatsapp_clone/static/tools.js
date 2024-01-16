@@ -74,4 +74,6 @@ function switch_collapse(){
     });
 }
 
+
+
 export {get, post, create_message_html, modifyNotification, display_chat, switch_collapse}

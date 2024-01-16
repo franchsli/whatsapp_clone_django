@@ -7,11 +7,30 @@ const new_message_input = document.getElementById('new-message')
 const socket = new WebSocket(`ws://${window.location.host}/`)
 const chats = document.querySelectorAll('.chat')
 const collapse_buttons = document.querySelectorAll('.collapse-switch')
+const form = document.getElementById("chat-creation-form")
 let last_chat_message
 let last_chat_message_date
 let last_message_id
 
+function modify_inputs(){
+    const form = document.getElementById("chat-creation-form")
+    const form_elements = form.elements
+    console.log(form_elements)
+    for (let index = 0; index < form_elements.length; index++) {
+        let element = form_elements[index];
+        if (element.checked){
+            console.log(`This element: ${element} is checked with id: ${element.id}`)
+        }
+        
+    }
 
+    return false;
+}
+
+form.onsubmit = (event) => {
+    event.preventDefault()
+    modify_inputs()
+}
 
 collapse_buttons.forEach(button => {
     button.onclick = function(){
