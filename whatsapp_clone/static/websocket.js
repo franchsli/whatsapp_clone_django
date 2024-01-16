@@ -1,4 +1,4 @@
-import { get, post, create_message_html, modifyNotification, display_chat } from  './tools.js';
+import { get, post, create_message_html, modifyNotification, display_chat, switch_collapse } from  './tools.js';
 
 const user = document.getElementById('profile-pic')
 const user_id = user.getAttribute('data-user')
@@ -6,11 +6,18 @@ const user_username = user.getAttribute('data-username')
 const new_message_input = document.getElementById('new-message') 
 const socket = new WebSocket(`ws://${window.location.host}/`)
 const chats = document.querySelectorAll('.chat')
+const collapse_buttons = document.querySelectorAll('.collapse-switch')
 let last_chat_message
 let last_chat_message_date
 let last_message_id
 
 
+
+collapse_buttons.forEach(button => {
+    button.onclick = function(){
+        switch_collapse()
+    }
+})
 
 socket.addEventListener('open', () => {
 

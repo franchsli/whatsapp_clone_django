@@ -32,7 +32,7 @@ main,  #base {
   align-self: self-end;
 }
 
-.chat:hover, .btn:hover {
+.chat:hover, .contact:hover, .btn:hover {
   background-color: var(--bs-tertiary-bg);
 }
 

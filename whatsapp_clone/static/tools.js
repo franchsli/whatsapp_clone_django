@@ -63,4 +63,15 @@ async function display_chat(contact, messages){
     }
 }
 
-export {get, post, create_message_html, modifyNotification, display_chat}
+
+function switch_collapse(){
+    const collapse_parts = document.querySelectorAll('.collapse')
+    collapse_parts.forEach(collapse => {
+        if (collapse.classList.contains('show')){
+            collapse.classList.remove('show')
+        }
+        
+    });
+}
+
+export {get, post, create_message_html, modifyNotification, display_chat, switch_collapse}
