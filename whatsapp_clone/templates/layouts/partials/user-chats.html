@@ -1,7 +1,7 @@
 {% load filters %}
 {% load crispy_forms_tags %}
 
-<div class="col-4 border border-black p-0" id="chats-and-more">
+<div class="col-4 border border-black p-0 position-relative" id="chats-and-more">
     <nav class="navbar border d-flex align-items-center bg-body-tertiary">
       {% comment "user profile pic" %}{% endcomment %}
       <div class="col-4 border" id="profile-pic" data-user={{request.user.id}} data-username={{request.user.username}}>
@@ -29,7 +29,7 @@
       </div>
     </div>
     {% comment "chats list" %}{% endcomment %}
-    <ul id="chat-list" class="list-group list-group-flush overflow-y-scroll" style="max-height: 615px;">
+    <ul id="chat-list" class="collapse list-group list-group-flush overflow-y-scroll" style="max-height: 615px;">
       {% for chat in chats %}
       <li class="list-group-item p-3  d-flex flex-inline align-items-center chat" role="button" data-chat={{chat.id}} data-contact={{ chat.users.all|exclude_user:request.user }} data-messages='{{chat.message_set.all|to_list}}'>
         {% csrf_token %}
@@ -46,20 +46,11 @@
         </div>
       </li>
       {% endfor %}
-      {% comment %} <li class="list-group-item p-3  d-flex flex-inline align-items-center chat" role="button">
-        <img class="ms-1" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNBNdcMDNS2r9df1IWFVc8AY0QNtfNhEJv7fGS5TdhUWrlBqfGu1PCCn9lKpL-FqF9dWc&usqp=CAU" alt="" style="max-width: 45px;">
-        <div class="d-flex flex-column ms-3 w-100">
-          <div class="d-flex justify-content-between">
-            <span>Contact name</span>
-            <span>Date</span>
-          </div>
-          <div class="d-flex justify-content-between">
-            <span>contact message</span>
-            <span class="badge rounded-pill bg-success">10</span>
-          </div>
-        </div>
-      </li> {% endcomment %}
+ 
     </ul>
+    <button class="btn btn-success position-absolute bottom-0 end-0 m-3" data-bs-toggle="collapse" data-bs-target="#chat-list">
+      <i class="bi bi-chat-right-dots-fill"></i>
+    </button>
 </div>
 
 
