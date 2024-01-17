@@ -11,7 +11,7 @@
       <nav class="navbar d-flex justify-content-end col-8 borde">
         <button onclick="switch_theme()" id="theme-toggler" class="btn rounded-fill me-3 action"><span><i id="theme-icon"
           class="bi bi-moon-fill"></i></span></button>
-          <button id="add-contact" class="action me-3 btn"><i class="bi bi-person-plus"></i></button>
+          <button id="add-contact" class="action me-3 btn"  data-bs-toggle="modal" data-bs-target="#NewContact"><i class="bi bi-person-plus"></i></button>
           {% comment "Trigger new chat form modal" %}{% endcomment %}
         <button id="create-chat" class="action me-3 btn" type="button" data-bs-toggle="modal" data-bs-target="#NewChat"><span><i class="bi bi-chat-left-dots"></i></span></button>
         <button id="settings" class="action me-3 btn"><span><i class="bi bi-three-dots-vertical"></i></span></button>
@@ -59,7 +59,7 @@
 
   
   <!-- New Chat Form Modal -->
-  <div class="modal fade" id="NewChat" tabindex="-1" aria-labelledby="NewChatLabel" aria-hidden="true">
+<div class="modal fade" id="NewChat" tabindex="-1" aria-labelledby="NewChatLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -85,4 +85,27 @@
         </div>
       </div>
     </div>
-  </div>
+</div>
+
+
+
+  <!-- New Contact Form Modal -->
+<div class="modal fade" id="NewContact" tabindex="-1" aria-labelledby="NewContactLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="NewChatLabel">Add new contact</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          {% comment "" %}hx-get="{% url 'get_chats' %}" hx-target="#chats" hx-trigger="submit delay:2s"{% endcomment %}
+        <form id="contact-creation-form">
+          {% csrf_token %}
+          {{ contact_form | crispy }}
+        </form>
+        </div>
+        <div class="modal-footer">
+        </div>
+      </div>
+    </div>
+</div>

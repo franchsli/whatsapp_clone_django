@@ -7,7 +7,7 @@ const new_message_input = document.getElementById('new-message')
 const socket = new WebSocket(`ws://${window.location.host}/`)
 const chats = document.querySelectorAll('.chat')
 const collapse_buttons = document.querySelectorAll('.collapse-switch')
-const form = document.getElementById("chat-creation-form")
+const chat_form = document.getElementById("chat-creation-form")
 let last_chat_message
 let last_chat_message_date
 let last_message_id
@@ -72,7 +72,7 @@ socket.addEventListener('open', () => {
 
     }})
 
-    form.onsubmit = (event) => {
+    chat_form.onsubmit = (event) => {
         event.preventDefault()
         modify_inputs()
     }
