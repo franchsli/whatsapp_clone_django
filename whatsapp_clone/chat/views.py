@@ -17,3 +17,9 @@ def chat(request):
         else:
             return HttpResponse(chat_form.errors)
     return render(request, 'index.html', {'chats':chats, 'chat_form': chat_form, 'contacts':contacts})
+
+#htmx
+def get_chats(request):
+    user_instance = User(id=request.user.id)
+    chats = user_instance.chats.all()
+    return render(request, 'layouts/partials/components/chats.html', {'chats':chats})

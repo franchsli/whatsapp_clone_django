@@ -20,4 +20,6 @@ urlpatterns = [
     path('', include(contact_router.urls)),
     path('', include(message_router.urls)),
     path('', include(chat_router.urls)),
+    #htmx
+    path('v2/chats/', views.chats_api_view, name='chats-api-view')
 ]

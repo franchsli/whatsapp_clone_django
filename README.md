@@ -4,9 +4,9 @@
 TODO:
     - **IMPORTANT** IMPLEMENT THIS:
     Users should be able to CRUD contacts
-    Make it so when you create a chat, the chat_list got updated.
+    - **FIX** When the chat list updates, the user can't get the chats message for some reason.
+    - **SOLUTION** To fix it, you need to set a onclick property in the HTML and not in the javascript.
     - **ADD THE LAST MESSAGE LOGIC**
-    - **IMPORTANT** Make it so when you send a message to the server, it stores in the db.
     - **MUST DO** Make it so the messages data get stored in the localstorage once the API get called
     so the next time  tries to load the messages from local storage, reducing the API calls.
     **MUST DO** Replace the username in the create_message_html() condition for phonenumber.
@@ -26,3 +26,9 @@ TODO:
     - Rename sender user field from message.
     - Add the create chats logic.
     - Improve readibility and scalability of consumers.
+    - Make it so the chats name come with the contact that the user has.
+
+## Improvements
+
+- Users shouldn't be able to create TWO OR MORE chats with the same user
+- When a user creates a chat it collapse will stay showing.
