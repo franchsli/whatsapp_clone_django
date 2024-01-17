@@ -8,12 +8,12 @@ const socket = new WebSocket(`ws://${window.location.host}/`)
 const chats = document.querySelectorAll('.chat')
 const collapse_buttons = document.querySelectorAll('.collapse-switch')
 const chat_form = document.getElementById("chat-creation-form")
+const contact_form = document.getElementById("contact-creation-form")
 let last_chat_message
 let last_chat_message_date
 let last_message_id
 
-function modify_inputs(){
-    const form = document.getElementById("chat-creation-form")
+function modify_inputs(form, message_type){
     const form_elements = form.elements
     console.log(form_elements)
     for (let index = 0; index < form_elements.length; index++) {
@@ -21,7 +21,8 @@ function modify_inputs(){
         if (element.checked){
             console.log(`This element: ${element} is checked with id: ${element.id} and name ${element.dataset.contactName}`)
             socket.send(JSON.stringify({
-                'type': 'create_chat',
+                //'type': 'create_chat',
+                'type': message_type,
                 'contact_name': element.dataset.contactName,
                 'contact_phone_number': element.id
             }))
@@ -74,7 +75,7 @@ socket.addEventListener('open', () => {
 
     chat_form.onsubmit = (event) => {
         event.preventDefault()
-        modify_inputs()
+        modify_inputs(chat_form, 'create_chat')
     }
 
 
