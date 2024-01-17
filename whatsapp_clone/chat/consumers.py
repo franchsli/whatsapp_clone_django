@@ -55,6 +55,13 @@ class ChatConsumer(AsyncWebsocketConsumer):
             self.room_group_name = group_name
             print('room', self.room_group_name)
             await self.channel_layer.group_add(self.room_group_name, self.channel_name)
+        
+        elif 'create_chat' in text_data_json['type']:
+            user = await self.get_user_by_id(self.scope['user'].id)
+            #print(f'User:{user}')
+            contact = await self.get_user_by_phone(text_data_json['contact_phone_number'])
+            #print(f'Contact:{contact}')
+            await self.create_chat([user, contact])
 
 
     async def chat_message(self, event):
@@ -66,12 +73,29 @@ class ChatConsumer(AsyncWebsocketConsumer):
     @database_sync_to_async
     def get_user_id(self, username):
         return User.objects.get(username=username).id
+    
+    @database_sync_to_async
+    def get_user_by_id(self, user_id):
+        return User.objects.get(id=user_id)
+
+    @database_sync_to_async
+    def get_user_by_phone(self, phone_number):
+        try:
+            return User.objects.get(phone_number=phone_number)
+        except User.DoesNotExist:
+            raise Exception('NOT USER FOUND WITH SUCH PHONE')
 
     @database_sync_to_async
     def create_message(self, sender_user_id, text, chat_id):
         sender_user_instance = User.objects.get(id=sender_user_id)
         chat_instance = Chat.objects.get(id=chat_id)
-        new_message = Message.objects.create(sender_user=sender_user_instance, text=text, date=timezone.now(), chat=chat_instance)      
+        new_message = Message.objects.create(sender_user=sender_user_instance, text=text, date=timezone.now(), chat=chat_instance)   
+
+    @database_sync_to_async
+    def create_chat(self, users:list):
+        new_chat = Chat.objects.create()
+        new_chat.users.set(users)
+        new_chat.save()
 
     async def disconnect(self, close_code):
         await self.channel_layer.group_discard(self.room_group_name, self.channel_name)

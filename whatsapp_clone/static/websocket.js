@@ -19,7 +19,13 @@ function modify_inputs(){
     for (let index = 0; index < form_elements.length; index++) {
         let element = form_elements[index];
         if (element.checked){
-            console.log(`This element: ${element} is checked with id: ${element.id}`)
+            console.log(`This element: ${element} is checked with id: ${element.id} and name ${element.dataset.contactName}`)
+            socket.send(JSON.stringify({
+                'type': 'create_chat',
+                'contact_name': element.dataset.contactName,
+                'contact_phone_number': element.id
+            }))
+            
         }
         
     }
@@ -27,10 +33,7 @@ function modify_inputs(){
     return false;
 }
 
-form.onsubmit = (event) => {
-    event.preventDefault()
-    modify_inputs()
-}
+
 
 collapse_buttons.forEach(button => {
     button.onclick = function(){
@@ -54,8 +57,6 @@ socket.addEventListener('open', () => {
             new_message_input.value = ''}})
     
     chats.forEach(async chat => {
-
-        
         chat.onclick = function(){
         chat.dataset.messages = chat.dataset.messages.replace('[', '')
         chat.dataset.messages = chat.dataset.messages.replace(']', '')
@@ -70,6 +71,12 @@ socket.addEventListener('open', () => {
         localStorage.setItem('chat_id', chat.dataset.chat)
 
     }})
+
+    form.onsubmit = (event) => {
+        event.preventDefault()
+        modify_inputs()
+    }
+
 
 })
 

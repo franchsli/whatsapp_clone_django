@@ -85,8 +85,8 @@
           <ul id="new-chat-contact-select-inputs" class="list-group list-group-flush overflow-y-scroll" style="max-height: 615px;">
           {% for contact in contacts %}
             <li class="list-group-item p-3  d-flex flex-inline align-items-center contact" role="button" data-contact={{contact.id}} >
-            <input type="checkbox" class="form-check-input" id={{ contact.phone_number }}>
-            <label class="form-check-label ms-3" for={{ contact.id }}>{{contact.name}}</label>
+            <input type="checkbox" class="form-check-input" id={{ contact.phone_number }} data-contact-name={{contact.name}}>
+            <label class="form-check-label ms-3" for={{ contact.phone_number }}>{{contact.name}}</label>
             </li>
           {% endfor %}
           </ul>
