@@ -8,12 +8,12 @@ def exclude_user(value, user):
  
 @register.filter
 def to_list(value):
-    #return list(value.values_list('sender_user', 'text').order_by('-date'))
-    # queryset
-    #print(type(value))
-    # queryset
-    #print(type(value.values_list('sender_user', 'text').order_by('-date')))
     # you CAN ALSO use list comprehension (super effective)
     #print(value.values_list('sender_user', 'text').order_by('-date'))
     #list(value.values_list('sender_user', 'text').order_by('-date'))
     return list(value.values_list('id', flat=True).order_by('date'))
+
+@register.simple_tag
+def exclude_user_tag(user_set, user, value):
+    user_list = list(user_set.values_list(value, flat=True))
+    return user_list[1] if user_list[1] != user.username else user_list[0]
