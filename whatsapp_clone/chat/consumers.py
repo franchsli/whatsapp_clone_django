@@ -4,6 +4,8 @@ from channels.db import database_sync_to_async
 from .models import User, Chat, Message, Contact
 from django.utils import timezone
 from phonenumber_field.phonenumber import PhoneNumber
+from typing import Union, Optional
+from .exceptions import UserNotFoundException
 import json
 
 
@@ -12,8 +14,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
         # default group name
         self.room_group_name = "test"
         self.user_instance = await self.get_user_by_id(self.scope["user"].id)
-        self.user_specific_group_name = f"user_group_{self.user_instance.phone_number.as_e164.replace('+', '')}"
-        print(self.user_specific_group_name)
+        self.user_specific_group_name = (
+            f"user_group_{self.user_instance.phone_number.as_e164.replace('+', '')}"
+        )
 
         await self.channel_layer.group_add(self.room_group_name, self.channel_name)
         await self.channel_layer.group_add(
@@ -31,11 +34,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
                     "text": f"{text_data_json['sender_user_id']}{text_data_json['message']}",
                 },
             )
-            self.receiver = text_data_json["contact_phone_number"].replace('+', '')
+            self.receiver = text_data_json["contact_phone_number"].replace("+", "")
             print(f"user_group_{self.receiver}")
-            #user_group_3125538098
-            #user_group_573125538098
-            
+
             await self.channel_layer.group_send(
                 f"user_group_{self.receiver}",
                 {
@@ -78,18 +79,54 @@ class ChatConsumer(AsyncWebsocketConsumer):
         await self.send(text_data=f"chat_notification{event['text']}")
 
     @database_sync_to_async
-    def get_user_by_id(self, user_id:str or int) -> object:
-        return User.objects.get(id=user_id)
+    def get_user_by_id(self, user_id: Union[str, int]) -> Union[object, Exception]:
+        """Returns the user in the database found with the given id,
+        raises an exception if not found
+
+        Args:
+            user_id (Union[str, int]): A numeric (integer) value that identify the user.
+
+        Raises:
+            UserNotFoundException: Raised when there's no user with the given id.
+
+        Returns:
+            Union[object, Exception]: The user object in the database or an exception if not found.
+        """
+        try:
+            return User.objects.get(id=user_id)
+        except User.DoesNotExist:
+            raise UserNotFoundException("NO USER FOUND WITH SUCH ID")
 
     @database_sync_to_async
-    def get_user_by_phone(self, phone_number:str) -> object:
+    def get_user_by_phone(self, phone_number: str) -> Union[object, Exception]:
+        """Returns the user in the database found with the given phone_number,
+        raises an exception if not found
+
+        Args:
+            phone_number (str): The phone number of the wanted user.
+
+        Raises:
+            UserNotFoundException: Raised when there's no user with such phone
+
+        Returns:
+            Union[object, Exception]: The user object in the database or an exception if not found.
+        """
         try:
             return User.objects.get(phone_number=phone_number)
         except User.DoesNotExist:
-            raise Exception("NO USER FOUND WITH SUCH PHONE")
+            raise UserNotFoundException("NO USER FOUND WITH SUCH PHONE")
 
     @database_sync_to_async
-    def create_message(self, sender_user_id:str or int, text:str, chat_id:str or int) -> None:
+    def create_message(
+        self, sender_user_id: Union[str, int], text: str, chat_id: Union[str, int]
+    ) -> None:
+        """Creates and stores a new message object in the database.
+
+        Args:
+            sender_user_id (Union[str, int]): The id (numeric value) of the user that sent the message.
+            text (str): What the message says.
+            chat_id (Union[str, int]): The id (numeric value) of the chat that the sender sent this message on.
+        """
         sender_user_instance = User.objects.get(id=sender_user_id)
         chat_instance = Chat.objects.get(id=chat_id)
         new_message = Message.objects.create(
@@ -101,12 +138,23 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
     @database_sync_to_async
     def create_chat(self, users: list) -> None:
+        """Creates and stores a new chat object in the database.
+
+        Args:
+            users (list): A list containing at least two user objects.
+        """
         new_chat = Chat.objects.create()
         new_chat.users.set(users)
         new_chat.save()
 
     @database_sync_to_async
-    def create_contact(self, contact_name:str, contact_phone_number:str) -> None:
+    def create_contact(self, contact_name: str, contact_phone_number: str) -> None:
+        """Creates and stores a new contact object in the database.
+
+        Args:
+            contact_name (str): The name that the user thought for the contact.
+            contact_phone_number (str): The phone number of the contact.
+        """
         phone = PhoneNumber.from_string(contact_phone_number)
         new_contact = Contact.objects.create(
             name=contact_name, phone_number=phone.as_e164, created_by=self.user_instance

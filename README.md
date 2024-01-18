@@ -11,6 +11,7 @@ TODO:
     so the next time  tries to load the messages from local storage, reducing the API calls.
     **MUST DO** Replace the username in the create_message_html() condition for phonenumber.
     - You can use FILTER ELEMENTS WITH `SHOW ... WHEN` from Hyperscript
+    - Write test for the exceptions and functions.
     - Add groups chats.
     - Allow images in messages.
     - Add status page.
@@ -26,6 +27,7 @@ TODO:
     - Add the create chats logic.
     - Improve readibility and scalability of consumers.
     - Make it so the chats name come with the contact that the user has.
+    - Reconsider the exceptions.py file
 
 ## Improvements
 
