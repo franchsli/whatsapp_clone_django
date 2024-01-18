@@ -11,12 +11,6 @@ def chat(request):
     chat_form = ChatForm(initial={'users':user_instance})
     contact_form = ContactForm(initial={'created_by':user_instance})
     contacts = user_instance.contact_set.all().order_by('name') 
-    if request.method == 'POST':
-        chat_form = ChatForm(request.POST)
-        if chat_form.is_valid():
-            chat_form.save()
-        else:
-            return HttpResponse(chat_form.errors)
     return render(request, 'index.html', {'chats':chats, 'chat_form': chat_form, 'contacts':contacts, 'contact_form':contact_form})
 
 #htmx
