@@ -102,6 +102,7 @@
         <form id="contact-creation-form">
           {% csrf_token %}
           {{ contact_form | crispy }}
+          <button class="btn btn-success float-end" type="submit">Create contact</button>
         </form>
         </div>
         <div class="modal-footer">

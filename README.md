@@ -10,7 +10,6 @@ TODO:
     - **MUST DO** Make it so the messages data get stored in the localstorage once the API get called
     so the next time  tries to load the messages from local storage, reducing the API calls.
     **MUST DO** Replace the username in the create_message_html() condition for phonenumber.
-    **MUST DO** Make it so you can add contacts
     - You can use FILTER ELEMENTS WITH `SHOW ... WHEN` from Hyperscript
     - Add groups chats.
     - Allow images in messages.
@@ -32,3 +31,7 @@ TODO:
 
 - Users shouldn't be able to create TWO OR MORE chats with the same user
 - When a user creates a chat it collapse will stay showing.
+- When a form is succesfully submited, the inputs should be clear
+- When a user is creating a new chat and selects more than a contact,
+    the modal form title should change to 'create group' and a new input should appear that has the label
+        'group name'.

@@ -1,8 +1,9 @@
 from channels.generic.websocket import AsyncWebsocketConsumer
 from asgiref.sync import async_to_sync
 from channels.db import database_sync_to_async
-from .models import User, Chat, Message
+from .models import User, Chat, Message, Contact
 from django.utils import timezone
+from phonenumber_field.phonenumber import PhoneNumber
 import json
 
 class ChatConsumer(AsyncWebsocketConsumer):
@@ -11,7 +12,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
         # To accept the connection call:
         self.room_group_name = 'test'
         self.user_specific_group_name = f"user_group_{self.scope['user'].id}"
-        print(self.user_specific_group_name)
+        self.user_instance = await self.get_user_by_id(self.scope['user'].id)
+        #print(self.user_specific_group_name)
 
         await self.channel_layer.group_add(
             self.room_group_name,
@@ -62,6 +64,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
             contact = await self.get_user_by_phone(text_data_json['contact_phone_number'])
             #print(f'Contact:{contact}')
             await self.create_chat([user, contact])
+        
+        elif 'create_contact' in text_data_json['type']:
+            await self.create_contact(text_data_json['contact_name'], text_data_json['contact_phone_number'])
 
 
     async def chat_message(self, event):
@@ -96,6 +101,11 @@ class ChatConsumer(AsyncWebsocketConsumer):
         new_chat = Chat.objects.create()
         new_chat.users.set(users)
         new_chat.save()
+    
+    @database_sync_to_async
+    def create_contact(self, contact_name, contact_phone_number):
+        phone = PhoneNumber.from_string(contact_phone_number)
+        new_contact = Contact.objects.create(name=contact_name, phone_number=phone.as_e164, created_by=self.user_instance)
 
     async def disconnect(self, close_code):
         await self.channel_layer.group_discard(self.room_group_name, self.channel_name)

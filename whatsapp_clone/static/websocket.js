@@ -16,20 +16,32 @@ let last_message_id
 function modify_inputs(form, message_type){
     const form_elements = form.elements
     console.log(form_elements)
-    for (let index = 0; index < form_elements.length; index++) {
-        let element = form_elements[index];
-        if (element.checked){
-            console.log(`This element: ${element} is checked with id: ${element.id} and name ${element.dataset.contactName}`)
-            socket.send(JSON.stringify({
-                //'type': 'create_chat',
-                'type': message_type,
-                'contact_name': element.dataset.contactName,
-                'contact_phone_number': element.id
-            }))
+    if (message_type === 'create_chat'){
+        for (let index = 0; index < form_elements.length; index++) {
+            let element = form_elements[index];
+    
+            if (element.checked){
+                console.log(`This element: ${element} is checked with id: ${element.id} and name ${element.dataset.contactName}`)
+                socket.send(JSON.stringify({
+                    //'type': 'create_chat',
+                    'type': message_type,
+                    'contact_name': element.dataset.contactName,
+                    'contact_phone_number': element.id
+                }))
+                
+            }
             
         }
-        
     }
+    else {
+        socket.send(JSON.stringify({
+            //'type': 'create_chat',
+            'type': message_type,
+            'contact_name': form_elements[1].value,
+            'contact_phone_number': form_elements[2].value
+        }))
+    }
+
 
     return false;
 }
@@ -76,6 +88,11 @@ socket.addEventListener('open', () => {
     chat_form.onsubmit = (event) => {
         event.preventDefault()
         modify_inputs(chat_form, 'create_chat')
+    }
+
+    contact_form.onsubmit = (event) => {
+        event.preventDefault()
+        modify_inputs(contact_form, 'create_contact')
     }
 
 
