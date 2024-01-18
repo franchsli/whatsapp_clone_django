@@ -64,7 +64,8 @@ socket.addEventListener('open', () => {
                 'message': new_message_input.value,
                 'receiver_username': localStorage.getItem('receiver_username'),
                 'sender_user_id': user_id,
-                'chat_id': localStorage.getItem('chat_id')
+                'chat_id': localStorage.getItem('chat_id'),
+                'contact_phone_number': localStorage.getItem('contact_phone_number')
             }))
             //create_message_html(new_message_input.value)
             new_message_input.value = ''}})
@@ -82,6 +83,7 @@ socket.addEventListener('open', () => {
         }))
         localStorage.setItem('receiver_username', chat.dataset.contact)
         localStorage.setItem('chat_id', chat.dataset.chat)
+        localStorage.setItem('contact_phone_number', chat.dataset.contactPhone)
 
     }})
 

@@ -1,4 +1,5 @@
 from django import template
+from phonenumber_field.phonenumber import PhoneNumber
 register = template.Library()
 
 @register.filter
@@ -16,4 +17,5 @@ def to_list(value):
 @register.simple_tag
 def exclude_user_tag(user_set, user, value):
     user_list = list(user_set.values_list(value, flat=True))
-    return user_list[1] if user_list[1] != user.username else user_list[0]
+    comparison = user.username if value == 'username' else user.phone_number
+    return user_list[1] if user_list[1] != comparison else user_list[0]

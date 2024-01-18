@@ -11,8 +11,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         # default group name
         self.room_group_name = "test"
-        self.user_specific_group_name = f"user_group_{self.scope['user'].id}"
         self.user_instance = await self.get_user_by_id(self.scope["user"].id)
+        self.user_specific_group_name = f"user_group_{self.user_instance.phone_number.as_e164.replace('+', '')}"
+        print(self.user_specific_group_name)
 
         await self.channel_layer.group_add(self.room_group_name, self.channel_name)
         await self.channel_layer.group_add(
@@ -30,11 +31,13 @@ class ChatConsumer(AsyncWebsocketConsumer):
                     "text": f"{text_data_json['sender_user_id']}{text_data_json['message']}",
                 },
             )
-            self.receiver_id = await self.get_user_id(
-                text_data_json["receiver_username"]
-            )
+            self.receiver = text_data_json["contact_phone_number"].replace('+', '')
+            print(f"user_group_{self.receiver}")
+            #user_group_3125538098
+            #user_group_573125538098
+            
             await self.channel_layer.group_send(
-                f"user_group_{self.receiver_id}",
+                f"user_group_{self.receiver}",
                 {
                     "type": "chat_notification",
                     "text": f"{text_data_json['sender_user_id']}{text_data_json['message']}",
@@ -73,25 +76,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
     async def chat_notification(self, event):
         await self.send(text_data=f"chat_notification{event['text']}")
-
-    @database_sync_to_async
-    def get_user_id(self, username:str):
-        """Returns the user object id in the database with the given username if exists
-        Raises an exception otherwise.
-
-        Args:
-            username (str): The username of the user that needs to be found.
-
-        Raises:
-            Exception: If not found.
-
-        Returns:
-            object: The found username
-        """
-        try:
-            return User.objects.get(username=username).id
-        except User.DoesNotExist:
-            raise Exception('NO USER FOUND WITH SUCH USERNAME')
 
     @database_sync_to_async
     def get_user_by_id(self, user_id:str or int) -> object:
