@@ -6,8 +6,6 @@ TODO:
     Also, separate the HTML into files again.
     - **IMPORTANT** IMPLEMENT THIS:
     Users should be able to CRUD contacts
-    - **FIX** When the chat list updates, the user can't get the chats message for some reason.
-    - **SOLUTION** To fix it, you need to set a onclick property in the HTML and not in the javascript.
     - **ADD THE LAST MESSAGE LOGIC**
     - **MUST DO** Make it so the messages data get stored in the localstorage once the API get called
     so the next time  tries to load the messages from local storage, reducing the API calls.
