@@ -28,7 +28,7 @@ TODO:
 ## Improvements
 
 - Users shouldn't be able to create TWO OR MORE chats with the same user
-- When a user creates a chat it collapse will stay showing.
+- When a user creates a chat it collapse should stay showing.
 - When a form is succesfully submited, the inputs should be clear
 - When a user is creating a new chat and selects more than a contact,
     the modal form title should change to 'create group' and a new input should appear that has the label
