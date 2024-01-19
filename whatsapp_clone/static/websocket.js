@@ -47,7 +47,7 @@ function modify_inputs(form, message_type){
     return false;
 }
 
-function summon_chat(chat){
+window.summon_chat = function(chat){
     chat.dataset.messages = chat.dataset.messages.replace('[', '')
     chat.dataset.messages = chat.dataset.messages.replace(']', '')
     chat.dataset.messages = chat.dataset.messages.replaceAll(',', '')
