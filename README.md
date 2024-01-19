@@ -2,6 +2,8 @@
 # Whatsapp clone
 
 TODO:
+    -**DO IT NOW** Check if the HTMX to update the contact still working and do the same for contacts.
+    Also, separate the HTML into files again.
     - **IMPORTANT** IMPLEMENT THIS:
     Users should be able to CRUD contacts
     - **FIX** When the chat list updates, the user can't get the chats message for some reason.
