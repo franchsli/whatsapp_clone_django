@@ -32,10 +32,16 @@ main,  #base {
   align-self: self-end;
 }
 
-.chat:hover, .contact:hover, .btn:hover {
+.chat:hover, .contact:hover, .chat:hover button, .contact:hover button{
   background-color: var(--bs-tertiary-bg);
 }
 
 .action:hover{
   background-color: var(--bs-tertiary-color);
+}
+
+.dropdown-toggle{
+  background-color: var(--bs-body-bg);
+  
+  
 }

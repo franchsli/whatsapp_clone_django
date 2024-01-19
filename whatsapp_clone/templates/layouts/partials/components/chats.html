@@ -15,7 +15,13 @@
         <span id="last-chat-message-date">Date</span>
       </div>
       {% comment "last message in the chat" %}{% endcomment %}
-      <span id="last-chat-message">contact message</span>
+      <div class="d-flex justify-content-between">
+        <span id="last-chat-message">contact message</span>
+        <button class="btn btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
+        <ul class="dropdown-menu">
+          ...
+        </ul>
+      </div>
     </div>
   </li>
   {% endfor %}

@@ -4,6 +4,7 @@
 TODO:
     - **IMPORTANT** IMPLEMENT THIS:
     Users should be able to CRUD contacts
+    - Make it so the chats name come with the contact that the user has.
     - **ADD THE LAST MESSAGE LOGIC**
     - **MUST DO** Make it so the messages data get stored in the localstorage once the API get called
     so the next time  tries to load the messages from local storage, reducing the API calls.
@@ -22,7 +23,6 @@ TODO:
     - Add the archived chats logic.
     - Use text truncation for the last messages.
     - Add the create chats logic.
-    - Make it so the chats name come with the contact that the user has.
     - Reconsider the exceptions.py file
 
 ## Improvements
