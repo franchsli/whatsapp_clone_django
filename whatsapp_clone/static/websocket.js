@@ -1,5 +1,6 @@
 import { get, post, create_message_html, modifyNotification, display_chat, switch_collapse } from  './tools.js';
 
+console.log("websocket.js is loaded!");
 const user = document.getElementById('profile-pic')
 const user_id = user.getAttribute('data-user')
 const user_username = user.getAttribute('data-username')
@@ -46,7 +47,21 @@ function modify_inputs(form, message_type){
     return false;
 }
 
+function summon_chat(chat){
+    chat.dataset.messages = chat.dataset.messages.replace('[', '')
+    chat.dataset.messages = chat.dataset.messages.replace(']', '')
+    chat.dataset.messages = chat.dataset.messages.replaceAll(',', '')
+    display_chat(chat.dataset.contact, chat.dataset.messages.split(' '))
 
+    socket.send(JSON.stringify({
+        'type':'reconnect',
+        'reconnect_to': chat.dataset.chat
+    }))
+    localStorage.setItem('receiver_username', chat.dataset.contact)
+    localStorage.setItem('chat_id', chat.dataset.chat)
+    localStorage.setItem('contact_phone_number', chat.dataset.contactPhone)
+    
+}
 
 collapse_buttons.forEach(button => {
     button.onclick = function(){
@@ -70,22 +85,11 @@ socket.addEventListener('open', () => {
             //create_message_html(new_message_input.value)
             new_message_input.value = ''}})
     
-    chats.forEach(async chat => {
-        chat.onclick = function(){
-        chat.dataset.messages = chat.dataset.messages.replace('[', '')
-        chat.dataset.messages = chat.dataset.messages.replace(']', '')
-        chat.dataset.messages = chat.dataset.messages.replaceAll(',', '')
-        display_chat(chat.dataset.contact, chat.dataset.messages.split(' '))
-        //socket.send(`reconnect${chat.dataset.chat}`)
-        socket.send(JSON.stringify({
-            'type':'reconnect',
-            'reconnect_to': chat.dataset.chat
-        }))
-        localStorage.setItem('receiver_username', chat.dataset.contact)
-        localStorage.setItem('chat_id', chat.dataset.chat)
-        localStorage.setItem('contact_phone_number', chat.dataset.contactPhone)
+    // chats.forEach(async chat => {
+    //     chat.onclick = function(){
 
-    }})
+
+    // }})
 
     chat_form.onsubmit = (event) => {
         event.preventDefault()

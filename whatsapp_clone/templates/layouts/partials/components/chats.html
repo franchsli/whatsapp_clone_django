@@ -1,8 +1,10 @@
 {% load filters %}
+{% load static %}
+
 
 <ul id="chat-list" class="collapse list-group list-group-flush overflow-y-scroll" style="max-height: 615px;">
     {% for chat in chats %}
-    <li class="list-group-item p-3  d-flex flex-inline align-items-center chat" role="button" data-chat={{chat.id}} data-contact={% exclude_user_tag chat.users.all request.user 'username' %} data-contact-phone={% exclude_user_tag chat.users.all request.user 'phone_number' %} data-messages='{{chat.message_set.all|to_list}}'>
+    <li onclick="summon_chat(this)" class="list-group-item p-3  d-flex flex-inline align-items-center chat" role="button" data-chat={{chat.id}} data-contact={% exclude_user_tag chat.users.all request.user 'username' %} data-contact-phone={% exclude_user_tag chat.users.all request.user 'phone_number' %} data-messages='{{chat.message_set.all|to_list}}'>
       {% csrf_token %}
       {% comment "contact profile photo" %}{% endcomment %}
       <img class="ms-1" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNBNdcMDNS2r9df1IWFVc8AY0QNtfNhEJv7fGS5TdhUWrlBqfGu1PCCn9lKpL-FqF9dWc&usqp=CAU" alt="" style="max-width: 45px;">
