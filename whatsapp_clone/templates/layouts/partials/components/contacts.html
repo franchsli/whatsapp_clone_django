@@ -1,0 +1,16 @@
+{% load static %}
+
+<ul id="contact-list" class="collapse list-group list-group-flush overflow-y-scroll" style="max-height: 615px;">
+    {% for contact in contacts %}
+    <li class="list-group-item p-3  d-flex flex-inline align-items-center contact" role="button" data-contact={{contact.id}} >
+      {% csrf_token %}
+      {% comment "contact profile photo" %}{% endcomment %}
+      <img class="ms-1" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNBNdcMDNS2r9df1IWFVc8AY0QNtfNhEJv7fGS5TdhUWrlBqfGu1PCCn9lKpL-FqF9dWc&usqp=CAU" alt="" style="max-width: 45px;">
+      <div class="d-flex flex-column ms-3 w-100">
+        <div class="d-flex justify-content-between">
+          <span>{{ contact.name }}</span>
+        </div>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
