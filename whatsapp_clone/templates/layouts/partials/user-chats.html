@@ -33,7 +33,7 @@
     {% include "layouts/partials/components/chats.html" %}
   </div>
   {% comment "contacts list" %}{% endcomment %}
-  <div class="contacts">
+  <div id="contacts">
     {% include "layouts/partials/components/contacts.html" %}
   </div>
 
@@ -88,10 +88,10 @@
       </div>
       <div class="modal-body">
         {% comment "" %}hx-get="{% url 'get_chats' %}" hx-target="#chats" hx-trigger="submit delay:2s"{% endcomment %}
-      <form id="contact-creation-form">
+      <form id="contact-creation-form" hx-get="{% url 'get_contacts' %}" hx-target="#contacts" hx-trigger="submit delay:250ms">
         {% csrf_token %}
         {{ contact_form | crispy }}
-        <button class="btn btn-success float-end" type="submit">Create contact</button>
+        <button class="btn btn-success float-end" type="submit" data-bs-dismiss="modal">Create contact</button>
       </form>
       </div>
       <div class="modal-footer">

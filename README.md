@@ -33,3 +33,4 @@ TODO:
 - When a user is creating a new chat and selects more than a contact,
     the modal form title should change to 'create group' and a new input should appear that has the label
         'group name'.
+- Make it responsive.
