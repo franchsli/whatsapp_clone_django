@@ -26,7 +26,15 @@ def delete_chat(request, pk):
     chats = user_instance.chats.all()
     return render(request, 'layouts/partials/components/chats.html', {'chats':chats})
 
+
 def get_contacts(request):
     user_instance = User(id=request.user.id)
+    contacts = user_instance.contact_set.all()
+    return render(request, 'layouts/partials/components/contacts.html', {'contacts':contacts})
+
+def delete_contact(request, pk):
+    user_instance = User(id=request.user.id)
+    contact = Contact.objects.get(id=pk)
+    contact.delete()
     contacts = user_instance.contact_set.all()
     return render(request, 'layouts/partials/components/contacts.html', {'contacts':contacts})
