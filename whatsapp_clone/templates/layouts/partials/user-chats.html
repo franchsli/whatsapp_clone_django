@@ -2,19 +2,29 @@
 {% load crispy_forms_tags %}
 
 <div class="col-4 border border-black p-0 position-relative" id="chats-and-more">
-  <nav class="navbar border d-flex align-items-center bg-body-tertiary">
+  <nav class="navbar border d-flex align-items-center justify-content-between bg-body-tertiary">
     {% comment "user profile pic" %}{% endcomment %}
-    <div class="col-4 border" id="profile-pic" data-user={{request.user.id}} data-username={{request.user.username}}>
+    <div class="border" id="profile-pic" data-user={{request.user.id}} data-username={{request.user.username}}>
       <img class="ms-3" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNBNdcMDNS2r9df1IWFVc8AY0QNtfNhEJv7fGS5TdhUWrlBqfGu1PCCn9lKpL-FqF9dWc&usqp=CAU" alt="" style="max-width: 50px;" role="button">
     </div>
     {% comment "new chat and settings" %}{% endcomment %}
-    <nav class="navbar d-flex justify-content-end col-8 borde">
+    <nav class="navbar">
       <button onclick="switch_theme()" id="theme-toggler" class="btn rounded-fill me-3 action"><span><i id="theme-icon"
         class="bi bi-moon-fill"></i></span></button>
         <button id="add-contact" class="action me-3 btn"  data-bs-toggle="modal" data-bs-target="#NewContact"><i class="bi bi-person-plus"></i></button>
         {% comment "Trigger new chat form modal" %}{% endcomment %}
       <button id="create-chat" class="action me-3 btn" type="button" data-bs-toggle="modal" data-bs-target="#NewChat"><span><i class="bi bi-chat-left-dots"></i></span></button>
-      <button id="settings" class="action me-3 btn"><span><i class="bi bi-three-dots-vertical"></i></span></button>
+      <div class="dropdown">
+        <button id="settings" class="action me-3 btn" data-bs-toggle="dropdown"><span><i class="bi bi-three-dots-vertical"></i></span></button>
+        <ul class="dropdown-menu">
+          <li><span class="dropdown-item">New group</span></li>
+          <li><span class="dropdown-item">New community</span></li>
+          <li><span class="dropdown-item">Starred messages</span></li>
+          <li><span class="dropdown-item">Select chats</span></li>
+          <li><span class="dropdown-item">Settings</span></li>
+          <li><a class="dropdown-item" href="{% url 'exit' %}">Log out</a></li>
+        </ul>
+      </div>
     </nav>
   </nav>
   {% comment "archived chats" %}{% endcomment %}
@@ -49,7 +59,7 @@
   
  <!-- New Chat Form Modal -->
  <div class="modal fade" id="NewChat" tabindex="-1" aria-labelledby="NewChatLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="NewChatLabel">Start new chat</h1>
@@ -80,7 +90,7 @@
 
 <!-- New Contact Form Modal -->
 <div class="modal fade" id="NewContact" tabindex="-1" aria-labelledby="NewContactLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="NewChatLabel">Add new contact</h1>

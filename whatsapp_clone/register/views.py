@@ -13,7 +13,7 @@ def register(request):
         if new_user_form.is_valid():
             new_user = new_user_form.save()
             login(request, new_user)
-            return redirect('home')
+            return redirect('chat')
         else:
             return HttpResponse(f'INVALID FORM: {new_user_form.errors}')
         
@@ -23,4 +23,4 @@ def register(request):
 
 def exit(request):
     logout(request)
-    return redirect('home')
+    return redirect('chat')
