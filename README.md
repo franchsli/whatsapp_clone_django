@@ -3,7 +3,6 @@
 
 TODO:
     - **IMPORTANT** IMPLEMENT THIS:
-    Users should be able to CRUD contacts
     - Make it so the chats name come with the contact that the user has.
     - **ADD THE LAST MESSAGE LOGIC**
     - **MUST DO** Make it so the messages data get stored in the localstorage once the API get called

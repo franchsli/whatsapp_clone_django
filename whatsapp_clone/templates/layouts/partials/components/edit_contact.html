@@ -1,0 +1,8 @@
+{% load static %}
+{% load crispy_forms_tags %}
+
+<form hx-post="{% url 'edit_contact' contact.id %}" hx-target="this" hx-swap="outerHTML" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+    {{ contact_form | crispy }}
+    <button class="btn" type="submit">Submit</button>
+    <button class="btn" hx-get="{% url 'get_contact' contact.id %}">Cancel</button>
+</form>

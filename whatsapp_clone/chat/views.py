@@ -32,6 +32,25 @@ def get_contacts(request):
     contacts = user_instance.contact_set.all()
     return render(request, 'layouts/partials/components/contacts.html', {'contacts':contacts})
 
+def get_contact(request, pk):
+    contact = Contact.objects.get(id=pk)
+    return render(request, 'layouts/partials/components/contact.html', {'contact':contact})
+
+
+def edit_contact(request, pk):
+    user_instance = User(id=request.user.id)
+    if request.method == 'GET':
+        contact = Contact.objects.get(id=pk)
+        contact_form = ContactForm(instance=contact)
+        return render(request, 'layouts/partials/components/edit_contact.html', {'contact':contact, 'contact_form':contact_form, 'user':user_instance})
+    else:
+        contact = Contact.objects.get(id=pk)
+        contact_form = ContactForm(request.POST, instance=contact)
+        if contact_form.is_valid():
+            contact_form.save()
+        return render(request, 'layouts/partials/components/contact.html', {'contact':contact})
+
+
 def delete_contact(request, pk):
     user_instance = User(id=request.user.id)
     contact = Contact.objects.get(id=pk)
