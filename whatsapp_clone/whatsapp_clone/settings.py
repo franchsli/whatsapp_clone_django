@@ -50,6 +50,9 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 PHONENUMBER_DEFAULT_REGION = 'CO'
 
+MEDIA_ROOT = BASE_DIR / 'static/images/'
+MEDIA_URL = '/images/'
+
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels.layers.InMemoryChannelLayer"

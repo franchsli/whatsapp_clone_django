@@ -7,14 +7,21 @@ from phonenumber_field.modelfields import PhoneNumberField
 class User(AbstractUser, UserManager):
     # custom fields
     phone_number = PhoneNumberField(unique=True)
+    photo = models.ImageField(blank=True, null=True, upload_to='images/')
 
     USERNAME_FIELD = 'username'
     EMAIL_FIELD = 'email'
 
+    @property
+    def has_photo(self):
+        try:
+            return self.photo.url
+        except:
+            return False
+
 
 class Contact(models.Model):
     name = models.CharField(max_length=36, blank=False, null=False)
-    #phone_number = models.CharField(max_length=10)
     phone_number = PhoneNumberField()
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
