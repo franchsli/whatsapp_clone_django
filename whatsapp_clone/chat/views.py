@@ -2,7 +2,6 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from .models import User, Chat, Contact
 from .forms import ChatForm, ContactForm
-from django.http import HttpResponse
 
 @login_required
 def chat(request):
@@ -12,6 +11,7 @@ def chat(request):
     contact_form = ContactForm(initial={'created_by':user_instance})
     contacts = user_instance.contact_set.all().order_by('name')
     print(user_instance.has_photo) 
+    print(f'User:{user_instance.get_username()}')
     return render(request, 'index.html', {'user':user_instance, 'chats':chats, 'chat_form': chat_form, 'contacts':contacts, 'contact_form':contact_form})
 
 #htmx
