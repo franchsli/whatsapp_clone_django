@@ -10,8 +10,9 @@ def chat(request):
     chats = user_instance.chats.all()
     chat_form = ChatForm(initial={'users':user_instance})
     contact_form = ContactForm(initial={'created_by':user_instance})
-    contacts = user_instance.contact_set.all().order_by('name') 
-    return render(request, 'index.html', {'chats':chats, 'chat_form': chat_form, 'contacts':contacts, 'contact_form':contact_form})
+    contacts = user_instance.contact_set.all().order_by('name')
+    print(user_instance.has_photo) 
+    return render(request, 'index.html', {'user':user_instance, 'chats':chats, 'chat_form': chat_form, 'contacts':contacts, 'contact_form':contact_form})
 
 #htmx
 def get_chats(request):

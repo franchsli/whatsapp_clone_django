@@ -7,7 +7,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 class User(AbstractUser, UserManager):
     # custom fields
     phone_number = PhoneNumberField(unique=True)
-    photo = models.ImageField(blank=True, null=True, upload_to='images/')
+    photo = models.ImageField(blank=True, null=True, upload_to='user/')
 
     USERNAME_FIELD = 'username'
     EMAIL_FIELD = 'email'
@@ -16,8 +16,9 @@ class User(AbstractUser, UserManager):
     def has_photo(self):
         try:
             return self.photo.url
-        except:
+        except ValueError:
             return False
+
 
 
 class Contact(models.Model):
