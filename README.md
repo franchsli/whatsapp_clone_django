@@ -3,7 +3,8 @@
 
 TODO:
     - **IMPORTANT** IMPLEMENT THIS:
-    - Make it so the chats name come with the contact that the user has.
+    - Make it so the chats name and chat photo come of the contact that the user has.
+    - Allow images in messages.
     - **ADD THE LAST MESSAGE LOGIC**
     - **MUST DO** Make it so the messages data get stored in the localstorage once the API get called
     so the next time  tries to load the messages from local storage, reducing the API calls.
@@ -11,7 +12,7 @@ TODO:
     - You can use FILTER ELEMENTS WITH `SHOW ... WHEN` from Hyperscript
     - Write test for the exceptions and functions.
     - Add groups chats.
-    - Allow images in messages.
+
     - Add status page.
     - Add status logic
     - Add read and unread logic.
@@ -34,4 +35,5 @@ TODO:
 - When a user is creating a new chat and selects more than a contact,
     the modal form title should change to 'create group' and a new input should appear that has the label
         'group name'.
+- Fix: When there's only a contact or chat in the list, its option dropdown seems weird.
 - Make it responsive.
