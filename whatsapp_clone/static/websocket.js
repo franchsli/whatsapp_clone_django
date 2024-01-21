@@ -28,15 +28,9 @@ function modify_inputs(form, message_type){
                     'type': message_type,
                     'contact_name': element.dataset.contactName,
                     'contact_phone_number': element.id
-                }))
-                
-            }
-            
-        }
-    }
+                }))}}}
     else {
         socket.send(JSON.stringify({
-            //'type': 'create_chat',
             'type': message_type,
             'contact_name': form_elements[1].value,
             'contact_phone_number': form_elements[2].value

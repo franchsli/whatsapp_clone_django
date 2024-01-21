@@ -61,11 +61,10 @@ class ChatConsumer(AsyncWebsocketConsumer):
             await self.channel_layer.group_add(self.room_group_name, self.channel_name)
 
         elif text_data_json["type"] == "create_chat":
-            user = await self.get_user_by_id(self.scope["user"].id)
             contact = await self.get_user_by_phone(
                 text_data_json["contact_phone_number"]
             )
-            await self.create_chat([user, contact])
+            await self.create_chat([self.user_instance, contact])
 
         elif text_data_json["type"] == "create_contact":
             await self.create_contact(
@@ -141,7 +140,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         """Creates and stores a new chat object in the database.
 
         Args:
-            users (list): A list containing at least two user objects.
+            users (list): A list containing at least two user objects that will be in the chat.
         """
         new_chat = Chat.objects.create()
         new_chat.users.set(users)

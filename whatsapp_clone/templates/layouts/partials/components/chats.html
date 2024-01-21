@@ -10,7 +10,7 @@
     <img class="ms-1 rounded-circle img-fluid" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNBNdcMDNS2r9df1IWFVc8AY0QNtfNhEJv7fGS5TdhUWrlBqfGu1PCCn9lKpL-FqF9dWc&usqp=CAU" alt="" style="max-width: 45px;">
     <div class="d-flex flex-column ms-3 w-100">
       <div class="d-flex justify-content-between">
-        <span>{{ chat.users.all|exclude_user:request.user }}</span>
+        <span>{% get_contact_in_chat chat.users.all request.user %}</span>
         {% comment %} <span>{{ chat.profiles.all }}</span> {% endcomment %}
         <span id="last-chat-message-date">Date</span>
       </div>
