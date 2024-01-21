@@ -4,6 +4,7 @@
 TODO:
     - **IMPORTANT** IMPLEMENT THIS:
     - Make it so the chats name and chat photo come of the contact that the user has.
+    - When updating a contact, the chats list needs to update too with htmx.
     - Allow images in messages.
     - **ADD THE LAST MESSAGE LOGIC**
     - **MUST DO** Make it so the messages data get stored in the localstorage once the API get called
