@@ -35,3 +35,11 @@ def get_contact_in_chat(user_set, auth_user, desired_value):
             return contact.photo.url
         else:
             return 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNBNdcMDNS2r9df1IWFVc8AY0QNtfNhEJv7fGS5TdhUWrlBqfGu1PCCn9lKpL-FqF9dWc&usqp=CAU'
+
+@register.simple_tag
+def get_contact_photo(phone):
+    user = User.objects.get(phone_number=phone)
+    if user.has_photo:
+        return user.photo.url
+    else:
+        return 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNBNdcMDNS2r9df1IWFVc8AY0QNtfNhEJv7fGS5TdhUWrlBqfGu1PCCn9lKpL-FqF9dWc&usqp=CAU'
