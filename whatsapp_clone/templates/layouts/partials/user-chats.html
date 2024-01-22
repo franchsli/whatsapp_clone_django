@@ -44,7 +44,7 @@
     </div>
   </div>
   {% comment "chats list" %}{% endcomment %}
-  <div id="chats" hx-get="{% url 'get_chats' %}" hx-trigger="from: #submit-contact-form" >
+  <div id="chats" hx-get="{% url 'get_chats' %}" hx-swap="outerHTML" hx-trigger="change from:.contact">
     {% include "layouts/partials/components/chats.html" %}
   </div>
   {% comment "contacts list" %}{% endcomment %}
