@@ -31,7 +31,10 @@
   {% comment "send message" %}{% endcomment %}
   <footer class="d-flex flex-inline align-items-center bg-body-tertiary p-1">
     <h5 class="p-3" role="button"><i class="bi bi-emoji-smile"></i></h5>
-    <h5 class="p-3" role="button"><i class="bi bi-plus"></i></h5>
+    <label for="imageInput" class="custom-file-input">
+      <h5 class="p-3" role="button"><i class="bi bi-plus"></i></h5>
+    </label>
+    <input type="file" id="imageInput" name="image" accept="image/*" style="display: none;">
     <input id="new-message" class="form-control" type="text" name="new-message">
     <h5 class="p-3" role="button"><i class="bi bi-send"></i></h5>
     <h5 class="p-3" role="button"><i class="bi bi-mic"></i></h5>
