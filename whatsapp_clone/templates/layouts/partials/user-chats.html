@@ -44,7 +44,7 @@
     </div>
   </div>
   {% comment "chats list" %}{% endcomment %}
-  <div id="chats" hx-get="{% url 'get_chats' %}" hx-swap="outerHTML" hx-trigger="change from:.contact">
+  <div id="chats" hx-get="{% url 'get_chats' %}" hx-target="this" hx-swap="outerHTML" hx-trigger="click from:#chats-collapse-toggle">
     {% include "layouts/partials/components/chats.html" %}
   </div>
   {% comment "contacts list" %}{% endcomment %}
@@ -52,7 +52,7 @@
     {% include "layouts/partials/components/contacts.html" %}
   </div>
 
-  <button class="collapse-switch btn btn-success position-absolute bottom-0 end-0 me-5 mb-3" data-bs-toggle="collapse" data-bs-target="#chat-list">
+  <button id="chats-collapse-toggle" class="collapse-switch btn btn-success position-absolute bottom-0 end-0 me-5 mb-3" data-bs-toggle="collapse" data-bs-target="#chat-list">
     <i class="bi bi-chat-right-dots-fill"></i>
   </button>
   <button class="collapse-switch btn btn-success position-absolute bottom-0 end-0 mb-3" data-bs-toggle="collapse" data-bs-target="#contact-list">
