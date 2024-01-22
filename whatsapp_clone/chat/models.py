@@ -36,6 +36,7 @@ class Chat(models.Model):
 class Message(models.Model):
     sender_user = models.ForeignKey(User, on_delete=models.CASCADE)
     text = models.TextField(blank=False, null=False)
+    image = models.ImageField(blank=True, null=True, upload_to='messages/')
     date = models.DateTimeField(default=timezone.now)
     chat = models.ForeignKey(Chat, on_delete=models.CASCADE)
 
