@@ -50,3 +50,13 @@ main,  #base {
 .dropdown-toggle{
   background-color: var(--bs-body-bg);
 }
+
+.scroll-section::-webkit-scrollbar{
+  width: 8px;
+  height: 8px;
+}
+
+.scroll-section::-webkit-scrollbar-thumb{
+  border-radius: 20px;
+  background: var(--bs-secondary-bg);
+}

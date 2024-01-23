@@ -2,7 +2,7 @@
 {% load static %}
 
 
-<ul id="chat-list" class="collapse list-group list-group-flush overflow-y-scroll" style="max-height: 615px;">
+<ul id="chat-list" class="scroll-section collapse list-group list-group-flush overflow-y-scroll" style="max-height: 615px;">
   {% for chat in chats %}
   <li onclick="summon_chat(this);" id="chat-{{chat.id}}" class="list-group-item p-3  d-flex flex-inline align-items-center chat" role="button" data-chat={{chat.id}} data-contact={% exclude_user_tag chat.users.all request.user 'username' %} data-contact-phone={% exclude_user_tag chat.users.all request.user 'phone_number' %} data-messages='{{chat.message_set.all|to_list}}'>
     {% csrf_token %}
