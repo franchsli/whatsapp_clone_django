@@ -43,24 +43,26 @@ async function display_chat(contact, messages){
     const chat_messages_display = document.getElementById('chat-messages')
     const user = document.getElementById('profile-pic')
     const user_id = user.getAttribute('data-user')
-
     contact_name_display.innerHTML = contact
     let message_data
-
     let cleaned = false
-    for (let index = 0; index < messages.length; index++) {
-        let message_id = messages[index];
-        message_data = await get(`/api/messages/${message_id}`)
-        console.log(message_data)
-        console.log(message_data.text)
-        console.log(typeof(message_data.sender_user))
-        console.log(typeof(parseInt(user_id)))
+
+    if (messages[0] !== ''){
+        for (let index = 0; index < messages.length; index++) {
+            let message_id = messages[index];
+            message_data = await get(`/api/messages/${message_id}`)
+            if (!cleaned) {
+                chat_messages_display.innerHTML = ''
+                cleaned = true}
+            create_message_html(message_data.text, message_data.sender_user === parseInt(user_id))}
+    }
+    else{
         if (!cleaned) {
             chat_messages_display.innerHTML = ''
             cleaned = true}
-        create_message_html(message_data.text, message_data.sender_user === parseInt(user_id))
-        
     }
+
+    
 }
 
 

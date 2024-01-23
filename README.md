@@ -9,11 +9,9 @@ TODO:
     - **ADD THE LAST MESSAGE LOGIC**
     - **MUST DO** Make it so the messages data get stored in the localstorage once the API get called
     so the next time  tries to load the messages from local storage, reducing the API calls.
-    **MUST DO** Replace the username in the create_message_html() condition for phonenumber.
     - You can use FILTER ELEMENTS WITH `SHOW ... WHEN` from Hyperscript
     - Write test for the exceptions and functions.
     - Add groups chats.
-
     - Add status page.
     - Add status logic
     - Add read and unread logic.
