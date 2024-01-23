@@ -26,7 +26,7 @@ TODO:
 
 ## Improvements
 
-- Make it so when a user creates a new contact, the chat form gets updated.
+- Make it so when a user creates a new contact, the chat form gets updated. (REMEMBER HTMX FROM)
 - Users shouldn't be able to create TWO OR MORE chats with the same user
 - When a user creates a chat it collapse should stay showing.
 - Check why request.user.has_photo returns value but (in view) user_instance.has_photo returns False.
