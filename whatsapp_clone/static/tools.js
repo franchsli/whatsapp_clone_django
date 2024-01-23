@@ -16,11 +16,16 @@ function post(url, data){
     .catch(error => console.log(error.message))
 }
 
-function create_message_html(text, user_message=true){
+/**
+ * Creates all the HTML code for a message and adds it to the current opened chat.
+ * @param {*} text The text of the message.
+ * @param {Boolean} sent_by_auth_user True if the one who sent the message is the actual authenticated user, False otherwise.
+ */
+function create_message_html(text, sent_by_auth_user=true){
     const messages = document.getElementById('chat-messages')
     const new_message = document.createElement('li')
     const message_text = document.createElement('span')
-    if (user_message){new_message.classList.add('list-unstyled-item', 'me-3', 'mt-3', 'rounded', 'message', 'user-message')}
+    if (sent_by_auth_user){new_message.classList.add('list-unstyled-item', 'me-3', 'mt-3', 'rounded', 'message', 'user-message')}
     else {new_message.classList.add('list-unstyled-item', 'me-3', 'mt-3', 'rounded', 'message', 'contact-message')}
     message_text.classList.add('p-2')
     message_text.innerHTML = text
@@ -29,6 +34,11 @@ function create_message_html(text, user_message=true){
     messages.scroll(0, 10000)
 
 }
+/**
+ * Manipulates the notification toast in the HTML
+ * @param {String} contact_name The name of the contact who sent the message.
+ * @param {*} message The text of the message that was sent.
+ */
 function modifyNotification(contact_name, message){
     const toastNotification = document.getElementById('liveToast')
     let contact_name_display = toastNotification.querySelector('strong')
@@ -37,7 +47,12 @@ function modifyNotification(contact_name, message){
     message_display.innerHTML = message
 
 }
-
+/**
+ * Displays the chat and it's messages in the HTML.
+ * @param {String} contact The name of the contact.
+ * @param {HTMLImageElement} contact_photo The contact's HTML image.
+ * @param {Array} messages An array of the message's ids in the chat. 
+ */
 async function display_chat(contact, contact_photo, messages){
     const contact_name_display = document.getElementById('contact-name')
     const contact_photo_display = document.getElementById('contact-picture')
@@ -67,7 +82,9 @@ async function display_chat(contact, contact_photo, messages){
     
 }
 
-
+/**
+ * Unshowns all the actual showing collapses in the HTML.
+ */
 function switch_collapse(){
     const collapse_parts = document.querySelectorAll('.collapse')
     collapse_parts.forEach(collapse => {

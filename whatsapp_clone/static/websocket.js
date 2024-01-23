@@ -9,11 +9,16 @@ const collapse_buttons = document.querySelectorAll('.collapse-switch')
 const chat_form = document.getElementById("chat-creation-form")
 const contact_form = document.getElementById("contact-creation-form")
 
-
-function modify_inputs(form, message_type){
+/**
+ * Sends a message to the websocket for creating the desired instance using the given form data.
+ * @param {HTMLFormElement} form The HTML form element that contains all the inputs data to be set to the websocket.
+ * @param {String} instance_type A string telling the websocket consumer what type of instance it should create.
+ * @returns {false} Returns false avoiding form submission.
+ */
+function create_instance(form, instance_type){
     const form_elements = form.elements
     console.log(form_elements)
-    if (message_type === 'create_chat'){
+    if (instance_type === 'create_chat'){
         for (let index = 0; index < form_elements.length; index++) {
             let element = form_elements[index];
     
@@ -21,13 +26,13 @@ function modify_inputs(form, message_type){
                 console.log(`This element: ${element} is checked with id: ${element.id} and name ${element.dataset.contactName}`)
                 socket.send(JSON.stringify({
                     //'type': 'create_chat',
-                    'type': message_type,
+                    'type': instance_type,
                     'contact_name': element.dataset.contactName,
                     'contact_phone_number': element.id
                 }))}}}
     else {
         socket.send(JSON.stringify({
-            'type': message_type,
+            'type': instance_type,
             'contact_name': form_elements[1].value,
             'contact_phone_number': form_elements[2].value
         }))
@@ -78,12 +83,12 @@ socket.addEventListener('open', () => {
 
     chat_form.onsubmit = (event) => {
         event.preventDefault()
-        modify_inputs(chat_form, 'create_chat')
+        create_instance(chat_form, 'create_chat')
     }
 
     contact_form.onsubmit = (event) => {
         event.preventDefault()
-        modify_inputs(contact_form, 'create_contact')
+        create_instance(contact_form, 'create_contact')
     }
 
 
