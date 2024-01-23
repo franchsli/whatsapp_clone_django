@@ -7,8 +7,6 @@ TODO:
         WHEN THE USER ATTACH A PHOTO, ADD IT TO THE MESSAGE INPUT OR SUM SO THAT THE USER SEE THAT THE IMG GOT SUCCESSFULLY ADDED.
         WHEN THE PLANE ICON GETS CLICKED IT SENDS THE MESSAGE ALONG WITH THE INPUT IMAGE.
     - **ADD THE LAST MESSAGE LOGIC**
-    - **MUST DO** Make it so the messages data get stored in the localstorage once the API get called
-    so the next time  tries to load the messages from local storage, reducing the API calls.
     - You can use FILTER ELEMENTS WITH `SHOW ... WHEN` from Hyperscript
     - Write test for the exceptions and functions.
     - Add groups chats.
