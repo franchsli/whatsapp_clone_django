@@ -41,7 +41,7 @@ window.summon_chat = function(chat){
     chat.dataset.messages = chat.dataset.messages.replace('[', '')
     chat.dataset.messages = chat.dataset.messages.replace(']', '')
     chat.dataset.messages = chat.dataset.messages.replaceAll(',', '')
-    display_chat(chat.dataset.contact, chat.dataset.messages.split(' '))
+    display_chat(chat.dataset.contact, chat.querySelector('img'), chat.dataset.messages.split(' '))
 
     socket.send(JSON.stringify({
         'type':'reconnect',

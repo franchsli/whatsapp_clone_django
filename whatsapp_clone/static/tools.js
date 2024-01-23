@@ -38,12 +38,14 @@ function modifyNotification(contact_name, message){
 
 }
 
-async function display_chat(contact, messages){
+async function display_chat(contact, contact_photo, messages){
     const contact_name_display = document.getElementById('contact-name')
+    const contact_photo_display = document.getElementById('contact-picture')
     const chat_messages_display = document.getElementById('chat-messages')
     const user = document.getElementById('profile-pic')
     const user_id = user.getAttribute('data-user')
     contact_name_display.innerHTML = contact
+    contact_photo_display.src = contact_photo.src
     let message_data
     let cleaned = false
 
