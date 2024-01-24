@@ -9,20 +9,21 @@ const collapse_buttons = document.querySelectorAll('.collapse-switch')
 const chat_form = document.getElementById("chat-creation-form")
 const contact_form = document.getElementById("contact-creation-form")
 
-function checked_inputs(form){
-    let checked_inputs_num 
-    form.elements.forEach( element => {
+function checked(form){
+    console.log(form.elements)
+    for (let index = 0; index < form.elements.length; index++) {
+        let element = form.elements[index];
         if (element.checked){
-            checked_inputs_num ++
-        }
-    })
-    return checked_inputs_num
+            return true}
+    }
+    return false
 }
 
 /**
  * Sends a message to the websocket for creating the desired instance using the given form data.
  * @param {HTMLFormElement} form The HTML form element that contains all the inputs data to be set to the websocket.
  * @param {String} instance_type A string telling the websocket consumer what type of instance it should create.
+ * @returns {false} To avoid form submission.
  */
 function create_instance(form, instance_type){
     const form_elements = form.elements
@@ -88,15 +89,17 @@ socket.addEventListener('open', () => {
     
 
 
-    chat_form.onsubmit = (event) => {
-        // let checked_inputs_num = checked_inputs(chat_form)
-        // if (checked_inputs_num === 0){
-
-        // }
-        create_instance(chat_form, 'create_chat')
+    chat_form.onsubmit = () => {
+        if (!checked(chat_form)){
+            const validation_message = document.getElementById('chat-validation-message')
+            validation_message.innerText = 'Please select a contact to create chat with'
+        }
+        else{
+            create_instance(chat_form, 'create_chat')
+        }   
     }
 
-    contact_form.onsubmit = (event) => {
+    contact_form.onsubmit = () => {
         create_instance(contact_form, 'create_contact')
     }
 

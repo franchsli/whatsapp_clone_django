@@ -71,7 +71,8 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-      <form action="" id="chat-creation-form" hx-get="{% url 'get_chats' %}" hx-target="#chats" hx-trigger="submit delay:250ms">
+      <form id="chat-creation-form" hx-get="{% url 'get_chats' %}" hx-target="#chats" hx-trigger="submit delay:250ms">
+        <div id="chat-validation-message" style="font-size: 14px; color: var(	--bs-danger);"></div>
         <ul id="new-chat-contact-select-inputs" class="list-group list-group-flush overflow-y-scroll" style="max-height: 615px;">
         {% for contact in contacts %}
           <li class="list-group-item p-3  d-flex flex-inline align-items-center contact" role="button" data-contact={{contact.id}} >
