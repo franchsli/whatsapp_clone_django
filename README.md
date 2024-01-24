@@ -20,6 +20,7 @@ TODO:
     - Add the archived chats logic.
     - Use text truncation for the last messages.
     - Add the create chats logic.
+    - Add contact form validation.
     - Reconsider the exceptions.py file
 
 ## Improvements
