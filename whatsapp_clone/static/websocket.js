@@ -13,7 +13,6 @@ const contact_form = document.getElementById("contact-creation-form")
  * Sends a message to the websocket for creating the desired instance using the given form data.
  * @param {HTMLFormElement} form The HTML form element that contains all the inputs data to be set to the websocket.
  * @param {String} instance_type A string telling the websocket consumer what type of instance it should create.
- * @returns {false} Returns false avoiding form submission.
  */
 function create_instance(form, instance_type){
     const form_elements = form.elements
@@ -38,8 +37,6 @@ function create_instance(form, instance_type){
         }))
     }
 
-
-    return false;
 }
 
 window.summon_chat = function(chat){
