@@ -96,6 +96,10 @@ socket.addEventListener('open', () => {
         }
         else{
             create_instance(chat_form, 'create_chat')
+            const toastNotification = document.getElementById('liveToast')
+            modifyNotification('Server', 'The chat was created successfully!!')
+            const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
+            toastBootstrap.show()
         }   
     }
 
