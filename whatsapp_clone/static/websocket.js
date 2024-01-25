@@ -9,6 +9,37 @@ const collapse_buttons = document.querySelectorAll('.collapse-switch')
 const chat_form = document.getElementById("chat-creation-form")
 const contact_form = document.getElementById("contact-creation-form")
 
+const imageInput = document.getElementById('imageInput')
+imageInput.addEventListener('change', previewImage);
+
+function previewImage() {
+    let imageInput = document.getElementById('imageInput');
+    let imagePreview = document.getElementById('imagePreview');
+
+    let file = imageInput.files[0];
+
+    if (file) {
+        let reader = new FileReader();
+
+        reader.onload = function (e) {
+            // Display image preview
+            let preview = document.createElement('img');
+            preview.classList.add('m-3')
+            preview.src = e.target.result;
+            preview.alt = 'Image Preview';
+
+            // Clear previous previews
+            while (imagePreview.firstChild) {
+                imagePreview.removeChild(imagePreview.firstChild);
+            }
+
+            imagePreview.appendChild(preview);
+        };
+
+        reader.readAsDataURL(file);
+    }
+}
+
 function checked(form){
     console.log(form.elements)
     for (let index = 0; index < form.elements.length; index++) {
