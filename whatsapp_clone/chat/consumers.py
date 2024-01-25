@@ -3,10 +3,11 @@ from asgiref.sync import async_to_sync
 from channels.db import database_sync_to_async
 from .models import User, Chat, Message, Contact
 from django.utils import timezone
+from django.core.files.uploadedfile import SimpleUploadedFile
 from phonenumber_field.phonenumber import PhoneNumber
 from typing import Union, Optional
 from .exceptions import UserNotFoundException
-import json
+import json, base64
 
 
 class ChatConsumer(AsyncWebsocketConsumer):
@@ -47,6 +48,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             await self.create_message(
                 text_data_json["sender_user_id"],
                 text_data_json["message"],
+                text_data_json["image"],
                 text_data_json["chat_id"],
             )
 
@@ -117,7 +119,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
     @database_sync_to_async
     def create_message(
-        self, sender_user_id: Union[str, int], text: str, chat_id: Union[str, int]
+        self, sender_user_id: Union[str, int], text: str, image: Optional[str], chat_id: Union[str, int]
     ) -> None:
         """Creates and stores a new message object in the database.
 
@@ -134,6 +136,14 @@ class ChatConsumer(AsyncWebsocketConsumer):
             date=timezone.now(),
             chat=chat_instance,
         )
+        if image != '':
+            image_file = SimpleUploadedFile(
+                name='user_message_image.jpg',
+                content=base64.b64decode(image),
+                content_type='image/jpeg'
+            )
+            new_message.image = image_file
+            new_message.save()
 
     @database_sync_to_async
     def create_chat(self, users: list) -> None:

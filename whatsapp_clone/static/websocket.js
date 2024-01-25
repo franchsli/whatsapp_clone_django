@@ -10,6 +10,9 @@ const chat_form = document.getElementById("chat-creation-form")
 const contact_form = document.getElementById("contact-creation-form")
 
 const imageInput = document.getElementById('imageInput')
+setInterval(() => {
+    console.log(`Value ${imageInput.value}\nType:${typeof(imageInput.value)}\nHTML:${imageInput}\nCondition: ${imageInput.value !== ''}`)
+}, 1000);
 imageInput.addEventListener('change', previewImage);
 
 function previewImage() {
@@ -21,11 +24,12 @@ function previewImage() {
     if (file) {
         let reader = new FileReader();
 
-        reader.onload = function (e) {
+        reader.onload = function (event) {
             // Display image preview
             let preview = document.createElement('img');
             preview.classList.add('m-3')
-            preview.src = e.target.result;
+            preview.src = event.target.result;
+            localStorage.setItem('image_data', event.target.result)
             preview.alt = 'Image Preview';
 
             // Clear previous previews
@@ -106,10 +110,11 @@ collapse_buttons.forEach(button => {
 socket.addEventListener('open', () => {
 
     new_message_input.addEventListener('keypress', (event) => {
-        if (event.key === 'Enter' && new_message_input.value !== ''){
+        if (event.key === 'Enter' && (new_message_input.value !== '' || imageInput.value !== '')){
             socket.send(JSON.stringify({
                 'type':'message',
                 'message': new_message_input.value,
+                'image': imageInput.value !== '' ? localStorage.getItem('image_data') : '',
                 'receiver_username': localStorage.getItem('receiver_username'),
                 'sender_user_id': user_id,
                 'chat_id': localStorage.getItem('chat_id'),
