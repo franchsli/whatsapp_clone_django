@@ -150,11 +150,17 @@ socket.addEventListener('message',async (event) => {
     console.log('message from server', event.data , 'type:', event.type)
     let message
     let sender_id
+    let message_data
+    let text
+    let image
     if (event.data.includes('chat_message')){
         message = event.data.replace('chat_message', '')
-        sender_id = message[0]
-        message = message.replace(sender_id, '')
-        create_message_html(message, user_id === sender_id)}
+        message_data = message.split(',')
+        sender_id = message_data[0]
+        text = message_data[1]
+        image = message_data[2]
+        console.log(`IMAGE:${image}`)
+        create_message_html(text, 'undefined', user_id === sender_id)}
 
     else if (event.data.includes('chat_notification')){
         message = event.data.replace('chat_notification', '')

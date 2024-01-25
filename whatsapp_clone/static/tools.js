@@ -19,17 +19,24 @@ function post(url, data){
 /**
  * Creates all the HTML code for a message and adds it to the current opened chat.
  * @param {*} text The text of the message.
+ * @param {*} image_src
  * @param {Boolean} sent_by_auth_user True if the one who sent the message is the actual authenticated user, False otherwise.
  */
-function create_message_html(text, sent_by_auth_user=true){
+function create_message_html(text, image_src="undefined", sent_by_auth_user=true){
     const messages = document.getElementById('chat-messages')
+    const message_container = document.createElement('div')
     const new_message = document.createElement('li')
     const message_text = document.createElement('span')
+    const message_image = document.createElement('img')
+    message_image.src = image_src
+    message_image.alt = ''
     if (sent_by_auth_user){new_message.classList.add('list-unstyled-item', 'me-3', 'mt-3', 'rounded', 'message', 'user-message')}
     else {new_message.classList.add('list-unstyled-item', 'me-3', 'mt-3', 'rounded', 'message', 'contact-message')}
-    message_text.classList.add('p-2')
+    message_container.classList.add('p-2')
     message_text.innerHTML = text
-    new_message.appendChild(message_text)
+    message_container.appendChild(message_image)
+    message_container.appendChild(message_text)
+    new_message.appendChild(message_container)
     messages.appendChild(new_message)
     messages.scroll(0, 10000)
 
@@ -71,7 +78,7 @@ async function display_chat(contact, contact_photo, messages){
             if (!cleaned) {
                 chat_messages_display.innerHTML = ''
                 cleaned = true}
-            create_message_html(message_data.text, message_data.sender_user === parseInt(user_id))}
+            create_message_html(message_data.text, 'undefined', message_data.sender_user === parseInt(user_id))}
     }
     else{
         if (!cleaned) {
