@@ -78,7 +78,8 @@ async function display_chat(contact, contact_photo, messages){
             if (!cleaned) {
                 chat_messages_display.innerHTML = ''
                 cleaned = true}
-            create_message_html(message_data.text, 'undefined', message_data.sender_user === parseInt(user_id))}
+            console.log(message_data.image)
+            create_message_html(message_data.text, message_data.image, message_data.sender_user === parseInt(user_id))}
     }
     else{
         if (!cleaned) {

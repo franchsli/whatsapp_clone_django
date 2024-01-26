@@ -4,7 +4,7 @@
 TODO:
     - **IMPORTANT** IMPLEMENT THIS:
     - Allow images in messages:
-        WHEN THE USER ATTACH A PHOTO, ADD IT TO THE MESSAGE INPUT OR SUM SO THAT THE USER SEE THAT THE IMG GOT SUCCESSFULLY ADDED.
+        **FIX FAST** There's a bug that sends invalid images type to the server, it is stored as jpg but they don't load somehow.
         WHEN THE PLANE ICON GETS CLICKED IT SENDS THE MESSAGE ALONG WITH THE INPUT IMAGE.
     - **FIX** THERE'S A TEMA AND THEME VARS IN LOCALSTORAGE.
     - **ADD THE LAST MESSAGE LOGIC**
