@@ -4,7 +4,8 @@
 TODO:
     - **IMPORTANT** IMPLEMENT THIS:
     - Allow images in messages:
-        **FIX FAST** There's a bug that sends invalid images type to the server, it is stored as jpg but they don't load somehow.
+        **FIX FAST** There's a bug that sends invalid images type to the server, it is stored as jpg but they don't load somehow
+        (IT LOOKS LIKE THE ERROR IS IN HARDCODING THE IMAGE TYPE).
         2. When sending a message via input, input text gets displayed but image isn't and get the error (url not valid) it is encoded
         and the url sends data:image/jpeg;base64 (YOU CAN USE atob() function in javascript).
         WHEN THE PLANE ICON GETS CLICKED IT SENDS THE MESSAGE ALONG WITH THE INPUT IMAGE.

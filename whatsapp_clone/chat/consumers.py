@@ -7,6 +7,8 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from phonenumber_field.phonenumber import PhoneNumber
 from typing import Union, Optional
 from .exceptions import UserNotFoundException
+import PIL
+from io import BytesIO
 import json, base64
 
 
@@ -139,17 +141,36 @@ class ChatConsumer(AsyncWebsocketConsumer):
         if image != '':
             image_binary_data = base64.b64decode(image)
             #print(image)
-            print(len(image_binary_data))
-            print(image)
-            print(image_binary_data)
-            print(type(image_binary_data))
+            #print(len(image_binary_data))
+            #print(image)
+            #print(image_binary_data)
+            #print(type(image_binary_data))
+            print(image == base64.b64encode(image_binary_data))
+            print(image_binary_data == base64.b64decode(base64.b64encode(image_binary_data)))
+                    # Use Pillow to open the image from bytes
+            # try:
+            #     with PIL.Image.open(BytesIO(image_binary_data)) as img:
+            #         # Save the image to a BytesIO object
+            #         output_buffer = BytesIO()
+            #         img.save(output_buffer, format="JPEG")
+            #         image_binary_data = output_buffer.getvalue()
+            # except PIL.UnidentifiedImageError as e:
+            #     print(f"Error identifying image: {e}")
+            
+            with open('encoded.txt', 'w') as file:
+                file.write(image)
+            
+            with open('decoded.txt', 'w') as file:
+                file.write(str(image_binary_data))
+
+            # THE ERROR IS THE FILE EXTENSION
+            # IT SHOULD BE DINAMICALLY SET, NOT HARDCODED
             image_file = SimpleUploadedFile(
                 name='user_message_image.jpg',
                 content=image_binary_data,
                 content_type='image/jpeg'
             )
-            with open('decoded_image.png', 'wb') as file:
-                file.write(image_binary_data)
+
             new_message.image = image_file
             new_message.save()
 
