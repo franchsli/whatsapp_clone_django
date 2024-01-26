@@ -160,7 +160,7 @@ socket.addEventListener('message',async (event) => {
         text = message_data[1]
         image = message_data[2]
         console.log(`IMAGE:${image}`)
-        create_message_html(text, 'undefined', user_id === sender_id)}
+        create_message_html(text, image, user_id === sender_id)}
 
     else if (event.data.includes('chat_notification')){
         message = event.data.replace('chat_notification', '')

@@ -5,6 +5,8 @@ TODO:
     - **IMPORTANT** IMPLEMENT THIS:
     - Allow images in messages:
         **FIX FAST** There's a bug that sends invalid images type to the server, it is stored as jpg but they don't load somehow.
+        2. When sending a message via input, input text gets displayed but image isn't and get the error (url not valid) it is encoded
+        and the url sends data:image/jpeg;base64.
         WHEN THE PLANE ICON GETS CLICKED IT SENDS THE MESSAGE ALONG WITH THE INPUT IMAGE.
     - **FIX** THERE'S A TEMA AND THEME VARS IN LOCALSTORAGE.
     - **ADD THE LAST MESSAGE LOGIC**
