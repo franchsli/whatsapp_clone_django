@@ -114,7 +114,7 @@ socket.addEventListener('open', () => {
             socket.send(JSON.stringify({
                 'type':'message',
                 'message': new_message_input.value,
-                'image': imageInput.value !== '' ? localStorage.getItem('image_data') : '',
+                'image': imageInput.value !== '' ? btoa(localStorage.getItem('image_data')) : '',
                 'receiver_username': localStorage.getItem('receiver_username'),
                 'sender_user_id': user_id,
                 'chat_id': localStorage.getItem('chat_id'),
@@ -160,6 +160,7 @@ socket.addEventListener('message',async (event) => {
         text = message_data[1]
         image = message_data[2]
         console.log(`IMAGE:${image}`)
+        console.log(typeof(localStorage.getItem('image_data')))
         create_message_html(text, image, user_id === sender_id)}
 
     else if (event.data.includes('chat_notification')){

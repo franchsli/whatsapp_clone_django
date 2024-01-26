@@ -137,11 +137,19 @@ class ChatConsumer(AsyncWebsocketConsumer):
             chat=chat_instance,
         )
         if image != '':
+            image_binary_data = base64.b64decode(image)
+            #print(image)
+            print(len(image_binary_data))
+            print(image)
+            print(image_binary_data)
+            print(type(image_binary_data))
             image_file = SimpleUploadedFile(
                 name='user_message_image.jpg',
-                content=base64.b64decode(image),
+                content=image_binary_data,
                 content_type='image/jpeg'
             )
+            with open('decoded_image.png', 'wb') as file:
+                file.write(image_binary_data)
             new_message.image = image_file
             new_message.save()
 
