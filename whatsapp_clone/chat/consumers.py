@@ -144,8 +144,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
             # removes the prefix data:image/jpeg;base64 from the decoded bytes
             image_prefix, image_bytes = image_binary_data.split(b',', 1)
 
-            #print(image == base64.b64encode(image_binary_data))
-            #print(image_binary_data == base64.b64decode(base64.b64encode(image_binary_data)))
+            #print(image == base64.b64encode(image_binary_data)) prints False
+            #print(image_binary_data == base64.b64decode(base64.b64encode(image_binary_data))) prints True
 
             # Check image type
             image_type = imghdr.what(BytesIO(image_bytes))
@@ -170,11 +170,17 @@ class ChatConsumer(AsyncWebsocketConsumer):
             with open('encoded.txt', 'w') as file:
                 file.write(image)
             
-            with open('decoded.txt', 'w') as file:
+            with open('decoded.txt', 'wb') as file:
                 file.write(str(image_binary_data))
 
-            with open('decoded_split.txt', 'w') as file:
-                file.write(str(image_bytes))
+            with open('decoded_split.txt', 'wb') as file:
+                file.write(image_bytes)
+            
+            with open('decoded_split_image.jpg', 'wb') as file:
+                file.write(image_bytes)
+            
+            with open('decoded_image.jpg', 'wb') as file:
+                file.write(image_binary_data)
 
             image_file = ContentFile(image_bytes, f'user_message.{image_type}' if image_type else 'user_message.jpg')
 
