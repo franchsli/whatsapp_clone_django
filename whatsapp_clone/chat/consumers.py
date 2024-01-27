@@ -4,12 +4,13 @@ from channels.db import database_sync_to_async
 from .models import User, Chat, Message, Contact
 from django.utils import timezone
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.core.files.base import ContentFile
 from phonenumber_field.phonenumber import PhoneNumber
 from typing import Union, Optional
 from .exceptions import UserNotFoundException
 import PIL
 from io import BytesIO
-import json, base64
+import json, base64, imghdr
 
 
 class ChatConsumer(AsyncWebsocketConsumer):
@@ -140,22 +141,31 @@ class ChatConsumer(AsyncWebsocketConsumer):
         )
         if image != '':
             image_binary_data = base64.b64decode(image)
-            #print(image)
-            #print(len(image_binary_data))
-            #print(image)
-            #print(image_binary_data)
-            #print(type(image_binary_data))
-            print(image == base64.b64encode(image_binary_data))
-            print(image_binary_data == base64.b64decode(base64.b64encode(image_binary_data)))
+            # removes the prefix data:image/jpeg;base64 from the decoded bytes
+            image_prefix, image_bytes = image_binary_data.split(b',', 1)
+
+            #print(image == base64.b64encode(image_binary_data))
+            #print(image_binary_data == base64.b64decode(base64.b64encode(image_binary_data)))
+
+            # Check image type
+            image_type = imghdr.what(BytesIO(image_bytes))
+
+            if image_type not in ['jpeg', 'png', 'gif']:
+                # Handle invalid image type
+                print(f"Invalid image type: {image_type}")
+            else:
+                if image_type == 'jpeg':
+                    image_type = 'jpg'
                     # Use Pillow to open the image from bytes
-            # try:
-            #     with PIL.Image.open(BytesIO(image_binary_data)) as img:
-            #         # Save the image to a BytesIO object
-            #         output_buffer = BytesIO()
-            #         img.save(output_buffer, format="JPEG")
-            #         image_binary_data = output_buffer.getvalue()
-            # except PIL.UnidentifiedImageError as e:
-            #     print(f"Error identifying image: {e}")
+            try:
+                with PIL.Image.open(BytesIO(image_bytes)) as img:
+                    print(image_bytes)
+                    #Save the image to a BytesIO object
+                    output_buffer = BytesIO()
+                    img.save(output_buffer, format="JPEG")
+                    image_bytes = output_buffer.getvalue()
+            except PIL.UnidentifiedImageError as e:
+                print(f"Error identifying image: {e}")
             
             with open('encoded.txt', 'w') as file:
                 file.write(image)
@@ -163,13 +173,10 @@ class ChatConsumer(AsyncWebsocketConsumer):
             with open('decoded.txt', 'w') as file:
                 file.write(str(image_binary_data))
 
-            # THE ERROR IS THE FILE EXTENSION
-            # IT SHOULD BE DINAMICALLY SET, NOT HARDCODED
-            image_file = SimpleUploadedFile(
-                name='user_message_image.jpg',
-                content=image_binary_data,
-                content_type='image/jpeg'
-            )
+            with open('decoded_split.txt', 'w') as file:
+                file.write(str(image_bytes))
+
+            image_file = ContentFile(image_bytes, f'user_message.{image_type}' if image_type else 'user_message.jpg')
 
             new_message.image = image_file
             new_message.save()
