@@ -114,7 +114,7 @@ socket.addEventListener('open', () => {
             socket.send(JSON.stringify({
                 'type':'message',
                 'message': new_message_input.value,
-                'image': imageInput.value !== '' ? btoa(localStorage.getItem('image_data')) : '',
+                'image': imageInput.value !== '' ? localStorage.getItem('image_data') : '',
                 'receiver_username': localStorage.getItem('receiver_username'),
                 'sender_user_id': user_id,
                 'chat_id': localStorage.getItem('chat_id'),

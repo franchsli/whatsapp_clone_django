@@ -133,7 +133,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         Args:
             sender_user_id (Union[str, int]): The id (numeric value) of the user that sent the message.
             text (str): What the message says.
-            image (str): The encoded image data in base64 encoding.
+            image (str): The image encoded base64  image data.
             chat_id (Union[str, int]): The id (numeric value) of the chat that the sender sent this message on.
         """
         sender_user_instance = User.objects.get(id=sender_user_id)
@@ -145,21 +145,13 @@ class ChatConsumer(AsyncWebsocketConsumer):
             chat=chat_instance,
         )
         if image != "":
-            image_bytes_data = base64.b64decode(image)
-            # removes the prefix data:image/jpeg;base64 from the decoded bytes
-            image_prefix, image_bytes = image_bytes_data.split(b",", 1)
+            file_format, image_string_data = image.split(';base64,')
+            # Get the file format extension (png, jpg, jpeg, etc.)
+            file_extension = file_format.split('/')[-1]  
 
-            # print(image == base64.b64encode(image_bytes_data)) prints False
-            # print(image_bytes_data == base64.b64decode(base64.b64encode(image_bytes_data))) prints True
+            image_bytes_data = base64.b64decode(image_string_data)
 
-            # Check image type
-            image_type = imghdr.what(BytesIO(image_bytes_data))
-
-            if image_type not in ["jpeg", "png", "gif"]:
-                # Handle invalid image type
-                print(f"Invalid image type: {image_type}")
-
-            image_file = ContentFile(image_bytes, f"user_message.{image_type}")
+            image_file = ContentFile(image_bytes_data, f"user_message.{file_extension}")
 
             new_message.image = image_file
             new_message.save()
