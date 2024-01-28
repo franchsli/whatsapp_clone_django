@@ -3,14 +3,11 @@ from asgiref.sync import async_to_sync
 from channels.db import database_sync_to_async
 from .models import User, Chat, Message, Contact
 from django.utils import timezone
-from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.files.base import ContentFile
 from phonenumber_field.phonenumber import PhoneNumber
 from typing import Union, Optional
 from .exceptions import UserNotFoundException
-import PIL
-from io import BytesIO
-import json, base64, imghdr
+import json, base64
 
 
 class ChatConsumer(AsyncWebsocketConsumer):
