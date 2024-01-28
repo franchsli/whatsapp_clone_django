@@ -8,11 +8,12 @@ const socket = new WebSocket(`ws://${window.location.host}/`)
 const collapse_buttons = document.querySelectorAll('.collapse-switch')
 const chat_form = document.getElementById("chat-creation-form")
 const contact_form = document.getElementById("contact-creation-form")
-
 const imageInput = document.getElementById('imageInput')
-setInterval(() => {
-    console.log(`Value ${imageInput.value}\nType:${typeof(imageInput.value)}\nHTML:${imageInput}\nCondition: ${imageInput.value !== ''}`)
-}, 1000);
+let actual_image_data
+
+setInterval( () => {
+    console.log(actual_image_data)
+}, 1000)
 imageInput.addEventListener('change', previewImage);
 
 function previewImage() {
@@ -29,7 +30,8 @@ function previewImage() {
             let preview = document.createElement('img');
             preview.classList.add('m-3')
             preview.src = event.target.result;
-            localStorage.setItem('image_data', event.target.result)
+            //localStorage.setItem('image_data', event.target.result)
+            actual_image_data = event.target.result
             preview.alt = 'Image Preview';
 
             // Clear previous previews
@@ -114,7 +116,7 @@ socket.addEventListener('open', () => {
             socket.send(JSON.stringify({
                 'type':'message',
                 'message': new_message_input.value,
-                'image': imageInput.value !== '' ? localStorage.getItem('image_data') : '',
+                'image': imageInput.value !== '' ? actual_image_data : '',
                 'receiver_username': localStorage.getItem('receiver_username'),
                 'sender_user_id': user_id,
                 'chat_id': localStorage.getItem('chat_id'),
@@ -125,6 +127,7 @@ socket.addEventListener('open', () => {
             //deletes the selected image
             imageInput.value = ''
             document.getElementById('imagePreview').firstChild.remove()
+
 
         }})
     
