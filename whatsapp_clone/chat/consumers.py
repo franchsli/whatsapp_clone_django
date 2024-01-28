@@ -122,13 +122,18 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
     @database_sync_to_async
     def create_message(
-        self, sender_user_id: Union[str, int], text: str, image: Optional[str], chat_id: Union[str, int]
+        self,
+        sender_user_id: Union[str, int],
+        text: str,
+        image: Optional[str],
+        chat_id: Union[str, int],
     ) -> None:
         """Creates and stores a new message object in the database.
 
         Args:
             sender_user_id (Union[str, int]): The id (numeric value) of the user that sent the message.
             text (str): What the message says.
+            image (str): The encoded image data in base64 encoding.
             chat_id (Union[str, int]): The id (numeric value) of the chat that the sender sent this message on.
         """
         sender_user_instance = User.objects.get(id=sender_user_id)
@@ -139,50 +144,22 @@ class ChatConsumer(AsyncWebsocketConsumer):
             date=timezone.now(),
             chat=chat_instance,
         )
-        if image != '':
-            image_binary_data = base64.b64decode(image)
+        if image != "":
+            image_bytes_data = base64.b64decode(image)
             # removes the prefix data:image/jpeg;base64 from the decoded bytes
-            image_prefix, image_bytes = image_binary_data.split(b',', 1)
+            image_prefix, image_bytes = image_bytes_data.split(b",", 1)
 
-            #print(image == base64.b64encode(image_binary_data)) prints False
-            #print(image_binary_data == base64.b64decode(base64.b64encode(image_binary_data))) prints True
+            # print(image == base64.b64encode(image_bytes_data)) prints False
+            # print(image_bytes_data == base64.b64decode(base64.b64encode(image_bytes_data))) prints True
 
             # Check image type
-            image_type = imghdr.what(BytesIO(image_bytes))
+            image_type = imghdr.what(BytesIO(image_bytes_data))
 
-            if image_type not in ['jpeg', 'png', 'gif']:
+            if image_type not in ["jpeg", "png", "gif"]:
                 # Handle invalid image type
                 print(f"Invalid image type: {image_type}")
-            else:
-                if image_type == 'jpeg':
-                    image_type = 'jpg'
-                    # Use Pillow to open the image from bytes
-            try:
-                with PIL.Image.open(BytesIO(image_bytes)) as img:
-                    print(image_bytes)
-                    #Save the image to a BytesIO object
-                    output_buffer = BytesIO()
-                    img.save(output_buffer, format="JPEG")
-                    image_bytes = output_buffer.getvalue()
-            except PIL.UnidentifiedImageError as e:
-                print(f"Error identifying image: {e}")
-            
-            with open('encoded.txt', 'w') as file:
-                file.write(image)
-            
-            with open('decoded.txt', 'wb') as file:
-                file.write(str(image_binary_data))
 
-            with open('decoded_split.txt', 'wb') as file:
-                file.write(image_bytes)
-            
-            with open('decoded_split_image.jpg', 'wb') as file:
-                file.write(image_bytes)
-            
-            with open('decoded_image.jpg', 'wb') as file:
-                file.write(image_binary_data)
-
-            image_file = ContentFile(image_bytes, f'user_message.{image_type}' if image_type else 'user_message.jpg')
+            image_file = ContentFile(image_bytes, f"user_message.{image_type}")
 
             new_message.image = image_file
             new_message.save()
