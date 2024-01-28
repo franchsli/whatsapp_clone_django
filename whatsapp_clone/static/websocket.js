@@ -155,7 +155,7 @@ socket.addEventListener('message',async (event) => {
     let image
     if (event.data.includes('chat_message')){
         message = event.data.replace('chat_message', '')
-        message_data = message.split(',')
+        message_data = message.split('-')
         sender_id = message_data[0]
         text = message_data[1]
         image = message_data[2]

@@ -32,7 +32,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 self.room_group_name,
                 {
                     "type": "chat_message",
-                    "text": f"{text_data_json['sender_user_id']},{text_data_json['message']},{text_data_json['image']}",
+                    "text": f"{text_data_json['sender_user_id']}-{text_data_json['message']}-{text_data_json['image']}",
                 },
             )
             self.receiver = text_data_json["contact_phone_number"].replace("+", "")
