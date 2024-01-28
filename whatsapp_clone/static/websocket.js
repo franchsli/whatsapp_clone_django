@@ -28,6 +28,8 @@ function previewImage() {
         reader.onload = function (event) {
             // Display image preview
             let preview = document.createElement('img');
+            preview.style.maxHeight = '200px'
+            preview.style.maxWidth = '200px'
             preview.classList.add('m-3')
             preview.src = event.target.result;
             //localStorage.setItem('image_data', event.target.result)
