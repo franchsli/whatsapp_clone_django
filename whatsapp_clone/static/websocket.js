@@ -121,7 +121,12 @@ socket.addEventListener('open', () => {
                 'contact_phone_number': localStorage.getItem('contact_phone_number')
             }))
             
-            new_message_input.value = ''}})
+            new_message_input.value = ''
+            //deletes the selected image
+            imageInput.value = ''
+            document.getElementById('imagePreview').firstChild.remove()
+
+        }})
     
 
 
