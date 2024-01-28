@@ -19,7 +19,7 @@ function post(url, data){
 /**
  * Creates all the HTML code for a message and adds it to the current opened chat.
  * @param {*} text The text of the message.
- * @param {*} image_src
+ * @param {String} image_src The path of the image.
  * @param {Boolean} sent_by_auth_user True if the one who sent the message is the actual authenticated user, False otherwise.
  */
 function create_message_html(text, image_src="undefined", sent_by_auth_user=true){
@@ -28,12 +28,16 @@ function create_message_html(text, image_src="undefined", sent_by_auth_user=true
     const new_message = document.createElement('li')
     const message_text = document.createElement('span')
     const message_image = document.createElement('img')
+
+    message_image.classList.add('mw-100', 'mh-100')
     message_image.src = image_src
     message_image.alt = ''
+
     if (sent_by_auth_user){new_message.classList.add('list-unstyled-item', 'me-3', 'mt-3', 'rounded', 'message', 'user-message')}
     else {new_message.classList.add('list-unstyled-item', 'me-3', 'mt-3', 'rounded', 'message', 'contact-message')}
-    message_container.classList.add('p-2')
-    message_text.innerHTML = text
+    message_container.classList.add('d-flex', 'flex-column', 'p-2')
+
+    message_text.innerText = text
     message_container.appendChild(message_image)
     message_container.appendChild(message_text)
     new_message.appendChild(message_container)
