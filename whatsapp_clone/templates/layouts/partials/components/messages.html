@@ -1,0 +1,7 @@
+{% load static %}
+
+<ul class="scroll-section list-unstyled flex-column overflow-y-scroll" id="chat-messages">
+    {% for message in messages %}
+        {% include 'layouts/partials/components/message.html' %}
+    {% endfor %}
+</ul>

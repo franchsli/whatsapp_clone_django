@@ -1,7 +1,7 @@
 {% load static %}
 
-<li class="list-unstyled-item me-3 mt-3 rounded message user-message">
-    <div class="p-2">
+<li class="list-unstyled-item me-3 mt-3 rounded message user-message" hx-target="this" hx-swap="outerHTML">
+    <div class="p-2" data-bs-toggle="dropdown" aria-expanded="false">
         {% if message.has_image %}
         <img class="mw-100 mh-100" src="{{message.image.url}}" alt="">
         {% else %}
@@ -9,4 +9,8 @@
         {% endif %}
       <span>{{message.text}}</span>
     </div>
+    <ul class="dropdown-menu">
+        {% comment %} <li><span class="dropdown-item delete-action" hx-delete="{% url 'delete_contact' contact.id %}" hx-confirm="Are you sure you want to delete this contact?" hx-swap="outerHTML" hx-target="#contacts" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' ><i class="bi bi-trash3"></i> Delete contact</span></li> {% endcomment %}
+        <li><span class="dropdown-item edit-action" hx-get="{% url 'edit_message' message.id %}"><i class="bi bi-pencil-square"></i> Edit message</span></li>
+      </ul>
   </li>

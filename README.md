@@ -27,6 +27,7 @@ TODO:
 (The localSotrage will sotre messages but the API calls will be still necessary for getting the latest messages)
 - Make it so when a user creates a new contact, the chat form gets updated. (REMEMBER HTMX FROM)
 - Users shouldn't be able to create TWO OR MORE chats with the same user
+- Redesign display_chat() logic so it get displayed using HTMX.
 - When a user creates a chat it collapse should stay showing.
 - Check why request.user.has_photo returns value but (in view) user_instance.has_photo returns False.
 - When a form is succesfully submited, the inputs should be clear
