@@ -1,0 +1,12 @@
+{% load static %}
+
+<li class="list-unstyled-item me-3 mt-3 rounded message user-message">
+    <div class="p-2">
+        {% if message.has_image %}
+        <img class="mw-100 mh-100" src="{{message.image.url}}" alt="">
+        {% else %}
+        <img class="mw-100 mh-100" src="undefined" alt="">
+        {% endif %}
+      <span>{{message.text}}</span>
+    </div>
+  </li>

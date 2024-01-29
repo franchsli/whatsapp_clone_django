@@ -42,3 +42,10 @@ class Message(models.Model):
 
     def __str__(self) -> str:
         return self.text
+    
+    @property
+    def has_image(self):
+        try:
+            return self.image.url
+        except ValueError:
+            return False
