@@ -58,3 +58,6 @@ def delete_contact(request, pk):
     contact.delete()
     contacts = user_instance.contact_set.all()
     return render(request, 'layouts/partials/components/contacts.html', {'contacts':contacts})
+
+def edit_message(request, pk):
+    ...

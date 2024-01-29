@@ -1,4 +1,4 @@
-from .models import Chat, Contact
+from .models import Chat, Contact, Message
 from django.forms import ModelForm, HiddenInput
 
 class ChatForm(ModelForm):
@@ -12,5 +12,17 @@ class ContactForm(ModelForm):
         fields = '__all__'
 
         widgets = {
-            'created_by':HiddenInput()
+            'created_by': HiddenInput()
+        }
+
+class MessageForm(ModelForm):
+    class Meta:
+        model = Message
+        fields = '__all__'
+
+        widgets = {
+            'image': HiddenInput(),
+            'date': HiddenInput(),
+            'sender_user': HiddenInput(),
+            'chat': HiddenInput()
         }
