@@ -3,7 +3,8 @@ import { get, post, create_message_html, modifyNotification, display_chat, switc
 console.log("websocket.js is loaded!");
 const user = document.getElementById('profile-pic')
 const user_id = user.getAttribute('data-user')
-const new_message_input = document.getElementById('new-message') 
+const new_message_input = document.getElementById('new-message')
+const new_message_button = document.getElementById('send-message-button') 
 const socket = new WebSocket(`ws://${window.location.host}/`)
 const collapse_buttons = document.querySelectorAll('.collapse-switch')
 const chat_form = document.getElementById("chat-creation-form")
@@ -105,33 +106,50 @@ window.summon_chat = function(chat){
     
 }
 
+function send_message (message_type, message_text, message_image, message_sender_id){
+    socket.send(JSON.stringify({
+        'type': message_type,
+        'message': message_text,
+        'image': message_image,
+        'receiver_username': localStorage.getItem('receiver_username'),
+        'sender_user_id': message_sender_id,
+        'chat_id': localStorage.getItem('chat_id'),
+        'contact_phone_number': localStorage.getItem('contact_phone_number')
+    }))
+
+}
+
 collapse_buttons.forEach(button => {
     button.onclick = function(){
         switch_collapse()
     }
 })
-
+// image: imageInput.value !== '' ? actual_image_data : ''
 socket.addEventListener('open', () => {
 
     new_message_input.addEventListener('keypress', (event) => {
         if (event.key === 'Enter' && (new_message_input.value !== '' || imageInput.value !== '')){
-            socket.send(JSON.stringify({
-                'type':'message',
-                'message': new_message_input.value,
-                'image': imageInput.value !== '' ? actual_image_data : '',
-                'receiver_username': localStorage.getItem('receiver_username'),
-                'sender_user_id': user_id,
-                'chat_id': localStorage.getItem('chat_id'),
-                'contact_phone_number': localStorage.getItem('contact_phone_number')
-            }))
+
+            send_message('message', new_message_input.value, imageInput.value !== '' ? actual_image_data : '', user_id)
             
             new_message_input.value = ''
             //deletes the selected image
             imageInput.value = ''
             document.getElementById('imagePreview').firstChild.remove()
-
-
         }})
+    
+
+    new_message_button.onclick = () => {
+        if (new_message_input.value !== '' || imageInput.value !== ''){
+            send_message('message', new_message_input.value, imageInput.value !== '' ? actual_image_data : '', user_id)
+            
+            new_message_input.value = ''
+            //deletes the selected image
+            imageInput.value = ''
+            document.getElementById('imagePreview').firstChild.remove()
+    }}
+    
+    
     
 
 

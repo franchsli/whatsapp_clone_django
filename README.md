@@ -4,9 +4,6 @@
 TODO:
     - **IMPORTANT** IMPLEMENT THIS:
     - ADD EDIT AND DELETE CHAT MESSAGES LOGIC (REMEMBER HTMX).
-    - Allow images in messages:
-        WHEN THE PLANE ICON GETS CLICKED IT SENDS THE MESSAGE ALONG WITH THE INPUT IMAGE.
-    - **FIX** THERE'S A TEMA AND THEME VARS IN LOCALSTORAGE.
     - **ADD THE LAST MESSAGE LOGIC**
     - You can use FILTER ELEMENTS WITH `SHOW ... WHEN` from Hyperscript
     - Write test for the exceptions and functions.
