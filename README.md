@@ -3,7 +3,8 @@
 
 TODO:
     - **IMPORTANT** IMPLEMENT THIS:
-    - ADD EDIT AND DELETE CHAT MESSAGES LOGIC (REMEMBER HTMX).
+    - ADD EDIT AND DELETE CHAT MESSAGES LOGIC (REMEMBER HTMX):
+        + When a chat gets clicked, the chat, display and messages should change using HTMX.
     - **ADD THE LAST MESSAGE LOGIC**
     - You can use FILTER ELEMENTS WITH `SHOW ... WHEN` from Hyperscript
     - Write test for the exceptions and functions.
