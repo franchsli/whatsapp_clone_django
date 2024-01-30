@@ -1,21 +1,75 @@
-import { get, post, create_message_html, modifyNotification, display_chat, switch_collapse } from  './tools.js';
+import { get, create_message_html, modifyNotification, switch_collapse } from  './tools.js';
 
 console.log("websocket.js is loaded!");
 const user = document.getElementById('profile-pic')
 const user_id = user.getAttribute('data-user')
-const new_message_input = document.getElementById('new-message')
-const new_message_button = document.getElementById('send-message-button') 
 const socket = new WebSocket(`ws://${window.location.host}/`)
 const collapse_buttons = document.querySelectorAll('.collapse-switch')
 const chat_form = document.getElementById("chat-creation-form")
+const chat_display = document.getElementById('chat-display')
 const contact_form = document.getElementById("contact-creation-form")
-const imageInput = document.getElementById('imageInput')
 let actual_image_data
 
-setInterval( () => {
-    console.log(actual_image_data)
-}, 1000)
-imageInput.addEventListener('change', previewImage);
+// Callback function to execute when mutations are observed
+const mutationCallback = function(mutationsList, observer) {
+    for (const mutation of mutationsList) {
+        if (mutation.type === 'childList') {
+            // Check if a new element is added
+            const addedNodes = mutation.addedNodes;
+            for (const addedNode of addedNodes) {
+                if (addedNode.nodeType === 1 && addedNode.tagName === 'FOOTER'){ // Check if it's an footer element node
+                    // Execute your code when a new element is created
+                    console.log('ITS A FOOTER')
+                    window.new_message_input = document.getElementById('new-message')
+                    window.new_message_button = document.getElementById('send-message-button')
+                    const imageInput = document.getElementById('imageInput')
+                    imageInput.addEventListener('change', previewImage); 
+
+                    // You can perform additional actions here
+                    new_message_input.addEventListener('keypress', (event) => {
+                        if (event.key === 'Enter' && (new_message_input.value !== '' || imageInput.value !== '')){
+                
+                            send_message('message', new_message_input.value, imageInput.value !== '' ? actual_image_data : '', user_id)
+                            
+                            new_message_input.value = ''
+                            //deletes the selected image
+                            imageInput.value = ''
+                            document.getElementById('imagePreview').firstChild.remove()
+                        }})
+                    
+                
+                    new_message_button.onclick = () => {
+                        if (new_message_input.value !== '' || imageInput.value !== ''){
+                            send_message('message', new_message_input.value, imageInput.value !== '' ? actual_image_data : '', user_id)
+                            
+                            new_message_input.value = ''
+                            //deletes the selected image
+                            imageInput.value = ''
+                            document.getElementById('imagePreview').firstChild.remove()
+    }}}}}}};
+
+// Create a MutationObserver with the callback
+const observer = new MutationObserver(mutationCallback);
+
+// Configure the observer to watch for changes in the container's children
+const observerConfig = { childList: true };
+
+// Start observing the target container
+observer.observe(chat_display, observerConfig);
+
+
+window.summon_chat = function(chat){
+
+    socket.send(JSON.stringify({
+        'type':'reconnect',
+        'reconnect_to': chat.dataset.chat
+    }))
+    localStorage.setItem('receiver_username', chat.dataset.contact)
+    localStorage.setItem('chat_id', chat.dataset.chat)
+    localStorage.setItem('contact_phone_number', chat.dataset.contactPhone)
+
+}
+
 
 function previewImage() {
     let imageInput = document.getElementById('imageInput');
@@ -48,6 +102,8 @@ function previewImage() {
         reader.readAsDataURL(file);
     }
 }
+
+
 
 function checked(form){
     console.log(form.elements)
@@ -90,21 +146,11 @@ function create_instance(form, instance_type){
     return false
 }
 
-window.summon_chat = function(chat){
-    chat.dataset.messages = chat.dataset.messages.replace('[', '')
-    chat.dataset.messages = chat.dataset.messages.replace(']', '')
-    chat.dataset.messages = chat.dataset.messages.replaceAll(',', '')
-    display_chat(chat.dataset.contact, chat.querySelector('img'), chat.dataset.messages.split(' '))
 
-    socket.send(JSON.stringify({
-        'type':'reconnect',
-        'reconnect_to': chat.dataset.chat
-    }))
-    localStorage.setItem('receiver_username', chat.dataset.contact)
-    localStorage.setItem('chat_id', chat.dataset.chat)
-    localStorage.setItem('contact_phone_number', chat.dataset.contactPhone)
-    
-}
+
+
+
+
 
 function send_message (message_type, message_text, message_image, message_sender_id){
     socket.send(JSON.stringify({
@@ -126,31 +172,7 @@ collapse_buttons.forEach(button => {
 })
 // image: imageInput.value !== '' ? actual_image_data : ''
 socket.addEventListener('open', () => {
-
-    new_message_input.addEventListener('keypress', (event) => {
-        if (event.key === 'Enter' && (new_message_input.value !== '' || imageInput.value !== '')){
-
-            send_message('message', new_message_input.value, imageInput.value !== '' ? actual_image_data : '', user_id)
-            
-            new_message_input.value = ''
-            //deletes the selected image
-            imageInput.value = ''
-            document.getElementById('imagePreview').firstChild.remove()
-        }})
-    
-
-    new_message_button.onclick = () => {
-        if (new_message_input.value !== '' || imageInput.value !== ''){
-            send_message('message', new_message_input.value, imageInput.value !== '' ? actual_image_data : '', user_id)
-            
-            new_message_input.value = ''
-            //deletes the selected image
-            imageInput.value = ''
-            document.getElementById('imagePreview').firstChild.remove()
-    }}
-    
-    
-    
+        
 
 
     chat_form.onsubmit = () => {
