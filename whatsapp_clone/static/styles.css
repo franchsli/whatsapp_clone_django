@@ -27,7 +27,7 @@ main,  #base {
   align-self: self-start;
 
 }
-.user-message {
+.user-message, .dropdown-toggle-message {
   background-color: var(--bs-success-bg-subtle);
   align-self: self-end;
 }
