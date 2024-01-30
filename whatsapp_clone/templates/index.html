@@ -12,7 +12,9 @@
       {% comment "User chats and more" %}{% endcomment %}
       {% include "layouts/partials/user-chats.html" %}
         {% comment "selected chat" %}{% endcomment %}
-      {% include "layouts/partials/selected-chat.html" %}
+      <div class="col-8 d-flex flex-column border border-black p-0" id="chat-display">
+        {% include "layouts/partials/selected-chat.html" %}
+      </div>
     </div>
   </div>
 </div>

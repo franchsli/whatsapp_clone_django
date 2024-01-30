@@ -32,6 +32,11 @@ def get_chats(request):
     chats = user_instance.chats.all()
     return render(request, "layouts/partials/components/chats.html", {"chats": chats})
 
+def display_chat(request, pk):
+    user_instance = User(id=request.user.id)
+    chat = Chat.objects.get(id=pk)
+    chat_messages = chat.message_set.all().order_by('date')
+    return render(request, "layouts/partials/selected-chat.html", {"user":user_instance, "chat": chat, "messages":chat_messages})
 
 def delete_chat(request, pk):
     user_instance = User(id=request.user.id)

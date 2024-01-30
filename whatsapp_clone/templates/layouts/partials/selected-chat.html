@@ -1,44 +1,34 @@
-<div class="col-8 d-flex flex-column border border-black p-0" id="chat-display">
+{% load static %}
+{% load filters %}
+
   <nav class="navbar bg-body-tertiary justify-content-between">
     <div class="d-flex align-items-center ms-3 col-6" role="button">
       {% comment "chat contact info" %}{% endcomment %}
-      <img id="contact-picture" class="rounded-circle img-fluid" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNBNdcMDNS2r9df1IWFVc8AY0QNtfNhEJv7fGS5TdhUWrlBqfGu1PCCn9lKpL-FqF9dWc&usqp=CAU" alt="" style="max-width: 50px;">
-      <p class="ms-3 my-auto" id="contact-name">Contact name</p>
+      <img id="contact-picture" class="rounded-circle img-fluid" src="{% get_contact_in_chat chat.users.all request.user 'photo' %}" alt="" style="max-width: 50px;">
+      <p class="ms-3 my-auto" id="contact-name">{% get_contact_in_chat chat.users.all request.user 'name' %}</p>
     </div>
       {% comment "settings or details of contacts" %}{% endcomment %}
       <button class="btn rounded-fill action me-3"><i class="bi bi-three-dots-vertical"></i></button>
   </nav>
   {% comment "messages in the chat with the contact" %}{% endcomment %}
   <ul class="scroll-section list-unstyled flex-column overflow-y-scroll" id="chat-messages">
-    <li class="list-unstyled-item ms-3 mt-3 rounded message contact-message">
-      <span class="p-2">Contact message</span>
-    </li>
-    <li class="list-unstyled-item ms-3 mt-3 rounded message contact-message">
-      <span class="p-2">Contact message</span>
-    </li>
-    <li class="list-unstyled-item me-3 mt-3 rounded message user-message">
-      <span class="p-2">User message</span>
-    </li>
-    <li class="list-unstyled-item me-3 mt-3 rounded message user-message">
-      <span class="p-2">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis ipsa provident placeat natus laudantium commodi aliquid sunt accusantium minima debitis beatae, veritatis non qui nobis perspiciatis dolores unde eaque nam!</span>
-    </li>
-    <li class="list-unstyled-item me-3 mt-3 rounded message user-message">
-      <span class="p-2">
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis ipsa provident placeat natus laudantium commodi aliquid sunt accusantium minima debitis beatae, veritatis non qui nobis perspiciatis dolores unde eaque nam!
-      </span>
-    </li>
-    <li class="list-unstyled-item me-3 mt-3 rounded message user-message">
-      <div class="p-2">
-        <img class="mw-100 mh-100" src="undefined" alt="">
-        <span>This is a no photo message</span>
-      </div>
-    </li>
-    <li class="list-unstyled-item me-3 mt-3 rounded message user-message">
-      <div class="d-flex flex-column p-2">
-        <img class="mw-100 mh-100" src="https://static.wikia.nocookie.net/pelea-versus/images/f/f3/Midoriya_by_mrze1598-d9ogj1j.png/revision/latest?cb=20171212151621&path-prefix=es" alt="">
-        <span>This is a photo message</span>
-      </div>
-    </li>
+    {% for message in messages %}
+      {% if message.sender_user == request.user %}
+        <li class="list-unstyled-item me-3 mt-3 rounded message user-message">
+      {% else %}
+        <li class="list-unstyled-item me-3 mt-3 rounded message contact-message">
+      {% endif %}
+          <div class="p-2">
+            {% if message.has_image %}
+              <img class="mw-100 mh-100" src="{{message.image.url}}" alt="">
+            {% else %}
+              <img class="mw-100 mh-100" src="undefined" alt="">
+            {% endif %}
+            <span>{{message.text}}</span>
+          </div>
+        </li>
+    {% endfor %}
+
   </ul>
   {% comment "send message" %}{% endcomment %}
   <footer class="d-flex flex-inline align-items-center bg-body-tertiary p-1">
@@ -54,5 +44,3 @@
     <h5 id="send-message-button" class="p-3" role="button"><i class="bi bi-send"></i></h5>
     <h5 class="p-3" role="button"><i class="bi bi-mic"></i></h5>
   </footer>
-
-</div>
