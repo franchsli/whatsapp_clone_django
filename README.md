@@ -23,6 +23,7 @@ TODO:
 
 ## Improvements
 
+- When a chat is displayed, the nav bar should be at the end of the ocnversation.
 - Implement something to store messages in the localStorage so the API calls get reduced
 (The localSotrage will sotre messages but the API calls will be still necessary for getting the latest messages)
 - Make it so when a user creates a new contact, the chat form gets updated. (REMEMBER HTMX FROM)

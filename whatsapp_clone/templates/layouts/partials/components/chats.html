@@ -4,7 +4,7 @@
 
 <ul id="chat-list" class="scroll-section collapse list-group list-group-flush overflow-y-scroll" style="max-height: 615px;">
   {% for chat in chats %}
-  <li id="chat-{{chat.id}}" class="list-group-item p-3  d-flex flex-inline align-items-center chat" role="button" data-chat={{chat.id}} data-contact={% exclude_user_tag chat.users.all request.user 'username' %} data-contact-phone={% exclude_user_tag chat.users.all request.user 'phone_number' %} data-messages='{{chat.message_set.all|to_list}}'>
+  <li hx-get="{% url 'display_chat' chat.id %}" hx-trigger="click" hx-target="#chat-display" id="chat-{{chat.id}}" class="list-group-item p-3  d-flex flex-inline align-items-center chat" role="button" data-chat={{chat.id}} data-contact={% exclude_user_tag chat.users.all request.user 'username' %} data-contact-phone={% exclude_user_tag chat.users.all request.user 'phone_number' %} data-messages='{{chat.message_set.all|to_list}}'>
     {% csrf_token %}
     {% comment "contact profile photo" %}{% endcomment %}
     <img class="ms-1 rounded-circle img-fluid" src="{% get_contact_in_chat chat.users.all request.user 'photo' %}" alt="" style="max-width: 45px;">
