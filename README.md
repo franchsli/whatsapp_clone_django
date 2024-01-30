@@ -13,7 +13,6 @@ TODO:
     - Add status logic
     - Add read and unread logic.
     - Redesign the login and register views.
-    - Use collapse for the pages.
     - Create the search message logic.
     - Add the "read more" function to messages.
     - Add the archived chats logic.
