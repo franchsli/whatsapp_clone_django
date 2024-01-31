@@ -21,7 +21,7 @@ class MessageForm(ModelForm):
         fields = '__all__'
 
         widgets = {
-            'image': HiddenInput(),
+            # 'image': HiddenInput(),
             'date': HiddenInput(),
             'sender_user': HiddenInput(),
             'chat': HiddenInput()
