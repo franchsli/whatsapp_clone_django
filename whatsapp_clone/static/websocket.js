@@ -1,4 +1,4 @@
-import { get, create_message_html, modifyNotification, switch_collapse } from  './tools.js';
+import { get, modifyNotification, switch_collapse, scroll_to_bottom } from  './tools.js';
 
 console.log("websocket.js is loaded!");
 const user = document.getElementById('profile-pic')
@@ -19,11 +19,11 @@ const mutationCallback = function(mutationsList, observer) {
             for (const addedNode of addedNodes) {
                 if (addedNode.nodeType === 1 && addedNode.tagName === 'FOOTER'){ // Check if it's an footer element node
                     // Execute your code when a new element is created
-                    console.log('ITS A FOOTER')
+                    //console.log('ITS A FOOTER')
                     window.new_message_input = document.getElementById('new-message')
                     window.new_message_button = document.getElementById('send-message-button')
                     const imageInput = document.getElementById('imageInput')
-                    imageInput.addEventListener('change', previewImage); 
+                    imageInput.addEventListener('change', previewImage);
 
                     // You can perform additional actions here
                     new_message_input.addEventListener('keypress', (event) => {
@@ -45,8 +45,10 @@ const mutationCallback = function(mutationsList, observer) {
                             new_message_input.value = ''
                             //deletes the selected image
                             imageInput.value = ''
-                            document.getElementById('imagePreview').firstChild.remove()
-    }}}}}}};
+                            document.getElementById('imagePreview').firstChild.remove()}}
+                    
+                    scroll_to_bottom()    
+                }}}}};
 
 // Create a MutationObserver with the callback
 const observer = new MutationObserver(mutationCallback);

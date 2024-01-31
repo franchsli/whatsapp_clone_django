@@ -2,9 +2,7 @@
 # Whatsapp clone
 
 TODO:
-    - **IMPORTANT** IMPLEMENT THIS:
-    - ADD EDIT CHAT MESSAGES LOGIC (REMEMBER HTMX):
-        + Modify message.html to handle the message style (if the auth user sent it or not and the dropdown)
+    - **IMPORTANT** IMPLEMENT THIS
     - **ADD THE LAST MESSAGE LOGIC**
     - You can use FILTER ELEMENTS WITH `SHOW ... WHEN` from Hyperscript
     - Write test for the exceptions and functions.
@@ -33,6 +31,7 @@ TODO:
 - Check why request.user.has_photo returns value but (in view) user_instance.has_photo returns False.
 - When a form is succesfully submited, the inputs should be clear
 - Optimize the js code (delete all the cloned code.)
+- Improve the scoll_to_bottom logic so it always scrolls to the bottom.
 - When a user is creating a new chat and selects more than a contact,
     the modal form title should change to 'create group' and a new input should appear that has the label
         'group name'.

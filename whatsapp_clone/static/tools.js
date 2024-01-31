@@ -17,34 +17,11 @@ function post(url, data){
 }
 
 /**
- * Creates all the HTML code for a message and adds it to the current opened chat.
- * @param {*} text The text of the message.
- * @param {String} image_src The path of the image.
- * @param {Boolean} sent_by_auth_user True if the one who sent the message is the actual authenticated user, False otherwise.
+ * Moves the scrollbar  at the bottom of the messages in chat.
  */
-function create_message_html(text, image_src="undefined", sent_by_auth_user=true){
+function scroll_to_bottom(){
     const messages = document.getElementById('chat-messages')
-    const message_container = document.createElement('div')
-    const new_message = document.createElement('li')
-    const message_text = document.createElement('span')
-    const message_image = document.createElement('img')
-
-    // display the message image
-    message_image.classList.add('mw-100', 'mh-100')
-    message_image.src = image_src
-    message_image.alt = ''
-    // set the style acording to who sent the message
-    if (sent_by_auth_user){new_message.classList.add('list-unstyled-item', 'me-3', 'mt-3', 'rounded', 'message', 'user-message')}
-    else {new_message.classList.add('list-unstyled-item', 'me-3', 'mt-3', 'rounded', 'message', 'contact-message')}
-    message_container.classList.add('d-flex', 'flex-column', 'p-2')
-    // display the message text
-    message_text.innerText = text
-
-    message_container.appendChild(message_image)
-    message_container.appendChild(message_text)
-    new_message.appendChild(message_container)
-    messages.appendChild(new_message)
-    messages.scroll(0, 10000)
+    messages.scroll(0, 100000)
 
 }
 /**
@@ -60,41 +37,7 @@ function modifyNotification(contact_name, message){
     message_display.innerHTML = message
 
 }
-/**
- * Displays the chat and it's messages in the HTML.
- * @param {String} contact The name of the contact.
- * @param {HTMLImageElement} contact_photo The contact's HTML image.
- * @param {Array} messages An array of the message's ids in the chat. 
- */
-async function display_chat(contact, contact_photo, messages){
-    const contact_name_display = document.getElementById('contact-name')
-    const contact_photo_display = document.getElementById('contact-picture')
-    const chat_messages_display = document.getElementById('chat-messages')
-    const user = document.getElementById('profile-pic')
-    const user_id = user.getAttribute('data-user')
-    contact_name_display.innerHTML = contact
-    contact_photo_display.src = contact_photo.src
-    let message_data
-    let cleaned = false
 
-    if (messages[0] !== ''){
-        for (let index = 0; index < messages.length; index++) {
-            let message_id = messages[index];
-            message_data = await get(`/api/messages/${message_id}`)
-            if (!cleaned) {
-                chat_messages_display.innerHTML = ''
-                cleaned = true}
-            console.log(message_data.image)
-            create_message_html(message_data.text, message_data.image, message_data.sender_user === parseInt(user_id))}
-    }
-    else{
-        if (!cleaned) {
-            chat_messages_display.innerHTML = ''
-            cleaned = true}
-    }
-
-    
-}
 
 /**
  * Unshowns all the actual showing collapses in the HTML.
@@ -111,4 +54,4 @@ function switch_collapse(){
 
 
 
-export {get, post, create_message_html, modifyNotification, display_chat, switch_collapse}
+export {get, post, modifyNotification, switch_collapse, scroll_to_bottom}
