@@ -18,21 +18,18 @@
       {% else %}
         <li class="list-unstyled-item me-3 mt-3 rounded message contact-message dropdown">
       {% endif %}
-          <div class="p-2">
+          <div class="p-2" hx-target="this" hx-swap="outerHTML">
             {% if message.has_image %}
               <img class="mw-100 mh-100" src="{{message.image.url}}" alt="">
             {% else %}
               <img class="mw-100 mh-100" src="undefined" alt="">
             {% endif %}
-            <div class="test" hx-target="this" hx-swap="outerHTML">
-              <span>{{message.text}}</span>
-              <button class="btn btn-sm dropdown-toggle-message" type="button" data-bs-toggle="dropdown" aria-expanded="false">-</button>
-              <ul class="dropdown-menu">
-                <li><span class="dropdown-item edit-action" hx-get="{% url 'edit_message' message.id %}"><i class="bi bi-pencil-square"></i> Edit message</span></li>
-                <li><span class="dropdown-item delete-action">Delete</span></li>
-              </ul>
-            </div>
-
+            <span>{{message.text}}</span>
+            <button class="btn btn-sm dropdown-toggle-message" type="button" data-bs-toggle="dropdown" aria-expanded="false">-</button>
+            <ul class="dropdown-menu">
+              <li><span class="dropdown-item edit-action" hx-get="{% url 'edit_message' message.id %}"><i class="bi bi-pencil-square"></i> Edit message</span></li>
+              <li><span class="dropdown-item delete-action">Delete</span></li>
+            </ul>
           </div>
         </li>
     {% endfor %}
