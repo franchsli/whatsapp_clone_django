@@ -1,5 +1,5 @@
 from .models import Chat, Contact, Message
-from django.forms import ModelForm, HiddenInput
+from django.forms import ModelForm, HiddenInput, Textarea
 
 class ChatForm(ModelForm):
     class Meta:
@@ -21,8 +21,8 @@ class MessageForm(ModelForm):
         fields = '__all__'
 
         widgets = {
-            # 'image': HiddenInput(),
-            'date': HiddenInput(),
             'sender_user': HiddenInput(),
+            'text': Textarea(attrs={'cols':1, 'rows':1}),
+            'date': HiddenInput(),
             'chat': HiddenInput()
         }
