@@ -1,4 +1,4 @@
-import { get, modifyNotification, switch_collapse, scroll_to_bottom } from  './tools.js';
+import { get, modifyNotification, switch_collapse, scroll_to_bottom, create_message_html } from  './tools.js';
 
 console.log("websocket.js is loaded!");
 const user = document.getElementById('profile-pic')

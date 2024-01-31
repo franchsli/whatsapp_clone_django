@@ -24,6 +24,42 @@ function scroll_to_bottom(){
     messages.scroll(0, 100000)
 
 }
+
+
+/**
+ * Creates all the HTML code for a message and adds it to the current opened chat.
+ * @param {*} text The text of the message.
+ * @param {String} image_src The path of the image.
+ * @param {Boolean} sent_by_auth_user True if the one who sent the message is the actual authenticated user, False otherwise.
+ */
+function create_message_html(text, image_src="undefined", sent_by_auth_user=true){
+    const messages = document.getElementById('chat-messages')
+    const message_container = document.createElement('div')
+    const new_message = document.createElement('li')
+    const message_text = document.createElement('span')
+    const message_image = document.createElement('img')
+
+    // display the message image
+    message_image.classList.add('mw-100', 'mh-100')
+    message_image.src = image_src
+    message_image.alt = ''
+    // set the style acording to who sent the message
+    if (sent_by_auth_user){new_message.classList.add('list-unstyled-item', 'me-3', 'mt-3', 'rounded', 'message', 'user-message')}
+    else {new_message.classList.add('list-unstyled-item', 'me-3', 'mt-3', 'rounded', 'message', 'contact-message')}
+    message_container.classList.add('d-flex', 'flex-column', 'p-2')
+    // display the message text
+    message_text.innerText = text
+
+    message_container.appendChild(message_image)
+    message_container.appendChild(message_text)
+    new_message.appendChild(message_container)
+    messages.appendChild(new_message)
+    scroll_to_bottom()
+
+}
+
+
+
 /**
  * Manipulates the notification toast in the HTML
  * @param {String} contact_name The name of the contact who sent the message.
@@ -54,4 +90,4 @@ function switch_collapse(){
 
 
 
-export {get, post, modifyNotification, switch_collapse, scroll_to_bottom}
+export {get, post, modifyNotification, switch_collapse, scroll_to_bottom, create_message_html}
