@@ -22,10 +22,19 @@ const mutationCallback = function(mutationsList, observer) {
                     //console.log('ITS A FOOTER')
                     window.new_message_input = document.getElementById('new-message')
                     window.new_message_button = document.getElementById('send-message-button')
+                    window.delete_message_option_buttons = document.querySelectorAll('.delete-message')
                     const imageInput = document.getElementById('imageInput')
                     imageInput.addEventListener('change', previewImage);
 
                     // You can perform additional actions here
+                    delete_message_option_buttons.forEach( button => {
+                        button.onclick = function() {
+                            console.log('SCROLL!!')
+                            setTimeout(scroll_to_bottom, 1000)
+                            console.log('SCROLLED!!')
+                        }})
+                    
+                    
                     new_message_input.addEventListener('keypress', (event) => {
                         if (event.key === 'Enter' && (new_message_input.value !== '' || imageInput.value !== '')){
                 
@@ -47,7 +56,10 @@ const mutationCallback = function(mutationsList, observer) {
                             imageInput.value = ''
                             document.getElementById('imagePreview').firstChild.remove()}}
                     
-                    scroll_to_bottom()    
+                    
+                    scroll_to_bottom()
+                    console.log(delete_message_option_buttons)
+
                 }}}}};
 
 // Create a MutationObserver with the callback
@@ -58,7 +70,6 @@ const observerConfig = { childList: true };
 
 // Start observing the target container
 observer.observe(chat_display, observerConfig);
-
 
 window.summon_chat = function(chat){
 

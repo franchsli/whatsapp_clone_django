@@ -3,7 +3,8 @@
 
 TODO:
     - **IMPORTANT** IMPLEMENT THIS
-        + DELETE MESSAGES LOGIC.
+        + Make it so when user send a message, it contains the dropwdown and such.
+        (USE HTMX for this one [The display chat logic should work])
     - **ADD THE LAST MESSAGE LOGIC**
     - You can use FILTER ELEMENTS WITH `SHOW ... WHEN` from Hyperscript
     - Write test for the exceptions and functions.
@@ -22,7 +23,7 @@ TODO:
 
 ## Improvements
 
-- When a chat is displayed, the nav bar should be at the end of the ocnversation.
+- When a chat is displayed, the scroll bar should  ALWAYS be at the end of the ocnversation.
 - Implement something to store messages in the localStorage so the API calls get reduced
 (The localSotrage will sotre messages but the API calls will be still necessary for getting the latest messages)
 - Make it so when a user creates a new contact, the chat form gets updated. (REMEMBER HTMX FROM)
