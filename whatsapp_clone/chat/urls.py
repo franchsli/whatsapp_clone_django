@@ -13,5 +13,6 @@ urlpatterns = [
     path('edit_contact/<int:pk>', views.edit_contact, name='edit_contact'),
     path('delete_contacts/<int:pk>', views.delete_contact, name='delete_contact'),
     path('get_message/<int:pk>', views.get_message, name='get_message'),
-    path('edit_message/<int:pk>', views.edit_message, name='edit_message')
+    path('edit_message/<int:pk>', views.edit_message, name='edit_message'),
+    path('delete_message/<int:chat_id>/<int:message_id>', views.delete_message, name='delete_message')
 ]

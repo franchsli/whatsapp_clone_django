@@ -122,3 +122,10 @@ def edit_message(request, pk):
             "layouts/partials/components/message.html",
             {"message": message_instance},
         )
+
+def delete_message(request, chat_id, message_id):
+    message_instance = Message.objects.get(id=message_id)
+    message_instance.delete()
+    chat = Chat.objects.get(id=chat_id)
+    chat_messages = chat.message_set.all().order_by('date')
+    return render(request, "layouts/partials/components/messages.html", {"chat": chat, "messages":chat_messages})

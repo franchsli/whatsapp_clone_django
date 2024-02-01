@@ -2,6 +2,12 @@
 
 <ul class="scroll-section list-unstyled flex-column overflow-y-scroll" id="chat-messages">
     {% for message in messages %}
-        {% include 'layouts/partials/components/message.html' %}
+      {% if message.sender_user == request.user %}
+        <li class="list-unstyled-item me-3 mt-3 rounded message user-message dropdown">
+      {% else %}
+        <li class="list-unstyled-item me-3 mt-3 rounded message contact-message dropdown">
+      {% endif %}
+        {% include "layouts/partials/components/message.html" %}
+        </li>
     {% endfor %}
 </ul>
