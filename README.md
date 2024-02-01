@@ -3,12 +3,13 @@
 
 TODO:
     - **IMPORTANT** IMPLEMENT THIS
+        + DELETE MESSAGES LOGIC.
     - **ADD THE LAST MESSAGE LOGIC**
     - You can use FILTER ELEMENTS WITH `SHOW ... WHEN` from Hyperscript
     - Write test for the exceptions and functions.
     - Add groups chats.
     - Add status page.
-    - Add status logic
+    - Add status logic.
     - Add read and unread logic.
     - Redesign the login and register views.
     - Create the search message logic.
@@ -17,7 +18,7 @@ TODO:
     - Use text truncation for the last messages.
     - Add the create chats logic.
     - Add contact form validation.
-    - Reconsider the exceptions.py file
+    - Reconsider the exceptions.py file.
 
 ## Improvements
 
@@ -29,9 +30,11 @@ TODO:
 - Redesign display_chat() logic so it get displayed using HTMX.
 - When a user creates a chat it collapse should stay showing.
 - Check why request.user.has_photo returns value but (in view) user_instance.has_photo returns False.
-- When a form is succesfully submited, the inputs should be clear
+- When a form is succesfully submited, the inputs should be clear.
 - Optimize the js code (delete all the cloned code.)
-- Improve the scoll_to_bottom logic so it always scrolls to the bottom.
+- Improve the scroll_to_bottom logic so it always scrolls to the bottom.
+- Make it so when a message gets updated or deleted, the other user will be able to see the message edition
+    or deletion in real time. (This has to be with the way the chat  and it's message are displayed)
 - When a user is creating a new chat and selects more than a contact,
     the modal form title should change to 'create group' and a new input should appear that has the label
         'group name'.
