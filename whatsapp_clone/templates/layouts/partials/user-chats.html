@@ -43,19 +43,15 @@
       <span class="badge bg-success">1</span>
     </div>
   </div>
-  {% comment "chats list" %}{% endcomment %}
-  <div id="chats">
-    {% include "layouts/partials/components/chats.html" %}
-  </div>
-  {% comment "contacts list" %}{% endcomment %}
-  <div id="contacts">
-    {% include "layouts/partials/components/contacts.html" %}
-  </div>
+  {% comment "tabs" %}Contacts and chats{% endcomment %}
+  <div id="chats-and-contacts" hx-get="{% url 'get_chats' %}" hx-target="this" hx-trigger="load delay:100ms" hx-swap="innerHTML"></div>
 
-  <button id="chats-collapse-toggle" class="collapse-switch btn btn-success position-absolute bottom-0 end-0 me-5 mb-3" data-bs-toggle="collapse" data-bs-target="#chat-list">
+  <button id="chats-collapse-toggle" class="collapse-switch btn btn-success position-absolute bottom-0 end-0 me-5 mb-3" 
+  hx-get="{% url 'get_chats' %}" hx-target="#chats-and-contacts" hx-swap="innerHTML">
     <i class="bi bi-chat-right-dots-fill"></i>
   </button>
-  <button class="collapse-switch btn btn-success position-absolute bottom-0 end-0 mb-3" data-bs-toggle="collapse" data-bs-target="#contact-list">
+  <button class="collapse-switch btn btn-success position-absolute bottom-0 end-0 mb-3" 
+  hx-get="{% url 'get_contacts' %}" hx-target="#chats-and-contacts" hx-swap="innerHTML">
     <i class="bi bi-person-fill"></i>
   </button>
 </div>

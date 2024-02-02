@@ -90,4 +90,4 @@ function switch_collapse(){
 
 
 
-export {get, post, modifyNotification, switch_collapse, scroll_to_bottom, create_message_html}
+export {get, post, modifyNotification, scroll_to_bottom, create_message_html}

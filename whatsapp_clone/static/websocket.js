@@ -1,10 +1,9 @@
-import { get, modifyNotification, switch_collapse, scroll_to_bottom, create_message_html } from  './tools.js';
+import { get, modifyNotification, scroll_to_bottom, create_message_html } from  './tools.js';
 
 console.log("websocket.js is loaded!");
 const user = document.getElementById('profile-pic')
 const user_id = user.getAttribute('data-user')
 const socket = new WebSocket(`ws://${window.location.host}/`)
-const collapse_buttons = document.querySelectorAll('.collapse-switch')
 const chat_form = document.getElementById("chat-creation-form")
 const chat_display = document.getElementById('chat-display')
 const contact_form = document.getElementById("contact-creation-form")
@@ -178,11 +177,7 @@ function send_message (message_type, message_text, message_image, message_sender
 
 }
 
-collapse_buttons.forEach(button => {
-    button.onclick = function(){
-        switch_collapse()
-    }
-})
+
 // image: imageInput.value !== '' ? actual_image_data : ''
 socket.addEventListener('open', () => {
         
