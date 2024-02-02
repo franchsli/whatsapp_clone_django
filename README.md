@@ -3,9 +3,11 @@
 
 TODO:
     - **IMPORTANT** IMPLEMENT THIS
-        + Make it so when user send a message, it contains the dropwdown and such.
-        (USE HTMX for this one [The display chat logic should work])
+    - Make it so when a user creates a new contact, the chat form gets updated. (REMEMBER HTMX FROM)
+    - When a user creates a chat the chat list will update.
     - **ADD THE LAST MESSAGE LOGIC**
+    + Make it so when user send a message, it contains the dropwdown and such.
+        (USE HTMX for this one [The display chat logic should work])
     - You can use FILTER ELEMENTS WITH `SHOW ... WHEN` from Hyperscript
     - Write test for the exceptions and functions.
     - Add groups chats.
@@ -26,10 +28,7 @@ TODO:
 - When a chat is displayed, the scroll bar should  ALWAYS be at the end of the ocnversation.
 - Implement something to store messages in the localStorage so the API calls get reduced
 (The localSotrage will sotre messages but the API calls will be still necessary for getting the latest messages)
-- Make it so when a user creates a new contact, the chat form gets updated. (REMEMBER HTMX FROM)
 - Users shouldn't be able to create TWO OR MORE chats with the same user
-- Redesign display_chat() logic so it get displayed using HTMX.
-- When a user creates a chat the chat list will update.
 - Check why request.user.has_photo returns value but (in view) user_instance.has_photo returns False.
 - When a form is succesfully submited, the inputs should be clear.
 - Optimize the js code (delete all the cloned code.)
