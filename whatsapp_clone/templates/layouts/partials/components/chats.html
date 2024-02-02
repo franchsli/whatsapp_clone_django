@@ -19,7 +19,7 @@
         <span id="last-chat-message">contact message</span>
         <button class="btn btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
         <ul class="dropdown-menu">
-          <li><span class="dropdown-item delete-action" hx-delete="{% url 'delete_chat' chat.id %}" hx-confirm="Are you sure you want to delete this chat?" hx-swap="outerHTML" hx-target="#chats" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' ><i class="bi bi-trash3"></i> Delete chat</span></li>
+          <li><span class="dropdown-item delete-action" hx-delete="{% url 'delete_chat' chat.id %}" hx-confirm="Are you sure you want to delete this chat?" hx-swap="outerHTML" hx-target="#chat-list" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' ><i class="bi bi-trash3"></i> Delete chat</span></li>
         </ul>
       </div>
     </div>
