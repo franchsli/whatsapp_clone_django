@@ -5,7 +5,6 @@ TODO:
     - **IMPORTANT** IMPLEMENT THIS
         + Make it so when user send a message, it contains the dropwdown and such.
         (USE HTMX for this one [The display chat logic should work])
-    - Use HTMX pages for contacts and chats.
     - **ADD THE LAST MESSAGE LOGIC**
     - You can use FILTER ELEMENTS WITH `SHOW ... WHEN` from Hyperscript
     - Write test for the exceptions and functions.
@@ -30,7 +29,7 @@ TODO:
 - Make it so when a user creates a new contact, the chat form gets updated. (REMEMBER HTMX FROM)
 - Users shouldn't be able to create TWO OR MORE chats with the same user
 - Redesign display_chat() logic so it get displayed using HTMX.
-- When a user creates a chat it collapse should stay showing (You can use HTMX pages for this one).
+- When a user creates a chat the chat list will update.
 - Check why request.user.has_photo returns value but (in view) user_instance.has_photo returns False.
 - When a form is succesfully submited, the inputs should be clear.
 - Optimize the js code (delete all the cloned code.)
