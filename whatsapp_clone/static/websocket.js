@@ -200,6 +200,12 @@ socket.addEventListener('open', () => {
 
     contact_form.onsubmit = () => {
         create_instance(contact_form, 'create_contact')
+        const toastNotification = document.getElementById('liveToast')
+        modifyNotification('Server', 
+        'The contact was created successfully! Update your contacts list by clicking the "contacts" button.')
+        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
+        toastBootstrap.show()
+        console.log(contact_form.elements.getElementsByTagName('input'))
     }
 
 

@@ -24,11 +24,12 @@ TODO:
 ## Improvements
 
 - When a chat is displayed, the scroll bar should  ALWAYS be at the end of the chat.
-- Implement something to store messages in the localStorage so the API calls get reduced
+- Implement something to store messages in the localStorage so the API calls get reduced.
 (The localSotrage will sotre messages but the API calls will be still necessary for getting the latest messages)
 - Users shouldn't be able to create TWO OR MORE chats with the same user
 - Check why request.user.has_photo returns value but (in view) user_instance.has_photo returns False.
 - Optimize the js code (delete all the cloned code.)
+- Add sounds yessir.
 - Improve the scroll_to_bottom logic so it always scrolls to the bottom.
 - Make it so when a message gets updated or deleted, the other user will be able to see the message edition
     or deletion in real time. (This has to be with the way the chat  and it's message are displayed)
