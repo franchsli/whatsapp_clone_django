@@ -3,6 +3,14 @@
 
 TODO:
     - **IMPORTANT** IMPLEMENT THIS
+    **FIX**:
+    When the chat_form is updated, the onsubmit function gets deleted (because the response
+    doesn't have the submit function)
+    ***SOLUTION*** :
+    1. Create a div element that is child of the form and is parent of all the inputs.
+    2. Change the HTMX response to render the new div and allat.
+    3. Make sure the div doesn't break the onsubmit logic.
+    NOTE: READ THE CHATGPT latest chat.
     - **ADD THE LAST MESSAGE LOGIC**
     + Make it so when user send a message, it contains the dropwdown and such.
         (USE HTMX for this one [The display chat logic should work])

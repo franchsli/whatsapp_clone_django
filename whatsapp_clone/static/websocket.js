@@ -162,10 +162,6 @@ function create_instance(form, instance_type){
 
 
 
-
-
-
-
 function send_message (message_type, message_text, message_image, message_sender_id){
     socket.send(JSON.stringify({
         'type': message_type,
@@ -182,10 +178,9 @@ function send_message (message_type, message_text, message_image, message_sender
 
 // image: imageInput.value !== '' ? actual_image_data : ''
 socket.addEventListener('open', () => {
-        
-
 
     chat_form.onsubmit = () => {
+        console.log('HANDLED')
         if (!checked(chat_form)){
             const validation_message = document.getElementById('chat-validation-message')
             validation_message.innerText = 'Please select a contact to create chat with'
@@ -197,7 +192,8 @@ socket.addEventListener('open', () => {
             'The chat was created successfully!! Update your chat list by clicking the "chats" button.')
             const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
             toastBootstrap.show()
-        }   
+        }
+        return false;   
     }
 
     contact_form.onsubmit = () => {
@@ -211,6 +207,7 @@ socket.addEventListener('open', () => {
         // clears phonenumber and contact name fields.
         inputs[1].value = ''
         inputs[2].value = ''
+        return false;
     }
 
 

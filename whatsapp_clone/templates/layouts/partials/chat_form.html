@@ -1,4 +1,4 @@
-<form id="chat-creation-form" hx-get="{% url 'update_chat_form' %}" hx-target="this" hx-swap="outerHTML" hx-trigger="load delay:250ms">
+<form id="chat-creation-form">
     <div id="chat-validation-message" style="font-size: 14px; color: var(--bs-danger);"></div>
     <ul id="new-chat-contact-select-inputs" class="scroll-section list-group list-group-flush overflow-y-scroll" style="max-height: 615px;">
     {% for contact in contacts %}
@@ -11,3 +11,11 @@
     <button type="submit" class="btn btn-success float-end mt-3">Create chat</button>
     <button type="button" class="btn btn-secondary float-end mt-3 me-3" data-bs-dismiss="modal">Close</button>
 </form>
+
+{% comment "" %}
+
+form update logic:
+
+hx-get="{% url 'update_chat_form' %}" hx-target="this" hx-swap="outerHTML" hx-trigger="click from:#create-chat"
+
+{% endcomment %}
