@@ -87,7 +87,7 @@
       </div>
       <div class="modal-body">
         {% comment "" %}hx-get="{% url 'get_chats' %}" hx-target="#chats" hx-trigger="submit delay:2s"{% endcomment %}
-      <form id="contact-creation-form" hx-get="{% url 'get_contacts' %}" hx-target="#contacts" hx-trigger="submit delay:250ms">
+      <form id="contact-creation-form" hx-get="{% url 'get_contacts' %}" hx-target="#chats-and-contacts" hx-swap="innerHTML" hx-trigger="submit delay:250ms">
         {% csrf_token %}
         {{ contact_form | crispy }}
         <button class="btn btn-success float-end" type="submit">Create contact</button>

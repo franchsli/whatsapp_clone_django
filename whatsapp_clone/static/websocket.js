@@ -7,6 +7,8 @@ const socket = new WebSocket(`ws://${window.location.host}/`)
 const chat_form = document.getElementById("chat-creation-form")
 const chat_display = document.getElementById('chat-display')
 const contact_form = document.getElementById("contact-creation-form")
+const notification_audio = new Audio('static/Audio/app/message_received.mp3')
+const message_sent_audio = new Audio('static/Audio/app/message_sent.mp3')
 let actual_image_data
 
 // Callback function to execute when mutations are observed
@@ -229,7 +231,9 @@ socket.addEventListener('message',async (event) => {
         image = message_data[2]
         console.log(`IMAGE:${image}`)
         console.log(typeof(localStorage.getItem('image_data')))
-        create_message_html(text, image, user_id === sender_id)}
+        create_message_html(text, image, user_id === sender_id)
+        message_sent_audio.play()
+    }
 
     else if (event.data.includes('chat_notification')){
         message = event.data.replace('chat_notification', '')
@@ -243,6 +247,7 @@ socket.addEventListener('message',async (event) => {
         modifyNotification(sender_user_data.username, message)
         const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
         toastBootstrap.show()
+        notification_audio.play()
     }
 
 
