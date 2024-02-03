@@ -19,13 +19,12 @@ TODO:
     - Add the "read more" function to messages.
     - Add the archived chats logic.
     - Use text truncation for the last messages.
-    - Add the create chats logic.
     - Add contact form validation.
     - Reconsider the exceptions.py file.
 
 ## Improvements
 
-- When a chat is displayed, the scroll bar should  ALWAYS be at the end of the ocnversation.
+- When a chat is displayed, the scroll bar should  ALWAYS be at the end of the chat.
 - Implement something to store messages in the localStorage so the API calls get reduced
 (The localSotrage will sotre messages but the API calls will be still necessary for getting the latest messages)
 - Users shouldn't be able to create TWO OR MORE chats with the same user
