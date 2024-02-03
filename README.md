@@ -3,7 +3,6 @@
 
 TODO:
     - **IMPORTANT** IMPLEMENT THIS
-    - Make it so when a user creates a new contact, the chat form gets updated. (REMEMBER HTMX FROM)
     - **ADD THE LAST MESSAGE LOGIC**
     + Make it so when user send a message, it contains the dropwdown and such.
         (USE HTMX for this one [The display chat logic should work])
@@ -30,7 +29,6 @@ TODO:
 - Check why request.user.has_photo returns value but (in view) user_instance.has_photo returns False.
 - Optimize the js code (delete all the cloned code.)
 - Add sounds yessir.
-- Improve the scroll_to_bottom logic so it always scrolls to the bottom.
 - Make it so when a message gets updated or deleted, the other user will be able to see the message edition
     or deletion in real time. (This has to be with the way the chat  and it's message are displayed)
 - When a user is creating a new chat and selects more than a contact,

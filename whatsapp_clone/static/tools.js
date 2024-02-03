@@ -21,7 +21,8 @@ function post(url, data){
  */
 function scroll_to_bottom(){
     const messages = document.getElementById('chat-messages')
-    messages.scroll(0, 100000)
+    //.scrollTop = messageBody.scrollHeight - messageBody.clientHeight;
+    messages.scroll(0, messages.scrollHeight - messages.clientHeight)
 
 }
 
