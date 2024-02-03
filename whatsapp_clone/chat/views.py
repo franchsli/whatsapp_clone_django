@@ -129,3 +129,11 @@ def delete_message(request, chat_id, message_id):
     chat = Chat.objects.get(id=chat_id)
     chat_messages = chat.message_set.all().order_by('date')
     return render(request, "layouts/partials/components/messages.html", {"chat": chat, "messages":chat_messages})
+
+
+def update_chat_form(request):
+    user_instance = User(id=request.user.id)
+    contacts = user_instance.contact_set.all()
+    return render(
+        request, "layouts/partials/chat_form.html", {"contacts": contacts}
+    )

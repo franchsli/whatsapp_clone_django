@@ -191,7 +191,8 @@ socket.addEventListener('open', () => {
         else{
             create_instance(chat_form, 'create_chat')
             const toastNotification = document.getElementById('liveToast')
-            modifyNotification('Server', 'The chat was created successfully!!')
+            modifyNotification('Server', 
+            'The chat was created successfully!! Update your chat list by clicking the "chats" button.')
             const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
             toastBootstrap.show()
         }   
