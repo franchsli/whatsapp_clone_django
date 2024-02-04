@@ -229,7 +229,10 @@ socket.addEventListener('message',async (event) => {
         console.log(`IMAGE:${image}`)
         console.log(typeof(localStorage.getItem('image_data')))
         create_message_html(text, image, user_id === sender_id)
-        message_sent_audio.play()
+        if (user_id === sender_id){
+            message_sent_audio.play()
+        }
+        
     }
 
     else if (event.data.includes('chat_notification')){

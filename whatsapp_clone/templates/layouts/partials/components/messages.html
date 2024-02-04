@@ -5,7 +5,7 @@
       {% if message.sender_user == request.user %}
         <li class="list-unstyled-item me-3 mt-3 rounded message user-message dropdown">
       {% else %}
-        <li class="list-unstyled-item me-3 mt-3 rounded message contact-message dropdown">
+        <li class="list-unstyled-item ms-3 mt-3 rounded message contact-message">
       {% endif %}
         {% include "layouts/partials/components/message.html" %}
         </li>
