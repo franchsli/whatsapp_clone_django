@@ -23,6 +23,9 @@ TODO:
 ## Improvements
 
 - Implement something to store messages in the localStorage so the API calls get reduced.
+**IMPLEMENT**
+READ THE CHATGPT Django Channels Websocket chat for IMPORTANT improvement.
+Also don't forget to change the channel layer to redis.
 (The localSotrage will sotre messages but the API calls will be still necessary for getting the latest messages)
 - Users shouldn't be able to create TWO OR MORE chats with the same user
 - Check why request.user.has_photo returns value but (in view) user_instance.has_photo returns False.

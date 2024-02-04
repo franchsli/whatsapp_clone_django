@@ -43,8 +43,11 @@ const mutationCallback = function(mutationsList, observer) {
                             
                             new_message_input.value = ''
                             //deletes the selected image
-                            imageInput.value = ''
-                            document.getElementById('imagePreview').firstChild.remove()
+                            if (imageInput.value != ''){
+                                imageInput.value = ''
+                                document.getElementById('imagePreview').firstChild.remove()
+                            }
+                            
                         }})
                     
                 
@@ -54,12 +57,14 @@ const mutationCallback = function(mutationsList, observer) {
                             
                             new_message_input.value = ''
                             //deletes the selected image
-                            imageInput.value = ''
-                            document.getElementById('imagePreview').firstChild.remove()}}
+                            if (imageInput.value != ''){
+                                imageInput.value = ''
+                                document.getElementById('imagePreview').firstChild.remove()
+                            }}}
                     
                     
-                    scroll_to_bottom()
-                    console.log(delete_message_option_buttons)
+                        scroll_to_bottom()
+                        console.log(delete_message_option_buttons)
 
                 }}}}};
 
@@ -228,11 +233,14 @@ socket.addEventListener('message',async (event) => {
         image = message_data[2]
         console.log(`IMAGE:${image}`)
         console.log(typeof(localStorage.getItem('image_data')))
-        create_message_html(text, image, user_id === sender_id)
         if (user_id === sender_id){
             message_sent_audio.play()
+            htmx.get(`/display_chat/${localStorage.getItem('chat_id')}/`, { target: chat_display })
         }
-        
+        else {
+            create_message_html(text, image, user_id === sender_id)
+        }
+    
     }
 
     else if (event.data.includes('chat_notification')){
