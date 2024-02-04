@@ -25,11 +25,15 @@ def exclude_user_tag(user_set, user, value):
 def get_contact_in_chat(user_set, auth_user, desired_value):
     phones_list = list(user_set.values_list('phone_number', flat=True))
     result = phones_list[0] if auth_user.phone_number != phones_list[0] else phones_list[1]
-    contact = Contact.objects.get(created_by=auth_user, phone_number=result)
-    if desired_value == 'name':
+    contact_created_by_user = Contact.objects.filter(created_by=auth_user, phone_number=result).exists()
+    if desired_value == 'name' and contact_created_by_user:
+        contact = Contact.objects.get(created_by=auth_user, phone_number=result)
         return contact.name
+    
+    elif desired_value == 'name' and contact_created_by_user == False:
+        return result
+    
     elif desired_value == 'photo':
-        del contact
         contact = User.objects.get(phone_number=result)
         if contact.has_photo:
             return contact.photo.url
