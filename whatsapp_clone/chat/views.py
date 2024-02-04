@@ -135,5 +135,5 @@ def update_chat_form(request):
     user_instance = User(id=request.user.id)
     contacts = user_instance.contact_set.all()
     return render(
-        request, "layouts/partials/chat_form.html", {"contacts": contacts}
+        request, "layouts/partials/chat_form_elements.html", {"contacts": contacts}
     )

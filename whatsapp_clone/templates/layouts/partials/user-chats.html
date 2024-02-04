@@ -67,7 +67,10 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        {% include 'layouts/partials/chat_form.html' %}
+        <form id="chat-creation-form" hx-get="{% url 'update_chat_form' %}" hx-target="this" hx-trigger="click from:#create-chat">
+          {% include 'layouts/partials/chat_form_elements.html' %}
+        </form>
+        
       </div>
       <div class="modal-footer">
       </div>

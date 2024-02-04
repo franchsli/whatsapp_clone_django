@@ -3,14 +3,6 @@
 
 TODO:
     - **IMPORTANT** IMPLEMENT THIS
-    **FIX**:
-    When the chat_form is updated, the onsubmit function gets deleted (because the response
-    doesn't have the submit function)
-    ***SOLUTION*** :
-    1. Create a div element that is child of the form and is parent of all the inputs.
-    2. Change the HTMX response to render the new div and allat.
-    3. Make sure the div doesn't break the onsubmit logic.
-    NOTE: READ THE CHATGPT latest chat.
     - **ADD THE LAST MESSAGE LOGIC**
     + Make it so when user send a message, it contains the dropwdown and such.
         (USE HTMX for this one [The display chat logic should work])
@@ -30,13 +22,11 @@ TODO:
 
 ## Improvements
 
-- When a chat is displayed, the scroll bar should  ALWAYS be at the end of the chat.
 - Implement something to store messages in the localStorage so the API calls get reduced.
 (The localSotrage will sotre messages but the API calls will be still necessary for getting the latest messages)
 - Users shouldn't be able to create TWO OR MORE chats with the same user
 - Check why request.user.has_photo returns value but (in view) user_instance.has_photo returns False.
 - Optimize the js code (delete all the cloned code.)
-- Add sounds yessir.
 - Make it so when a message gets updated or deleted, the other user will be able to see the message edition
     or deletion in real time. (This has to be with the way the chat  and it's message are displayed)
 - When a user is creating a new chat and selects more than a contact,
