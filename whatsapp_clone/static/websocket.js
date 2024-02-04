@@ -233,9 +233,11 @@ socket.addEventListener('message',async (event) => {
         image = message_data[2]
         console.log(`IMAGE:${image}`)
         console.log(typeof(localStorage.getItem('image_data')))
+        // if the message was sent by the auth user, play a sound and update the chat list
+        // only render the HTML otherwise
         if (user_id === sender_id){
             message_sent_audio.play()
-            htmx.get(`/display_chat/${localStorage.getItem('chat_id')}/`, { target: chat_display })
+            htmx.ajax('GET', `/display_chat/${localStorage.getItem('chat_id')}`, '#chat-display')
         }
         else {
             create_message_html(text, image, user_id === sender_id)

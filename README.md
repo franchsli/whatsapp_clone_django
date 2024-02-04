@@ -3,31 +3,29 @@
 
 TODO:
     - **IMPORTANT** IMPLEMENT THIS
+    - Use text truncation for the last messages.
+    - Add read and unread logic.
     - **ADD THE LAST MESSAGE LOGIC**
-    + Make it so when user send a message, it contains the dropwdown and such.
-        (USE HTMX for this one [The display chat logic should work])
+    - Users shouldn't be able to create TWO OR MORE chats with the same user.
     - You can use FILTER ELEMENTS WITH `SHOW ... WHEN` from Hyperscript
     - Write test for the exceptions and functions.
     - Add groups chats.
     - Add status page.
     - Add status logic.
-    - Add read and unread logic.
     - Redesign the login and register views.
     - Create the search message logic.
     - Add the "read more" function to messages.
     - Add the archived chats logic.
-    - Use text truncation for the last messages.
     - Add contact form validation.
     - Reconsider the exceptions.py file.
 
 ## Improvements
 
 - Implement something to store messages in the localStorage so the API calls get reduced.
+(The localSotrage will sotre messages but the API calls will be still necessary for getting the latest messages)
 **IMPLEMENT**
 READ THE CHATGPT Django Channels Websocket chat for IMPORTANT improvement.
 Also don't forget to change the channel layer to redis.
-(The localSotrage will sotre messages but the API calls will be still necessary for getting the latest messages)
-- Users shouldn't be able to create TWO OR MORE chats with the same user
 - Check why request.user.has_photo returns value but (in view) user_instance.has_photo returns False.
 - Optimize the js code (delete all the cloned code.)
 - Make it so when a message gets updated or deleted, the other user will be able to see the message edition
