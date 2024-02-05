@@ -15,6 +15,12 @@ def to_list(value):
     #list(value.values_list('sender_user', 'text').order_by('-date'))
     return list(value.values_list('id', flat=True).order_by('date'))
 
+@register.filter
+def last_message(value, data):
+    messages_data = list(value.values_list(data, flat=True).order_by('date'))
+    return messages_data[-1]
+    
+
 @register.simple_tag
 def exclude_user_tag(user_set, user, value):
     user_list = list(user_set.values_list(value, flat=True))

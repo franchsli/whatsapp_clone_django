@@ -33,6 +33,7 @@ Also don't forget to change the channel layer to redis.
 - When a user is creating a new chat and selects more than a contact,
     the modal form title should change to 'create group' and a new input should appear that has the label
         'group name'.
+- Use for... empty in for loops if necessary. <https://docs.djangoproject.com/en/5.0/ref/templates/builtins/#for-empty>
 - Fix: When there's only a contact or chat in the list, its option dropdown seems weird.
 - Make it responsive.
 - Re think the delete message modal (Delete for everyone or for me logic).
