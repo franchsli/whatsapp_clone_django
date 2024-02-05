@@ -3,7 +3,12 @@
 
 TODO:
     - **IMPORTANT** IMPLEMENT THIS
-    - Use text truncation for the last messages.
+    - Use text truncation for the messages:
+        + Create a display flex row col logic:
+            Images in messages should use one row alone.
+            Text and dropwdown button should use one row (col-9 for messages and col-3 for dropdown)
+            Implement the read more logic.
+        Test these things in a HTML, CSS and JS new files.
     - Add read and unread logic.
     - **ADD THE LAST MESSAGE LOGIC**
     - Users shouldn't be able to create TWO OR MORE chats with the same user.

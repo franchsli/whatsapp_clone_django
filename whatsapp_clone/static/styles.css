@@ -27,6 +27,14 @@ main,  #base {
   align-self: self-start;
 
 }
+
+.last-chat-message{
+  max-width: 260px;
+}
+.message-text{
+  max-width: 332px;
+}
+
 .user-message, .dropdown-toggle-message {
   background-color: var(--bs-success-bg-subtle);
   align-self: self-end;
