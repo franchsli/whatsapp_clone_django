@@ -4,7 +4,7 @@
 
 <ul id="chat-list" class="scroll-section list-group list-group-flush overflow-y-scroll" style="max-height: 615px;">
   {% for chat in chats %}
-  <li onclick="summon_chat(this);" hx-get="{% url 'display_chat' chat.id %}" hx-trigger="click" hx-target="#chat-display" id="chat-{{chat.id}}" class="list-group-item p-3  d-flex flex-inline align-items-center chat" role="button" data-chat={{chat.id}} data-contact={% exclude_user_tag chat.users.all request.user 'username' %} data-contact-phone={% exclude_user_tag chat.users.all request.user 'phone_number' %} data-messages='{{chat.message_set.all|to_list}}'>
+  <li onclick="summon_chat(this);" hx-get="{% url 'display_chat' chat.id %}" hx-trigger="click" hx-target="#chat-display" id="chat-{{chat.id}}" class="list-group-item p-3  d-flex flex-inline align-items-center chat" role="button" data-chat={{chat.id}} data-contact={% exclude_user_tag chat.users.all request.user 'username' %} data-contact-phone={% exclude_user_tag chat.users.all request.user 'phone_number' %}>
     {% csrf_token %}
     {% comment "contact profile photo" %}{% endcomment %}
     <img class="ms-1 rounded-circle img-fluid" src="{% get_contact_in_chat chat.users.all request.user 'photo' %}" alt="" style="max-width: 45px;">
@@ -12,11 +12,11 @@
       <div class="d-flex justify-content-between">
         <span>{% get_contact_in_chat chat.users.all request.user 'name' %}</span>
         {% comment %} <span>{{ chat.profiles.all }}</span> {% endcomment %}
-        <span id="last-chat-message-date">Date</span>
+        <span id="last-chat-message-date">{{chat.message_set.all|last_message:'date'}}</span>
       </div>
       {% comment "last message in the chat" %}{% endcomment %}
       <div class="d-flex justify-content-between">
-        <span id="last-chat-message">contact message</span>
+        <span id="last-chat-message">{{chat.message_set.all|last_message:'text'}}</span>
         <button class="btn btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
         <ul class="dropdown-menu">
           <li><span class="dropdown-item delete-action" hx-delete="{% url 'delete_chat' chat.id %}" hx-confirm="Are you sure you want to delete this chat?" hx-swap="outerHTML" hx-target="#chat-list" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' ><i class="bi bi-trash3"></i> Delete chat</span></li>
