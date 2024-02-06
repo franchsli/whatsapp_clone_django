@@ -7,10 +7,13 @@ TODO:
         + Create a display flex row col logic:
             Images in messages should use one row alone.
             Text and dropwdown button should use one row (col-9 for messages and col-3 for dropdown)
-            Implement the read more logic.
+            Implement the read more logic:
+                + When a text is too large, display a 'Read more' span that when clicked shows more
+                text and the span transforms into 'Read less' that when clicked show less.
         Test these things in a HTML, CSS and JS new files.
     - Add read and unread logic.
     - **ADD THE LAST MESSAGE LOGIC**
+        + When the message list is updated, the chat list gets updated too (This is a way to update the last message.)
     - Users shouldn't be able to create TWO OR MORE chats with the same user.
     - You can use FILTER ELEMENTS WITH `SHOW ... WHEN` from Hyperscript
     - Write test for the exceptions and functions.
