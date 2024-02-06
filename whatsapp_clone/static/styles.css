@@ -32,7 +32,9 @@ main,  #base {
   max-width: 260px;
 }
 .message-text{
+  overflow: hidden;
   max-width: 332px;
+  max-height: 200px;
 }
 
 .user-message, .dropdown-toggle-message {
