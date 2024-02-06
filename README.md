@@ -26,6 +26,7 @@ TODO:
 
 ## Improvements
 
+- When a message is 'rightclicked', the dropdown appears.
 - Implement something to store messages in the localStorage so the API calls get reduced.
 (The localSotrage will sotre messages but the API calls will be still necessary for getting the latest messages)
 **IMPLEMENT**
