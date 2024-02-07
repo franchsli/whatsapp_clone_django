@@ -95,7 +95,9 @@ function toggleReadMore(button, text_id) {
     console.log(content)
     console.log(button)
     content.style.maxHeight = content.style.maxHeight === '200px' ? 'none' : '200px';
-    button.textContent = content.style.maxHeight === '200px' ? 'Show more' : 'Show less';
+    content.style.overflow = content.style.overflow === 'hidden' ? 'visible' : 'hidden';
+    content.style.textDecoration = content.style.textDecoration === 'dotted' ? 'none' : 'dotted';
+    //button.textContent = content.style.maxHeight === '200px' ? 'Show more' : 'Show less';
 }
 
 export {get, post, modifyNotification, scroll_to_bottom, create_message_html, toggleReadMore}

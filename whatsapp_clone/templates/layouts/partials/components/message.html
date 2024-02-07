@@ -2,13 +2,12 @@
 
 
 {% if message.sender_user == request.user %}
-  <div class="p-2 mw-100" hx-target="this" hx-swap="outerHTML">
+  <div id="text-{{message.id}}" class="p-2 mw-100" hx-target="this" hx-swap="outerHTML" style="max-height: 200px; overflow: hidden; text-decoration: dotted;" onclick="toggleReadMore(this, '{{message.id}}')">
     {% if message.has_image %}
       <img class="mw-100 mh-100 mb-3" src="{{message.image.url}}" alt="">
     {% endif %}
 
-      <span id="text-{{message.id}}" class="mw-100 message-text read-more">{{message.text}}</span>
-      <span class="read-more-toggle" onclick="toggleReadMore(this, '{{message.id}}')">Show more</span>
+      <span class="mw-100 read-more">{{message.text}}</span>
       <button class="btn btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: var(--bs-success-bg-subtle); align-self: self-end;"></button>      
       <ul class="dropdown-menu">
         <li><span class="dropdown-item edit-action" hx-get="{% url 'edit_message' message.id %}"><i class="bi bi-pencil-square"></i> Edit message</span></li>
