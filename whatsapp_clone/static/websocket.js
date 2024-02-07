@@ -183,8 +183,8 @@ function send_message (message_type, message_text, message_image, message_sender
 
 // image: imageInput.value !== '' ? actual_image_data : ''
 socket.addEventListener('open', () => {
-    window.toggleReadMore = function(){
-        toggleReadMore()
+    window.toggleReadMore = function(button, text_id){
+        toggleReadMore(button, text_id)
     }
 
     chat_form.onsubmit = () => {

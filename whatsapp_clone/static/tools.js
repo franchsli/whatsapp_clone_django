@@ -89,12 +89,13 @@ function switch_collapse(){
     });
 }
 
-function toggleReadMore() {
-    const content = document.querySelector('.read-more');
-    const toggleButton = document.querySelector('.read-more-toggle');
-
+function toggleReadMore(button, text_id) {
+    console.log('SHOWED MORE')
+    const content = document.getElementById(`text-${text_id}`)
+    console.log(content)
+    console.log(button)
     content.style.maxHeight = content.style.maxHeight === '200px' ? 'none' : '200px';
-    toggleButton.textContent = content.style.maxHeight === '200px' ? 'Show more' : 'Show less';
+    button.textContent = content.style.maxHeight === '200px' ? 'Show more' : 'Show less';
 }
 
 export {get, post, modifyNotification, scroll_to_bottom, create_message_html, toggleReadMore}

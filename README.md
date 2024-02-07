@@ -3,10 +3,6 @@
 
 TODO:
     - **IMPORTANT** IMPLEMENT THIS
-    - Use text truncation for the messages:
-        + Create a display flex row col logic:
-            Images in messages should use one row alone.
-            Text and dropwdown button should use one row (col-9 for messages and col-3 for dropdown)
             Implement the read more logic:
                 + When a text is too large, display a 'Read more' span that when clicked shows more
                 text and the span transforms into 'Read less' that when clicked show less.
