@@ -91,25 +91,25 @@ function switch_collapse(){
 
 /**
  * 
- * @param {HTMLElement} container_node 
  * @param {String} text_id 
  */
-function toggleReadMore(container_node, text_id) {
+function toggleReadMore(text_id) {
     console.log('SHOWED MORE')
     const content = document.getElementById(`text-${text_id}`)
     const toggle_button = document.createElement('span')
     //toggle_button.style.textDecorationColor = 'aqua'
     toggle_button.innerText = 'Show more'
     console.log(content)
-    console.log(button)
 
     toggle_button.onclick = function(){
-        content.style.maxHeight = content.style.maxHeight === '200px' ? 'none' : '200px';
-        content.style.overflow = content.style.overflow === 'hidden' ? 'visible' : 'hidden';
-        button.textContent = content.style.maxHeight === '200px' ? 'Show more' : 'Show less'
+        content.style.maxHeight = content.style.maxHeight === '200px' ? 'none' : '200px'
+        content.style.overflow = content.style.overflow === 'hidden' ? 'visible' : 'hidden'
+        toggle_button.textContent = content.style.maxHeight === '200px' ? 'Show more' : 'Show less'
     }
-    container_node.insertAdjacentElement('afterend', toggle_button)
-;
+
+    console.log(toggle_button)
+    content.insertAdjacentElement('afterend', toggle_button)
+
 }
 
 export {get, post, modifyNotification, scroll_to_bottom, create_message_html, toggleReadMore}

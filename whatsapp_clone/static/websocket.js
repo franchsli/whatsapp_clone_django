@@ -64,7 +64,6 @@ const mutationCallback = function(mutationsList, observer) {
                     
                     
                         scroll_to_bottom()
-                        console.log(delete_message_option_buttons)
 
                 }}}}};
 
@@ -182,8 +181,8 @@ function send_message (message_type, message_text, message_image, message_sender
 
 
 socket.addEventListener('open', () => {
-    window.toggleReadMore = function(container_node, text_id){
-        toggleReadMore(container_node, text_id)
+    window.toggleReadMore = function(text_id){
+        toggleReadMore(text_id)
     }
 
     chat_form.onsubmit = () => {
