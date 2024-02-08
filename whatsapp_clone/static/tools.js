@@ -96,6 +96,7 @@ function switch_collapse(){
 function toggleReadMore(text_id) {
     console.log('SHOWED MORE')
     const content = document.getElementById(`text-${text_id}`)
+    console.log(content.clientHeight)
     if (content.clientHeight === 200 ){
         const toggle_button = document.createElement('a')
         toggle_button.innerText = 'Show more'
