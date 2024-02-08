@@ -2,11 +2,6 @@
 # Whatsapp clone
 
 TODO:
-    - **IMPORTANT** IMPLEMENT THIS
-            Implement the read more logic:
-                + When a text is too large, display a 'Read more' span that when clicked shows more
-                text and the span transforms into 'Read less' that when clicked show less.
-        Test these things in a HTML, CSS and JS new files.
     - Add read and unread logic.
     - **ADD THE LAST MESSAGE LOGIC**
         + When the message list is updated, the chat list gets updated too (This is a way to update the last message.)

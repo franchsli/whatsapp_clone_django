@@ -1,4 +1,4 @@
-import { get, modifyNotification, scroll_to_bottom, create_message_html, toggleReadMore } from  './tools.js';
+import { get, modifyNotification, scroll_to_bottom, create_message_html, toggleReadMore, showDropdown } from  './tools.js';
 
 console.log("websocket.js is loaded!");
 const user = document.getElementById('profile-pic')
@@ -194,6 +194,10 @@ function send_message (message_type, message_text, message_image, message_sender
 socket.addEventListener('open', () => {
     window.toggleReadMore = function(text_id){
         toggleReadMore(text_id)
+    }
+
+    window.showDropdown  = function (event, dropdown_id) {
+        showDropdown(event, dropdown_id)
     }
 
     chat_form.onsubmit = () => {

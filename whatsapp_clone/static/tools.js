@@ -115,4 +115,23 @@ function toggleReadMore(text_id) {
 
 }
 
-export {get, post, modifyNotification, scroll_to_bottom, create_message_html, toggleReadMore}
+function showDropdown(event, dropdown_id) {
+    event.preventDefault();
+
+    // Set the position of the dropdown
+    const dropdown = document.getElementById(`customDropdown-${dropdown_id}`);
+    dropdown.style.position = 'absolute';
+    dropdown.style.left = `${event.clientX}px`;
+    dropdown.style.top = `${event.clientY}px`;
+
+    // Display the dropdown
+    dropdown.classList.toggle('show');
+
+    // Close the dropdown when clicking outside
+    document.addEventListener('click', function closeDropdown() {
+        dropdown.classList.remove('show');
+        document.removeEventListener('click', closeDropdown);
+    });
+}
+
+export {get, post, modifyNotification, scroll_to_bottom, create_message_html, toggleReadMore, showDropdown}
