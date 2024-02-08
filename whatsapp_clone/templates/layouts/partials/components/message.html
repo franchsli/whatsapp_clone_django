@@ -2,7 +2,7 @@
 
 
 {% if message.sender_user == request.user %}
-  <div class="p-2 mw-100" hx-target="this" hx-swap="outerHTML" onload="toggleReadMore(this, '{{message.id}}')">
+  <div class="p-2 mw-100" hx-target="this" hx-swap="outerHTML">
     {% if message.has_image %}
       <img class="mw-100 mh-100 mb-3" src="{{message.image.url}}" alt="">
     {% endif %}
@@ -13,7 +13,7 @@
       <button class="btn btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: var(--bs-success-bg-subtle); align-self: self-end;"></button>      
       <ul class="dropdown-menu">
         <li><span class="dropdown-item edit-action" hx-get="{% url 'edit_message' message.id %}"><i class="bi bi-pencil-square"></i> Edit message</span></li>
-        <li><span class="dropdown-item delete-action delete-message" hx-delete="{% url 'delete_message' message.chat.id message.id %}" hx-target="#chat-messages" hx-swap="outerHTML" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>Delete</span></li>
+        <li><span class="dropdown-item delete-action delete-message" data-chat="{{message.chat.id}}" data-message="{{message.id}}" data-token="{{ csrf_token }}">Delete</span></li>
       </ul>
   </div>
 {% else %}

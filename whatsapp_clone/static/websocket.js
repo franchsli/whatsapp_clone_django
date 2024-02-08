@@ -27,11 +27,22 @@ const mutationCallback = function(mutationsList, observer) {
                     const imageInput = document.getElementById('imageInput')
                     imageInput.addEventListener('change', previewImage);
 
-                    // You can perform additional actions here
+                    
                     delete_message_option_buttons.forEach( button => {
                         button.onclick = function() {
                             console.log('SCROLL!!')
-                            setTimeout(scroll_to_bottom, 1000)
+                             // delete the message
+                            htmx.ajax('DELETE', `/delete_message/${button.dataset.chat}/${button.dataset.message}` , 
+                            {target:'#chat-messages', 
+                            swap:'outerHTML', 
+                            headers: {
+                                'X-CSRFToken': button.dataset.token
+                            }}).then(() => {
+                                // this code will be executed after the 'htmx:afterOnLoad' event,
+                                // and before the 'htmx:xhr:loadend' event
+                                // when the message is deleted and the response is loaded, scroll
+                                scroll_to_bottom()
+                            });
                             console.log('SCROLLED!!')
                         }})
                     

@@ -31,6 +31,7 @@ TODO:
 **IMPLEMENT**
 READ THE CHATGPT Django Channels Websocket chat for IMPORTANT improvement.
 Also don't forget to change the channel layer to redis.
+- Delete all console.logs
 - Check why request.user.has_photo returns value but (in view) user_instance.has_photo returns False.
 - Optimize the js code (delete all the cloned code.)
 - Make it so when a message gets updated or deleted, the other user will be able to see the message edition
