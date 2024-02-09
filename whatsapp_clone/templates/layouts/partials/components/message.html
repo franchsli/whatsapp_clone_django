@@ -6,16 +6,15 @@
     {% if message.has_image %}
       <img class="mw-100 mh-100 mb-3" src="{{message.image.url}}" alt="">
     {% endif %}
-      <div class="row">
-        <span id="text-{{message.id}}" class="col-auto mw-100" style="height: auto; max-height: 200px; overflow: hidden;">{{message.text}}</span>
-        <script type="text/javascript">
-          toggleReadMore('{{message.id}}')
-        </script>      
-        <ul id="customDropdown-{{message.id}}" class="dropdown-menu col-auto">
-          <li><span class="dropdown-item edit-action" hx-get="{% url 'edit_message' message.id %}"><i class="bi bi-pencil-square"></i> Edit message</span></li>
-          <li><span class="dropdown-item delete-action delete-message" data-chat="{{message.chat.id}}" data-message="{{message.id}}" data-token="{{ csrf_token }}">Delete</span></li>
-        </ul>
-      </div>
+    <span id="text-{{message.id}}" class="mw-100" style="height: auto; max-height: 200px; overflow: hidden;">{{message.text}}</span>
+    <script type="text/javascript">
+      toggleReadMore('{{message.id}}')
+    </script>      
+    <ul id="customDropdown-{{message.id}}" class="dropdown-menu">
+      <li><span class="dropdown-item edit-action" hx-get="{% url 'edit_message' message.id %}"><i class="bi bi-pencil-square"></i> Edit message</span></li>
+      <li><span class="dropdown-item delete-action delete-message" data-chat="{{message.chat.id}}" data-message="{{message.id}}" data-token="{{ csrf_token }}">Delete</span></li>
+    </ul>
+    
   </div>
 {% else %}
   <div class="p-2">
