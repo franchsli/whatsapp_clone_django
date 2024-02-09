@@ -2,6 +2,7 @@
 # Whatsapp clone
 
 TODO:
+    +**FIX** When a message gets edited, it can't be deleted somehow. (Check HTMX logic.)
     +**FIX** When scroll to bottom doesn't scroll to the botom anymore.
     - Add read and unread logic.
     - **ADD THE LAST MESSAGE LOGIC**
