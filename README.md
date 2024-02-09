@@ -2,6 +2,9 @@
 # Whatsapp clone
 
 TODO:
+    - When a message is 'rightclicked', the dropdown appears:
+        +**FIX** When scroll to bottom doesn't scroll to the botom anymore.
+        + **FIX** Make it so the dropdown appears above all (like toast).
     - Add read and unread logic.
     - **ADD THE LAST MESSAGE LOGIC**
         + When the message list is updated, the chat list gets updated too (This is a way to update the last message.)
@@ -20,7 +23,6 @@ TODO:
 
 ## Improvements
 
-- When a message is 'rightclicked', the dropdown appears.
 - Implement something to store messages in the localStorage so the API calls get reduced.
 (The localSotrage will sotre messages but the API calls will be still necessary for getting the latest messages)
 **IMPLEMENT**
