@@ -2,8 +2,11 @@
 # Whatsapp clone
 
 TODO:
-    +**FIX** When a message gets edited, it can't be deleted somehow. (Check HTMX logic.)
     +**FIX** When scroll to bottom doesn't scroll to the botom anymore.
+    **THIS IS WHAT I THINK IT HAPPENS**:
+        The chat gets displayed but somehow the read more script doesn't finished running.
+        but i don't know whats happening. When the read more isn't in the 'scroll view' (user can't see it)
+        the scroll_to_bottom runs as expected....
     - Add read and unread logic.
     - **ADD THE LAST MESSAGE LOGIC**
         + When the message list is updated, the chat list gets updated too (This is a way to update the last message.)
@@ -22,6 +25,7 @@ TODO:
 
 ## Improvements
 
+- Check the deleteoptions onclick.
 - Implement something to store messages in the localStorage so the API calls get reduced.
 (The localSotrage will sotre messages but the API calls will be still necessary for getting the latest messages)
 **IMPLEMENT**
@@ -30,6 +34,7 @@ Also don't forget to change the channel layer to redis.
 - Delete all console.logs
 - Check why request.user.has_photo returns value but (in view) user_instance.has_photo returns False.
 - Optimize the js code (delete all the cloned code.)
+- Check what happens when contact user send a message and htmx.ajax runs anyway.
 - Make it so when a message gets updated or deleted, the other user will be able to see the message edition
     or deletion in real time. (This has to be with the way the chat  and it's message are displayed)
 - When a user is creating a new chat and selects more than a contact,

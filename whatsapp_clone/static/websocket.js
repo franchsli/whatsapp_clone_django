@@ -31,18 +31,8 @@ const mutationCallback = function(mutationsList, observer) {
                     delete_message_option_buttons.forEach( button => {
                         button.onclick = function() {
                             console.log('SCROLL!!')
-                             // delete the message
-                            htmx.ajax('DELETE', `/delete_message/${button.dataset.chat}/${button.dataset.message}` , 
-                            {target:'#chat-messages', 
-                            swap:'outerHTML', 
-                            headers: {
-                                'X-CSRFToken': button.dataset.token
-                            }}).then(() => {
-                                // this code will be executed after the 'htmx:afterOnLoad' event,
-                                // and before the 'htmx:xhr:loadend' event
-                                // when the message is deleted and the response is loaded, scroll
-                                scroll_to_bottom()
-                            });
+                            // delete the message
+                            setTimeout(scroll_to_bottom, 1000)
                             console.log('SCROLLED!!')
                         }})
                     
@@ -230,6 +220,16 @@ socket.addEventListener('open', () => {
         inputs[2].value = ''
         return false;
     }
+
+    htmx.on('htmx:afterSwap', function(event) {
+        // Your code here
+        console.log('HTMX content loaded:', event.detail);
+        console.log('Content id',  event.detail.target.id)
+        if (event.detail.target.id === 'chat-display' || event.detail.target.id === 'chat-messages'){
+            console.log('CHAT ACTUALIZADO!!')
+            //scroll_to_bottom()
+        }
+    });
 
 
 })
