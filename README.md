@@ -8,8 +8,6 @@ TODO:
         but i don't know whats happening. When the read more isn't in the 'scroll view' (user can't see it)
         the scroll_to_bottom runs as expected....
     - Add read and unread logic.
-    - **ADD THE LAST MESSAGE LOGIC**
-        + When the message list is updated, the chat list gets updated too (This is a way to update the last message.)
     - Users shouldn't be able to create TWO OR MORE chats with the same user.
     - You can use FILTER ELEMENTS WITH `SHOW ... WHEN` from Hyperscript
     - Write test for the exceptions and functions.
@@ -32,6 +30,8 @@ TODO:
 READ THE CHATGPT Django Channels Websocket chat for IMPORTANT improvement.
 Also don't forget to change the channel layer to redis.
 - Delete all console.logs
+- **OPTIMIZE REQUESTS**:
+  - Combine related request views so the server calls reduce and do two jobs in the same response.
 - Check why request.user.has_photo returns value but (in view) user_instance.has_photo returns False.
 - Optimize the js code (delete all the cloned code.)
 - Check what happens when contact user send a message and htmx.ajax runs anyway.

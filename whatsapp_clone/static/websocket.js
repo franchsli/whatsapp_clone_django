@@ -253,7 +253,9 @@ socket.addEventListener('message',async (event) => {
         // only render the HTML otherwise
         if (user_id === sender_id){
             message_sent_audio.play()
-            htmx.ajax('GET', `/display_chat/${localStorage.getItem('chat_id')}`, '#chat-display')
+            htmx.ajax('GET', `/display_chat/${localStorage.getItem('chat_id')}`, '#chat-display').then(() => {
+                htmx.ajax('GET', '/chats', {target:'#chats-and-contacts', swap:'innerHTML'})
+            })
         }
         else {
             create_message_html(text, image, user_id === sender_id)
