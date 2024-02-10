@@ -120,7 +120,12 @@ function showDropdown(event, dropdown_id) {
     dropdown.style.top = `${event.clientY}px`;
 
     // Display the dropdown
-    dropdown.classList.toggle('show');
+    dropdown.classList.toggle('show')
+    console.log(dropdown.style.animation)
+    console.log(dropdown.style.animationPlayState)
+    console.log(dropdown.style)
+    run_element_animation(dropdown)
+    
 
     // Close the dropdown when clicking outside
     document.addEventListener('click', function closeDropdown() {
@@ -129,4 +134,11 @@ function showDropdown(event, dropdown_id) {
     });
 }
 
+/**
+ * 
+ * @param {HTMLElement} element 
+ */
+function run_element_animation(element){
+    element.style.animationPlayState = 'running';
+}
 export {get, post, modifyNotification, scroll_to_bottom, create_message_html, toggleReadMore, showDropdown}
