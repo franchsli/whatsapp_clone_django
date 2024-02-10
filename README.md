@@ -14,6 +14,7 @@ TODO:
     - Add contact form validation.
     - Reconsider the exceptions.py file.
     - Add chat wallpapers.
+    - Rework show_dropdown animation.
     +**FIX** When scroll to bottom doesn't scroll to the botom anymore.
     **THIS IS WHAT I THINK IT HAPPENS**:
         The chat gets displayed but somehow the read more script doesn't finished running.

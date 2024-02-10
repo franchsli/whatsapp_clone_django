@@ -142,8 +142,8 @@ function run_element_animation(element){
     try {
         element.style.animationPlayState = 'running';
     } catch (error) {
-        console.log('This does not have an animation.')
+        console.log(`This does not have an animation:\n${element}`)
     }
     
 }
-export {get, post, modifyNotification, scroll_to_bottom, create_message_html, toggleReadMore, showDropdown}
+export {get, post, modifyNotification, scroll_to_bottom, create_message_html, toggleReadMore, showDropdown, run_element_animation}
