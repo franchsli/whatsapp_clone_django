@@ -2,24 +2,23 @@
 # Whatsapp clone
 
 TODO:
+    - Add status page.
+    - Add status logic.
+    - Create the search message logic (You can use FILTER ELEMENTS WITH `SHOW ... WHEN` from Hyperscript).
+    - Add the archived chats logic.
+    - Add read and unread logic.
+    - Users shouldn't be able to create TWO OR MORE chats with the same user.
+    - Write test for the exceptions and functions.
+    - Add groups chats.
+    - Redesign the login and register views.
+    - Add contact form validation.
+    - Reconsider the exceptions.py file.
+    - Add chat wallpapers.
     +**FIX** When scroll to bottom doesn't scroll to the botom anymore.
     **THIS IS WHAT I THINK IT HAPPENS**:
         The chat gets displayed but somehow the read more script doesn't finished running.
         but i don't know whats happening. When the read more isn't in the 'scroll view' (user can't see it)
         the scroll_to_bottom runs as expected....
-    - Add read and unread logic.
-    - Users shouldn't be able to create TWO OR MORE chats with the same user.
-    - You can use FILTER ELEMENTS WITH `SHOW ... WHEN` from Hyperscript
-    - Write test for the exceptions and functions.
-    - Add groups chats.
-    - Add status page.
-    - Add status logic.
-    - Redesign the login and register views.
-    - Create the search message logic.
-    - Add the "read more" function to messages.
-    - Add the archived chats logic.
-    - Add contact form validation.
-    - Reconsider the exceptions.py file.
 
 ## Improvements
 
