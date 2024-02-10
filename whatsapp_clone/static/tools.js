@@ -135,10 +135,15 @@ function showDropdown(event, dropdown_id) {
 }
 
 /**
- * 
+ * Runs the animation in a HTMLelement if and only if it has one.
  * @param {HTMLElement} element 
  */
 function run_element_animation(element){
-    element.style.animationPlayState = 'running';
+    try {
+        element.style.animationPlayState = 'running';
+    } catch (error) {
+        console.log('This does not have an animation.')
+    }
+    
 }
 export {get, post, modifyNotification, scroll_to_bottom, create_message_html, toggleReadMore, showDropdown}
