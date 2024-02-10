@@ -221,15 +221,15 @@ socket.addEventListener('open', () => {
         return false;
     }
 
-    htmx.on('htmx:afterSwap', function(event) {
-        // Your code here
-        console.log('HTMX content loaded:', event.detail);
-        console.log('Content id',  event.detail.target.id)
-        if (event.detail.target.id === 'chat-display' || event.detail.target.id === 'chat-messages'){
-            console.log('CHAT ACTUALIZADO!!')
-            //scroll_to_bottom()
-        }
-    });
+    // htmx.on('htmx:afterSwap', function(event) {
+    //     // Your code here
+    //     console.log('HTMX content loaded:', event.detail);
+    //     console.log('Content id',  event.detail.target.id)
+    //     if (event.detail.target.id === 'chat-display' || event.detail.target.id === 'chat-messages'){
+    //         console.log('CHAT ACTUALIZADO!!')
+    //         //scroll_to_bottom()
+    //     }
+    // });
 
 
 })
