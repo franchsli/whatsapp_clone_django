@@ -62,8 +62,6 @@ const mutationCallback = function(mutationsList, observer) {
                                 imageInput.value = ''
                                 document.getElementById('imagePreview').firstChild.remove()
                             }}}
-                    
-                    
                         scroll_to_bottom()
 
                 }}}}};
@@ -77,8 +75,11 @@ const observerConfig = { childList: true };
 // Start observing the target container
 observer.observe(chat_display, observerConfig);
 
+/**
+ * Tells the websocket to reconnect to the provided chat channel.
+ * @param {HTMLElement} chat 
+ */
 window.summon_chat = function(chat){
-
     socket.send(JSON.stringify({
         'type':'reconnect',
         'reconnect_to': chat.dataset.chat
@@ -89,7 +90,9 @@ window.summon_chat = function(chat){
 
 }
 
-
+/**
+ * Displays a preview of the image in the chat image input.
+ */
 function previewImage() {
     let imageInput = document.getElementById('imageInput');
     let imagePreview = document.getElementById('imagePreview');
@@ -123,7 +126,11 @@ function previewImage() {
 }
 
 
-
+/**
+ * Returns if at least one checkbox in the provided form was checked.
+ * @param {HTMLFormElement} form The form that contains the checkboxs.
+ * @returns {Boolean} Returns true if at least a checkbox in the form was checked, false otherwise.
+ */
 function checked(form){
     console.log(form.elements)
     for (let index = 0; index < form.elements.length; index++) {

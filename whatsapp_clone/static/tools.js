@@ -90,8 +90,8 @@ function switch_collapse(){
 }
 
 /**
- * 
- * @param {String} text_id 
+ * Adds a button that show more or less of the specified text content.
+ * @param {String} text_id The id of the HTML element that contains the text.
  */
 function toggleReadMore(text_id) {
     const content = document.getElementById(`text-${text_id}`)
@@ -110,6 +110,11 @@ function toggleReadMore(text_id) {
 
 }
 
+/**
+ * Shows the dropdown  in the same place where it was called.
+ * @param {Event} event The event.
+ * @param {String} dropdown_id The id of the dropdown that was called.
+ */
 function showDropdown(event, dropdown_id) {
     event.preventDefault();
 
@@ -121,9 +126,7 @@ function showDropdown(event, dropdown_id) {
 
     // Display the dropdown
     dropdown.classList.toggle('show')
-    console.log(dropdown.style.animation)
-    console.log(dropdown.style.animationPlayState)
-    console.log(dropdown.style)
+    // runs the dropdown animation
     run_element_animation(dropdown)
     
 
