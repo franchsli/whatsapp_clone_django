@@ -4,9 +4,12 @@
 TODO:
     - Add status page.
     - Add status logic.
+    - Add muted status logic.
     - Create the search message logic (You can use FILTER ELEMENTS WITH `SHOW ... WHEN` from Hyperscript).
     - Add the archived chats logic.
     - Add read and unread logic.
+    - Add emojis in messages (emojis list...).
+    - Read non-standar htmx events  for messages [hx-trigger](https://htmx.org/attributes/hx-trigger/)
     - Users shouldn't be able to create TWO OR MORE chats with the same user.
     - Write test for the exceptions and functions.
     - Add groups chats.
