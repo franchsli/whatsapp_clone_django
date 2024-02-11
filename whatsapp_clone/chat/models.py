@@ -49,3 +49,19 @@ class Message(models.Model):
             return self.image.url
         except ValueError:
             return False
+
+class Status(models.Model):
+    uploaded_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    text = models.TextField(blank=True)
+    image = models.ImageField(blank=True, null=True, upload_to='status/')
+    upload_date = models.DateTimeField(default=timezone.now)
+
+    def __str__(self) -> str:
+        return self.text if self.text else self.uploaded_by.username
+    
+    @property
+    def has_image(self):
+        try:
+            return self.image.url
+        except ValueError:
+            return False
