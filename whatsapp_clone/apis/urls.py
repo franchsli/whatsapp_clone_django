@@ -14,12 +14,14 @@ message_router.register(r'messages', views.MessageViewSet, 'messages')
 chat_router = DefaultRouter()
 chat_router.register(r'chats', views.ChatViewSet, 'chats')
 
+status_router = DefaultRouter()
+status_router.register(r'status', views.StatusViewSet, 'status')
+
 
 urlpatterns = [
     path('', include(user_router.urls)),
     path('', include(contact_router.urls)),
     path('', include(message_router.urls)),
     path('', include(chat_router.urls)),
-    #htmx
-    path('v2/chats/', views.chats_api_view, name='chats-api-view')
+    path('', include(status_router.urls))
 ]
