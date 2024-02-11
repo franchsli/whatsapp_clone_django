@@ -2,6 +2,15 @@
 # Whatsapp clone
 
 TODO:
+    **DO RIGHT NOW**:
+        1. Test if status only displays the statuses from your contacts (and if it have no errors.)
+        2. Add another variable to the get statuses view.
+        Split the statuses in two vars one are the user statuses and the other one the contacts statuses.
+        3. Test if edit/delete contact and delete chat works in any case.
+        4. Test  both the chat list and statuses max height.
+    **REFERENCE**:
+    - [db queries with Q](https://docs.djangoproject.com/en/5.0/topics/db/queries/#complex-lookups-with-q-objects)
+    - [queryset operators](https://docs.djangoproject.com/en/5.0/ref/models/querysets/#operators-that-return-new-querysets)
     - Add status page.
     - Add status logic.
     - Add user no updates or updates logic (if the user has uploaded a status show it in my status,
@@ -30,7 +39,7 @@ TODO:
 
 ## Improvements
 
-- Check the deleteoptions onclick.
+- Remove csrf token inputs (if you need them, use django csrf variable instead)
 - Implement something to store messages in the localStorage so the API calls get reduced.
 (The localSotrage will sotre messages but the API calls will be still necessary for getting the latest messages)
 **IMPLEMENT**

@@ -19,8 +19,31 @@
         {% endif %}
     </div>
 
-    <div class="d-flex flex-column ms-3 w-100">
-        <span class="col-auto fs-6 mt-2">My status</span>
-        <span class="col-auto fs-6">No updates</span>
+    <div class="d-flex justify-content-between w-75">
+        <div class="d-flex flex-column ms-3 w-100">
+            <span class="col-auto fs-6 mt-2">My status</span>
+            <span class="col-auto fs-6">No updates</span>
+        </div>
+
+        <button class="btn action" type="button"><span class="fs-4"><i class="bi bi-plus-circle-dotted"></i></span></button>
     </div>
+
 </div>
+
+<ul id="contact-statuses-list" class="scroll-section list-group list-group-flush overflow-y-scroll mt-3" style="max-height: 459px;">
+    {% for status in statuses %}
+        <li class="list-group-item p-3  d-flex flex-inline align-items-center" role="button" data-status={{status.id}}>
+            {% comment "status profile photo" %}{% endcomment %}
+            <img class="ms-1 rounded-circle img-fluid" src="{% get_contact_photo status.uploaded_by.phone_number %}" alt="" style="max-width: 45px;">
+            <div class="d-flex flex-column ms-3 w-100">
+            <div class="d-flex justify-content-between">
+                <span>{{ status.uploaded_by.username }}</span>
+                <button class="btn btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" onclick="run_element_animation(this.nextElementSibling)"></button>
+                <ul class="dropdown-menu animated-dropdown">
+                <li><span class="dropdown-item edit-action"><i class="bi bi-pencil-square"></i> Mute contact</span></li>
+                </ul>
+            </div>
+            </div>
+        </li>
+    {% endfor %}
+  </ul>
