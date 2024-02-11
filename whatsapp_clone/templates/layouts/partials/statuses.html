@@ -1,4 +1,6 @@
 {% load static %}
 {% load filters %}
 
-<h1>STATUSES</h1>
+<nav class="d-flex align-items-center justify-content-between bg-body-tertiary">
+   <button class="action btn" hx-get="{% url 'display_user_ui' %}" hx-target="#chats-and-more"><i class="bi bi-arrow-left"></i></button>
+</nav>

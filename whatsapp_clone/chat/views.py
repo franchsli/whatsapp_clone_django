@@ -34,6 +34,24 @@ def get_chats(request):
     chats = user_instance.chats.all()
     return render(request, "layouts/partials/components/chats.html", {"chats": chats})
 
+def display_user_ui(request):
+    user_instance = User(id=request.user.id)
+    chats = user_instance.chats.all()
+    chat_form = ChatForm(initial={"users": user_instance})
+    contact_form = ContactForm(initial={"created_by": user_instance})
+    contacts = user_instance.contact_set.all().order_by("name")
+    print(user_instance.has_photo)
+    print(f"User:{user_instance.get_username()}")
+    return render(
+        request,
+        "layouts/partials/user_interface.html",
+        {
+            "user": user_instance,
+            "chats": chats,
+            "contacts": contacts,
+        },
+    )
+
 def display_chat(request, pk):
     user_instance = User(id=request.user.id)
     chat = Chat.objects.get(id=pk)

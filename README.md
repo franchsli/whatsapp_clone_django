@@ -4,6 +4,8 @@
 TODO:
     - Add status page.
     - Add status logic.
+    - **FIX** When you send a message while in the status page, the app displays the chats in all the app (app UI breaks).
+        Try to use conditions on the htmx.ajax that updates the chats.
     - Add muted status logic.
     - Create the search message logic (You can use FILTER ELEMENTS WITH `SHOW ... WHEN` from Hyperscript).
     - Add the archived chats logic.
