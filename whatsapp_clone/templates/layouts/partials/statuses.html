@@ -2,5 +2,25 @@
 {% load filters %}
 
 <nav class="d-flex align-items-center justify-content-between bg-body-tertiary">
-   <button class="action btn" hx-get="{% url 'display_user_ui' %}" hx-target="#chats-and-more"><i class="bi bi-arrow-left"></i></button>
+    <div class="row d-flex align-items-center p-3">
+        <button class="action btn col-auto ms-2" hx-get="{% url 'display_user_ui' %}" hx-target="#chats-and-more"><i class="bi bi-arrow-left"></i></button>
+        <span class="col-auto fs-5">Status</span>
+    </div>
 </nav>
+
+
+{% comment "My status" %}{% endcomment %}
+<div class="contact mt-3 d-flex flex-row" role="button" type="button">
+    <div class="p-2" id="profile-pic" data-user={{request.user.id}} data-username={{request.user.username}}>
+        {% if request.user.has_photo %}
+          <img class="ms-3 rounded-circle img-fluid" src="{{request.user.photo.url}}" alt="" style="max-width: 50px;" role="button">
+        {% else %}
+          <img class="ms-3 rounded-circle img-fluid" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNBNdcMDNS2r9df1IWFVc8AY0QNtfNhEJv7fGS5TdhUWrlBqfGu1PCCn9lKpL-FqF9dWc&usqp=CAU" alt="" style="max-width: 50px;" role="button">
+        {% endif %}
+    </div>
+
+    <div class="d-flex flex-column ms-3 w-100">
+        <span class="col-auto fs-6 mt-2">My status</span>
+        <span class="col-auto fs-6">No updates</span>
+    </div>
+</div>

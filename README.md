@@ -4,6 +4,8 @@
 TODO:
     - Add status page.
     - Add status logic.
+    - Add user no updates or updates logic (if the user has uploaded a status show it in my status,
+    otherwise show no updates in my status).
     - **FIX** When you send a message while in the status page, the app displays the chats in all the app (app UI breaks).
         Try to use conditions on the htmx.ajax that updates the chats.
     - Add muted status logic.
