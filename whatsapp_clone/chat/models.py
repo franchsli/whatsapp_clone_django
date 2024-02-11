@@ -65,3 +65,6 @@ class Status(models.Model):
             return self.image.url
         except ValueError:
             return False
+        
+    class Meta:
+        verbose_name_plural = 'statuses'

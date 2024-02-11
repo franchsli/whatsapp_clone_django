@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from .models import User, Chat, Contact, Message
-from .forms import ChatForm, ContactForm, MessageForm
+from django.utils import timezone
+from django.db.models import Q
+from .models import User, Chat, Contact, Message, Status
+from .forms import ChatForm, ContactForm, MessageForm, StatusForm
 
 
 @login_required
@@ -137,3 +139,26 @@ def update_chat_form(request):
     return render(
         request, "layouts/partials/chat_form_elements.html", {"contacts": contacts}
     )
+
+def get_statuses(request):
+    if request.method == 'GET':
+        user_instance = User(id=request.user.id)
+        contacts = user_instance.contact_set.all()
+        status_form = StatusForm(initial={'uploaded_by':user_instance, 'upload_date': timezone.now})
+        # Query for statuses uploaded by the user or the user's contacts
+        statuses = Status.objects.filter(
+            Q(uploaded_by=user_instance) | Q(uploaded_by__in=contacts.values('created_by'))
+        ).distinct()
+
+    elif request.method == 'POST':
+        user_instance = User(id=request.user.id)
+        contacts = user_instance.contact_set.all()
+        # Query for statuses uploaded by the user or the user's contacts
+        statuses = Status.objects.filter(
+            Q(uploaded_by=user_instance) | Q(uploaded_by__in=contacts.values('created_by'))
+        ).distinct()
+        status_form = StatusForm(request.POST, initial={'uploaded_by':user_instance, 'upload_date': timezone.now})
+        if status_form.is_valid():
+            status_form.save()
+    
+    return render(request, 'layouts/partials/statuses.html', {'contacts':contacts, 'statuses':statuses, 'status_form':status_form})
