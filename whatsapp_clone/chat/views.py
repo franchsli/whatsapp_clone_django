@@ -165,7 +165,7 @@ def get_statuses(request):
         status_form = StatusForm(initial={'uploaded_by':user_instance, 'upload_date': timezone.now})
         # Query for statuses uploaded by the user or the user's contacts
         statuses = Status.objects.filter(
-            Q(uploaded_by=user_instance) | Q(uploaded_by__in=contacts.values('created_by'))
+            Q(uploaded_by=user_instance) | Q(uploaded_by__phone_number__in=contacts.values('phone_number'))
         ).distinct()
 
     elif request.method == 'POST':
@@ -173,7 +173,7 @@ def get_statuses(request):
         contacts = user_instance.contact_set.all()
         # Query for statuses uploaded by the user or the user's contacts
         statuses = Status.objects.filter(
-            Q(uploaded_by=user_instance) | Q(uploaded_by__in=contacts.values('created_by'))
+            Q(uploaded_by=user_instance) | Q(uploaded_by__phone_number__in=contacts.values('phone_number'))
         ).distinct()
         status_form = StatusForm(request.POST, initial={'uploaded_by':user_instance, 'upload_date': timezone.now})
         if status_form.is_valid():

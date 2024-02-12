@@ -22,7 +22,7 @@ def to_list(value):
 @register.filter
 def last_message(value, data):
     messages_data = list(value.values_list(data, flat=True).order_by("date"))
-    return messages_data[-1]
+    return messages_data[-1] if len(messages_data) > 0 else ''
 
 
 @register.simple_tag
