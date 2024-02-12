@@ -4,12 +4,16 @@
 TODO:
     **DO RIGHT NOW**:
         -Make a carousel modal for the statuses.
+        - Display the contact list (iterate over contacts queryset then display the status in the modal.)
         Cliking on a contact that uploaded a status will display the modal carousel.
         - Remember to include the user_statuses variable HTML.
         - Remember to add something to delete statuses automatically every 24 hours.
         - Remember to make a button "area" that covers 75 of the li weight (contact status display).
         - [Status with text and images.](https://getbootstrap.com/docs/5.3/components/carousel/#captions)
         **You should also be aware that carousels in general can often cause usability and accessibility challenges.**
+        For performance reasons, carousels must be manually initialized using the carousel constructor method. Without initialization, some of the event listeners (specifically, the events needed touch/swipe support) will not be registered until a user has explicitly activated a control or indicator.
+
+The only exception are autoplaying carousels with the data-bs-ride="carousel" attribute as these are initialized automatically on page load. If you’re using autoplaying carousels with the data attribute, don’t explicitly initialize the same carousels with the constructor method.
     **REFERENCE**:
     - [db queries with Q](https://docs.djangoproject.com/en/5.0/topics/db/queries/#complex-lookups-with-q-objects)
     - [queryset operators](https://docs.djangoproject.com/en/5.0/ref/models/querysets/#operators-that-return-new-querysets)
