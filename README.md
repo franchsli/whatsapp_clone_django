@@ -3,10 +3,13 @@
 
 TODO:
     **DO RIGHT NOW**:
-        -Make a carrousel modal for the statuses.
-        Cliking on a contact that uploaded a status will display the modal carrousel.
+        -Make a carousel modal for the statuses.
+        Cliking on a contact that uploaded a status will display the modal carousel.
         - Remember to include the user_statuses variable HTML.
-        -Remmeber to add something to delete statuses automatically every 24 hours.
+        - Remember to add something to delete statuses automatically every 24 hours.
+        - Remember to make a button "area" that covers 75 of the li weight (contact status display).
+        - [Status with text and images.](https://getbootstrap.com/docs/5.3/components/carousel/#captions)
+        **You should also be aware that carousels in general can often cause usability and accessibility challenges.**
     **REFERENCE**:
     - [db queries with Q](https://docs.djangoproject.com/en/5.0/topics/db/queries/#complex-lookups-with-q-objects)
     - [queryset operators](https://docs.djangoproject.com/en/5.0/ref/models/querysets/#operators-that-return-new-querysets)
