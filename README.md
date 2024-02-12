@@ -3,8 +3,10 @@
 
 TODO:
     **DO RIGHT NOW**:
-        2. Add another variable to the get statuses view.
-        Split the statuses in two vars one are the user statuses and the other one the contacts statuses.
+        -Make a carrousel modal for the statuses.
+        Cliking on a contact that uploaded a status will display the modal carrousel.
+        - Remember to include the user_statuses variable HTML.
+        -Remmeber to add something to delete statuses automatically every 24 hours.
     **REFERENCE**:
     - [db queries with Q](https://docs.djangoproject.com/en/5.0/topics/db/queries/#complex-lookups-with-q-objects)
     - [queryset operators](https://docs.djangoproject.com/en/5.0/ref/models/querysets/#operators-that-return-new-querysets)

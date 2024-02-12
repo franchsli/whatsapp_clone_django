@@ -164,19 +164,19 @@ def get_statuses(request):
         contacts = user_instance.contact_set.all()
         status_form = StatusForm(initial={'uploaded_by':user_instance, 'upload_date': timezone.now})
         # Query for statuses uploaded by the user or the user's contacts
-        statuses = Status.objects.filter(
-            Q(uploaded_by=user_instance) | Q(uploaded_by__phone_number__in=contacts.values('phone_number'))
-        ).distinct()
+        user_statuses = Status.objects.filter(uploaded_by=user_instance)
+        contacts_statuses = Status.objects.filter(uploaded_by__phone_number__in=contacts.values('phone_number'))
+
+      
 
     elif request.method == 'POST':
         user_instance = User(id=request.user.id)
         contacts = user_instance.contact_set.all()
         # Query for statuses uploaded by the user or the user's contacts
-        statuses = Status.objects.filter(
-            Q(uploaded_by=user_instance) | Q(uploaded_by__phone_number__in=contacts.values('phone_number'))
-        ).distinct()
+        user_statuses = Status.objects.filter(uploaded_by=user_instance)
+        contacts_statuses = Status.objects.filter(uploaded_by__phone_number__in=contacts.values('phone_number'))
         status_form = StatusForm(request.POST, initial={'uploaded_by':user_instance, 'upload_date': timezone.now})
         if status_form.is_valid():
             status_form.save()
     
-    return render(request, 'layouts/partials/statuses.html', {'contacts':contacts, 'statuses':statuses, 'status_form':status_form})
+    return render(request, 'layouts/partials/statuses.html', {'contacts':contacts, 'user_statuses':user_statuses, 'contact_statuses':contacts_statuses , 'status_form':status_form})
