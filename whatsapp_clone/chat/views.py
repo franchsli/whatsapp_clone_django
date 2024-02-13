@@ -166,8 +166,7 @@ def get_statuses(request):
         # Query for statuses uploaded by the user or the user's contacts
         user_statuses = Status.objects.filter(uploaded_by=user_instance)
         contacts_statuses = Status.objects.filter(uploaded_by__phone_number__in=contacts.values('phone_number'))
-
-      
+        #contacts_statuses = Contact.objects.filter(created_by=user_instance, )
 
     elif request.method == 'POST':
         user_instance = User(id=request.user.id)

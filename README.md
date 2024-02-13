@@ -3,7 +3,9 @@
 
 TODO:
     **DO RIGHT NOW**:
-        -Make a carousel modal for the statuses.
+        - Make the add status form work.
+        - Display in the view the contacts that was created by the auth user and have uploaded a status.
+        - Make a carousel modal for the statuses.
         - Display the contact list (iterate over contacts queryset then display the status in the modal.)
         Cliking on a contact that uploaded a status will display the modal carousel.
         - Remember to include the user_statuses variable HTML.
