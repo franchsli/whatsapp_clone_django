@@ -22,6 +22,7 @@ The only exception are autoplaying carousels with the data-bs-ride="carousel" at
     - [queryset operators](https://docs.djangoproject.com/en/5.0/ref/models/querysets/#operators-that-return-new-querysets)
     - Add status page.
     - Add status logic.
+    **NOTE**: Status htmx transition changes need to be in CSS
     - Add user no updates or updates logic (if the user has uploaded a status show it in my status,
     otherwise show no updates in my status).
     - **FIX** When you send a message while in the status page, the app displays the chats in all the app (app UI breaks).
