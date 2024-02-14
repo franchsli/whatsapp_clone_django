@@ -11,8 +11,19 @@
     <div class="d-flex flex-column ms-3 w-100">
       <div class="d-flex justify-content-between">
         <span>{% get_contact_in_chat chat.users.all request.user 'name' %}</span>
-        {% comment %} <span>{{ chat.profiles.all }}</span> {% endcomment %}
-        <span class="last-chat-message-date">{{chat.message_set.all|last_message:'date'}}</span>
+        {% with last_message_date=chat.message_set.all|last_message:'date' %}
+          {% if last_message_date %}
+            {% with time_difference=last_message_date|timesince %}
+                {% if 'day' in time_difference %}
+                    {# More than a day has passed #}
+                    <span class="last-chat-message-date">{{ last_message_date }}</span>
+                {% else %}
+                    {# Less than a day has passed #}
+                    <span class="last-chat-message-date">{{ time_difference }} ago.</span>
+                {% endif %}
+            {% endwith %}
+          {% endif %}
+        {% endwith %}
       </div>
       {% comment "last message in the chat" %}{% endcomment %}
       <div class="d-flex justify-content-between">

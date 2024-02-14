@@ -3,6 +3,11 @@
 
 TODO:
     **DO RIGHT NOW**:
+        - Implement this:
+            + If the last_message in chat was 1 day ago or more but less than or equal a week display the day name
+            display the whole date otherwise.
+            + If the last_message in chat was less than 1 day ago display the hour (e.g. 11:58 AM)
+        - Implement the archived chats logic (archived booleand field, HTMX update and such).
         - Make the add status form work.
         - Display in the view the contacts that was created by the auth user and have uploaded a status.
         - Make a carousel modal for the statuses.
