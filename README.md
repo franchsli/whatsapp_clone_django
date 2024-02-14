@@ -64,6 +64,7 @@ Also don't forget to change the channel layer to redis.
 - Check why request.user.has_photo returns value but (in view) user_instance.has_photo returns False.
 - Optimize the js code (delete all the cloned code.)
 - Check what happens when contact user send a message and htmx.ajax runs anyway.
+- Make a way to handle image decoding (async way).
 - Make it so when a message gets updated or deleted, the other user will be able to see the message edition
     or deletion in real time. (This has to be with the way the chat  and it's message are displayed)
 - When a user is creating a new chat and selects more than a contact,

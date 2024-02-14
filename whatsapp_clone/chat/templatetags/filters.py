@@ -22,7 +22,21 @@ def to_list(value):
 @register.filter
 def last_message(value, data):
     messages_data = list(value.values_list(data, flat=True).order_by("date"))
-    return messages_data[-1] if len(messages_data) > 0 else ''
+
+    if data == 'text':
+        #if the last message text is an empty string, return 'image'
+        if len(messages_data) > 0 and len(messages_data[-1]) > 0: 
+            return messages_data[-1]
+        
+        elif len(messages_data) > 0 and len(messages_data[-1]) == 0:
+            return 'Photo 📷'
+        
+        else:
+            return ''
+    else:
+        return messages_data[-1] if len(messages_data) > 0 else ''
+
+
 
 
 @register.simple_tag

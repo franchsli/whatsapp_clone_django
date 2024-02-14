@@ -162,11 +162,17 @@ function create_instance(form, instance_type){
                     'contact_name': element.dataset.contactName,
                     'contact_phone_number': element.id
                 }))}}}
-    else {
+    else if(instance_type === 'create_contact'){
         socket.send(JSON.stringify({
             'type': instance_type,
             'contact_name': form_elements[1].value,
             'contact_phone_number': form_elements[2].value
+        }))
+    }
+    else{
+        socket.send(JSON.stringify({
+            'type': instance_type,
+            
         }))
     }
     return false

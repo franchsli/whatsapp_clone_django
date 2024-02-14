@@ -1,7 +1,7 @@
 from channels.generic.websocket import AsyncWebsocketConsumer
 from asgiref.sync import async_to_sync
 from channels.db import database_sync_to_async
-from .models import User, Chat, Message, Contact
+from .models import User, Chat, Message, Contact, Status
 from django.utils import timezone
 from django.core.files.base import ContentFile
 from phonenumber_field.phonenumber import PhoneNumber
@@ -149,7 +149,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
             image_bytes_data = base64.b64decode(image_string_data)
 
             image_file = ContentFile(image_bytes_data, f"user_message.{file_extension}")
-
             new_message.image = image_file
             new_message.save()
 
@@ -176,6 +175,10 @@ class ChatConsumer(AsyncWebsocketConsumer):
         new_contact = Contact.objects.create(
             name=contact_name, phone_number=phone.as_e164, created_by=self.user_instance
         )
+    
+    @database_sync_to_async
+    def create_status(self):
+        pass
 
     async def disconnect(self, close_code):
         await self.channel_layer.group_discard(self.room_group_name, self.channel_name)
