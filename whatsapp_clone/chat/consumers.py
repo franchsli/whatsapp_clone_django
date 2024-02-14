@@ -142,9 +142,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
             chat=chat_instance,
         )
         if image != "":
-            file_format, image_string_data = image.split(';base64,')
+            file_format, image_string_data = image.split(";base64,")
             # Get the file format extension (png, jpg, jpeg, etc.)
-            file_extension = file_format.split('/')[-1]  
+            file_extension = file_format.split("/")[-1]
 
             image_bytes_data = base64.b64decode(image_string_data)
 
@@ -175,10 +175,47 @@ class ChatConsumer(AsyncWebsocketConsumer):
         new_contact = Contact.objects.create(
             name=contact_name, phone_number=phone.as_e164, created_by=self.user_instance
         )
-    
+
     @database_sync_to_async
-    def create_status(self):
-        pass
+    def create_status(
+        self,
+        uploaded_by: Union[str, int],
+        text: Optional[str] = None,
+        image: Optional[str] = None,
+    ) -> None:
+        status_creator = User.objects.get(id=uploaded_by)
+        if text and image:
+            new_status = Status.objects.create(
+                uploaded_by=status_creator, text=text, upload_date=timezone.now()
+            )
+            file_format, image_string_data = image.split(";base64,")
+            # Get the file format extension (png, jpg, jpeg, etc.)
+            file_extension = file_format.split("/")[-1]
+
+            image_bytes_data = base64.b64decode(image_string_data)
+
+            image_file = ContentFile(image_bytes_data, f"user_status.{file_extension}")
+            new_status.image = image_file
+            new_status.save()
+
+        elif text and not image:
+            new_status = Status.objects.create(
+                uploaded_by=status_creator, text=text, upload_date=timezone.now()
+            )
+
+        else:
+            new_status = Status.objects.create(
+                uploaded_by=status_creator, upload_date=timezone.now()
+            )
+            file_format, image_string_data = image.split(";base64,")
+            # Get the file format extension (png, jpg, jpeg, etc.)
+            file_extension = file_format.split("/")[-1]
+
+            image_bytes_data = base64.b64decode(image_string_data)
+
+            image_file = ContentFile(image_bytes_data, f"user_status.{file_extension}")
+            new_status.image = image_file
+            new_status.save()
 
     async def disconnect(self, close_code):
         await self.channel_layer.group_discard(self.room_group_name, self.channel_name)

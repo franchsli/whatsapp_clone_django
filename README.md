@@ -70,6 +70,9 @@ Also don't forget to change the channel layer to redis.
 - When a user is creating a new chat and selects more than a contact,
     the modal form title should change to 'create group' and a new input should appear that has the label
         'group name'.
+- Check if create_status have problems wealing with the actual upload_date
+- Check if consumer functions arguments number can be reduced.
+- Split Chat Consumers into multiple consumers (e.g Status consumer and so)
 - Use for... empty in for loops if necessary. <https://docs.djangoproject.com/en/5.0/ref/templates/builtins/#for-empty>
 - Remove all unnecesary datasets and such from chats, contact templates.
 - Fix: When there's only a contact or chat in the list, its option dropdown seems weird.
