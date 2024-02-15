@@ -14,12 +14,15 @@
         {% with last_message_date=chat.message_set.all|last_message:'date' %}
           {% if last_message_date %}
             {% with time_difference=last_message_date|timesince %}
-                {% if 'day' in time_difference %}
-                    {# More than a day has passed #}
-                    <span class="last-chat-message-date">{{ last_message_date }}</span>
+                {% if 'day' in time_difference and 'week' not in time_difference %}
+                  {# Between 1 day and 1 week ago, display the day name #}
+                  <span class="last-chat-message-date">{{ last_message_date|date:"l" }}</span>
+                {% elif 'day' in time_difference %}
+                  {# More than a week ago, display the whole date #}
+                  <span class="last-chat-message-date">{{ last_message_date|date:"F j, Y" }}</span>
                 {% else %}
-                    {# Less than a day has passed #}
-                    <span class="last-chat-message-date">{{ time_difference }} ago.</span>
+                  {# Less than a day ago, display the hour #}
+                  <span class="last-chat-message-date">{{ last_message_date|date:"h:i A" }}</span>
                 {% endif %}
             {% endwith %}
           {% endif %}
