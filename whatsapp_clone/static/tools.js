@@ -4,13 +4,12 @@ async function get(url){
     return data
 }
 
-function post(url, data){
-    const csrf_token = document.querySelector('input[name="csrfmiddlewaretoken"]').value
+function post(url, data, token){
     fetch(url, {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {'content-type':'aplication/json', 
-        'X-CSRFToken': csrf_token }
+        'X-CSRFToken': token}
     })
     .then(response => console.log(response.json))
     .catch(error => console.log(error.message))
