@@ -3,6 +3,7 @@
 
 TODO:
     **DO RIGHT NOW**:
+        - **FIX** statuses.html (modals not showing well....)
         - Implement the archived chats logic (archived booleand field, HTMX update and such).
         - Make the add status form work.
         - Display in the view the contacts that was created by the auth user and have uploaded a status.
