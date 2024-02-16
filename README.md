@@ -62,6 +62,7 @@ Also don't forget to change the channel layer to redis.
 - Delete all console.logs
 - **OPTIMIZE REQUESTS**:
   - Combine related request views so the server calls reduce and do two jobs in the same response.
+  - Reduce the HTMX responsability and use consumers.
 - Check why request.user.has_photo returns value but (in view) user_instance.has_photo returns False.
 - Optimize the js code (delete all the cloned code.)
 - Check what happens when contact user send a message and htmx.ajax runs anyway.
@@ -79,3 +80,4 @@ Also don't forget to change the channel layer to redis.
 - Fix: When there's only a contact or chat in the list, its option dropdown seems weird.
 - Make it responsive.
 - Re think the delete message modal (Delete for everyone or for me logic).
+- Implement all of these features at [dj-chat](https://github.com/adilmohak/dj-chat?tab=readme-ov-file#current-features)
