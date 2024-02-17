@@ -36,7 +36,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form>
+          <form enctype="multipart/form-data">
             {% csrf_token %}
             {{ status_form | crispy}}
             <button class="btn btn-success" type="submit">Create status</button>
@@ -117,4 +117,4 @@
     {% empty %}
         <li class="d-flex align-items-center justify-content-center"><span>No statuses.</span></li>
     {% endfor %}
-  </ul>
+</ul>
