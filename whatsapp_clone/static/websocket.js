@@ -233,8 +233,10 @@ socket.addEventListener('open', () => {
             console.log(validation_message)
             validation_message.innerText = 'Please create a valid status'
         }
-        console.log(not_empty(status_form))
-        create_instance(status_form, 'create_status')
+
+        else{
+            create_instance(status_form, 'create_status')
+        }
         return false;
     }
 
