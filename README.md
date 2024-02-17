@@ -77,6 +77,7 @@ Also don't forget to change the channel layer to redis.
 - Split Chat Consumers into multiple consumers (e.g Status consumer and so)
 - Use for... empty in for loops if necessary. <https://docs.djangoproject.com/en/5.0/ref/templates/builtins/#for-empty>
 - Remove all unnecesary datasets and such from chats, contact templates.
+- Remove lal unnecesary csrf token inputs in forms.
 - Fix: When there's only a contact or chat in the list, its option dropdown seems weird.
 - Make it responsive.
 - Re think the delete message modal (Delete for everyone or for me logic).

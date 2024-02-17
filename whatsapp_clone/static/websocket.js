@@ -162,7 +162,7 @@ function create_instance(form, instance_type){
          //   'type': instance_type,
             
         //}))
-        console.log(`Text:${form_elements[2].value}\nImage:${form_elements[3].value}`)
+        console.log(`Text:${form_elements[1].value}\nImage:${form_elements[2].value}`)
     }
     return false
 }
@@ -228,6 +228,12 @@ socket.addEventListener('open', () => {
     }
 
     status_form.onsubmit = () => {
+        if (!not_empty(status_form)){
+            const validation_message = document.getElementById('status-validation-message')
+            console.log(validation_message)
+            validation_message.innerText = 'Please create a valid status'
+        }
+        console.log(not_empty(status_form))
         create_instance(status_form, 'create_status')
         return false;
     }

@@ -40,6 +40,10 @@ main,  #base {
   background-color: var(--bs-success-bg-subtle);
   align-self: self-end;
 }
+.validation-error{
+  font-size: 14px; 
+  color: var(--bs-danger);
+}
 
 .chat:hover, .contact:hover, .chat:hover button, .contact:hover button{
   background-color: var(--bs-tertiary-bg);

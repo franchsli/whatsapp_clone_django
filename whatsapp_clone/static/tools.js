@@ -174,7 +174,8 @@ function not_empty(form){
     console.log(form.elements)
     for (let index = 0; index < form.elements.length; index++) {
         let element = form.elements[index];
-        if (element.value.trim() != ''){
+        if (element.value.trim() != '' && element.type !== 'hidden'){
+            console.log(`ELEMENT:${element}\nVALUE:${element.value}\nTYPE${element.type}`)
             return true}
     }
     return false
