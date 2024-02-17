@@ -12,6 +12,7 @@ def chat(request):
     chats = user_instance.chats.all()
     chat_form = ChatForm(initial={"users": user_instance})
     contact_form = ContactForm(initial={"created_by": user_instance})
+    status_form = StatusForm(initial={'uploaded_by':user_instance, 'upload_date': timezone.now})
     contacts = user_instance.contact_set.all().order_by("name")
     print(user_instance.has_photo)
     print(f"User:{user_instance.get_username()}")
@@ -24,6 +25,7 @@ def chat(request):
             "chat_form": chat_form,
             "contacts": contacts,
             "contact_form": contact_form,
+            "status_form": status_form
         },
     )
 
