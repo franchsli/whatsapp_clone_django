@@ -1,4 +1,4 @@
-import { get, modifyNotification, scroll_to_bottom, create_message_html, toggleReadMore, showDropdown, run_element_animation } from  './tools.js';
+import { get, modifyNotification, scroll_to_bottom, create_message_html, toggleReadMore, showDropdown, run_element_animation, checked, not_empty } from  './tools.js';
 
 console.log("websocket.js is loaded!");
 const user = document.getElementById('profile-pic')
@@ -7,6 +7,7 @@ const socket = new WebSocket(`ws://${window.location.host}/`)
 const chat_form = document.getElementById("chat-creation-form")
 const chat_display = document.getElementById('chat-display')
 const contact_form = document.getElementById("contact-creation-form")
+const status_form = document.getElementById('status_form')
 const notification_audio = new Audio('static/Audio/app/message_received.mp3')
 const message_sent_audio = new Audio('static/Audio/app/message_sent.mp3')
 let actual_image_data
@@ -126,20 +127,7 @@ function previewImage() {
 }
 
 
-/**
- * Returns if at least one checkbox in the provided form was checked.
- * @param {HTMLFormElement} form The form that contains the checkboxs.
- * @returns {Boolean} Returns true if at least a checkbox in the form was checked, false otherwise.
- */
-function checked(form){
-    console.log(form.elements)
-    for (let index = 0; index < form.elements.length; index++) {
-        let element = form.elements[index];
-        if (element.checked){
-            return true}
-    }
-    return false
-}
+
 
 /**
  * Sends a message to the websocket for creating the desired instance using the given form data.
@@ -169,11 +157,12 @@ function create_instance(form, instance_type){
             'contact_phone_number': form_elements[2].value
         }))
     }
-    else{
-        socket.send(JSON.stringify({
-            'type': instance_type,
+    else if (instance_type === 'create_status'){
+       // socket.send(JSON.stringify({
+         //   'type': instance_type,
             
-        }))
+        //}))
+        console.log(`Text:${form_elements[2].value}\nImage:${form_elements[3].value}`)
     }
     return false
 }
@@ -235,6 +224,11 @@ socket.addEventListener('open', () => {
         // clears phonenumber and contact name fields.
         inputs[1].value = ''
         inputs[2].value = ''
+        return false;
+    }
+
+    status_form.onsubmit = () => {
+        create_instance(status_form, 'create_status')
         return false;
     }
 

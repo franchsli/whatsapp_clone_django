@@ -148,4 +148,39 @@ function run_element_animation(element){
     }
     
 }
-export {get, post, modifyNotification, scroll_to_bottom, create_message_html, toggleReadMore, showDropdown, run_element_animation}
+
+
+/**
+ * Returns if at least one checkbox in the provided form was checked.
+ * @param {HTMLFormElement} form The form that contains the checkboxs.
+ * @returns {Boolean} Returns true if at least a checkbox in the form was checked, false otherwise.
+ */
+function checked(form){
+    console.log(form.elements)
+    for (let index = 0; index < form.elements.length; index++) {
+        let element = form.elements[index];
+        if (element.checked){
+            return true}
+    }
+    return false
+}
+
+/**
+ * Returns true if any input in the provided form is not empty, false otherwise.
+ * @param {HTMLFormElement} form 
+ * @returns {Boolean}
+ */
+function not_empty(form){
+    console.log(form.elements)
+    for (let index = 0; index < form.elements.length; index++) {
+        let element = form.elements[index];
+        if (element.value.trim() != ''){
+            return true}
+    }
+    return false
+
+}
+
+
+
+export {get, post, modifyNotification, scroll_to_bottom, create_message_html, toggleReadMore, showDropdown, run_element_animation, checked, not_empty}

@@ -54,7 +54,6 @@ The only exception are autoplaying carousels with the data-bs-ride="carousel" at
 - Limit the contact name display on chat list
 - Test if edit/delete contact and delete chat works in any case.
 - Test  both the chat list and statuses max height.
-- Remove csrf token inputs (if you need them, use django csrf variable instead)
 - Implement something to store messages in the localStorage so the API calls get reduced.
 (The localSotrage will sotre messages but the API calls will be still necessary for getting the latest messages)
 **IMPLEMENT**
