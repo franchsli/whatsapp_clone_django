@@ -174,7 +174,7 @@ def get_statuses(request):
     
     return render(request, 'layouts/partials/statuses.html', {'contacts':contacts, 'user_statuses':user_statuses, 'contact_statuses':contacts_statuses})
 
-def create_status(request, text:str='', image:str=''):
+def create_status(request, text:str, image:str):
     user_instance = User(id=request.user.id)
     contacts = user_instance.contact_set.all()
     # Query for statuses uploaded by the user or the user's contacts
