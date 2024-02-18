@@ -164,20 +164,18 @@ def get_statuses(request):
     if request.method == 'GET':
         user_instance = User(id=request.user.id)
         contacts = user_instance.contact_set.all()
-        status_form = StatusForm(initial={'uploaded_by':user_instance, 'upload_date': timezone.now})
         # Query for statuses uploaded by the user or the user's contacts
         user_statuses = Status.objects.filter(uploaded_by=user_instance)
         contacts_statuses = Status.objects.filter(uploaded_by__phone_number__in=contacts.values('phone_number'))
-        #contacts_statuses = Contact.objects.filter(created_by=user_instance, )
-
-    elif request.method == 'POST':
-        user_instance = User(id=request.user.id)
-        contacts = user_instance.contact_set.all()
-        # Query for statuses uploaded by the user or the user's contacts
-        user_statuses = Status.objects.filter(uploaded_by=user_instance)
-        contacts_statuses = Status.objects.filter(uploaded_by__phone_number__in=contacts.values('phone_number'))
-        status_form = StatusForm(request.POST, initial={'uploaded_by':user_instance, 'upload_date': timezone.now})
-        if status_form.is_valid():
-            status_form.save()
+        #contacts_statuses = Contact.objects.filter(created_by=user_instance, 
     
-    return render(request, 'layouts/partials/statuses.html', {'contacts':contacts, 'user_statuses':user_statuses, 'contact_statuses':contacts_statuses , 'status_form':status_form})
+    return render(request, 'layouts/partials/statuses.html', {'contacts':contacts, 'user_statuses':user_statuses, 'contact_statuses':contacts_statuses})
+
+def create_status(request, text:str='', image:str=''):
+    user_instance = User(id=request.user.id)
+    new_status = Status.objects.create(uploaded_by=user_instance, text=text, upload_date= timezone.now())
+    contacts = user_instance.contact_set.all()
+    # Query for statuses uploaded by the user or the user's contacts
+    user_statuses = Status.objects.filter(uploaded_by=user_instance)
+    contacts_statuses = Status.objects.filter(uploaded_by__phone_number__in=contacts.values('phone_number'))
+    return render(request, 'layouts/partials/statuses.html', {'contacts':contacts, 'user_statuses':user_statuses, 'contact_statuses':contacts_statuses})

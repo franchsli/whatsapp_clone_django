@@ -126,9 +126,6 @@ function previewImage() {
     }
 }
 
-
-
-
 /**
  * Sends a message to the websocket for creating the desired instance using the given form data.
  * @param {HTMLFormElement} form The HTML form element that contains all the inputs data to be set to the websocket.
@@ -160,8 +157,11 @@ function create_instance(form, instance_type){
     else if (instance_type === 'create_status'){
        // socket.send(JSON.stringify({
          //   'type': instance_type,
-            
+             
         //}))
+        htmx.ajax('POST', '/statuses/', {target:'#myDiv', swap:'innerHTML', headers: {
+            'X-CSRFToken': form.querySelector('input[name="csrfmiddlewaretoken"]').value
+        }})
         console.log(`Text:${form_elements[1].value}\nImage:${form_elements[2].value}`)
     }
     return false

@@ -18,4 +18,5 @@ urlpatterns = [
     path('delete_message/<int:chat_id>/<int:message_id>', views.delete_message, name='delete_message'),
     path('update_chat_form/', views.update_chat_form, name='update_chat_form'),
     path('statuses/', views.get_statuses, name='statuses'),
+    path('create_status/<str:text>/<str:image>', views.create_status, name='create_status'),
 ]
