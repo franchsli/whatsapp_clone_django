@@ -3,6 +3,9 @@
 
 TODO:
     **DO RIGHT NOW**:
+        - Make the add status form work:
+            + make it so the url parameters are optional.
+            The post request will update the entire statuses.html (use HTMX like always).
         - Implement the archived chats logic (archived booleand field, HTMX update and such).
         - Display in the view the contacts that was created by the auth user and have uploaded a status.
         - Make a carousel modal for the statuses.
