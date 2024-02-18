@@ -155,11 +155,8 @@ function create_instance(form, instance_type){
         }))
     }
     else if (instance_type === 'create_status'){
-       // socket.send(JSON.stringify({
-         //   'type': instance_type,
-             
-        //}))
-        htmx.ajax('POST', '/statuses/', {target:'#myDiv', swap:'innerHTML', headers: {
+        htmx.ajax('POST', `/create_status/${form_elements[1].value}/${form_elements[2].value}`, 
+        {target:'#chats-and-more', swap:'innerHTML', headers: {
             'X-CSRFToken': form.querySelector('input[name="csrfmiddlewaretoken"]').value
         }})
         console.log(`Text:${form_elements[1].value}\nImage:${form_elements[2].value}`)

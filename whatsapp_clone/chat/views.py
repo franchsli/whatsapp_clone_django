@@ -2,8 +2,11 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.db.models import Q
+from django.core.files.base import ContentFile
 from .models import User, Chat, Contact, Message, Status
 from .forms import ChatForm, ContactForm, MessageForm, StatusForm
+import base64
+
 
 
 @login_required
@@ -173,9 +176,26 @@ def get_statuses(request):
 
 def create_status(request, text:str='', image:str=''):
     user_instance = User(id=request.user.id)
-    new_status = Status.objects.create(uploaded_by=user_instance, text=text, upload_date= timezone.now())
     contacts = user_instance.contact_set.all()
     # Query for statuses uploaded by the user or the user's contacts
     user_statuses = Status.objects.filter(uploaded_by=user_instance)
     contacts_statuses = Status.objects.filter(uploaded_by__phone_number__in=contacts.values('phone_number'))
+    # new status creation
+    if image != '' or text != '':
+        new_status = Status.objects.create(uploaded_by=user_instance, upload_date=timezone.now())
+        if text != '':
+            new_status.text = text
+            new_status.save()
+        
+        if image != '':
+            file_format, image_string_data = image.split(";base64,")
+                # Get the file format extension (png, jpg, jpeg, etc.)
+            file_extension = file_format.split("/")[-1]
+            image_bytes_data = base64.b64decode(image_string_data)
+
+            image_file = ContentFile(image_bytes_data, f"user_status.{file_extension}")
+            new_status.image = image_file
+            new_status.save()
+    
     return render(request, 'layouts/partials/statuses.html', {'contacts':contacts, 'user_statuses':user_statuses, 'contact_statuses':contacts_statuses})
+
