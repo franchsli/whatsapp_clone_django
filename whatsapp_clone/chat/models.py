@@ -31,6 +31,8 @@ class Contact(models.Model):
 
 class Chat(models.Model):
     users = models.ManyToManyField(User, related_name='chats')
+    archived = models.BooleanField(default=False)
+
 
 
 class Message(models.Model):
