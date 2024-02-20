@@ -44,6 +44,7 @@ The only exception are autoplaying carousels with the data-bs-ride="carousel" at
     - Redesign the login and register views.
     - Add contact form validation.
     - Reconsider the exceptions.py file.
+    - Check what happens when a contact with a unexistent phone_number (user not in database) is created.
     - Add chat wallpapers.
     - Rework show_dropdown animation.
     +**FIX** When scroll to bottom doesn't scroll to the botom anymore.

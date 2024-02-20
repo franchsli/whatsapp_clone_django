@@ -29,13 +29,13 @@
 </div>
 
 <ul id="contact-statuses-list" class="scroll-section list-group list-group-flush overflow-y-scroll mt-3" style="max-height: 459px;">
-    {% for status in contact_statuses %}
+    {% for contact, statuses in contacts_with_statuses.items %}
         <li class="list-group-item p-3  d-flex flex-inline align-items-center contact" role="button" data-status={{status.id}}>
             {% comment "status profile photo" %}{% endcomment %}
-            <img class="ms-1 rounded-circle img-fluid" src="{% get_contact_photo status.uploaded_by.phone_number %}" alt="" style="max-width: 45px;" type="button" data-bs-toggle="modal" data-bs-target="#status-modal{{ status.id }}">
+            <img class="ms-1 rounded-circle img-fluid" src="{% get_contact_photo contact.phone_number %}" alt="" style="max-width: 45px;" type="button" data-bs-toggle="modal" data-bs-target="#status-modal{{ contact.id }}">
             <div class="d-flex flex-column ms-3 w-100">
             <div class="d-flex justify-content-between">
-                <span>{{ status.uploaded_by.username }}</span>
+                <span>{{ contact.name }}</span>
                 <button class="btn btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" onclick="run_element_animation(this.nextElementSibling)"></button>
                 <ul class="dropdown-menu animated-dropdown">
                 <li><span class="dropdown-item edit-action"><i class="bi bi-pencil-square"></i> Mute contact</span></li>
@@ -45,7 +45,7 @@
         </li>
         
         <!--Status Modal -->
-        <div class="modal fade" id="status-modal{{ status.id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="status-modal{{ status.id }}Label" aria-hidden="true">
+        <div class="modal fade" id="status-modal{{ contact.id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="status-modal{{ contact.id }}Label" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
