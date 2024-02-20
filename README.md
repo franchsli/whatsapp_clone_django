@@ -3,6 +3,9 @@
 
 TODO:
     **DO RIGHT NOW**:
+        - Make the carousel indicators number depend on how many
+        statuses are in the 'contact' key if there are 5 statuses then
+        it should work like for i in range(5) (see statuses.html)
         - Make the add status form work:
             + make it so the url parameters are optional (or check how you sent images from that input [image input]).
             The post request will update the entire statuses.html (use HTMX like always).
