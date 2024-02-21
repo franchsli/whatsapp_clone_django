@@ -3,20 +3,16 @@
 
 TODO:
     **DO RIGHT NOW**:
-        - Make the carousel indicators number depend on how many
-        statuses are in the 'contact' key if there are 5 statuses then
-        it should work like for i in range(5) (see statuses.html)
+        - Implement the archived chats logic (archived booleand field, HTMX update and such).
+        - Make the status view work:
+            + Make the silence contact logic (booleand field)
+            + Give carousel-caption a background color (black preferably) and text color (white)
+            to highlight the status text (ONLY IF HAVE TEXT just display the image otherwise)
         - Make the add status form work:
             + make it so the url parameters are optional (or check how you sent images from that input [image input]).
             The post request will update the entire statuses.html (use HTMX like always).
             + Make it so when you click a contact (in the statuses view, javascript loads the carousel
             with the statuses uploaded by the user with the contact phone_number)
-        - Implement the archived chats logic (archived booleand field, HTMX update and such).
-        - Display in the view the contacts that was created by the auth user and have uploaded a status.
-        - Make a carousel modal for the statuses.
-        - Display the contact list (iterate over contacts queryset then display the status in the modal.)
-        Cliking on a contact that uploaded a status will display the modal carousel.
-        - Remember to include the user_statuses variable HTML.
         - Remember to add something to delete statuses automatically every 24 hours.
         - Remember to make a button "area" that covers 75 of the li weight (contact status display).
         - [Status with text and images.](https://getbootstrap.com/docs/5.3/components/carousel/#captions)
@@ -30,7 +26,6 @@ The only exception are autoplaying carousels with the data-bs-ride="carousel" at
     - [queryset operators](https://docs.djangoproject.com/en/5.0/ref/models/querysets/#operators-that-return-new-querysets)
     - Add status page.
     - Add status logic.
-    **NOTE**: Status htmx transition changes need to be in CSS
     - Add user no updates or updates logic (if the user has uploaded a status show it in my status,
     otherwise show no updates in my status).
     - **FIX** When you send a message while in the status page, the app displays the chats in all the app (app UI breaks).
@@ -62,8 +57,7 @@ The only exception are autoplaying carousels with the data-bs-ride="carousel" at
 - Rework all the chat.views logics.
 - Limit the contact name display on chat list
 - Test if edit/delete contact and delete chat works in any case.
-- Test  both the chat list and statuses max height.
-- Implement something to store messages in the localStorage so the API calls get reduced.
+- Test both the chat list and statuses max height.
 (The localSotrage will sotre messages but the API calls will be still necessary for getting the latest messages)
 **IMPLEMENT**
 READ THE CHATGPT Django Channels Websocket chat for IMPORTANT improvement.
@@ -86,7 +80,6 @@ Also don't forget to change the channel layer to redis.
 - Split Chat Consumers into multiple consumers (e.g Status consumer and so)
 - Use for... empty in for loops if necessary. <https://docs.djangoproject.com/en/5.0/ref/templates/builtins/#for-empty>
 - Remove all unnecesary datasets and such from chats, contact templates.
-- Remove lal unnecesary csrf token inputs in forms.
 - Fix: When there's only a contact or chat in the list, its option dropdown seems weird.
 - Make it responsive.
 - Re think the delete message modal (Delete for everyone or for me logic).
