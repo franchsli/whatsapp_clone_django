@@ -50,6 +50,7 @@ The only exception are autoplaying carousels with the data-bs-ride="carousel" at
     - Check what happens when a contact with a unexistent phone_number (user not in database) is created.
     - Add chat wallpapers.
     - Rework show_dropdown animation.
+    - When you go to status page and then go back to the normal UI, the theme icon gets reseted.
     +**FIX** When scroll to bottom doesn't scroll to the botom anymore.
     **THIS IS WHAT I THINK IT HAPPENS**:
         The chat gets displayed but somehow the read more script doesn't finished running.
