@@ -193,6 +193,8 @@ def get_statuses(request):
             contact = contacts.filter(phone_number=status.uploaded_by.phone_number).first()
             if contact:
                 contacts_with_statuses.setdefault(contact, []).append(status)
+        print(len([value for value in contacts_with_statuses.values()]))
+        print([value for value in contacts_with_statuses.values()])
        
 
     return render(
