@@ -2,7 +2,7 @@
 {% load static %}
 
 
-<ul id="chat-list" class="scroll-section list-group list-group-flush overflow-y-scroll" style="max-height: 615px;">
+<ul id="chat-list" class="scroll-section list-group list-group-flush overflow-y-scroll" style="max-height: 590px;">
   {% for chat in chats %}
   <li onclick="summon_chat(this);" hx-get="{% url 'display_chat' chat.id %}" hx-trigger="click" hx-target="#chat-display" id="chat-{{chat.id}}" class="list-group-item p-3  d-flex flex-inline align-items-center chat" role="button" data-chat={{chat.id}} data-contact={% exclude_user_tag chat.users.all request.user 'username' %} data-contact-phone={% exclude_user_tag chat.users.all request.user 'phone_number' %}>
     {% comment "contact profile photo" %}{% endcomment %}
@@ -42,5 +42,46 @@
       </div>
     </div>
   </li>
+
+  <li class="list-group-item p-3  d-flex flex-inline align-items-center chat" role="button">LMAO NIGGAAAAAA</li>
+  <li class="list-group-item p-3  d-flex flex-inline align-items-center chat" role="button">LMAO NIGGAAAAAA</li>
+  <li class="list-group-item p-3  d-flex flex-inline align-items-center chat" role="button">LMAO NIGGAAAAAA</li>
+  <li class="list-group-item p-3  d-flex flex-inline align-items-center chat" role="button">LMAO NIGGAAAAAA</li>
+  <li class="list-group-item p-3  d-flex flex-inline align-items-center chat" role="button">LMAO NIGGAAAAAA</li>
+  <li class="list-group-item p-3  d-flex flex-inline align-items-center chat" role="button">LMAO NIGGAAAAAA</li>
+  <li class="list-group-item p-3  d-flex flex-inline align-items-center chat" role="button">LMAO NIGGAAAAAA</li>
+  <li class="list-group-item p-3  d-flex flex-inline align-items-center chat" role="button">LMAO NIGGAAAAAA</li>
+  <li class="list-group-item p-3  d-flex flex-inline align-items-center chat" role="button">LMAO NIGGAAAAAA</li>
+  <li class="list-group-item p-3  d-flex flex-inline align-items-center chat" role="button">LMAO NIGGAAAAAA</li>
+  <li class="list-group-item p-3  d-flex flex-inline align-items-center chat" role="button">LMAO NIGGAAAAAA</li>
+  <li class="list-group-item p-3  d-flex flex-inline align-items-center chat" role="button">LMAO NIGGAAAAAA</li>
+  <li class="list-group-item p-3  d-flex flex-inline align-items-center chat" role="button">LMAO NIGGAAAAAA</li>
+  <li class="list-group-item p-3  d-flex flex-inline align-items-center chat" role="button">LMAO NIGGAAAAAA</li>
+  <li class="list-group-item p-3  d-flex flex-inline align-items-center chat" role="button">LMAO NIGGAAAAAA</li>
+  <li class="list-group-item p-3  d-flex flex-inline align-items-center chat" role="button">LMAO NIGGAAAAAA</li>
+  <li class="list-group-item p-3  d-flex flex-inline align-items-center chat" role="button">LMAO NIGGAAAAAA</li>
+  <li class="list-group-item p-3  d-flex flex-inline align-items-center chat" role="button">LMAO NIGGAAAAAA</li>
+  <li class="list-group-item p-3  d-flex flex-inline align-items-center chat" role="button">LMAO NIGGAAAAAA</li>
+  <li class="list-group-item p-3  d-flex flex-inline align-items-center chat" role="button">LMAO NIGGAAAAAA</li>
+  <li class="list-group-item p-3  d-flex flex-inline align-items-center chat" role="button">LMAO NIGGAAAAAA</li>
+  <li class="list-group-item p-3  d-flex flex-inline align-items-center chat" role="button">LMAO NIGGAAAAAA</li>
+  <li class="list-group-item p-3  d-flex flex-inline align-items-center chat" role="button">LMAO NIGGAAAAAA</li>
+  <li class="list-group-item p-3  d-flex flex-inline align-items-center chat" role="button">LMAO NIGGAAAAAA</li>
+  <li class="list-group-item p-3  d-flex flex-inline align-items-center chat" role="button">LMAO NIGGAAAAAA</li>
+  <li class="list-group-item p-3  d-flex flex-inline align-items-center chat" role="button">LMAO NIGGAAAAAA</li>
+  <li class="list-group-item p-3  d-flex flex-inline align-items-center chat" role="button">LMAO NIGGAAAAAA</li>
+  <li class="list-group-item p-3  d-flex flex-inline align-items-center chat" role="button">LMAO NIGGAAAAAA</li>
+  <li class="list-group-item p-3  d-flex flex-inline align-items-center chat" role="button">LMAO NIGGAAAAAA</li>
+  <li class="list-group-item p-3  d-flex flex-inline align-items-center chat" role="button">LMAO NIGGAAAAAA</li>
+  <li class="list-group-item p-3  d-flex flex-inline align-items-center chat" role="button">LMAO NIGGAAAAAA</li>
+  <li class="list-group-item p-3  d-flex flex-inline align-items-center chat" role="button">LMAO NIGGAAAAAA</li>
+  <li class="list-group-item p-3  d-flex flex-inline align-items-center chat" role="button">LMAO NIGGAAAAAA</li>
+  <li class="list-group-item p-3  d-flex flex-inline align-items-center chat" role="button">LMAO NIGGAAAAAA</li>
+  <li class="list-group-item p-3  d-flex flex-inline align-items-center chat" role="button">LMAO NIGGAAAAAA</li>
+  <li class="list-group-item p-3  d-flex flex-inline align-items-center chat" role="button">LMAO NIGGAAAAAA</li>
+  <li class="list-group-item p-3  d-flex flex-inline align-items-center chat" role="button">LMAO NIGGAAAAAA</li>
+  <li class="list-group-item p-3  d-flex flex-inline align-items-center chat" role="button">LMAO NIGGAAAAAA</li>
+  <li class="list-group-item p-3  d-flex flex-inline align-items-center chat" role="button">LMAO NIGGAAAAAA</li>
+  <li class="list-group-item p-3  d-flex flex-inline align-items-center chat" role="button">LMAO NIGGAAAAAA</li>
   {% endfor %}
 </ul>
