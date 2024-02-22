@@ -33,7 +33,8 @@
     </nav>
   </nav>
   {% comment "archived chats" %}{% endcomment %}
-  <div role="button" type="button" class="btn border d-flex align-items-center justify-content-between p-3">
+  <div role="button" type="button" class="btn border d-flex align-items-center justify-content-between p-3"
+  hx-get="{% url 'archived_chats' %}" hx-trigger="click" hx-target="#chats-and-more">
     <div>
       <i class="bi bi-archive"></i>
       <span class="ms-3">Archived</span>

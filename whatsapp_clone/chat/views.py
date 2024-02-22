@@ -40,6 +40,11 @@ def get_chats(request):
     chats = user_instance.chats.filter(archived=False)
     return render(request, "layouts/partials/components/chats.html", {"chats": chats})
 
+def get_archived_chats(request):
+    user_instance = User(id=request.user.id)
+    archived_chats = user_instance.chats.filter(archived=True)
+    return render(request, "layouts/partials/archived_chats.html", {"chats": archived_chats})
+
 
 def display_user_ui(request):
     user_instance = User(id=request.user.id)
@@ -245,6 +250,3 @@ def create_status(request, text: str, image: str):
             "contact_statuses": contacts_statuses,
         },
     )
-
-def get_archived_chats(request):
-    pass

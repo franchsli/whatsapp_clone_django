@@ -33,6 +33,11 @@
         <button class="btn btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" onclick="run_element_animation(this.nextElementSibling)"></button>
         <ul class="dropdown-menu animated-dropdown">
           <li><span class="dropdown-item delete-action" hx-delete="{% url 'delete_chat' chat.id %}" hx-confirm="Are you sure you want to delete this chat?" hx-swap="outerHTML" hx-target="#chat-list" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' ><i class="bi bi-trash3"></i> Delete chat</span></li>
+          {% if chat.archived %}
+            <li><span class="dropdown-item edit-action"><i class="bi bi-box-arrow-in-up"></i> Unarchive chat</span></li>
+          {% else %}
+            <li><span class="dropdown-item edit-action"><i class="bi bi-archive"></i> Archive chat</span></li>
+          {% endif %}
         </ul>
       </div>
     </div>
