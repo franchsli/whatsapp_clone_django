@@ -1,56 +1,46 @@
 
 # Whatsapp clone
 
-TODO:
-    **DO RIGHT NOW**:
-        - Implement the archived chats logic (archived booleand field, HTMX update and such).
-        - Make the status view work:
-            + Make the silence contact logic (booleand field)
-            + Give carousel-caption a background color (black preferably) and text color (white)
-            to highlight the status text (ONLY IF HAVE TEXT just display the image otherwise)
-        - Make the add status form work:
-            + make it so the url parameters are optional (or check how you sent images from that input [image input]).
-            The post request will update the entire statuses.html (use HTMX like always).
-            + Make it so when you click a contact (in the statuses view, javascript loads the carousel
-            with the statuses uploaded by the user with the contact phone_number)
-        - Remember to add something to delete statuses automatically every 24 hours.
-        - Remember to make a button "area" that covers 75 of the li weight (contact status display).
-        - [Status with text and images.](https://getbootstrap.com/docs/5.3/components/carousel/#captions)
-        **You should also be aware that carousels in general can often cause usability and accessibility challenges.**
-        For performance reasons, carousels must be manually initialized using the carousel constructor method. Without initialization, some of the event listeners (specifically, the events needed touch/swipe support) will not be registered until a user has explicitly activated a control or indicator.
+## DO RIGHT NOW
 
-The only exception are autoplaying carousels with the data-bs-ride="carousel" attribute as these are initialized automatically on page load. If you’re using autoplaying carousels with the data attribute, don’t explicitly initialize the same carousels with the constructor method.
-    **REFERENCE**:
-    - [Outer queryset](https://docs.djangoproject.com/en/5.0/ref/models/expressions/#referencing-columns-from-the-outer-queryset)
-    - [db queries with Q](https://docs.djangoproject.com/en/5.0/topics/db/queries/#complex-lookups-with-q-objects)
-    - [queryset operators](https://docs.djangoproject.com/en/5.0/ref/models/querysets/#operators-that-return-new-querysets)
-    - Add status page.
-    - Add status logic.
-    - Add user no updates or updates logic (if the user has uploaded a status show it in my status,
-    otherwise show no updates in my status).
-    - **FIX** When you send a message while in the status page, the app displays the chats in all the app (app UI breaks).
-        Try to use conditions on the htmx.ajax that updates the chats.
-    - Add muted status logic.
-    - Create the search message logic (You can use FILTER ELEMENTS WITH `SHOW ... WHEN` from Hyperscript).
-    - Add the archived chats logic.
-    - Add read and unread logic.
-    - Add emojis in messages (emojis list...).
-    - Read non-standar htmx events  for messages [hx-trigger](https://htmx.org/attributes/hx-trigger/)
-    - Users shouldn't be able to create TWO OR MORE chats with the same user.
-    - Write test for the exceptions and functions.
-    - Add groups chats.
-    - Redesign the login and register views.
-    - Add contact form validation.
-    - Reconsider the exceptions.py file.
-    - Check what happens when a contact with a unexistent phone_number (user not in database) is created.
-    - Add chat wallpapers.
-    - Rework show_dropdown animation.
-    - When you go to status page and then go back to the normal UI, the theme icon gets reseted.
-    +**FIX** When scroll to bottom doesn't scroll to the botom anymore.
-    **THIS IS WHAT I THINK IT HAPPENS**:
-        The chat gets displayed but somehow the read more script doesn't finished running.
-        but i don't know whats happening. When the read more isn't in the 'scroll view' (user can't see it)
-        the scroll_to_bottom runs as expected....
+- Make the silence contact logic (booleand field)
+- Give carousel-caption a background color (black preferably) and text color (white)
+    to highlight the status text (ONLY IF HAVE TEXT just display the image otherwise)
+- Make the add status form work:
+- make it so the url parameters are optional (or check how you sent images from that input [image input]).
+    The post request will update the entire statuses.html (use HTMX like always).
+- Make it so when you click a contact (in the statuses view, javascript loads the carousel
+    with the statuses uploaded by the user with the contact phone_number)
+- Add something to delete statuses automatically every 24 hours.
+- Remember to make a button "area" that covers 75 of the li weight (contact status display).
+
+## ANOTHER THINGS TO DO
+
+- Add user no updates or updates logic (if the user has uploaded a status show it in my status,
+otherwise show no updates in my status).
+- **FIX** When you send a message while in the status page, the app displays the chats in all the app (app UI breaks).
+    Try to use conditions on the htmx.ajax that updates the chats.
+- Add muted status logic.
+- Create the search message logic (You can use FILTER ELEMENTS WITH `SHOW ... WHEN` from Hyperscript).
+- Add the archived chats logic.
+- Add read and unread logic.
+- Add emojis in messages (emojis list...).
+- Read non-standar htmx events  for messages [hx-trigger](https://htmx.org/attributes/hx-trigger/)
+- Users shouldn't be able to create TWO OR MORE chats with the same user.
+- Write test for the exceptions and functions.
+- Add groups chats.
+- Redesign the login and register views.
+- Add contact form validation.
+- Reconsider the exceptions.py file.
+- Check what happens when a contact with a unexistent phone_number (user not in database) is created.
+- Add chat wallpapers.
+- Rework show_dropdown animation.
+- When you go to status page and then go back to the normal UI, the theme icon gets reseted.
++**FIX** When scroll to bottom doesn't scroll to the botom anymore.
+**THIS IS WHAT I THINK IT HAPPENS**:
+    The chat gets displayed but somehow the read more script doesn't finished running.
+    but i don't know whats happening. When the read more isn't in the 'scroll view' (user can't see it)
+    the scroll_to_bottom runs as expected....
 
 ## Improvements
 
@@ -85,3 +75,14 @@ Also don't forget to change the channel layer to redis.
 - Make it responsive.
 - Re think the delete message modal (Delete for everyone or for me logic).
 - Implement all of these features at [dj-chat](https://github.com/adilmohak/dj-chat?tab=readme-ov-file#current-features)
+
+**REFERENCE**:
+
+- [Outer queryset](https://docs.djangoproject.com/en/5.0/ref/models/expressions/#referencing-columns-from-the-outer-queryset)
+- [db queries with Q](https://docs.djangoproject.com/en/5.0/topics/db/queries/#complex-lookups-with-q-objects)
+- [queryset operators](https://docs.djangoproject.com/en/5.0/ref/models/querysets/#operators-that-return-new-querysets)
+- [Status with text and images.](https://getbootstrap.com/docs/5.3/components/carousel/#captions)
+
+**You should also be aware that carousels in general can often cause usability and accessibility challenges.**
+For performance reasons, carousels must be manually initialized using the carousel constructor method. Without initialization, someof theevent listeners (specifically, the events needed touch/swipe support) will not be registered until a user has explicitlyactivated acontrol or indicator.
+The only exception are autoplaying carousels with the data-bs-ride="carousel" attribute as these are initialized automatically on page load.If you’re using autoplaying carousels with the data attribute, don’t explicitly initialize the same carousels with the constructor method.
