@@ -23,7 +23,9 @@ otherwise show no updates in my status).
 - Add muted status logic.
 - Create the search message logic (You can use FILTER ELEMENTS WITH `SHOW ... WHEN` from Hyperscript).
 - Add the archived chats logic.
-- Add read and unread logic.
+- Add read and unread logic (you can implement it that any message (in the viewport makes a
+PATCH request to update the 'read' field in the message model from False to True [This makes the user needs to scroll down or up
+to make the PATCH request for all the new messages] only if it is already False [To prevent unnecesary API calls])).
 - Add emojis in messages (emojis list...).
 - Read non-standar htmx events  for messages [hx-trigger](https://htmx.org/attributes/hx-trigger/)
 - Users shouldn't be able to create TWO OR MORE chats with the same user.
@@ -66,7 +68,7 @@ Also don't forget to change the channel layer to redis.
 - When a user is creating a new chat and selects more than a contact,
     the modal form title should change to 'create group' and a new input should appear that has the label
         'group name'.
-- Check if create_status have problems wealing with the actual upload_date
+- Check if create_status have problems dealing with the actual upload_date
 - Check if consumer functions arguments number can be reduced.
 - Split Chat Consumers into multiple consumers (e.g Status consumer and so)
 - Use for... empty in for loops if necessary. <https://docs.djangoproject.com/en/5.0/ref/templates/builtins/#for-empty>
