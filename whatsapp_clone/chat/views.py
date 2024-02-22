@@ -45,6 +45,16 @@ def get_archived_chats(request):
     archived_chats = user_instance.chats.filter(archived=True)
     return render(request, "layouts/partials/archived_chats.html", {"chats": archived_chats})
 
+def archive_chat(request, chat_id, archive):
+    user_instance = User(id=request.user.id)
+    # converts the str to boolean
+    archive = True if archive == 'True' else False
+    chat = Chat.objects.get(id=chat_id)
+    chat.archived = archive
+    chat.save()
+    chats = user_instance.chats.filter(archived=not archive)
+    return render(request, "layouts/partials/components/chats.html", {"chats": chats})
+
 
 def display_user_ui(request):
     user_instance = User(id=request.user.id)

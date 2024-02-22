@@ -55,6 +55,7 @@ The only exception are autoplaying carousels with the data-bs-ride="carousel" at
 ## Improvements
 
 - Rework all the chat.views logics.
+- Rework all the hx-post request (for example, if the element only needs to bet updated use patch or put)
 - Limit the contact name display on chat list
 - Test if edit/delete contact and delete chat works in any case.
 - Test both the chat list and statuses max height.
