@@ -37,7 +37,7 @@ def chat(request):
 # htmx
 def get_chats(request):
     user_instance = User(id=request.user.id)
-    chats = user_instance.chats.all()
+    chats = user_instance.chats.filter(archived=False)
     return render(request, "layouts/partials/components/chats.html", {"chats": chats})
 
 
@@ -245,3 +245,6 @@ def create_status(request, text: str, image: str):
             "contact_statuses": contacts_statuses,
         },
     )
+
+def get_archived_chats(request):
+    pass
