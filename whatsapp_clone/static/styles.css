@@ -102,3 +102,15 @@ main,  #base {
   width: 466px;
 
 }
+
+.carousel-status {
+  width: 100%;
+  position: absolute;
+  bottom: 1.25rem;
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+  color: #fff;
+  text-align: center;
+  background-color: black;
+  opacity: 0.5;
+}
