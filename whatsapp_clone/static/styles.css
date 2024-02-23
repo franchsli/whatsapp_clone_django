@@ -93,3 +93,12 @@ main,  #base {
   background: var(--bs-secondary-bg);
 }
 
+.text-status {
+  align-items: center;
+  justify-content: center;
+  color: white;
+  background-color: aquamarine;
+  height: 262px;
+  width: 466px;
+
+}
