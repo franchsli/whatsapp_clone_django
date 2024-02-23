@@ -67,6 +67,10 @@ class Status(models.Model):
             return self.image.url
         except ValueError:
             return False
+    
+    @property
+    def has_text(self):
+        return True if len(self.text) > 0 else False 
         
     class Meta:
         verbose_name_plural = 'statuses'
