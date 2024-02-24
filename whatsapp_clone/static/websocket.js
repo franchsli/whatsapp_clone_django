@@ -261,7 +261,14 @@ socket.addEventListener('message',async (event) => {
         if (user_id === sender_id){
             message_sent_audio.play()
             htmx.ajax('GET', `/display_chat/${localStorage.getItem('chat_id')}`, '#chat-display').then(() => {
-                htmx.ajax('GET', '/chats', {target:'#chats-and-contacts', swap:'innerHTML'})
+                if (document.getElementById('chat-list') !== null){
+                    if (document.getElementById('archived-chats') !== null) {
+                        htmx.ajax('GET', '/archived_chats', {target:'#chats-and-more', swap:'innerHTML'})
+                    } else {
+                        htmx.ajax('GET', '/chats', {target:'#chat-list', swap:'outerHTML'})
+                    }
+                    
+                }
             })
         }
         else {
