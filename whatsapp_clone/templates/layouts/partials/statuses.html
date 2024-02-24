@@ -53,6 +53,9 @@
                 {% for status in user_statuses %}
                   {% if forloop.first %}
                     <div class="carousel-item active" data-bs-interval="10000">
+                  {% else %}
+                    <div class="carousel-item" data-bs-interval="10000">
+                  {% endif %}
                     {% if status.has_image and status.has_text is True %}
                       <img src="{{status.image.url}}" class="d-block w-100" alt="">
                       <div class="carousel-status d-none d-md-flex">
@@ -60,30 +63,12 @@
                       </div>
                     {% elif status.has_image %}
                     <img src="{{status.image.url}}" class="d-block w-100" alt="">
-
                     {% else %}
                     <div class="text-status d-none d-md-flex">
                       <p>{{status.text}}</p>
                     </div>
                     {% endif %}
                     </div>
-                  {% else %}
-                    <div class="carousel-item" data-bs-interval="10000">
-                      {% if status.has_image and status.has_text is True %}
-                      <img src="{{status.image.url}}" class="d-block w-100" alt="">
-                      <div class="carousel-status d-none d-md-flex">
-                        <p>{{status.text}}</p>
-                      </div>
-                    {% elif status.has_image %}
-                    <img src="{{status.image.url}}" class="d-block w-100" alt="">
-
-                    {% else %}
-                    <div class="text-status d-none d-md-flex">
-                      <p>{{status.text}}</p>
-                    </div>
-                    {% endif %}
-                    </div>
-                  {% endif %}
                 {% endfor %}
 
               <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptionsUser" data-bs-slide="prev">
