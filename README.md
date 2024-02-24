@@ -3,7 +3,6 @@
 
 ## DO RIGHT NOW
 
-- Improve the if else statements in statuses.html (firstloop statements [duplicated code])
 - Add muted status logic.
 - Add user no updates or updates logic (if the user has uploaded a status show it in my status,
 otherwise show no updates in my status).
@@ -16,6 +15,7 @@ otherwise show no updates in my status).
 
 ## ANOTHER THINGS TO DO
 
+- **FIX** When a user archives a chat, the chat will be  archived from all the users in the chat.
 - **FIX** When you send a message while in the status page, the app displays the chats in all the app (app UI breaks).
     Try to use conditions on the htmx.ajax that updates the chats.
 - Create the search message logic (You can use FILTER ELEMENTS WITH `SHOW ... WHEN` from Hyperscript).
