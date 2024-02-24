@@ -3,6 +3,7 @@
 
 ## DO RIGHT NOW
 
+- Improve the if else statements in statuses.html (firstloop statements [duplicated code])
 - Add muted status logic.
 - Add user no updates or updates logic (if the user has uploaded a status show it in my status,
 otherwise show no updates in my status).
