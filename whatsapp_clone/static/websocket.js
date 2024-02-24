@@ -165,7 +165,13 @@ function create_instance(form, instance_type){
 }
 
 
-
+/**
+ * Send the chat message data to the websocket.
+ * @param {String} message_type The type of the message.
+ * @param {String} message_text The text of the message.
+ * @param {String} message_image A string of image data encoded in base64.
+ * @param {String} message_sender_id The id of who sent the chat message.
+ */
 function send_message (message_type, message_text, message_image, message_sender_id){
     socket.send(JSON.stringify({
         'type': message_type,

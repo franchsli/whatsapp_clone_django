@@ -37,20 +37,23 @@ class ChatConsumer(AsyncWebsocketConsumer):
             )
             self.receiver = text_data_json["contact_phone_number"].replace("+", "")
             print(f"user_group_{self.receiver}")
-
-            await self.channel_layer.group_send(
-                f"user_group_{self.receiver}",
-                {
-                    "type": "chat_notification",
-                    "text": f"{text_data_json['sender_user_id']}{text_data_json['message']}",
-                },
-            )
+            
             await self.create_message(
                 text_data_json["sender_user_id"],
                 text_data_json["message"],
                 text_data_json["image"],
                 text_data_json["chat_id"],
             )
+
+            chat_is_archived = await self.get_chat(text_data_json['chat_id'], 'archived')
+            if chat_is_archived == False:
+                await self.channel_layer.group_send(
+                    f"user_group_{self.receiver}",
+                    {
+                        "type": "chat_notification",
+                        "text": f"{text_data_json['sender_user_id']}{text_data_json['message']}",
+                    },
+                )
 
         elif text_data_json["type"] == "reconnect":
             group_name = text_data_json["reconnect_to"]
@@ -162,6 +165,31 @@ class ChatConsumer(AsyncWebsocketConsumer):
         new_chat = Chat.objects.create()
         new_chat.users.set(users)
         new_chat.save()
+    
+    @database_sync_to_async
+    def get_chat(self, chat_id:Union[str, int], field:str="") -> Union[Chat, Chat._meta.fields]:
+        """Returns the chat with the provided id or the value from the specified field
+        in the found chat.
+
+        Args:
+            chat_id (Union[str, int]): The id of the chat to search.
+            field (str, optional): The field to search in the found chat. Defaults to "".
+
+        Raises:
+            Exception: Raised if the chat is not found.
+
+        Returns:
+            Union[Chat, Chat._meta.fields]: Returns the entire chat object or the value from the desired field.
+        """
+        if field == "":
+            try:
+                return Chat.objects.get(id=chat_id)
+            except Chat.DoesNotExist:
+                raise Exception('NO CHAT FOUND WITH SUCH ID')
+        else:
+            chat = Chat.objects.get(id=chat_id)
+            return chat.archived if field == "archived" else chat.users
+
 
     @database_sync_to_async
     def create_contact(self, contact_name: str, contact_phone_number: str) -> None:
