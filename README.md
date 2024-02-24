@@ -11,12 +11,17 @@ otherwise show no updates in my status).
 - make it so the url parameters are optional (or check how you sent images from that input [image input]).
     The post request will update the entire statuses.html (use HTMX like always).
 - Add something to delete statuses automatically every 24 hours.
-- Remember to make a button "area" that covers 75 of the li weight (contact status display).
+- Remember to make a button "area" that covers 75 of the li weight (contact status display)
+also make all the chats buttons have an area that covers the 75% of the father, anything outside that should be considered
+as another action and not a chat_display.
 
 ## ANOTHER THINGS TO DO
 
 - Add something to style the last message whether it was sent by the auth user or the contact.
 - **FIX** When a user archives a chat, the chat will be  archived from all the users in the chat.
+- Make it so it stores in a 'list' the users who archived the chat:
+if both of them archived it, none should get a notification, if only one of the archived it, the one who doesn't archived it
+should still see the notifications from the chat.
     Try to use conditions on the htmx.ajax that updates the chats.
 - Create the search message logic (You can use FILTER ELEMENTS WITH `SHOW ... WHEN` from Hyperscript).
 - Add read and unread logic (you can implement it that any message (in the viewport makes a
