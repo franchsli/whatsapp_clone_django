@@ -24,6 +24,7 @@ class User(AbstractUser, UserManager):
 class Contact(models.Model):
     name = models.CharField(max_length=36, blank=False, null=False)
     phone_number = PhoneNumberField()
+    statuses_muted = models.BooleanField(default=False)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
