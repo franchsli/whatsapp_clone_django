@@ -228,14 +228,11 @@ def get_muted_statuses(request):
     if request.method == "GET":
         user_instance = User(id=request.user.id)
         contacts = user_instance.contact_set.all()
-        # Query for statuses uploaded by the user's muted contacts
-        contacts_statuses = Status.objects.filter(
-            uploaded_by__phone_number__in=contacts.values("phone_number"),
-        )
-        contact_phone_numbers = contacts.values_list('phone_number', flat=True)
-        statuses_with_contacts = Status.objects.filter(uploaded_by__phone_number__in=contact_phone_numbers)
+        muted_contacts = contacts.filter(statuses_muted=True)
+        contact_phone_numbers = muted_contacts.values_list('phone_number', flat=True)
+        statuses_with_muted_contacts = Status.objects.filter(uploaded_by__phone_number__in=contact_phone_numbers)
         contacts_with_statuses = {}
-        for status in statuses_with_contacts:
+        for status in statuses_with_muted_contacts:
             contact = contacts.filter(phone_number=status.uploaded_by.phone_number).first()
             if contact:
                 contacts_with_statuses.setdefault(contact, []).append(status)
@@ -244,43 +241,17 @@ def get_muted_statuses(request):
     
     return render(
         request,
-        "layouts/partials/statuses.html",
+        "layouts/partials/muted_statuses.html",
         {
             "contacts": contacts,
-            "contact_statuses": contacts_statuses,
             "contacts_with_statuses": contacts_with_statuses,
         },
     )
 
 def mute_contact_statuses(request, contact_id):
     # para terminar TODO:
-    user_instance = User(id=request.user.id)
-    contacts = user_instance.contact_set.all()
-    contact = Contact.objects.get(id=contact_id)
-    contact.statuses_muted = True
-    contact.save()
-    contacts_statuses = Status.objects.filter(
-    uploaded_by__phone_number__in=contacts.values("phone_number"),
-        )
-    contact_phone_numbers = contacts.values_list('phone_number', flat=True)
-    statuses_with_contacts = Status.objects.filter(uploaded_by__phone_number__in=contact_phone_numbers)
-    contacts_with_statuses = {}
-    for status in statuses_with_contacts:
-        contact = contacts.filter(phone_number=status.uploaded_by.phone_number).first()
-        if contact:
-            contacts_with_statuses.setdefault(contact, []).append(status)
-        print(len([value for value in contacts_with_statuses.values()]))
-        print([value for value in contacts_with_statuses.values()])
-
-    return render(
-        request,
-        "layouts/partials/statuses.html",
-        {
-            "contacts": contacts,
-            "contact_statuses": contacts_statuses,
-            "contacts_with_statuses": contacts_with_statuses,
-        },
-    )
+    # check get_muted statuses_function
+    pass
 
 
 def create_status(request, text: str, image: str):
