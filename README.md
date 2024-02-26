@@ -3,19 +3,22 @@
 
 ## DO RIGHT NOW
 
-- Add muted status logic.
-- Add user no updates or updates logic (if the user has uploaded a status show it in my status,
-otherwise show no updates in my status).
+- Finish muted status logic:
+  - Implement the htmx code and django views to mute and unmute chats.
+  (When you unmute or mute a chat, the entire contact-list should be updated
+  [this is to avoid unmuting or muting contacts and displaying them twice])
 - Add something to style the last message whether it was sent by the auth user or the contact.
 - Make the silence contact logic (booleand field)
 - Make the add status form work:
-- make it so the url parameters are optional (or check how you sent images from that input [image input]).
+  - make it so the url parameters are optional (or check how you sent images from that input [image input]).
     The post request will update the entire statuses.html (use HTMX like always).
 - Fix the message notification icon (it is too big.)
 - Add something to delete statuses automatically every 24 hours.
 - Remember to make a button "area" that covers 75 of the li weight (contact status display)
 also make all the chats buttons have an area that covers the 75% of the father, anything outside that should be considered
 as another action and not a chat_display.
+- Rework all the chat.views logics.
+- Rework all the hx-post request (for example, if the element only needs to bet updated use patch or put)
 
 ## ANOTHER THINGS TO DO
 
@@ -39,7 +42,7 @@ to make the PATCH request for all the new messages] only if it is already False 
 - Add chat wallpapers.
 - Rework show_dropdown animation.
 - When you go to status page and then go back to the normal UI, the theme icon gets reseted.
-+**FIX** When scroll to bottom doesn't scroll to the botom anymore.
+- **FIX** When scroll to bottom doesn't scroll to the botom anymore.
 **THIS IS WHAT I THINK IT HAPPENS**:
     The chat gets displayed but somehow the read more script doesn't finished running.
     but i don't know whats happening. When the read more isn't in the 'scroll view' (user can't see it)
@@ -47,8 +50,6 @@ to make the PATCH request for all the new messages] only if it is already False 
 
 ## Improvements
 
-- Rework all the chat.views logics.
-- Rework all the hx-post request (for example, if the element only needs to bet updated use patch or put)
 - Limit the contact name display on chat list
 - Test if edit/delete contact and delete chat works in any case.
 **IMPLEMENT**
