@@ -6,6 +6,7 @@
 - Add muted status logic.
 - Add user no updates or updates logic (if the user has uploaded a status show it in my status,
 otherwise show no updates in my status).
+- Add something to style the last message whether it was sent by the auth user or the contact.
 - Make the silence contact logic (booleand field)
 - Make the add status form work:
 - make it so the url parameters are optional (or check how you sent images from that input [image input]).
@@ -17,7 +18,6 @@ as another action and not a chat_display.
 
 ## ANOTHER THINGS TO DO
 
-- Add something to style the last message whether it was sent by the auth user or the contact.
 - **FIX** When a user archives a chat, the chat will be  archived from all the users in the chat.
 - Make it so it stores in a 'list' the users who archived the chat:
 if both of them archived it, none should get a notification, if only one of the archived it, the one who doesn't archived it
@@ -28,7 +28,6 @@ should still see the notifications from the chat.
 PATCH request to update the 'read' field in the message model from False to True [This makes the user needs to scroll down or up
 to make the PATCH request for all the new messages] only if it is already False [To prevent unnecesary API calls])).
 - Add emojis in messages (emojis list...).
-- Read non-standar htmx events  for messages [hx-trigger](https://htmx.org/attributes/hx-trigger/)
 - Users shouldn't be able to create TWO OR MORE chats with the same user.
 - Write test for the exceptions and functions.
 - Add groups chats.
@@ -51,8 +50,6 @@ to make the PATCH request for all the new messages] only if it is already False 
 - Rework all the hx-post request (for example, if the element only needs to bet updated use patch or put)
 - Limit the contact name display on chat list
 - Test if edit/delete contact and delete chat works in any case.
-- Test both the chat list and statuses max height.
-(The localSotrage will sotre messages but the API calls will be still necessary for getting the latest messages)
 **IMPLEMENT**
 READ THE CHATGPT Django Channels Websocket chat for IMPORTANT improvement.
 Also don't forget to change the channel layer to redis.
@@ -69,12 +66,13 @@ Also don't forget to change the channel layer to redis.
 - When a user is creating a new chat and selects more than a contact,
     the modal form title should change to 'create group' and a new input should appear that has the label
         'group name'.
-- Check if create_status have problems dealing with the actual upload_date
+- Check if create_status have problems dealing with the actual upload_date (consumers.py).
 - Check if consumer functions arguments number can be reduced.
 - Split Chat Consumers into multiple consumers (e.g Status consumer and so)
 - Use for... empty in for loops if necessary. <https://docs.djangoproject.com/en/5.0/ref/templates/builtins/#for-empty>
-- Remove all unnecesary datasets and such from chats, contact templates.
-- Fix: When there's only a contact or chat in the list, its option dropdown seems weird.
+- Remove all unnecesary datasets and such from chats, contact templates (remember to check websocket.js before deleting).
+- Fix: When there's only a contact or chat in the list, its option dropdown seems weird (It has to do with the
+dropdown position [rn is absolute]) Also check if showDropdown() func doesn't do anything weird (it declares position to fixed).
 - Make it responsive.
 - Re think the delete message modal (Delete for everyone or for me logic).
 - Implement all of these features at [dj-chat](https://github.com/adilmohak/dj-chat?tab=readme-ov-file#current-features)
@@ -85,6 +83,7 @@ Also don't forget to change the channel layer to redis.
 - [db queries with Q](https://docs.djangoproject.com/en/5.0/topics/db/queries/#complex-lookups-with-q-objects)
 - [queryset operators](https://docs.djangoproject.com/en/5.0/ref/models/querysets/#operators-that-return-new-querysets)
 - [Status with text and images.](https://getbootstrap.com/docs/5.3/components/carousel/#captions)
+- Read non-standar htmx events  for messages [hx-trigger](https://htmx.org/attributes/hx-trigger/)
 
 **You should also be aware that carousels in general can often cause usability and accessibility challenges.**
 For performance reasons, carousels must be manually initialized using the carousel constructor method. Without initialization, someof theevent listeners (specifically, the events needed touch/swipe support) will not be registered until a user has explicitlyactivated acontrol or indicator.

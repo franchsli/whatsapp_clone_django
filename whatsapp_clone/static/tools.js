@@ -1,9 +1,21 @@
+/**
+ * Does a GET request to the specified URL and returns the response in  JSON format.
+ * @param {String} url the url to which the request will be made
+ * @returns {JSON} The response.
+ */
 async function get(url){
     const response = await fetch(url)
     const data = response.json()
     return data
 }
 
+/**
+ * Does a POST request to the specified URL and returns the response in  JSON format
+ * if the response is succesful, logs an error otherwise.
+ * @param {String} url The url to which the request will be made.
+ * @param {Object} data The object containing all the data to be sent to the endpoint.
+ * @param {String} token The csrf token.
+ */
 function post(url, data, token){
     fetch(url, {
         method: 'POST',
