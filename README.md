@@ -11,6 +11,7 @@ otherwise show no updates in my status).
 - Make the add status form work:
 - make it so the url parameters are optional (or check how you sent images from that input [image input]).
     The post request will update the entire statuses.html (use HTMX like always).
+- Fix the message notification icon (it is too big.)
 - Add something to delete statuses automatically every 24 hours.
 - Remember to make a button "area" that covers 75 of the li weight (contact status display)
 also make all the chats buttons have an area that covers the 75% of the father, anything outside that should be considered
@@ -72,7 +73,7 @@ Also don't forget to change the channel layer to redis.
 - Use for... empty in for loops if necessary. <https://docs.djangoproject.com/en/5.0/ref/templates/builtins/#for-empty>
 - Remove all unnecesary datasets and such from chats, contact templates (remember to check websocket.js before deleting).
 - Fix: When there's only a contact or chat in the list, its option dropdown seems weird (It has to do with the
-dropdown position [rn is absolute]) Also check if showDropdown() func doesn't do anything weird (it declares position to fixed).
+dropdown height [it is auto rn]) Also check if showDropdown() func doesn't do anything weird (it declares position to fixed).
 - Make it responsive.
 - Re think the delete message modal (Delete for everyone or for me logic).
 - Implement all of these features at [dj-chat](https://github.com/adilmohak/dj-chat?tab=readme-ov-file#current-features)
@@ -84,6 +85,7 @@ dropdown position [rn is absolute]) Also check if showDropdown() func doesn't do
 - [queryset operators](https://docs.djangoproject.com/en/5.0/ref/models/querysets/#operators-that-return-new-querysets)
 - [Status with text and images.](https://getbootstrap.com/docs/5.3/components/carousel/#captions)
 - Read non-standar htmx events  for messages [hx-trigger](https://htmx.org/attributes/hx-trigger/)
+- [Closed tags checker](https://www.aliciaramirez.com/closing-tags-checker/)
 
 **You should also be aware that carousels in general can often cause usability and accessibility challenges.**
 For performance reasons, carousels must be manually initialized using the carousel constructor method. Without initialization, someof theevent listeners (specifically, the events needed touch/swipe support) will not be registered until a user has explicitlyactivated acontrol or indicator.
