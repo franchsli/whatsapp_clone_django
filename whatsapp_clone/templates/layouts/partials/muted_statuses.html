@@ -1,0 +1,81 @@
+{% load static %}
+{% load filters %}
+
+
+<ul id="muted-statuses-contact-list" class="scroll-section list-group list-group-flush">
+    {% for contact, statuses in contacts_with_statuses.items %}
+        <li class="list-group-item p-3  d-flex flex-inline align-items-center contact" role="button" data-status={{status.id}}>
+            {% comment "status profile photo" %}{% endcomment %}
+            <img class="ms-1 rounded-circle img-fluid" src="{% get_contact_photo contact.phone_number %}" alt="" style="max-width: 45px;" type="button" data-bs-toggle="modal" data-bs-target="#status-modal{{ contact.id }}">
+            <div class="d-flex flex-column ms-3 w-100">
+            <div class="d-flex justify-content-between">
+                <span>{{ contact.name }}</span>
+                <button class="btn btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" onclick="run_element_animation(this.nextElementSibling)"></button>
+                <ul class="dropdown-menu animated-dropdown">
+                <li><span class="dropdown-item edit-action"><i class="bi bi-volume-mute"></i> Mute contact</span></li>
+                </ul>
+            </div>
+            </div>
+        </li>
+        
+        <!--Status Modal -->
+        <div class="modal fade" id="status-modal{{ contact.id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="status-modal{{ contact.id }}Label" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h1 class="modal-title fs-5" id="status-modal{{ status.id }}Label">Status</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- ========== Status Carousel========== -->
+                    <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-indicators">
+                        {% for status in statuses %}
+                            {% if forloop.first %}
+                            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="{{forloop.counter0}}" class="active" aria-current="true" aria-label="Slide {{forloop.counter}}"></button>
+                            {% else %}
+                            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="{{forloop.counter0}}" aria-label="Slide {{forloop.counter}}"></button>
+                            {% endif %}
+                        {% endfor %}
+                        </div>
+                        <div class="carousel-inner">
+                        {% for status in statuses %}
+                            {% if forloop.first %}
+                            <div class="carousel-item active" data-bs-interval="10000">
+                            {% else %}
+                            <div class="carousel-item" data-bs-interval="10000">
+                            {% endif %}
+                            {% if status.has_image and status.has_text is True %}
+                                <img src="{{status.image.url}}" class="d-block w-100" alt="">
+                                <div class="carousel-status d-none d-md-flex">
+                                <p>{{status.text}}</p>
+                                </div>
+                            {% elif status.has_image %}
+                            <img src="{{status.image.url}}" class="d-block w-100" alt="">
+                            {% else %}
+                            <div class="text-status d-none d-md-flex">
+                                <p>{{status.text}}</p>
+                            </div>
+                            {% endif %}
+                            </div>
+                        {% endfor %}
+
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                        </div>
+                </div>
+            </div>
+            </div>
+            </div>
+            </div>
+        </div>
+{% empty %}
+    <li class="d-flex align-items-center justify-content-center"><span>No statuses.</span></li>
+{% endfor %}
+</ul>
