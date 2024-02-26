@@ -195,7 +195,7 @@ def update_chat_form(request):
 def get_statuses(request):
     if request.method == "GET":
         user_instance = User(id=request.user.id)
-        contacts = user_instance.contact_set.all()
+        contacts = user_instance.contact_set.filter(statuses_muted=False)
         # Query for statuses uploaded by the user or the user's contacts
         user_statuses = Status.objects.filter(uploaded_by=user_instance)
         contacts_statuses = Status.objects.filter(
@@ -227,13 +227,12 @@ def get_muted_statuses(request):
     # PARA TERMINAR TODO:
     if request.method == "GET":
         user_instance = User(id=request.user.id)
-        contacts = user_instance.contact_set.all()
-        muted_contacts = contacts.filter(statuses_muted=True)
+        muted_contacts = user_instance.contact_set.filter(statuses_muted=True)
         contact_phone_numbers = muted_contacts.values_list('phone_number', flat=True)
         statuses_with_muted_contacts = Status.objects.filter(uploaded_by__phone_number__in=contact_phone_numbers)
         contacts_with_statuses = {}
         for status in statuses_with_muted_contacts:
-            contact = contacts.filter(phone_number=status.uploaded_by.phone_number).first()
+            contact = muted_contacts.filter(phone_number=status.uploaded_by.phone_number).first()
             if contact:
                 contacts_with_statuses.setdefault(contact, []).append(status)
         print(len([value for value in contacts_with_statuses.values()]))
@@ -243,14 +242,13 @@ def get_muted_statuses(request):
         request,
         "layouts/partials/muted_statuses.html",
         {
-            "contacts": contacts,
             "contacts_with_statuses": contacts_with_statuses,
         },
     )
 
 def mute_contact_statuses(request, contact_id):
     # para terminar TODO:
-    # check get_muted statuses_function
+    # check get_muted
     pass
 
 

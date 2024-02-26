@@ -76,6 +76,7 @@ Also don't forget to change the channel layer to redis.
 dropdown height [it is auto rn]) Also check if showDropdown() func doesn't do anything weird (it declares position to fixed).
 - Make it responsive.
 - Re think the delete message modal (Delete for everyone or for me logic).
+- Test all statuses features.
 - Implement all of these features at [dj-chat](https://github.com/adilmohak/dj-chat?tab=readme-ov-file#current-features)
 
 **REFERENCE**:
