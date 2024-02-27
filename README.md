@@ -7,7 +7,8 @@
   - Implement the htmx code and django views to mute and unmute chats.
   (When you unmute or mute a chat, the entire contact-list should be updated
   [this is to avoid unmuting or muting contacts and displaying them twice])
-- Add something to style the last message whether it was sent by the auth user or the contact.
+- Add something to style the last message whether it was sent by the auth user or the contact:
+  - Check last_message func at filters.py.
 - Make the silence contact logic (booleand field)
 - Make the add status form work:
   - make it so the url parameters are optional (or check how you sent images from that input [image input]).
@@ -16,7 +17,7 @@
 - Remember to make a button "area" that covers 75 of the li weight (contact status display)
 also make all the chats buttons have an area that covers the 75% of the father, anything outside that should be considered
 as another action and not a chat_display.
-- Rework all the chat.views logics.
+- Rework all the chat.views logics (check if there's a way to implement some view code into another).
 - Rework all the hx-post request (for example, if the element only needs to bet updated use patch or put)
 
 ## ANOTHER THINGS TO DO
@@ -91,6 +92,7 @@ dropdown height [it is auto rn]) Also check if showDropdown() func doesn't do an
 - [Status with text and images.](https://getbootstrap.com/docs/5.3/components/carousel/#captions)
 - Read non-standar htmx events  for messages [hx-trigger](https://htmx.org/attributes/hx-trigger/)
 - [Closed tags checker](https://www.aliciaramirez.com/closing-tags-checker/)
+- [Queryset lists](https://docs.djangoproject.com/en/5.0/ref/models/querysets/#values-list)
 
 **You should also be aware that carousels in general can often cause usability and accessibility challenges.**
 For performance reasons, carousels must be manually initialized using the carousel constructor method. Without initialization, some of the event listeners (specifically, the events needed touch/swipe support) will not be registered until a user has explicitly activated a control or indicator.
