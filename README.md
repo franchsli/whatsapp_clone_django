@@ -12,7 +12,6 @@
 - Make the add status form work:
   - make it so the url parameters are optional (or check how you sent images from that input [image input]).
     The post request will update the entire statuses.html (use HTMX like always).
-- Fix the message notification icon (it is too big.)
 - Add something to delete statuses automatically every 24 hours.
 - Remember to make a button "area" that covers 75 of the li weight (contact status display)
 also make all the chats buttons have an area that covers the 75% of the father, anything outside that should be considered
@@ -22,11 +21,6 @@ as another action and not a chat_display.
 
 ## ANOTHER THINGS TO DO
 
-- **FIX** When a user archives a chat, the chat will be  archived from all the users in the chat.
-- Make it so it stores in a 'list' the users who archived the chat:
-if both of them archived it, none should get a notification, if only one of the archived it, the one who doesn't archived it
-should still see the notifications from the chat.
-    Try to use conditions on the htmx.ajax that updates the chats.
 - Create the search message logic (You can use FILTER ELEMENTS WITH `SHOW ... WHEN` from Hyperscript).
 - Add read and unread logic (you can implement it that any message (in the viewport makes a
 PATCH request to update the 'read' field in the message model from False to True [This makes the user needs to scroll down or up
@@ -41,16 +35,10 @@ to make the PATCH request for all the new messages] only if it is already False 
 - Check what happens when a contact with a unexistent phone_number (user not in database) is created.
 - Add chat wallpapers.
 - Rework show_dropdown animation.
-- When you go to status page and then go back to the normal UI, the theme icon gets reseted.
-- **FIX** When scroll to bottom doesn't scroll to the botom anymore.
-**THIS IS WHAT I THINK IT HAPPENS**:
-    The chat gets displayed but somehow the read more script doesn't finished running.
-    but i don't know whats happening. When the read more isn't in the 'scroll view' (user can't see it)
-    the scroll_to_bottom runs as expected....
 
 ## Improvements
 
-- Limit the contact name display on chat list
+- Limit the contact name display on chat list.
 - Test if edit/delete contact and delete chat works in any case.
 **IMPLEMENT**
 READ THE CHATGPT Django Channels Websocket chat for IMPORTANT improvement.
@@ -59,7 +47,6 @@ Also don't forget to change the channel layer to redis.
 - **OPTIMIZE REQUESTS**:
   - Combine related request views so the server calls reduce and do two jobs in the same response.
   - Reduce the HTMX responsability and use consumers.
-- Check why request.user.has_photo returns value but (in view) user_instance.has_photo returns False.
 - Optimize the js code (delete all the cloned code.)
 - Check what happens when contact user send a message and htmx.ajax runs anyway.
 - Make a way to handle image decoding (async way).
@@ -73,12 +60,28 @@ Also don't forget to change the channel layer to redis.
 - Split Chat Consumers into multiple consumers (e.g Status consumer and so)
 - Use for... empty in for loops if necessary. <https://docs.djangoproject.com/en/5.0/ref/templates/builtins/#for-empty>
 - Remove all unnecesary datasets and such from chats, contact templates (remember to check websocket.js before deleting).
-- Fix: When there's only a contact or chat in the list, its option dropdown seems weird (It has to do with the
-dropdown height [it is auto rn]) Also check if showDropdown() func doesn't do anything weird (it declares position to fixed).
 - Make it responsive.
 - Re think the delete message modal (Delete for everyone or for me logic).
 - Test all statuses features.
 - Implement all of these features at [dj-chat](https://github.com/adilmohak/dj-chat?tab=readme-ov-file#current-features)
+
+## BUGS TO FIX
+
+- Fix the message notification icon (it is too big.)
+- When a user archives a chat, the chat will be archived from all the users in the chat:
+  - Make it so it stores in a 'list' the users who archived the chat:
+if both of them archived it, none should get a notification, if only one of the archived it, the one who doesn't archived it
+should still see the notifications from the chat.
+    Try to use conditions on the htmx.ajax that updates the chats.
+- When there's only a contact or chat in the list, its option dropdown seems weird (It has to do with the
+dropdown height [it is auto rn]) Also check if showDropdown() func doesn't do anything weird (it declares position to fixed).
+- Check why request.user.has_photo returns value but (in view) user_instance.has_photo returns False.
+- When scroll to bottom doesn't scroll to the botom anymore:
+  - **THIS IS WHAT I THINK IT HAPPENS**:
+    The chat gets displayed but somehow the read more script doesn't finished running.
+    but i don't know whats happening. When the read more isn't in the 'scroll view' (user can't see it)
+    the scroll_to_bottom runs as expected....
+- When you go to status page and then go back to the normal UI, the theme icon gets reseted.
 
 **REFERENCE**:
 
@@ -90,5 +93,5 @@ dropdown height [it is auto rn]) Also check if showDropdown() func doesn't do an
 - [Closed tags checker](https://www.aliciaramirez.com/closing-tags-checker/)
 
 **You should also be aware that carousels in general can often cause usability and accessibility challenges.**
-For performance reasons, carousels must be manually initialized using the carousel constructor method. Without initialization, someof theevent listeners (specifically, the events needed touch/swipe support) will not be registered until a user has explicitlyactivated acontrol or indicator.
+For performance reasons, carousels must be manually initialized using the carousel constructor method. Without initialization, some of the event listeners (specifically, the events needed touch/swipe support) will not be registered until a user has explicitly activated a control or indicator.
 The only exception are autoplaying carousels with the data-bs-ride="carousel" attribute as these are initialized automatically on page load.If you’re using autoplaying carousels with the data attribute, don’t explicitly initialize the same carousels with the constructor method.
