@@ -246,8 +246,6 @@ def get_muted_statuses(request):
     )
 
 def mute_contact_statuses(request, contact_id):
-    # para terminar TODO:
-    # check get_muted
     try:
         contact_to_mute = Contact.objects.get(id=contact_id)
         contact_to_mute.statuses_muted = True
@@ -286,6 +284,45 @@ def mute_contact_statuses(request, contact_id):
             },
         )
 
+
+def unmute_contact_statuses(request, contact_id):
+    try:
+        contact_to_unmute = Contact.objects.get(id=contact_id)
+        contact_to_unmute.statuses_muted = False
+        contact_to_unmute.save()
+
+    except Contact.DoesNotExist:
+        print('CONTACT NOT FOUND WITH SUCH ID')
+
+    finally:
+        user_instance = User(id=request.user.id)
+        contacts = user_instance.contact_set.filter(statuses_muted=False)
+        # Query for statuses uploaded by the user or the user's contacts
+        user_statuses = Status.objects.filter(uploaded_by=user_instance)
+        contacts_statuses = Status.objects.filter( 
+            uploaded_by__phone_number__in=contacts.values("phone_number")
+        )
+        contact_phone_numbers = contacts.values_list('phone_number', flat=True)
+        statuses_with_contacts = Status.objects.filter(uploaded_by__phone_number__in=contact_phone_numbers)
+        contacts_with_statuses = {}
+        for status in statuses_with_contacts:
+            contact = contacts.filter(phone_number=status.uploaded_by.phone_number).first()
+            if contact:
+                contacts_with_statuses.setdefault(contact, []).append(status)
+        print(len([value for value in contacts_with_statuses.values()]))
+        print([value for value in contacts_with_statuses.values()])
+        
+
+        return render(
+            request,
+            "layouts/partials/statuses.html",
+            {
+                "contacts": contacts,
+                "user_statuses": user_statuses,
+                "contact_statuses": contacts_statuses,
+                "contacts_with_statuses": contacts_with_statuses,
+            },
+        )
 
 def create_status(request, text: str, image: str):
     user_instance = User(id=request.user.id)
