@@ -22,4 +22,5 @@ urlpatterns = [
     path('statuses/', views.get_statuses, name='statuses'),
     path('muted_statuses/', views.get_muted_statuses, name='muted_statuses'),
     path('create_status/<str:text>/<str:image>', views.create_status, name='create_status'),
+    path('mute_contact_statuses/<int:contact_id>', views.mute_contact_statuses, name='mute_contact_statuses'),
 ]
