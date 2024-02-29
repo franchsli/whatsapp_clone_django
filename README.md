@@ -13,6 +13,7 @@ also make all the chats buttons have an area that covers the 75% of the father, 
 as another action and not a chat_display.
 - Rework all the chat.views logics (check if there's a way to implement some view code into another).
 - Rework all the hx-post request (for example, if the element only needs to bet updated use patch or put)
+- Implement something to update the message receiver chat_list.
 
 ## ANOTHER THINGS TO DO
 
@@ -68,7 +69,6 @@ Also don't forget to change the channel layer to redis.
 
 ## BUGS TO FIX
 
-- Fix the message notification icon (it is too big.)
 - When a user archives a chat, the chat will be archived from all the users in the chat:
   - Make it so it stores in a 'list' the users who archived the chat:
 if both of them archived it, none should get a notification, if only one of the archived it, the one who doesn't archived it
