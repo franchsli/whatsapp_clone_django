@@ -3,12 +3,6 @@
 
 ## DO RIGHT NOW
 
-- Finish muted status logic:
-  - Implement the htmx code and django views to mute and unmute chats.
-  (When you unmute or mute a chat, the entire contact-list should be updated
-  [this is to avoid unmuting or muting contacts and displaying them twice])
-- Add something to style the last message whether it was sent by the auth user or the contact:
-  - Check last_message func at filters.py.
 - Make the silence contact logic (booleand field)
 - Make the add status form work:
   - make it so the url parameters are optional (or check how you sent images from that input [image input]).
@@ -22,6 +16,10 @@ as another action and not a chat_display.
 
 ## ANOTHER THINGS TO DO
 
+- Implement show/hide muted statuses logic (when you click show, it shows the muted statuses and then show dispay as 'hide'
+then when clicked again erase all the muted chats and 'hide' display a show again
+for do this 'diplay change' you actually need to change the show button to hide
+use htxm from and when the muted statuses gets displayed it should change the button from show to hide)
 - Create the search message logic (You can use FILTER ELEMENTS WITH `SHOW ... WHEN` from Hyperscript).
 - Add read and unread logic (you can implement it that any message (in the viewport makes a
 PATCH request to update the 'read' field in the message model from False to True [This makes the user needs to scroll down or up
@@ -64,6 +62,8 @@ Also don't forget to change the channel layer to redis.
 - Make it responsive.
 - Re think the delete message modal (Delete for everyone or for me logic).
 - Test all statuses features.
+- Check and compare all the whatsapp web features with this project features.
+- Review all the code and delete spaguetti code.
 - Implement all of these features at [dj-chat](https://github.com/adilmohak/dj-chat?tab=readme-ov-file#current-features)
 
 ## BUGS TO FIX

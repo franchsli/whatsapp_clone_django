@@ -29,7 +29,12 @@
       </div>
       {% comment "last message in the chat" %}{% endcomment %}
       <div class="d-flex justify-content-between">
-        <span class="last-chat-message text-truncate">{{chat.message_set.all|last_message:'text'}}</span>
+        {% if chat.message_set.all|last_message:'sender_user' == request.user.id %}
+          <span class="last-chat-message text-truncate text-white-50"><i class="bi bi-check2-all"></i> {{chat.message_set.all|last_message:'text'}}</span>
+        {% else %}
+          <span class="last-chat-message text-truncate text-white-50">{{chat.message_set.all|last_message:'text'}}</span>
+        {% endif %}
+        
         <button class="btn btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" onclick="run_element_animation(this.nextElementSibling)"></button>
         <ul class="dropdown-menu animated-dropdown">
           <li><span class="dropdown-item delete-action" hx-delete="{% url 'delete_chat' chat.id %}" hx-confirm="Are you sure you want to delete this chat?" hx-swap="outerHTML" hx-target="#chat-list" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' ><i class="bi bi-trash3"></i> Delete chat</span></li>
