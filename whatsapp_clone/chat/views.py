@@ -53,8 +53,15 @@ def get_chats(request):
 
 def get_archived_chats(request):
     user_instance = User(id=request.user.id)
-    archived_chats = user_instance.chats.filter(archived=True)
-    return render(request, "layouts/partials/archived_chats.html", {"chats": archived_chats})
+    chats = user_instance.chats.all()
+    user_archived_chats = []
+    for chat in chats:
+        contact = get_contact_in_chat(chat, user_instance)
+        if contact:
+            if contact.archived:
+                user_archived_chats.append(chat)
+
+    return render(request, "layouts/partials/archived_chats.html", {"chats": user_archived_chats})
 
 def archive_chat(request, chat_id, archive):
     user_instance = User(id=request.user.id)
