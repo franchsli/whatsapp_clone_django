@@ -37,8 +37,19 @@ def chat(request):
 # htmx
 def get_chats(request):
     user_instance = User(id=request.user.id)
-    chats = user_instance.chats.filter(archived=False)
-    return render(request, "layouts/partials/components/chats.html", {"chats": chats})
+    chats = user_instance.chats.all()
+    user_chats = []
+    for chat in chats:
+        contact = get_contact_in_chat(chat, user_instance)
+        if contact:
+            if not contact.archived:
+                user_chats.append(chat)
+        # if no contact is found it means is an unknow phone
+        # display it as normal chat 
+        else:
+            user_chats.append(chat)
+
+    return render(request, "layouts/partials/components/chats.html", {"chats": user_chats})
 
 def get_archived_chats(request):
     user_instance = User(id=request.user.id)
@@ -360,3 +371,26 @@ def create_status(request, text: str, image: str):
             "contact_statuses": contacts_statuses,
         },
     )
+
+
+# tool functions
+def get_contact_in_chat(chat:Chat, logged_user:User) -> Contact:
+    """Returns the contact object in the chat among all the users.
+
+    Args:
+        chat (Chat): The chat object
+        logged_user (User): The currentlly logged user.
+
+    Returns:
+        Contact: The contact object in the Chat (if found).
+        None: If the contact isn't found
+    """
+    # gets the user who is not the logged user in the chat
+    other_user:User = chat.users.exclude(id=logged_user.pk).first()
+
+    try:
+        contact = Contact.objects.get(created_by=logged_user, phone_number=other_user.phone_number)
+        return contact
+    except Contact.DoesNotExist:
+        print('CONTACT NOT FOUND!')
+        return None

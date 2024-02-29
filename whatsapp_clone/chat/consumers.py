@@ -1,6 +1,7 @@
 from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.db import database_sync_to_async
 from .models import User, Chat, Message, Contact, Status
+from .views import get_contact_in_chat
 from django.utils import timezone
 from django.core.files.base import ContentFile
 from phonenumber_field.phonenumber import PhoneNumber
@@ -43,9 +44,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 text_data_json["image"],
                 text_data_json["chat_id"],
             )
-
-            chat_is_archived = await self.get_chat(text_data_json['chat_id'], 'archived')
-            if chat_is_archived == False:
+            chat_data = await self.get_chat(text_data_json["chat_id"])
+            contact_in_chat = await database_sync_to_async(get_contact_in_chat(chat_data, self.user_instance))
+            if contact_in_chat.archived == False:
                 await self.channel_layer.group_send(
                     f"user_group_{self.receiver}",
                     {
