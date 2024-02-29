@@ -19,7 +19,7 @@ class CustomUserAdmin(UserAdmin):
 
 
 class ChatAdmin(admin.ModelAdmin):
-    list_filter = ('archived',)
+    pass
 
 class MessageAdmin(admin.ModelAdmin):
     search_fields = ('sender_user', 'text')
