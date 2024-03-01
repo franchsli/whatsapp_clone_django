@@ -3,10 +3,6 @@
 
 ## DO RIGHT NOW
 
-- **IMPORTANT**:
-Finish the archive chat logic (review views.py, filters.py, chats.html)
-  - Modify the archive chat view to return archived or not archived chats depending on archive arg.
-  - Implement something to get contact id from chat (filters.py)
 - Make the silence contact logic (booleand field)
 - Make the add status form work:
   - make it so the url parameters are optional (or check how you sent images from that input [image input]).
