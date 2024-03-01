@@ -71,20 +71,18 @@ Also don't forget to change the channel layer to redis.
 
 ## BUGS TO FIX
 
-- When a user archives a chat, the chat will be archived from all the users in the chat:
-  - Make it so it stores in a 'list' the users who archived the chat:
-if both of them archived it, none should get a notification, if only one of the archived it, the one who doesn't archived it
-should still see the notifications from the chat.
-    Try to use conditions on the htmx.ajax that updates the chats.
-- When there's only a contact or chat in the list, its option dropdown seems weird (It has to do with the
-chat or contact list height [it is auto rn]) Also check if showDropdown() func doesn't do anything weird (it declares position to fixed).
+- When a user deletes a chat, the chat will be deleted from all the users in the chat
 - Check why request.user.has_photo returns value but (in view) user_instance.has_photo returns False.
 - When scroll to bottom doesn't scroll to the botom anymore:
   - **THIS IS WHAT I THINK IT HAPPENS**:
     The chat gets displayed but somehow the read more script doesn't finished running.
     but i don't know whats happening. When the read more isn't in the 'scroll view' (user can't see it)
     the scroll_to_bottom runs as expected....
+    - I think is because the readmore height isn't kept in count when scrolling.
 - When you go to status page and then go back to the normal UI, the theme icon gets reseted.
+  - It has to do with the HTMX, when it gets reloaded it doesn't count as a DOMContentLoaded (search in stackoverflow).
+  - You can see HTMX events to add an hx.event that when the content was swapped into the DOM (before this verify that is the right content)
+  apllies the  DOMContentLoaded logic.
 
 **REFERENCE**:
 
