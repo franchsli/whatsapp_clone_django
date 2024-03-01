@@ -3,6 +3,10 @@
 
 ## DO RIGHT NOW
 
+- **IMPORTANT**:
+Finish the archive chat logic (review views.py, filters.py, chats.html)
+  - Modify the archive chat view to return archived or not archived chats depending on archive arg.
+  - Implement something to get contact id from chat (filters.py)
 - Make the silence contact logic (booleand field)
 - Make the add status form work:
   - make it so the url parameters are optional (or check how you sent images from that input [image input]).
@@ -48,6 +52,7 @@ Also don't forget to change the channel layer to redis.
   - Combine related request views so the server calls reduce and do two jobs in the same response.
   - Reduce the HTMX responsability and use consumers.
 - Optimize the js code (delete all the cloned code.)
+- Optimize filters.py code.
 - Check what happens when contact user send a message and htmx.ajax runs anyway.
 - Make a way to handle image decoding (async way).
 - Make it so when a message gets updated or deleted, the other user will be able to see the message edition
