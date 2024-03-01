@@ -23,20 +23,18 @@ def to_list(value):
 def last_message(value, data):
     messages_data = list(value.values_list(data, flat=True).order_by("date"))
 
-    if data == 'text':
-        #if the last message text is an empty string, return 'image'
-        if len(messages_data) > 0 and len(messages_data[-1]) > 0: 
+    if data == "text":
+        # if the last message text is an empty string, return 'image'
+        if len(messages_data) > 0 and len(messages_data[-1]) > 0:
             return messages_data[-1]
-        
+
         elif len(messages_data) > 0 and len(messages_data[-1]) == 0:
-            return 'Photo 📷'
-        
+            return "Photo 📷"
+
         else:
-            return ''
+            return ""
     else:
-        return messages_data[-1] if len(messages_data) > 0 else ''
-
-
+        return messages_data[-1] if len(messages_data) > 0 else ""
 
 
 @register.simple_tag
@@ -61,12 +59,12 @@ def get_contact_in_chat(user_set, auth_user, desired_value):
 
     elif desired_value == "name" and contact_created_by_user == False:
         return result
-    
-    elif desired_value == 'archived' and contact_created_by_user:
+
+    elif desired_value == "archived" and contact_created_by_user:
         contact = Contact.objects.get(created_by=auth_user, phone_number=result)
         return contact.archived
-    
-    elif desired_value == 'id' and  contact_created_by_user:
+
+    elif desired_value == "id" and contact_created_by_user:
         contact = Contact.objects.get(created_by=auth_user, phone_number=result)
         return contact.pk
 

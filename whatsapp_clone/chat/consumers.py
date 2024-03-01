@@ -37,7 +37,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             )
             self.receiver = text_data_json["contact_phone_number"].replace("+", "")
             print(f"user_group_{self.receiver}")
-            
+
             await self.create_message(
                 text_data_json["sender_user_id"],
                 text_data_json["message"],
@@ -45,7 +45,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 text_data_json["chat_id"],
             )
             chat_data = await self.get_chat(text_data_json["chat_id"])
-            contact_in_chat = await database_sync_to_async(get_contact_in_chat(chat_data, self.user_instance))
+            contact_in_chat = await database_sync_to_async(
+                get_contact_in_chat(chat_data, self.user_instance)
+            )
             if contact_in_chat.archived == False:
                 await self.channel_layer.group_send(
                     f"user_group_{self.receiver}",
@@ -165,9 +167,11 @@ class ChatConsumer(AsyncWebsocketConsumer):
         new_chat = Chat.objects.create()
         new_chat.users.set(users)
         new_chat.save()
-    
+
     @database_sync_to_async
-    def get_chat(self, chat_id:Union[str, int], field:str="") -> Union[Chat, Chat._meta.fields]:
+    def get_chat(
+        self, chat_id: Union[str, int], field: str = ""
+    ) -> Union[Chat, Chat._meta.fields]:
         """Returns the chat with the provided id or the value from the specified field
         in the found chat.
 
@@ -185,11 +189,10 @@ class ChatConsumer(AsyncWebsocketConsumer):
             try:
                 return Chat.objects.get(id=chat_id)
             except Chat.DoesNotExist:
-                raise Exception('NO CHAT FOUND WITH SUCH ID')
+                raise Exception("NO CHAT FOUND WITH SUCH ID")
         else:
             chat = Chat.objects.get(id=chat_id)
             return chat.archived if field == "archived" else chat.users
-
 
     @database_sync_to_async
     def create_contact(self, contact_name: str, contact_phone_number: str) -> None:
