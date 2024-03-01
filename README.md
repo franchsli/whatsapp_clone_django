@@ -37,7 +37,6 @@ to make the PATCH request for all the new messages] only if it is already False 
 
 ## Improvements
 
-- Limit the contact name display on chat list.
 - Test if edit/delete contact and delete chat works in any case.
 **IMPLEMENT**
 READ THE CHATGPT Django Channels Websocket chat for IMPORTANT improvement.
