@@ -12,7 +12,7 @@
                 <span>{{ contact.name }}</span>
                 <button class="btn btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" onclick="run_element_animation(this.nextElementSibling)"></button>
                 <ul class="dropdown-menu animated-dropdown">
-                <li><span class="dropdown-item edit-action" hx-post="{% url 'unmute_contact_statuses' contact.id %}" hx-target="#chats-and-more" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'><i class="bi bi-volume-off"></i> Unmute contact</span></li>
+                <li><span class="dropdown-item edit-action" hx-patch="{% url 'unmute_contact_statuses' contact.id %}" hx-target="#chats-and-more" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'><i class="bi bi-volume-off"></i> Unmute contact</span></li>
                 </ul>
             </div>
             </div>
