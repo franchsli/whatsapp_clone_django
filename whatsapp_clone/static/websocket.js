@@ -155,7 +155,7 @@ function create_instance(form, instance_type){
         }))
     }
     else if (instance_type === 'create_status'){
-        htmx.ajax('POST', `/create_status/${form_elements[2].value}/${form_elements[3].value !== '' ? form_elements[3].value : ''}/`, 
+        htmx.ajax('POST', `/create_status/${form_elements[2].value + 'IMAGE:' + form_elements[3].value}/`, 
         {target:'#chats-and-more', swap:'innerHTML', headers: {
             'X-CSRFToken': form.querySelector('input[name="csrfmiddlewaretoken"]').value
         }})

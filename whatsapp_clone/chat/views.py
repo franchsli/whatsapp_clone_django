@@ -381,7 +381,7 @@ def unmute_contact_statuses(request, contact_id):
         )
 
 
-def create_status(request, text: str, image: str):
+def create_status(request, status_data:str):
     user_instance = User(id=request.user.id)
     contacts = user_instance.contact_set.all()
     # Query for statuses uploaded by the user or the user's contacts
@@ -389,6 +389,7 @@ def create_status(request, text: str, image: str):
     contacts_statuses = Status.objects.filter(
         uploaded_by__phone_number__in=contacts.values("phone_number")
     )
+    text, image = status_data.split('IMAGE:')
     # new status creation
     if image != "" or text != "":
         new_status = Status.objects.create(

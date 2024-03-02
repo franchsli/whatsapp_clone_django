@@ -3,7 +3,6 @@
 
 ## DO RIGHT NOW
 
-- Make the silence contact logic (booleand field)
 - Make the add status form work:
   - make it so the url parameters are optional (or check how you sent images from that input [image input]).
     The post request will update the entire statuses.html (use HTMX like always).
@@ -34,6 +33,7 @@ to make the PATCH request for all the new messages] only if it is already False 
 - Check what happens when a contact with a unexistent phone_number (user not in database) is created.
 - Add chat wallpapers.
 - Rework show_dropdown animation.
+- Make the silence contact logic (booleand field)
 
 ## Improvements
 
@@ -70,6 +70,7 @@ Also don't forget to change the channel layer to redis.
 ## BUGS TO FIX
 
 - When a user deletes a chat, the chat will be deleted from all the users in the chat
+  - To fix this, you need to implement something similar to archive view logic.
 - Check why request.user.has_photo returns value but (in view) user_instance.has_photo returns False.
 - When scroll to bottom doesn't scroll to the botom anymore:
   - **THIS IS WHAT I THINK IT HAPPENS**:
