@@ -389,6 +389,20 @@ def create_status(request, status_data:str):
     contacts_statuses = Status.objects.filter(
         uploaded_by__phone_number__in=contacts.values("phone_number")
     )
+    contact_phone_numbers = contacts.values_list("phone_number", flat=True)
+    statuses_with_contacts = Status.objects.filter(
+        uploaded_by__phone_number__in=contact_phone_numbers
+    )
+    contacts_with_statuses = {}
+    for status in statuses_with_contacts:
+        contact = contacts.filter(
+            phone_number=status.uploaded_by.phone_number
+        ).first()
+        if contact:
+            contacts_with_statuses.setdefault(contact, []).append(status)
+    print(len([value for value in contacts_with_statuses.values()]))
+    print([value for value in contacts_with_statuses.values()])
+    # gets the text and the image for the status creation
     text, image = status_data.split('IMAGE:')
     # new status creation
     if image != "" or text != "":
@@ -416,6 +430,7 @@ def create_status(request, status_data:str):
             "contacts": contacts,
             "user_statuses": user_statuses,
             "contact_statuses": contacts_statuses,
+            "contacts_with_statuses": contacts_with_statuses,
         },
     )
 
