@@ -3,6 +3,7 @@
 
 ## DO RIGHT NOW
 
+- Check what happens when you upload an image in the status form.
 - Add something to delete statuses automatically every 24 hours.
 - Remember to make a button "area" that covers 75 of the li weight (contact status display)
 also make all the chats buttons have an area that covers the 75% of the father, anything outside that should be considered
