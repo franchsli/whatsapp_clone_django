@@ -383,7 +383,7 @@ def unmute_contact_statuses(request, contact_id):
 
 def create_status(request, status_data:str):
     user_instance = User(id=request.user.id)
-    contacts = user_instance.contact_set.all()
+    contacts = user_instance.contact_set.filter(statuses_muted=False)
     # Query for statuses uploaded by the user or the user's contacts
     user_statuses = Status.objects.filter(uploaded_by=user_instance)
     contacts_statuses = Status.objects.filter(

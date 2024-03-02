@@ -3,9 +3,6 @@
 
 ## DO RIGHT NOW
 
-- Make the add status form work:
-  - make it so the url parameters are optional (or check how you sent images from that input [image input]).
-    The post request will update the entire statuses.html (use HTMX like always).
 - Add something to delete statuses automatically every 24 hours.
 - Remember to make a button "area" that covers 75 of the li weight (contact status display)
 also make all the chats buttons have an area that covers the 75% of the father, anything outside that should be considered
@@ -18,7 +15,8 @@ as another action and not a chat_display.
 - Implement show/hide muted statuses logic (when you click show, it shows the muted statuses and then show dispay as 'hide'
 then when clicked again erase all the muted chats and 'hide' display a show again
 for do this 'diplay change' you actually need to change the show button to hide
-use htxm from and when the muted statuses gets displayed it should change the button from show to hide)
+use htxm from and when the muted statuses gets displayed it should change the button from show to hide **REMEMBER** IMPLEMENT STATUS
+WEBSOCKET CONSUMER BEFORE DOING THIS)
 - Create the search message logic (You can use FILTER ELEMENTS WITH `SHOW ... WHEN` from Hyperscript).
 - Add read and unread logic (you can implement it that any message (in the viewport makes a
 PATCH request to update the 'read' field in the message model from False to True [This makes the user needs to scroll down or up
@@ -69,6 +67,11 @@ Also don't forget to change the channel layer to redis.
 
 ## BUGS TO FIX
 
+- When an user uploads a status, the response returns all the statuses (depending on the view data)
+ to fix this, you need to make an independent status consumer and send a receive status from there and use HTMX to display it.
+  - You can retrieve all the statuses (muted and unmuted) in one view but the but the muted statuses list is display: none;
+  and only by clicking the show button will show it changing display to flex and flex direction to column
+  this cannot be implemented at the time because this won't display the newest muted statuses by clicking the show button.
 - When a user deletes a chat, the chat will be deleted from all the users in the chat
   - To fix this, you need to implement something similar to archive view logic.
 - Check why request.user.has_photo returns value but (in view) user_instance.has_photo returns False.
