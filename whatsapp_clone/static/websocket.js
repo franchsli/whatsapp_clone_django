@@ -158,8 +158,16 @@ function create_instance(form, instance_type){
         htmx.ajax('POST', `/create_status/${form_elements[2].value + 'IMAGE:' + form_elements[3].value}/`, 
         {target:'#chats-and-more', swap:'innerHTML', headers: {
             'X-CSRFToken': form.querySelector('input[name="csrfmiddlewaretoken"]').value
-        }})
-        console.log(`Text:${form_elements[2].value}\nImage:${form_elements[3].value}\nTest_Text:${form_elements[2].value !== ''}\nTest_image${form_elements[3].value !== ''}`)
+        }}).then( () => {
+            form_elements[2].value = ''
+            form_elements[3].value = ''
+            const toastNotification = document.getElementById('liveToast')
+            modifyNotification('Server', 'Status uploaded succesfully!')
+            const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
+            toastBootstrap.show()
+            notification_audio.play()
+        })
+        //console.log(`Text:${form_elements[2].value}\nImage:${form_elements[3].value}\nTest_Text:${form_elements[2].value !== ''}\nTest_image${form_elements[3].value !== ''}`)
     }
     return false
 }
