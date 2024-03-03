@@ -3,7 +3,8 @@
 
 ## DO RIGHT NOW
 
-- Check what happens when you upload an image in the status form.
+- Give the status form image input an onchange eventlistener that checks if an image is selected or not (see chat image input logic
+at user-chats.html, selected-chat.html and websocket.js [line 99])
 - Add something to delete statuses automatically every 24 hours.
 - Remember to make a button "area" that covers 75 of the li weight (contact status display)
 also make all the chats buttons have an area that covers the 75% of the father, anything outside that should be considered
@@ -61,6 +62,8 @@ Also don't forget to change the channel layer to redis.
 - Remove all unnecesary datasets and such from chats, contact templates (remember to check websocket.js before deleting).
 - Make it responsive.
 - Re think the delete message modal (Delete for everyone or for me logic).
+- Re think if image input (status form) should be changed.
+- Review previewImage func.
 - Test all statuses features.
 - Check and compare all the whatsapp web features with this project features.
 - Review all the code and delete spaguetti code.

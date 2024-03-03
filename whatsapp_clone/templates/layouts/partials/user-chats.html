@@ -65,7 +65,10 @@
           <form id="status_form" enctype="multipart/form-data">
             <div id="status-validation-message" class="validation-error"></div>
             {% csrf_token %}
-            {{ status_form | crispy}}
+            {{ status_form | crispy }}
+            <div class="d-flex flex-column w-100">
+              <div id="status-imagePreview" class="d-flex align-items-center justify-content-center"></div>
+            </div>
             <button class="btn btn-success" type="submit">Create status</button>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
           </form>
