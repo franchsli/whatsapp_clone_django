@@ -92,11 +92,13 @@ window.summon_chat = function(chat){
 }
 
 /**
- * Displays a preview of the image in the chat image input.
+ * Displays a preview of the image in the provided image preview and image input.
+ * @param {String} image_input_id 
+ * @param {String} image_preview_id 
  */
-function previewImage() {
-    let imageInput = document.getElementById('imageInput');
-    let imagePreview = document.getElementById('imagePreview');
+function previewImage(image_input_id='imageInput', image_preview_id='imagePreview') {
+    let imageInput = document.getElementById(image_input_id);
+    let imagePreview = document.getElementById(image_preview_id);
 
     let file = imageInput.files[0];
 
