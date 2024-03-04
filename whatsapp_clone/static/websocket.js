@@ -161,7 +161,7 @@ function create_instance(form, instance_type){
         }))
     }
     else if (instance_type === 'create_status'){
-        htmx.ajax('POST', `/create_status/${form_elements[2].value + 'IMAGE:' + form_elements[3].value}/`, 
+        htmx.ajax('POST', `/create_status/${form_elements[2].value + 'IMAGE:' + form.querySelector('img').src}/`, 
         {target:'#chats-and-more', swap:'innerHTML', headers: {
             'X-CSRFToken': form.querySelector('input[name="csrfmiddlewaretoken"]').value
         }}).then( () => {
@@ -173,7 +173,7 @@ function create_instance(form, instance_type){
             toastBootstrap.show()
             notification_audio.play()
         })
-        //console.log(`Text:${form_elements[2].value}\nImage:${form_elements[3].value}\nTest_Text:${form_elements[2].value !== ''}\nTest_image${form_elements[3].value !== ''}`)
+        console.log(`Text:${form_elements[2].value}\nImage:${form.querySelector('img').src}}\nTest_Text:${form_elements[2].value !== ''}\nTest_image${form.querySelector('img').src} !== ''}`)
     }
     return false
 }
