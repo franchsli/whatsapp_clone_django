@@ -3,8 +3,6 @@
 
 ## DO RIGHT NOW
 
-- Give the status form image input an onchange eventlistener that checks if an image is selected or not (see chat image input logic
-at user-chats.html, selected-chat.html and websocket.js [line 99])
 - Add something to delete statuses automatically every 24 hours.
 - Remember to make a button "area" that covers 75 of the li weight (contact status display)
 also make all the chats buttons have an area that covers the 75% of the father, anything outside that should be considered
@@ -55,7 +53,7 @@ Also don't forget to change the channel layer to redis.
 - When a user is creating a new chat and selects more than a contact,
     the modal form title should change to 'create group' and a new input should appear that has the label
         'group name'.
-- Check if create_status have problems dealing with the actual upload_date (consumers.py).
+- Give the user creation form image preview logic.
 - Check if consumer functions arguments number can be reduced.
 - Split Chat Consumers into multiple consumers (e.g Status consumer and so)
 - Use for... empty in for loops if necessary. <https://docs.djangoproject.com/en/5.0/ref/templates/builtins/#for-empty>
