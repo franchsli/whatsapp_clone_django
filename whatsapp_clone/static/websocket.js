@@ -8,6 +8,9 @@ const chat_form = document.getElementById("chat-creation-form")
 const chat_display = document.getElementById('chat-display')
 const contact_form = document.getElementById("contact-creation-form")
 const status_form = document.getElementById('status_form')
+const stauts_image_preview = document.getElementById('status-imagePreview')
+const status_image_input = document.getElementById('id_image')
+console.log(`IMAGE INPUT: ${status_image_input}\nIMAGE PREVIEW: ${stauts_image_preview}`)
 const notification_audio = new Audio('static/Audio/app/message_received.mp3')
 const message_sent_audio = new Audio('static/Audio/app/message_sent.mp3')
 let actual_image_data
@@ -99,6 +102,7 @@ window.summon_chat = function(chat){
 function previewImage(image_input_id='imageInput', image_preview_id='imagePreview') {
     let imageInput = document.getElementById(image_input_id);
     let imagePreview = document.getElementById(image_preview_id);
+    console.log('GOT THE IMAGE INPUT AND PREVIEW')
 
     let file = imageInput.files[0];
 
@@ -239,6 +243,10 @@ socket.addEventListener('open', () => {
         inputs[2].value = ''
         return false;
     }
+    // gets the image preview div and updated it over time
+    status_image_input.addEventListener('change', () => {
+        previewImage('id_image', 'status-imagePreview')
+    })
 
     status_form.onsubmit = () => {
         if (!not_empty(status_form)){
@@ -252,7 +260,6 @@ socket.addEventListener('open', () => {
         }
         return false;
     }
-
 
 
 })
