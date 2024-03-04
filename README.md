@@ -3,10 +3,9 @@
 
 ## DO RIGHT NOW
 
+- Rework previewImage func (line 99 websockets.js) to allow HTML elements instead of their id,
+if no element is provided then search for the default elements.
 - Add something to delete statuses automatically every 24 hours.
-- Remember to make a button "area" that covers 75 of the li weight (contact status display)
-also make all the chats buttons have an area that covers the 75% of the father, anything outside that should be considered
-as another action and not a chat_display.
 - Rework all the chat.views logics (check if there's a way to implement some view code into another).
 - Implement something to update the message receiver chat_list (websocket chatconsumer).
 
