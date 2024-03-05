@@ -29,7 +29,9 @@ const mutationCallback = function(mutationsList, observer) {
                     window.new_message_button = document.getElementById('send-message-button')
                     window.delete_message_option_buttons = document.querySelectorAll('.delete-message')
                     const imageInput = document.getElementById('imageInput')
-                    imageInput.addEventListener('change', previewImage);
+                    imageInput.addEventListener('change', () => {
+                        previewImage()
+                    });
 
                     
                     delete_message_option_buttons.forEach( button => {
@@ -95,14 +97,22 @@ window.summon_chat = function(chat){
 }
 
 /**
- * Displays a preview of the image in the provided image preview and image input.
- * @param {String} image_input_id 
- * @param {String} image_preview_id 
+ * Displays a preview of the image provided image input element in the provided HTML div element..
+ * @param {HTMLInputElement} image_input The element that contains the image.
+ * @param {HTMLDivElement} image_preview The element that will contain the image preview.
  */
-function previewImage(image_input_id='imageInput', image_preview_id='imagePreview') {
-    let imageInput = document.getElementById(image_input_id);
-    let imagePreview = document.getElementById(image_preview_id);
+function previewImage(image_input=undefined, image_preview=undefined) {
+    let imageInput
+    let imagePreview
+    // if no image input and image preview elements have been provided
+    // gets the default image input and preview HTML elements
+    if (image_input === undefined && image_preview === undefined){
+        console.log('IF STATEMENT RAN')
+        imageInput = document.getElementById('imageInput');
+        imagePreview = document.getElementById('imagePreview');
+    }
     console.log('GOT THE IMAGE INPUT AND PREVIEW')
+    console.log(`IMAGE INPUT: ${imageInput}\nIMAGE PREVIEW: ${imagePreview}`)
 
     let file = imageInput.files[0];
 
@@ -116,7 +126,6 @@ function previewImage(image_input_id='imageInput', image_preview_id='imagePrevie
             preview.style.maxWidth = '200px'
             preview.classList.add('m-3')
             preview.src = event.target.result;
-            //localStorage.setItem('image_data', event.target.result)
             actual_image_data = event.target.result
             preview.alt = 'Image Preview';
 
@@ -245,14 +254,14 @@ socket.addEventListener('open', () => {
     }
     // gets the image preview div and updated it over time
     status_image_input.addEventListener('change', () => {
-        previewImage('id_image', 'status-imagePreview')
+        previewImage(status_image_input, stauts_image_preview)
     })
 
     status_form.onsubmit = () => {
         if (!not_empty(status_form)){
             const validation_message = document.getElementById('status-validation-message')
             console.log(validation_message)
-            validation_message.innerText = 'Please create a valid status'
+            validation_message.innerText = 'Please upload something.'
         }
 
         else{
