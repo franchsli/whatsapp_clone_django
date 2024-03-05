@@ -3,8 +3,8 @@
 
 ## DO RIGHT NOW
 
-- Rework previewImage func (line 99 websockets.js) to allow HTML elements instead of their id,
-if no element is provided then search for the default elements.
+- Review previewImage func (line 99 websockets.js) (when user uploads a status with image errors occurs)
+[BUNCH OF ERRORS](image.png)
 - Add something to delete statuses automatically every 24 hours.
 - Rework all the chat.views logics (check if there's a way to implement some view code into another).
 - Implement something to update the message receiver chat_list (websocket chatconsumer).
