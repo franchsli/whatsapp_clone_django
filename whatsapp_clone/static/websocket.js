@@ -102,19 +102,19 @@ window.summon_chat = function(chat){
  * @param {HTMLDivElement} image_preview The element that will contain the image preview.
  */
 function previewImage(image_input=undefined, image_preview=undefined) {
-    let imageInput
-    let imagePreview
     // if no image input and image preview elements have been provided
     // gets the default image input and preview HTML elements
     if (image_input === undefined && image_preview === undefined){
         console.log('IF STATEMENT RAN')
-        imageInput = document.getElementById('imageInput');
-        imagePreview = document.getElementById('imagePreview');
+        image_input = document.getElementById('imageInput');
+        image_preview = document.getElementById('imagePreview');
     }
+    console.log(image_input)
+    console.log(image_preview)
     console.log('GOT THE IMAGE INPUT AND PREVIEW')
-    console.log(`IMAGE INPUT: ${imageInput}\nIMAGE PREVIEW: ${imagePreview}`)
+    console.log(`IMAGE INPUT: ${image_input}\nIMAGE PREVIEW: ${image_preview}`)
 
-    let file = imageInput.files[0];
+    let file = image_input.files[0];
 
     if (file) {
         let reader = new FileReader();
@@ -130,11 +130,11 @@ function previewImage(image_input=undefined, image_preview=undefined) {
             preview.alt = 'Image Preview';
 
             // Clear previous previews
-            while (imagePreview.firstChild) {
-                imagePreview.removeChild(imagePreview.firstChild);
+            while (image_preview.firstChild) {
+                image_preview.removeChild(image_preview.firstChild);
             }
 
-            imagePreview.appendChild(preview);
+            image_preview.appendChild(preview);
         };
 
         reader.readAsDataURL(file);
