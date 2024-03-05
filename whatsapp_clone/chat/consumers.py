@@ -45,10 +45,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 text_data_json["chat_id"],
             )
             chat_data = await self.get_chat(text_data_json["chat_id"])
-            contact_in_chat = await database_sync_to_async(
-                get_contact_in_chat(chat_data, self.user_instance)
-            )
-            if contact_in_chat.archived == False:
+            contact_in_chat = await database_sync_to_async(get_contact_in_chat)(chat_data, self.user_instance)
+            if contact_in_chat and contact_in_chat.archived == False:
                 await self.channel_layer.group_send(
                     f"user_group_{self.receiver}",
                     {
