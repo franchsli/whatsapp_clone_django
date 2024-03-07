@@ -6,7 +6,7 @@ from django.utils import timezone
 from django.core.files.base import ContentFile
 from phonenumber_field.phonenumber import PhoneNumber
 from typing import Union, Optional
-from .exceptions import UserNotFoundException
+from .exceptions import *
 import json, base64
 
 
@@ -20,13 +20,20 @@ class ChatConsumer(AsyncWebsocketConsumer):
         )
 
         await self.channel_layer.group_add(self.room_group_name, self.channel_name)
+        # joins the user to a unique group, which needs to be accessed by other users 
+        # if they want to communicate with said user.
         await self.channel_layer.group_add(
             self.user_specific_group_name, self.channel_name
         )
         await self.accept()
 
     async def receive(self, text_data):
+        # transform the text_data (message received [json])
+        # to a python dictionary
         text_data_json = json.loads(text_data)
+        # handles the message as a 'request'
+        # if the type of the 'request' is message, it means
+        # a message needs to be created in the database with the dictionary data.
         if text_data_json["type"] == "message":
             await self.channel_layer.group_send(
                 self.room_group_name,
@@ -54,7 +61,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
                         "text": f"{text_data_json['sender_user_id']}{text_data_json['message']}",
                     },
                 )
-
+        # if the type of the 'request' is 'reconnect'
+        # connect this consumer to another group
+        # to be able to send messages.
         elif text_data_json["type"] == "reconnect":
             group_name = text_data_json["reconnect_to"]
             print("reconnecting to group", group_name)
@@ -187,7 +196,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             try:
                 return Chat.objects.get(id=chat_id)
             except Chat.DoesNotExist:
-                raise Exception("NO CHAT FOUND WITH SUCH ID")
+                raise ChatNotFoundException("NO CHAT FOUND WITH SUCH ID")
         else:
             chat = Chat.objects.get(id=chat_id)
             return chat.archived if field == "archived" else chat.users
