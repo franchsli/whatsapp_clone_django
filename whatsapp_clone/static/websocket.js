@@ -109,8 +109,11 @@ function previewImage(image_input=undefined, image_preview=undefined) {
         image_input = document.getElementById('imageInput');
         image_preview = document.getElementById('imagePreview');
     }
-    console.log(image_input)
-    console.log(image_preview)
+
+    //else if (typeof(image_input)){}
+    console.log(typeof(image_input))
+    console.log(typeof(image_preview))
+    console.log(typeof(image_input) === typeof(HTMLInputElement))
     console.log('GOT THE IMAGE INPUT AND PREVIEW')
     console.log(`IMAGE INPUT: ${image_input}\nIMAGE PREVIEW: ${image_preview}`)
 
@@ -181,6 +184,8 @@ function create_instance(form, instance_type){
             const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
             toastBootstrap.show()
             notification_audio.play()
+        }).catch( (error) => {
+            console.log(error)
         })
         console.log(`Text:${form_elements[2].value}\nImage:${form.querySelector('img').src}}\nTest_Text:${form_elements[2].value !== ''}\nTest_image${form.querySelector('img').src} !== ''}`)
     }
@@ -257,7 +262,8 @@ socket.addEventListener('open', () => {
         previewImage(status_image_input, stauts_image_preview)
     })
 
-    status_form.onsubmit = () => {
+    status_form.onsubmit = (event) => {
+        event.preventDefault()
         if (!not_empty(status_form)){
             const validation_message = document.getElementById('status-validation-message')
             console.log(validation_message)

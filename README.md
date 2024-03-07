@@ -5,6 +5,7 @@
 
 - Review previewImage func (line 99 websockets.js) (when user uploads a status with image errors occurs)
 [BUNCH OF ERRORS](image.png)
+  - Try to rework the function to allow strings too (HTML element id's)
 - Add something to delete statuses automatically every 24 hours.
 - Rework all the chat.views logics (check if there's a way to implement some view code into another).
 - Implement something to update the message receiver chat_list (websocket chatconsumer).
