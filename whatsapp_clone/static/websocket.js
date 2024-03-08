@@ -173,7 +173,12 @@ function create_instance(form, instance_type){
         }))
     }
     else if (instance_type === 'create_status'){
-        htmx.ajax('POST', `/create_status/${form_elements[2].value + 'IMAGE:' + form.querySelector('img').src}/`, 
+        const status_image_html = form.querySelector('img')
+        console.log('status image', status_image_html)
+        console.log(status_image_html === null)
+        const status_image_src = status_image_html !== null ? status_image_html.src : ''
+
+        htmx.ajax('POST', `/create_status/${form_elements[2].value}IMAGE:${status_image_src}/`, 
         {target:'#chats-and-more', swap:'innerHTML', headers: {
             'X-CSRFToken': form.querySelector('input[name="csrfmiddlewaretoken"]').value
         }}).then( () => {
@@ -187,7 +192,7 @@ function create_instance(form, instance_type){
         }).catch( (error) => {
             console.log(error)
         })
-        console.log(`Text:${form_elements[2].value}\nImage:${form.querySelector('img').src}}\nTest_Text:${form_elements[2].value !== ''}\nTest_image${form.querySelector('img').src} !== ''}`)
+        //console.log(`Text:${form_elements[2].value}\nImage:${form.querySelector('img').src}}\nTest_Text:${form_elements[2].value !== ''}\nTest_image${form.querySelector('img').src} !== ''}`)
     }
     return false
 }
