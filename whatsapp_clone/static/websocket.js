@@ -187,7 +187,10 @@ function create_instance(form, instance_type){
         console.log('FORM DATA', formData)
         htmx.logAll();
 
-        htmx.ajax('POST', `/create_status/`, {target:'#chats-and-more', swap:'innerHTML', values: {'text':form_elements[2].value, 'image':file}, headers: {
+        htmx.ajax('POST', `/create_status/`, {target:'#chats-and-more', swap:'innerHTML', 
+        values: { text:form_elements[2].value, files: formData.getAll('image')},
+        //source: event.currentTarget, 
+        headers: {
             'X-CSRFToken': form.querySelector('input[name="csrfmiddlewaretoken"]').value
         }}).then( () => {
             form_elements[2].value = ''
