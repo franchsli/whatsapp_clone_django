@@ -176,6 +176,13 @@ function create_instance(form, instance_type){
         const status_image_html = form.querySelector('img')
         console.log('status image', status_image_html)
         console.log(status_image_html === null)
+        console.log(form_elements[3].files[0])
+        const file = form_elements[3].files[0]
+        const formData = new FormData();
+        if (file){
+            formData.append('text', form_elements[2].value);
+            formData.append('image', file);
+        }
         const status_image_src = status_image_html !== null ? status_image_html.src : ''
 
         htmx.ajax('POST', `/create_status/${form_elements[2].value}IMAGE:${status_image_src}/`, 
