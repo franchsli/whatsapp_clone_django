@@ -35,6 +35,7 @@ to make the PATCH request for all the new messages] only if it is already False 
 
 ## Improvements
 
+- Restric chat views (check if the request method is the correct one if not, raise an error.)
 - Test if edit/delete contact and delete chat works in any case.
 **IMPLEMENT**
 READ THE CHATGPT Django Channels Websocket chat for IMPORTANT improvement.

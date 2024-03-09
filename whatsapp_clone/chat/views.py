@@ -381,7 +381,7 @@ def unmute_contact_statuses(request, contact_id):
         )
 
 
-def create_status(request, status_data:str):
+def create_status(request):
     user_instance = User(id=request.user.id)
     contacts = user_instance.contact_set.filter(statuses_muted=False)
     # Query for statuses uploaded by the user or the user's contacts
@@ -403,24 +403,23 @@ def create_status(request, status_data:str):
     print(len([value for value in contacts_with_statuses.values()]))
     print([value for value in contacts_with_statuses.values()])
     # gets the text and the image for the status creation
-    text, image = status_data.split('IMAGE:')
+    text = request.POST.get('text')
+    image = request.FILES.get('image')
+    print(f'TEXT:{text}\nIMAGE:{image}')
+    print(f'REQUEST POST{request.POST}\n REQUEST FILES: {request.FILES}')
+    print(f'REQUEST:{request}')
+    print(f"DATA{request.POST.get('data')}")
     # new status creation
-    if image != "" or text != "":
+    if image or text:
         new_status = Status.objects.create(
             uploaded_by=user_instance, upload_date=timezone.now()
         )
-        if text != "":
+        if text:
             new_status.text = text
             new_status.save()
 
-        if image != "":
-            file_format, image_string_data = image.split(";base64,")
-            # Get the file format extension (png, jpg, jpeg, etc.)
-            file_extension = file_format.split("/")[-1]
-            image_bytes_data = base64.b64decode(image_string_data)
-
-            image_file = ContentFile(image_bytes_data, f"user_status.{file_extension}")
-            new_status.image = image_file
+        if image:
+            new_status.image.save(f"user_status_{new_status.id}.{image.content_type.split('/')[-1]}", image)
             new_status.save()
 
     return render(

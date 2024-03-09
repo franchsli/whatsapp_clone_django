@@ -180,17 +180,20 @@ function create_instance(form, instance_type){
         const file = form_elements[3].files[0]
         const formData = new FormData();
         if (file){
+            console.log('APPENDING DATA')
             formData.append('text', form_elements[2].value);
             formData.append('image', file);
         }
-        const status_image_src = status_image_html !== null ? status_image_html.src : ''
+        console.log('FORM DATA', formData)
+        htmx.logAll();
 
-        htmx.ajax('POST', `/create_status/${form_elements[2].value}IMAGE:${status_image_src}/`, 
-        {target:'#chats-and-more', swap:'innerHTML', headers: {
+        htmx.ajax('POST', `/create_status/`, {target:'#chats-and-more', swap:'innerHTML', values: {'text':form_elements[2].value, 'image':file}, headers: {
             'X-CSRFToken': form.querySelector('input[name="csrfmiddlewaretoken"]').value
         }}).then( () => {
             form_elements[2].value = ''
             form_elements[3].value = ''
+            status_image_html.src = ''
+            status_image_html.alt = ''
             const toastNotification = document.getElementById('liveToast')
             modifyNotification('Server', 'Status uploaded succesfully!')
             const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)

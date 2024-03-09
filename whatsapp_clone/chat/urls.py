@@ -21,7 +21,7 @@ urlpatterns = [
     path('update_chat_form/', views.update_chat_form, name='update_chat_form'),
     path('statuses/', views.get_statuses, name='statuses'),
     path('muted_statuses/', views.get_muted_statuses, name='muted_statuses'),
-    path('create_status/<path:status_data>/', views.create_status, name='create_status'),
+    path('create_status/', views.create_status, name='create_status'),
     path('mute_contact_statuses/<int:contact_id>', views.mute_contact_statuses, name='mute_contact_statuses'),
     path('unmute_contact_statuses/<int:contact_id>', views.unmute_contact_statuses, name='unmute_contact_statuses'),
 ]

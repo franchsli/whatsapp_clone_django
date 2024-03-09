@@ -62,7 +62,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form id="status_form" enctype="multipart/form-data">
+          <form id="status_form" enctype="multipart/form-data" method="POST">
             <div id="status-validation-message" class="validation-error"></div>
             {% csrf_token %}
             {{ status_form | crispy }}
