@@ -172,41 +172,6 @@ function create_instance(form, instance_type){
             'contact_phone_number': form_elements[2].value
         }))
     }
-    else if (instance_type === 'create_status'){
-        const status_image_html = form.querySelector('img')
-        console.log('status image', status_image_html)
-        console.log(status_image_html === null)
-        console.log(form_elements[3].files[0])
-        const file = form_elements[3].files[0]
-        const formData = new FormData();
-        if (file){
-            console.log('APPENDING DATA')
-            formData.append('text', form_elements[2].value);
-            formData.append('image', file);
-        }
-        console.log('FORM DATA', formData)
-        htmx.logAll();
-
-        htmx.ajax('POST', `/create_status/`, {target:'#chats-and-more', swap:'innerHTML', 
-        values: { text:form_elements[2].value, files: formData.getAll('image')},
-        //source: event.currentTarget, 
-        headers: {
-            'X-CSRFToken': form.querySelector('input[name="csrfmiddlewaretoken"]').value
-        }}).then( () => {
-            form_elements[2].value = ''
-            form_elements[3].value = ''
-            status_image_html.src = ''
-            status_image_html.alt = ''
-            const toastNotification = document.getElementById('liveToast')
-            modifyNotification('Server', 'Status uploaded succesfully!')
-            const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
-            toastBootstrap.show()
-            notification_audio.play()
-        }).catch( (error) => {
-            console.log(error)
-        })
-        //console.log(`Text:${form_elements[2].value}\nImage:${form.querySelector('img').src}}\nTest_Text:${form_elements[2].value !== ''}\nTest_image${form.querySelector('img').src} !== ''}`)
-    }
     return false
 }
 
@@ -280,19 +245,30 @@ socket.addEventListener('open', () => {
         previewImage(status_image_input, stauts_image_preview)
     })
 
-    status_form.onsubmit = (event) => {
-        event.preventDefault()
-        if (!not_empty(status_form)){
-            const validation_message = document.getElementById('status-validation-message')
-            console.log(validation_message)
-            validation_message.innerText = 'Please upload something.'
-        }
+    htmx.logger = function(elt, event, data) {
+        // cleans the status creation form fields (text, image and preview if exists.)
+        if (event === 'htmx:afterSettle' && data.pathInfo.requestPath === '/create_status/'){
+            const form_text = document.getElementById('id_text')
+            const form_image = document.getElementById('id_image')
+            const form_image_preview_container = document.getElementById('status-imagePreview')
+            const form_image_preview = form_image_preview_container.querySelector('img')
 
-        else{
-            create_instance(status_form, 'create_status')
+            form_text.value = ''
+            form_image.value = ''
+            if (form_image_preview){
+                form_image_preview.src = ''
+                form_image_preview.alt = ''
+            }
+            // notify the user that the status has been succesfully created.
+            const toastNotification = document.getElementById('liveToast')
+            modifyNotification('Server', 'Status uploaded succesfully!')
+            const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
+            toastBootstrap.show()
+            notification_audio.play()
         }
-        return false;
     }
+    htmx.logger()
+
 
 
 })

@@ -3,9 +3,8 @@
 
 ## DO RIGHT NOW
 
-- Review previewImage func (line 99 websockets.js) (when user uploads a status with image errors occurs)
-[BUNCH OF ERRORS](image.png)
-  - This happens when the uploaded image is too big, to fix this use formData js object.
+- Review and optimize the way something is done afte status creation.
+- Think to implement progress bar when uploading files.
 - Add something to delete statuses automatically every 24 hours.
 - Rework all the chat.views logics (check if there's a way to implement some view code into another).
 - Implement something to update the message receiver chat_list (websocket chatconsumer).
