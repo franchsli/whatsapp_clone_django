@@ -111,6 +111,8 @@ main,  #base {
   padding-bottom: 1.25rem;
   color: #fff;
   text-align: center;
+  align-items: center;
+  justify-content: center;
   background-color: black;
   opacity: 0.5;
 }
