@@ -244,6 +244,12 @@ socket.addEventListener('open', () => {
     status_image_input.addEventListener('change', () => {
         previewImage(status_image_input, stauts_image_preview)
     })
+    // fills the status form progress bar
+    htmx.on('#status_form', 'htmx:xhr:progress', function(evt) {
+        htmx.find('#status-upload-progress').setAttribute('value', evt.detail.loaded/evt.detail.total * 100)
+        console.log(evt.detail.loaded/evt.detail.total * 100)
+    });
+    // resets the progress bar
 
     htmx.logger = function(elt, event, data) {
         // cleans the status creation form fields (text, image and preview if exists.)

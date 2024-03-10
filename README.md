@@ -3,8 +3,6 @@
 
 ## DO RIGHT NOW
 
-- Review and optimize the way something is done afte status creation.
-- Think to implement progress bar when uploading files.
 - Add something to delete statuses automatically every 24 hours.
 - Rework all the chat.views logics (check if there's a way to implement some view code into another).
 - Implement something to update the message receiver chat_list (websocket chatconsumer).
