@@ -8,8 +8,10 @@ const chat_form = document.getElementById("chat-creation-form")
 const chat_display = document.getElementById('chat-display')
 const contact_form = document.getElementById("contact-creation-form")
 const status_form = document.getElementById('status_form')
+const status_modal = document.getElementById('CreateStatusModal')
 const stauts_image_preview = document.getElementById('status-imagePreview')
 const status_image_input = document.getElementById('id_image')
+const status_progress_bar = document.getElementById('status-upload-progress')
 console.log(`IMAGE INPUT: ${status_image_input}\nIMAGE PREVIEW: ${stauts_image_preview}`)
 const notification_audio = new Audio('static/Audio/app/message_received.mp3')
 const message_sent_audio = new Audio('static/Audio/app/message_sent.mp3')
@@ -240,10 +242,15 @@ socket.addEventListener('open', () => {
         inputs[2].value = ''
         return false;
     }
-    // gets the image preview div and updated it over time
+    // gets the image preview div and updated it over time.
     status_image_input.addEventListener('change', () => {
         previewImage(status_image_input, stauts_image_preview)
     })
+    // resets the status form progess bar value when the modal is closed.
+    status_modal.addEventListener('hidden.bs.modal', function (event) {
+        status_progress_bar.setAttribute('value', 0)
+        console.log('Modal has been closed!')
+      })
     // fills the status form progress bar
     htmx.on('#status_form', 'htmx:xhr:progress', function(evt) {
         htmx.find('#status-upload-progress').setAttribute('value', evt.detail.loaded/evt.detail.total * 100)
