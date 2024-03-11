@@ -161,6 +161,22 @@ function run_element_animation(element){
     
 }
 
+/**
+ * Toggles the provided html element inner text between the provided texts.
+ * @param {HTMLElement} HTML_element 
+ * @param {String} text_a 
+ * @param {String} text_b 
+ */
+function toggle_element_inner_text(HTML_element, text_a, text_b){
+    if (HTML_element.innerText === text_a){
+        HTML_element.innerText = text_b
+    }
+    else{
+        HTML_element.innerText = text_a
+    }
+
+}
+
 
 /**
  * Returns if at least one checkbox in the provided form was checked.
@@ -196,4 +212,7 @@ function not_empty(form){
 
 
 
-export {get, post, modifyNotification, scroll_to_bottom, create_message_html, toggleReadMore, showDropdown, run_element_animation, checked, not_empty}
+export {get, post, modifyNotification,
+     scroll_to_bottom, create_message_html, 
+     toggleReadMore, showDropdown, run_element_animation,
+      checked, not_empty, toggle_element_inner_text}

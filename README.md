@@ -3,18 +3,23 @@
 
 ## DO RIGHT NOW
 
-- Add something to delete statuses automatically every 24 hours.
-- Rework all the chat.views logics (check if there's a way to implement some view code into another).
-- Implement something to update the message receiver chat_list (websocket chatconsumer).
-
-## ANOTHER THINGS TO DO
-
 - Implement show/hide muted statuses logic (when you click show, it shows the muted statuses and then show dispay as 'hide'
 then when clicked again erase all the muted chats and 'hide' display a show again
 for do this 'diplay change' you actually need to change the show button to hide
 use htxm from and when the muted statuses gets displayed it should change the button from show to hide **REMEMBER** IMPLEMENT STATUS
 WEBSOCKET CONSUMER BEFORE DOING THIS)
+  - **DO THIS** When you click show, it do as expected, but in muted statuses html (template)
+  it should handle the 'Show' button and change it to a hidde one that when clicked returns to a not shown muted statuses
+  (to do this, you need to implement a new template.)
 - Create the search message logic (You can use FILTER ELEMENTS WITH `SHOW ... WHEN` from Hyperscript).
+- Add status form validation.
+- Add contact form validation.
+- Rework all the chat.views logics (check if there's a way to implement some view code into another).
+- Add something to delete statuses automatically every 24 hours.
+- Implement something to update the message receiver chat_list (websocket chatconsumer).
+
+## ANOTHER THINGS TO DO
+
 - Add read and unread logic (you can implement it that any message (in the viewport makes a
 PATCH request to update the 'read' field in the message model from False to True [This makes the user needs to scroll down or up
 to make the PATCH request for all the new messages] only if it is already False [To prevent unnecesary API calls])).
@@ -23,7 +28,6 @@ to make the PATCH request for all the new messages] only if it is already False 
 - Write test for the exceptions and functions.
 - Add groups chats.
 - Redesign the login and register views.
-- Add contact form validation.
 - Reconsider the exceptions.py file.
 - Check what happens when a contact with a unexistent phone_number (user not in database) is created.
 - Add chat wallpapers.
@@ -32,7 +36,7 @@ to make the PATCH request for all the new messages] only if it is already False 
 
 ## Improvements
 
-- Restric chat views (check if the request method is the correct one if not, raise an error.)
+- Restrict chat views (check if the request method is the correct one if not, raise an error).
 - Test if edit/delete contact and delete chat works in any case.
 **IMPLEMENT**
 READ THE CHATGPT Django Channels Websocket chat for IMPORTANT improvement.
@@ -83,6 +87,8 @@ Also don't forget to change the channel layer to redis.
     - I think is because the readmore height isn't kept in count when scrolling.
 - When you go to status page and then go back to the normal UI, the theme icon gets reseted.
   - It has to do with the HTMX, when it gets reloaded it doesn't count as a DOMContentLoaded (search in stackoverflow).
+    - To fix this you can add an event listener that checks whether the content DOMContent has been changed.
+    If it is the case, check if the theme icon is in it, if so, apply the same logic in the DOMConten Loaded event listener.
   - You can see HTMX events to add an hx.event that when the content was swapped into the DOM (before this verify that is the right content)
   apllies the  DOMContentLoaded logic.
 

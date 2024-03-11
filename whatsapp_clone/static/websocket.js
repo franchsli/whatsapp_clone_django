@@ -1,4 +1,7 @@
-import { get, modifyNotification, scroll_to_bottom, create_message_html, toggleReadMore, showDropdown, run_element_animation, checked, not_empty } from  './tools.js';
+import { get, modifyNotification, scroll_to_bottom,
+  create_message_html, toggleReadMore, showDropdown,
+   run_element_animation, checked, not_empty,
+    toggle_element_inner_text } from  './tools.js';
 
 console.log("websocket.js is loaded!");
 const user = document.getElementById('profile-pic')
@@ -250,14 +253,14 @@ socket.addEventListener('open', () => {
     status_modal.addEventListener('hidden.bs.modal', function (event) {
         status_progress_bar.setAttribute('value', 0)
         console.log('Modal has been closed!')
-      })
+    })
     // fills the status form progress bar
     htmx.on('#status_form', 'htmx:xhr:progress', function(evt) {
         htmx.find('#status-upload-progress').setAttribute('value', evt.detail.loaded/evt.detail.total * 100)
         console.log(evt.detail.loaded/evt.detail.total * 100)
-    });
-    // resets the progress bar
+    })
 
+    // handle different htmx events and what to do after they're executed.
     htmx.logger = function(elt, event, data) {
         // cleans the status creation form fields (text, image and preview if exists.)
         if (event === 'htmx:afterSettle' && data.pathInfo.requestPath === '/create_status/'){
@@ -278,6 +281,27 @@ socket.addEventListener('open', () => {
             const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
             toastBootstrap.show()
             notification_audio.play()
+        }
+
+        else if (event === 'htmx:afterSettle' && data.pathInfo.requestPath === '/statuses/'){
+            const show_muted_statuses_button = document.getElementById('show-muted-statuses')
+            const muted_statuses = document.getElementById('muted-statuses-contact-list')
+            show_muted_statuses_button.onclick = (event) => {
+                toggle_element_inner_text(show_muted_statuses_button, 'Show', 'Hide')
+                if (event === 'htmx:afterSettle' && show_muted_statuses_button.innerText === 'Show'){
+                    //
+                    function s(){
+                        muted_statuses.textContent = ''
+                        console.log('ERASED')
+                        console.log(muted_statuses)
+                    }
+                    s()
+
+                    
+                }
+
+
+            }
         }
     }
     htmx.logger()
