@@ -8,7 +8,7 @@ then when clicked again erase all the muted chats and 'hide' display a show agai
 for do this 'diplay change' you actually need to change the show button to hide
 use htxm from and when the muted statuses gets displayed it should change the button from show to hide **REMEMBER** IMPLEMENT STATUS
 WEBSOCKET CONSUMER BEFORE DOING THIS)
-  - **DO THIS** When you click show, it do as expected, but in muted statuses html (template)
+  - **DO THIS** When you click show, it does as expected, but in muted statuses html (template)
   it should handle the 'Show' button and change it to a hidde one that when clicked returns to a not shown muted statuses
   (to do this, you need to implement a new template.)
 - Create the search message logic (You can use FILTER ELEMENTS WITH `SHOW ... WHEN` from Hyperscript).
@@ -85,12 +85,6 @@ Also don't forget to change the channel layer to redis.
     but i don't know whats happening. When the read more isn't in the 'scroll view' (user can't see it)
     the scroll_to_bottom runs as expected....
     - I think is because the readmore height isn't kept in count when scrolling.
-- When you go to status page and then go back to the normal UI, the theme icon gets reseted.
-  - It has to do with the HTMX, when it gets reloaded it doesn't count as a DOMContentLoaded (search in stackoverflow).
-    - To fix this you can add an event listener that checks whether the content DOMContent has been changed.
-    If it is the case, check if the theme icon is in it, if so, apply the same logic in the DOMConten Loaded event listener.
-  - You can see HTMX events to add an hx.event that when the content was swapped into the DOM (before this verify that is the right content)
-  apllies the  DOMContentLoaded logic.
 
 **REFERENCE**:
 
