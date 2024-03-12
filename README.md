@@ -14,7 +14,8 @@ WEBSOCKET CONSUMER BEFORE DOING THIS)
 - Create the search message logic (You can use FILTER ELEMENTS WITH `SHOW ... WHEN` from Hyperscript).
 - Add status form validation.
 - Add contact form validation.
-- Rework all the chat.views logics (check if there's a way to implement some view code into another).
+- Rework all the chat.views logics (check if there's a way to implement some view code into another [try to use django redirect
+ to include another view funcionalities into another]).
 - Add something to delete statuses automatically every 24 hours.
 - Implement something to update the message receiver chat_list (websocket chatconsumer).
 
