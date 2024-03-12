@@ -36,8 +36,16 @@ to make the PATCH request for all the new messages] only if it is already False 
 
 ## Improvements
 
+- Review previewImage func.
+- Test all statuses features.
+- Remove all unnecesary datasets and such from chats, contact templates (remember to check websocket.js before deleting).
+- Give the user creation form image preview logic.
+- Optimize the js code (delete all the cloned code.)
+- Optimize filters.py code.
 - Restrict chat views (check if the request method is the correct one if not, raise an error).
 - Test if edit/delete contact and delete chat works in any case.
+- Re think the delete message modal (Delete for everyone or for me logic).
+- Re think if image input (status form) should be changed.
 **IMPLEMENT**
 READ THE CHATGPT Django Channels Websocket chat for IMPORTANT improvement.
 Also don't forget to change the channel layer to redis.
@@ -45,8 +53,6 @@ Also don't forget to change the channel layer to redis.
 - **OPTIMIZE REQUESTS**:
   - Combine related request views so the server calls reduce and do two jobs in the same response.
   - Reduce the HTMX responsability and use consumers.
-- Optimize the js code (delete all the cloned code.)
-- Optimize filters.py code.
 - Check what happens when contact user send a message and htmx.ajax runs anyway.
 - Make a way to handle image decoding (async way).
 - Make it so when a message gets updated or deleted, the other user will be able to see the message edition
@@ -55,16 +61,10 @@ Also don't forget to change the channel layer to redis.
 - When a user is creating a new chat and selects more than a contact,
     the modal form title should change to 'create group' and a new input should appear that has the label
         'group name'.
-- Give the user creation form image preview logic.
 - Check if consumer functions arguments number can be reduced.
 - Split Chat Consumers into multiple consumers (e.g Status consumer and so)
 - Use for... empty in for loops if necessary. <https://docs.djangoproject.com/en/5.0/ref/templates/builtins/#for-empty>
-- Remove all unnecesary datasets and such from chats, contact templates (remember to check websocket.js before deleting).
 - Make it responsive.
-- Re think the delete message modal (Delete for everyone or for me logic).
-- Re think if image input (status form) should be changed.
-- Review previewImage func.
-- Test all statuses features.
 - Check and compare all the whatsapp web features with this project features.
 - Review all the code and delete spaguetti code.
 - Implement all of these features at [dj-chat](https://github.com/adilmohak/dj-chat?tab=readme-ov-file#current-features)

@@ -21,6 +21,15 @@ def to_list(value):
 
 @register.filter
 def last_message(value, data):
+    """Returns the latest message desired data in the provided value.
+
+    Args:
+        value (_type_): A queryset containing messages objects.
+        data (_type_): The desired data of the latest message object.
+
+    Returns:
+        _type_: The last message in the messages queryset if not empty, returns an empty string otherwise.
+    """
     messages_data = list(value.values_list(data, flat=True).order_by("date"))
 
     if data == "text":
@@ -39,6 +48,16 @@ def last_message(value, data):
 
 @register.simple_tag
 def exclude_user_tag(user_set, user, value):
+    """Removes the given user object from the provided user_set.
+
+    Args:
+        user_set (_type_): An user object queryset.
+        user (_type_): The user that will be removed.
+        value (_type_): The desired field of the user object.
+
+    Returns:
+        _type_: _description_
+    """
     user_list = list(user_set.values_list(value, flat=True))
     comparison = user.username if value == "username" else user.phone_number
     return user_list[1] if user_list[1] != comparison else user_list[0]
