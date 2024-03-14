@@ -64,7 +64,6 @@ Also don't forget to change the channel layer to redis.
         'group name'.
 - Check if consumer functions arguments number can be reduced.
 - Split Chat Consumers into multiple consumers (e.g Status consumer and so)
-- Use for... empty in for loops if necessary. <https://docs.djangoproject.com/en/5.0/ref/templates/builtins/#for-empty>
 - Make it responsive.
 - Check and compare all the whatsapp web features with this project features.
 - Review all the code and delete spaguetti code.
@@ -82,9 +81,14 @@ Also don't forget to change the channel layer to redis.
 - Check why request.user.has_photo returns value but (in view) user_instance.has_photo returns False.
 - When scroll to bottom doesn't scroll to the botom anymore:
   - **THIS IS WHAT I THINK IT HAPPENS**:
-    The chat gets displayed but somehow the read more script doesn't finished running.
-    but i don't know whats happening. When the read more isn't in the 'scroll view' (user can't see it)
-    the scroll_to_bottom runs as expected....
+    The chat gets displayed but somehow scroll_to_bottom doesn't work as expected.
+    There's two approaches:
+    - I think is because the images in the chat load with delay:
+      1. All the messages (text) loads
+      2. scroll_to_botom executes.
+      3. The high resolution images load, 'lengthening' the space used by the messages,
+       giving the effect that it has not been completely scrolled.
+
     - I think is because the readmore height isn't kept in count when scrolling.
 
 **REFERENCE**:
@@ -96,6 +100,7 @@ Also don't forget to change the channel layer to redis.
 - Read non-standar htmx events  for messages [hx-trigger](https://htmx.org/attributes/hx-trigger/)
 - [Closed tags checker](https://www.aliciaramirez.com/closing-tags-checker/)
 - [Queryset lists](https://docs.djangoproject.com/en/5.0/ref/models/querysets/#values-list)
+- [For...empty](https://docs.djangoproject.com/en/5.0/ref/templates/builtins/#for-empty)
 
 **You should also be aware that carousels in general can often cause usability and accessibility challenges.**
 For performance reasons, carousels must be manually initialized using the carousel constructor method. Without initialization, some of the event listeners (specifically, the events needed touch/swipe support) will not be registered until a user has explicitly activated a control or indicator.
