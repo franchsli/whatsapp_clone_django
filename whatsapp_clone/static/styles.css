@@ -116,3 +116,9 @@ main,  #base {
   background-color: black;
   opacity: 0.5;
 }
+
+
+.emoji-class-button {
+  border-bottom: var(--bs-tertiary-color);
+  color: var(--bs-tertiary-color);
+}

@@ -15,7 +15,26 @@
 
   {% comment "send message" %}{% endcomment %}
   <footer class="d-flex flex-inline align-items-center bg-body-tertiary p-1">
-    <h5 class="p-3" role="button"><i class="bi bi-emoji-smile"></i></h5>
+    <div class="btn-group dropup">
+      <button class="btn p-3" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="bi bi-emoji-smile"></i>
+      </button>
+      <ul class="dropdown-menu" style="min-height: 350px; min-width: 1000px;">
+        <div class="d-flex flex-row align-items-center">
+          <button class="btn emoji-class-button d-flex flex-fill justify-content-center p-1">Smileys 😃</button>
+          <button class="btn emoji-class-button d-flex flex-fill justify-content-center p-1">People 🙌</button>
+          <button class="btn emoji-class-button d-flex flex-fill justify-content-center p-1">Animals 🐻</button>
+          <button class="btn emoji-class-button d-flex flex-fill justify-content-center p-1">Food 🍔</button>
+          <button class="btn emoji-class-button d-flex flex-fill justify-content-center p-1">Activity ⚽</button>
+          <button class="btn emoji-class-button d-flex flex-fill justify-content-center p-1">Travel and places 🚀</button>
+          <button class="btn emoji-class-button d-flex flex-fill justify-content-center p-1">Objects 💡</button>
+          <button class="btn emoji-class-button d-flex flex-fill justify-content-center p-1">Symbols 💕</button>
+          <button class="btn emoji-class-button d-flex flex-fill justify-content-center p-1">Flags 🎌</button>
+        </div>
+        <li><a class="dropdown-item" href="#">Action two</a></li>
+        <li><a class="dropdown-item" href="#">Action three</a></li>
+      </ul>
+    </div>
     <label for="imageInput" class="custom-file-input">
       <h5 class="p-3" role="button"><i class="bi bi-plus"></i></h5>
     </label>

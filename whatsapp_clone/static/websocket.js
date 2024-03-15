@@ -260,7 +260,12 @@ socket.addEventListener('open', () => {
         console.log(evt.detail.loaded/evt.detail.total * 100)
     })
 
-    // handle different htmx events and what to do after they're executed.
+    /**
+     * handle different htmx events and what to do after they're executed.
+     * @param {HTMLElement} elt 
+     * @param {Event} event 
+     * @param {Object} data 
+     */
     htmx.logger = function(elt, event, data) {
         // cleans the status creation form fields (text, image and preview if exists.)
         if (event === 'htmx:afterSettle' && data.pathInfo.requestPath === '/create_status/'){
@@ -295,13 +300,15 @@ socket.addEventListener('open', () => {
                         console.log('ERASED')
                         console.log(muted_statuses)
                     }
-                    s()
-
-                    
+                    s()   
                 }
 
 
             }
+        }
+
+        else if (event === 'htmx:afterSettle' && data.pathInfo.requestPath.includes('display_chat')){
+            
         }
     }
     htmx.logger()
