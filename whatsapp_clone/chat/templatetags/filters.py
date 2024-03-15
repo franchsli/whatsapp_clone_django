@@ -1,6 +1,8 @@
 from django import template
+from django.db.models import QuerySet
 from phonenumber_field.phonenumber import PhoneNumber
 from chat.models import Contact, User
+from typing import Union, List
 
 register = template.Library()
 
@@ -20,15 +22,15 @@ def to_list(value):
 
 
 @register.filter
-def last_message(value, data):
+def last_message(value: QuerySet, data: str) -> str:
     """Returns the latest message desired data in the provided value.
 
     Args:
-        value (_type_): A queryset containing messages objects.
-        data (_type_): The desired data of the latest message object.
+        value (Queryset): A queryset containing messages objects.
+        data (str): The desired data of the latest message object.
 
     Returns:
-        _type_: The last message in the messages queryset if not empty, returns an empty string otherwise.
+        str: The last message in the messages queryset if not empty, returns an empty string otherwise.
     """
     messages_data = list(value.values_list(data, flat=True).order_by("date"))
 
@@ -47,16 +49,16 @@ def last_message(value, data):
 
 
 @register.simple_tag
-def exclude_user_tag(user_set, user, value):
+def exclude_user_tag(user_set: QuerySet, user: User, value: str) -> str:
     """Removes the given user object from the provided user_set.
 
     Args:
-        user_set (_type_): An user object queryset.
-        user (_type_): The user that will be removed.
-        value (_type_): The desired field of the user object.
+        user_set (Queryset): An user object queryset.
+        user (User): The user that will be removed.
+        value (str): The desired field of the user object.
 
     Returns:
-        _type_: _description_
+        str: The user left after excluding the given user.
     """
     user_list = list(user_set.values_list(value, flat=True))
     comparison = user.username if value == "username" else user.phone_number
@@ -64,7 +66,18 @@ def exclude_user_tag(user_set, user, value):
 
 
 @register.simple_tag
-def get_contact_in_chat(user_set, auth_user, desired_value):
+def get_contact_in_chat(user_set: QuerySet, auth_user: User, desired_value: str) -> Union[str, bool, int]:
+    """Gets the contact in the chat desired data by excluding the auth user and using the left user
+    data to obtain the appropiate Contact model object desired value.
+
+    Args:
+        user_set (QuerySet): The queryset where the contact is.
+        auth_user (User): The authenticated user.
+        desired_value (str): The desired field of the Contact model.
+
+    Returns:
+        Union[str, bool, int]: Either a string (name or phone number), or a bool (archived) or a int (id).
+    """
     phones_list = list(user_set.values_list("phone_number", flat=True))
     result = (
         phones_list[0] if auth_user.phone_number != phones_list[0] else phones_list[1]
@@ -96,7 +109,15 @@ def get_contact_in_chat(user_set, auth_user, desired_value):
 
 
 @register.simple_tag
-def get_contact_photo(phone):
+def get_contact_photo(phone: str) -> str:
+    """Returns the User photo with the given phone.
+
+    Args:
+        phone (str): The phonenumber of the 'contact'.
+
+    Returns:
+        str: The url of the user photo, or a default url if the user has no photo.
+    """
     user = User.objects.get(phone_number=phone)
     if user.has_photo:
         return user.photo.url
