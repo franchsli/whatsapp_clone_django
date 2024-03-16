@@ -4,7 +4,10 @@
 ## DO RIGHT NOW
 
 - Add emojis in messages (emojis list...).
-  - Make a way to load the emojis when the html 'runs' (use load_emojis func).
+  - Rework load_emojis func to fetch (from the emojis API) and load emojis right after.
+  - **TO DO THIS MUST**:
+    - buttons data-emoji-pack value should be one of the categories mentioned in[EMOJIS API](https://github.com/cheatsnake/emojihub?tab=readme-ov-file#-api-documentation)
+    - load_emojis should make the complete URL depending on the emoji_list_name (which is the data-emoji-pack of the element with the id 'emoji-class-active')
 - Implement show/hide muted statuses logic (when you click show, it shows the muted statuses and then show dispay as 'hide'
 then when clicked again erase all the muted chats and 'hide' display a show again
 for do this 'diplay change' you actually need to change the show button to hide

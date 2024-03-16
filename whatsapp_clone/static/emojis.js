@@ -1,3 +1,9 @@
+
+/**
+ * 
+ * 
+ * 
+
 async function get_all_emojis(){
     const base_url = 'https://emojihub.yurace.pro/api/all'
     const endpoint_list = [
@@ -17,8 +23,10 @@ async function get_all_emojis(){
         emoji_list.push(emojis_category_data_json)
         
     }
-
     console.log(emoji_list)
+    return emoji_list
+    
 }
 
 get_all_emojis()
+ */
