@@ -272,4 +272,6 @@ function load_emojis(emoji_list, parent_element){
 export {get, post, modifyNotification,
      scroll_to_bottom, create_message_html, 
      toggleReadMore, showDropdown, run_element_animation,
-      checked, not_empty, toggle_element_inner_text}
+      checked, not_empty, toggle_element_inner_text,
+    load_emojis,
+}

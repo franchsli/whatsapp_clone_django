@@ -3,6 +3,8 @@
 
 ## DO RIGHT NOW
 
+- Add emojis in messages (emojis list...).
+  - Make a way to load the emojis when the html 'runs' (use load_emojis func).
 - Implement show/hide muted statuses logic (when you click show, it shows the muted statuses and then show dispay as 'hide'
 then when clicked again erase all the muted chats and 'hide' display a show again
 for do this 'diplay change' you actually need to change the show button to hide
@@ -24,7 +26,6 @@ WEBSOCKET CONSUMER BEFORE DOING THIS)
 - Add read and unread logic (you can implement it that any message (in the viewport makes a
 PATCH request to update the 'read' field in the message model from False to True [This makes the user needs to scroll down or up
 to make the PATCH request for all the new messages] only if it is already False [To prevent unnecesary API calls])).
-- Add emojis in messages (emojis list...).
 - Users shouldn't be able to create TWO OR MORE chats with the same user.
 - Write test for the exceptions and functions.
 - Add groups chats.
