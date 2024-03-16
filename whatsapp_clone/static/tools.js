@@ -1,3 +1,33 @@
+const smileys = ['😀', '😃','😄','😁','😆',
+    '😅','🤣','😂','🙂','😉',
+    '😊','😇','🥰','😍','🤩',
+    '😘','😗','☺️','😚','😙',
+    '🥲','😏','😋','😛','😜',
+    '🤪','😝','🤗','🤭','🫢',
+    '🫣','🤫','🤔','🫡','🤤',
+    '🤠','🥳','🥸','😎','🤓',
+    '🧐','🙃','🫠','🤐','🤨',
+    '😐','😑','😶','🫥','😶‍🌫️',
+    '😒','🙄','😬','😮‍💨','🤥',
+    '🫨', '😌','😔','😪','😴',
+    '😷','🤒','🤕','🤢','🤮',
+    '🤧','🥵','🥶','🥴','😵',
+    '😵‍💫','🤯','🥱','😕',
+    '🫤','😟','🙁','☹️','😮',
+    '😯','😲','😳','🥺','🥹',
+    '😦','😧','😨','😰','😥',
+    '😢','😭','😱','😖','😣',
+    '😞','😓','😩','😫','😤',
+    '😡','😠','🤬','👿','😈',
+    '👿','💀','☠️','💩','🤡',
+    '👹','👺','👻','👽','👾',
+    '🤖','😺','😸','😹','😻',
+    '😼','😽','🙀','😿','😾',
+    '🙈','🙉','🙊',
+]
+
+
+
 /**
  * Does a GET request to the specified URL and returns the response in  JSON format.
  * @param {String} url the url to which the request will be made
@@ -212,6 +242,31 @@ function not_empty(form){
 
 }
 
+/**
+ * Appends the given button innertext in the provided input
+ * @param {HTMLButtonElement} button 
+ * @param {HTMLInputElement} input 
+ */
+function display_button_inner_text(button, input){
+    input.value.concat(button.innerText)
+}
+
+
+/**
+ * loads the given emojis in new buttons (HTML elements)
+ * placed in the provided parent.
+ * @param {Array} emoji_list 
+ * @param {HTMLElement} parent_element 
+ */
+function load_emojis(emoji_list, parent_element){
+    const input = document.getElementById('new-message')
+    for (let index = 0; index < emoji_list.length; index++) {
+        let new_button = document.createElement('button')
+        new_button.innerText = emoji_list[index]
+        new_button.onclick = display_button_inner_text(new_button, input)
+        parent_element.appendChild(new_button)
+    }
+}
 
 
 export {get, post, modifyNotification,

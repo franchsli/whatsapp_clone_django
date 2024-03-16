@@ -122,3 +122,13 @@ main,  #base {
   border-bottom: var(--bs-tertiary-color);
   color: var(--bs-tertiary-color);
 }
+
+.emoji-class-button:hover {
+  border-bottom: var(--bs-success);
+  color: var(--bs-success);
+}
+.emoji-class-active{
+  border-bottom: var(--bs-success);
+  color: var(--bs-success);
+
+}
