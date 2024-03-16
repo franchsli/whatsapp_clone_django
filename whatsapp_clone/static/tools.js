@@ -26,6 +26,22 @@ const smileys = ['😀', '😃','😄','😁','😆',
     '🙈','🙉','🙊',
 ]
 
+const people = [
+    '👋','🤚','🖐️','✋','🖖','🫱',
+    '🫲','🫳','🫴','🫷','🫸','👌',
+    '🤌','🤏','✌️','🤞','🫰','🤟',
+    '🤘','🤙','👈','👉','👆','🖕',
+    '👇','☝️','🫵','👍','👎','✊',
+    '👊','🤛','🤜','👏','🙌','🫶',
+    '👐','🤲','🤝','🙏','✍️','💅',
+    '🤳','💪','🦾','🦿','🦵','🦶',
+    '👂','🦻','👃','🧠','🫀','🫁',
+    '🦷','🦴','👀','👅','👄','🫦',
+    '👣','🧬','🩸',
+]
+
+const emoji_list = [smileys, ]
+
 
 
 /**
@@ -254,7 +270,6 @@ function display_button_inner_text(button, input){
     console.log(previous_value)
     console.log(input.value)
 }
-
 
 /**
  * loads the emojis in the array name provided in new buttons (HTML elements)
