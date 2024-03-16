@@ -8,6 +8,7 @@
   - **TO DO THIS MUST**:
     - buttons data-emoji-pack value should be one of the categories mentioned in[EMOJIS API](https://github.com/cheatsnake/emojihub?tab=readme-ov-file#-api-documentation)
     - load_emojis should make the complete URL depending on the emoji_list_name (which is the data-emoji-pack of the element with the id 'emoji-class-active')
+    - implement [scrollspy for emojis group](https://getbootstrap.com/docs/5.3/components/scrollspy/)
 - Implement show/hide muted statuses logic (when you click show, it shows the muted statuses and then show dispay as 'hide'
 then when clicked again erase all the muted chats and 'hide' display a show again
 for do this 'diplay change' you actually need to change the show button to hide
