@@ -1,7 +1,7 @@
 import { get, modifyNotification, scroll_to_bottom,
   create_message_html, toggleReadMore, showDropdown,
    run_element_animation, checked, not_empty,
-    toggle_element_inner_text } from  './tools.js';
+    toggle_element_inner_text, load_emojis } from  './tools.js';
 
 console.log("websocket.js is loaded!");
 const user = document.getElementById('profile-pic')
@@ -294,7 +294,7 @@ socket.addEventListener('open', () => {
             show_muted_statuses_button.onclick = (event) => {
                 toggle_element_inner_text(show_muted_statuses_button, 'Show', 'Hide')
                 if (event === 'htmx:afterSettle' && show_muted_statuses_button.innerText === 'Show'){
-                    //
+                    // FIX
                     function s(){
                         muted_statuses.textContent = ''
                         console.log('ERASED')
@@ -308,6 +308,8 @@ socket.addEventListener('open', () => {
         }
 
         else if (event === 'htmx:afterSettle' && data.pathInfo.requestPath.includes('display_chat')){
+            const emoji_container = document.getElementById('emojis-ui')
+            load_emojis('smileys', emoji_container)
             
         }
     }
