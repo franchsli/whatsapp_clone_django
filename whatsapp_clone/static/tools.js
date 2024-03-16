@@ -248,7 +248,11 @@ function not_empty(form){
  * @param {HTMLInputElement} input 
  */
 function display_button_inner_text(button, input){
-    input.value.concat(button.innerText)
+    const previous_value = input.value
+    input.value = `${previous_value}${button.innerText}`
+    console.log('RAN')
+    console.log(previous_value)
+    console.log(input.value)
 }
 
 
@@ -263,12 +267,16 @@ function load_emojis(emoji_list_name, parent_element){
     if(emoji_list_name === 'smileys'){
         emoji_list = smileys
     }
-    
+
     const input = document.getElementById('new-message')
     for (let index = 0; index < emoji_list.length; index++) {
         let new_button = document.createElement('button')
         new_button.innerText = emoji_list[index]
-        new_button.onclick = display_button_inner_text(new_button, input)
+        new_button.classList.add('btn')
+        new_button.onclick = (event) => {
+            event.stopPropagation();
+            display_button_inner_text(new_button, input)
+        }
         parent_element.appendChild(new_button)
     }
 }
