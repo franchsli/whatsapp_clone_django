@@ -127,7 +127,7 @@ main,  #base {
   border-bottom: var(--bs-success);
   color: var(--bs-success);
 }
-#emoji-class-active{
+.emoji-class-active{
   border-bottom: var(--bs-success);
   color: var(--bs-success);
 

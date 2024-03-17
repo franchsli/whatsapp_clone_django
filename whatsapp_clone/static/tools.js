@@ -278,23 +278,39 @@ function display_button_inner_text(button, input){
  * @param {HTMLElement} parent_element 
  */
 function load_emojis(emoji_list_name, parent_element){
-    let emoji_list
-    if(emoji_list_name === 'smileys'){
-        emoji_list = smileys
-    }
-
     const input = document.getElementById('new-message')
-    for (let index = 0; index < emoji_list.length; index++) {
-        let new_button = document.createElement('button')
-        new_button.innerText = emoji_list[index]
-        new_button.classList.add('btn', 'm-1', 'action')
-        new_button.style.fontSize = '30px'
-        new_button.onclick = (event) => {
-            event.stopPropagation();
-            display_button_inner_text(new_button, input)
-        }
-        parent_element.appendChild(new_button)
+
+    fetch(`https://emojihub.yurace.pro/api/all/category/${emoji_list_name}`)
+    .then( (response) => {
+        return response.json()
+    })
+    .then( (emojis) => {
+        for (let index = 0; index < emojis.length; index++) {
+            let new_button = document.createElement('button')
+            new_button.innerText = emojis[index].htmlCode[0]
+            new_button.classList.add('btn', 'm-1', 'action')
+            new_button.style.fontSize = '30px'
+            new_button.onclick = (event) => {
+                event.stopPropagation();
+                display_button_inner_text(new_button, input)
+            }
+            parent_element.appendChild(new_button)
     }
+    })
+    .catch((error) => {console.log(error.message)})
+
+    
+    // for (let index = 0; index < emoji_list.length; index++) {
+    //     let new_button = document.createElement('button')
+    //     new_button.innerText = emoji_list[index]
+    //     new_button.classList.add('btn', 'm-1', 'action')
+    //     new_button.style.fontSize = '30px'
+    //     new_button.onclick = (event) => {
+    //         event.stopPropagation();
+    //         display_button_inner_text(new_button, input)
+    //     }
+    //     parent_element.appendChild(new_button)
+    // }
 }
 
 
