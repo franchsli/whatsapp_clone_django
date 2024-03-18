@@ -287,7 +287,7 @@ function load_emojis(emoji_list_name, parent_element){
     .then( (emojis) => {
         for (let index = 0; index < emojis.length; index++) {
             let new_button = document.createElement('button')
-            new_button.innerText = emojis[index].htmlCode[0]
+            new_button.innerHTML = emojis[index].htmlCode[0]
             new_button.classList.add('btn', 'm-1', 'action')
             new_button.style.fontSize = '30px'
             new_button.onclick = (event) => {
