@@ -274,8 +274,8 @@ function display_button_inner_text(button, input){
 /**
  * loads the emojis in the array name provided in new buttons (HTML elements)
  * placed in the provided parent.
- * @param {String} emoji_list_name
- * @param {HTMLElement} parent_element 
+ * @param {String} emoji_list_name The name of the emoji category.
+ * @param {HTMLElement} parent_element The container of the emojis.
  */
 function load_emojis(emoji_list_name, parent_element){
     const input = document.getElementById('new-message')

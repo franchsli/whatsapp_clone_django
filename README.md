@@ -6,8 +6,10 @@
 - Add emojis in messages (emojis list...).
   - Rework load_emojis func to fetch (from the emojis API) and load emojis right after.
   - **TO DO THIS MUST**:
-    - buttons data-emoji-pack value should be one of the categories mentioned in[EMOJIS API](https://github.com/cheatsnake/emojihub?tab=readme-ov-file#-api-documentation)
-    - load_emojis should make the complete URL depending on the emoji_list_name (which is the data-emoji-pack of the element with the id 'emoji-class-active')
+    - Implement a function that when a emoji category btn is clicked,
+    selects the button that has the 'emoji-class-active' class and removes its class
+    and then adds the 'emoji-class-active' class to the clicked button
+    and then does the load_emojis() logic.
     - implement [scrollspy for emojis group](https://getbootstrap.com/docs/5.3/components/scrollspy/)
 - Implement show/hide muted statuses logic (when you click show, it shows the muted statuses and then show dispay as 'hide'
 then when clicked again erase all the muted chats and 'hide' display a show again
