@@ -1,7 +1,7 @@
 import { get, modifyNotification, scroll_to_bottom,
   create_message_html, toggleReadMore, showDropdown,
    run_element_animation, checked, not_empty,
-    toggle_element_inner_text, load_emojis } from  './tools.js';
+    toggle_element_inner_text, load_emojis, switch_emojis } from  './tools.js';
 
 console.log("websocket.js is loaded!");
 const user = document.getElementById('profile-pic')
@@ -213,6 +213,10 @@ socket.addEventListener('open', () => {
 
     window.run_element_animation = function(element){
         run_element_animation(element)
+    }
+    
+    window.switch_emojis = function(button){
+        switch_emojis(button)
     }
 
     chat_form.onsubmit = () => {

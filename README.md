@@ -4,7 +4,8 @@
 ## DO RIGHT NOW
 
 - Add emojis in messages (emojis list...).
-  - Rework load_emojis func to fetch (from the emojis API) and load emojis right after.
+  - Fix why when clicking (swiching to a emoji class) more than one time doesnt resets the emojis container.
+  - Add a h1 in the emoji container (or before) that has the emojis category name.
   - **TO DO THIS MUST**:
     - Implement a function that when a emoji category btn is clicked,
     selects the button that has the 'emoji-class-active' class and removes its class

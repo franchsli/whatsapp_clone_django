@@ -300,8 +300,18 @@ function load_emojis(emoji_list_name, parent_element){
     .catch((error) => {console.log(error.message)})
 }
 
-function switch_emojis(){
-    
+/**
+ * @param {HTMLButtonElement}
+ */
+function switch_emojis(button){
+    const previous_emoji_class = document.querySelector('.emoji-class-active')
+    const emoji_container = document.getElementById('emojis-container')
+    previous_emoji_class.classList.remove('emoji-class-active')
+    emoji_container.innerHTML = ''
+    button.classList.add('emoji-class-active')
+    load_emojis(button.dataset.emojiPack, button.parentElement.parentElement)
+
+
 }
 
 
@@ -309,5 +319,5 @@ export {get, post, modifyNotification,
      scroll_to_bottom, create_message_html, 
      toggleReadMore, showDropdown, run_element_animation,
       checked, not_empty, toggle_element_inner_text,
-    load_emojis,
+    load_emojis, switch_emojis
 }
