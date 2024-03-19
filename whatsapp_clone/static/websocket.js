@@ -304,9 +304,9 @@ socket.addEventListener('open', () => {
                 }
             }
         }
-
+        // loads the default emojis
         else if (event === 'htmx:afterSettle' && data.pathInfo.requestPath.includes('display_chat')){
-            const emoji_container = document.getElementById('emojis-ui')
+            const emoji_container = document.getElementById('emojis-container')
             const emoji_class = document.querySelector('.emoji-class-active')
             load_emojis(emoji_class.dataset.emojiPack, emoji_container)
             

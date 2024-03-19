@@ -298,19 +298,10 @@ function load_emojis(emoji_list_name, parent_element){
     }
     })
     .catch((error) => {console.log(error.message)})
+}
 
+function switch_emojis(){
     
-    // for (let index = 0; index < emoji_list.length; index++) {
-    //     let new_button = document.createElement('button')
-    //     new_button.innerText = emoji_list[index]
-    //     new_button.classList.add('btn', 'm-1', 'action')
-    //     new_button.style.fontSize = '30px'
-    //     new_button.onclick = (event) => {
-    //         event.stopPropagation();
-    //         display_button_inner_text(new_button, input)
-    //     }
-    //     parent_element.appendChild(new_button)
-    // }
 }
 
 

@@ -95,6 +95,7 @@ Also don't forget to change the channel layer to redis.
       2. scroll_to_botom executes.
       3. The high resolution images load, 'lengthening' the space used by the messages,
        giving the effect that it has not been completely scrolled.
+      4. To fix this you can change the image format to an optimized one.
 
     - I think is because the readmore height isn't kept in count when scrolling.
 
