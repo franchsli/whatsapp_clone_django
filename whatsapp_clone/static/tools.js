@@ -270,10 +270,7 @@ function switch_emojis(button){
     previous_emoji_class.classList.remove('emoji-class-active')
     emoji_container.innerHTML = ''
     button.classList.add('emoji-class-active')
-    load_emojis(button.dataset.emojiPack, button.parentElement.parentElement)
-    console.log(button.parentElement.parentElement)
-
-
+    load_emojis(button.dataset.emojiPack, emoji_container)
 }
 
 

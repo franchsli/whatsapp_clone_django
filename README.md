@@ -4,12 +4,7 @@
 ## DO RIGHT NOW
 
 - Add emojis in messages (emojis list...).
-  - Fix why when clicking (swiching to a emoji class) more than one time doesnt resets the emojis container.
   - **TO DO THIS MUST**:
-    - Implement a function that when a emoji category btn is clicked,
-    selects the button that has the 'emoji-class-active' class and removes its class
-    and then adds the 'emoji-class-active' class to the clicked button
-    and then does the load_emojis() logic.
     - implement [scrollspy for emojis group](https://getbootstrap.com/docs/5.3/components/scrollspy/)
 - Implement show/hide muted statuses logic (when you click show, it shows the muted statuses and then show dispay as 'hide'
 then when clicked again erase all the muted chats and 'hide' display a show again
