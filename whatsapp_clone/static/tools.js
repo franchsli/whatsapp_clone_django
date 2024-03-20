@@ -1,49 +1,3 @@
-const smileys = ['😀', '😃','😄','😁','😆',
-    '😅','🤣','😂','🙂','😉',
-    '😊','😇','🥰','😍','🤩',
-    '😘','😗','☺️','😚','😙',
-    '🥲','😏','😋','😛','😜',
-    '🤪','😝','🤗','🤭','🫢',
-    '🫣','🤫','🤔','🫡','🤤',
-    '🤠','🥳','🥸','😎','🤓',
-    '🧐','🙃','🫠','🤐','🤨',
-    '😐','😑','😶','🫥','😶‍🌫️',
-    '😒','🙄','😬','😮‍💨','🤥',
-    '🫨', '😌','😔','😪','😴',
-    '😷','🤒','🤕','🤢','🤮',
-    '🤧','🥵','🥶','🥴','😵',
-    '😵‍💫','🤯','🥱','😕',
-    '🫤','😟','🙁','☹️','😮',
-    '😯','😲','😳','🥺','🥹',
-    '😦','😧','😨','😰','😥',
-    '😢','😭','😱','😖','😣',
-    '😞','😓','😩','😫','😤',
-    '😡','😠','🤬','👿','😈',
-    '👿','💀','☠️','💩','🤡',
-    '👹','👺','👻','👽','👾',
-    '🤖','😺','😸','😹','😻',
-    '😼','😽','🙀','😿','😾',
-    '🙈','🙉','🙊',
-]
-
-const people = [
-    '👋','🤚','🖐️','✋','🖖','🫱',
-    '🫲','🫳','🫴','🫷','🫸','👌',
-    '🤌','🤏','✌️','🤞','🫰','🤟',
-    '🤘','🤙','👈','👉','👆','🖕',
-    '👇','☝️','🫵','👍','👎','✊',
-    '👊','🤛','🤜','👏','🙌','🫶',
-    '👐','🤲','🤝','🙏','✍️','💅',
-    '🤳','💪','🦾','🦿','🦵','🦶',
-    '👂','🦻','👃','🧠','🫀','🫁',
-    '🦷','🦴','👀','👅','👄','🫦',
-    '👣','🧬','🩸',
-]
-
-const emoji_list = [smileys, ]
-
-
-
 /**
  * Does a GET request to the specified URL and returns the response in  JSON format.
  * @param {String} url the url to which the request will be made
@@ -279,6 +233,10 @@ function display_button_inner_text(button, input){
  */
 function load_emojis(emoji_list_name, parent_element){
     const input = document.getElementById('new-message')
+    const emoji_category_header = document.createElement('span')
+    emoji_category_header.classList.add('dropdown-item')
+    emoji_category_header.innerText = emoji_list_name.split('-').join(' ')
+    parent_element.appendChild(emoji_category_header)
 
     fetch(`https://emojihub.yurace.pro/api/all/category/${emoji_list_name}`)
     .then( (response) => {
@@ -301,7 +259,10 @@ function load_emojis(emoji_list_name, parent_element){
 }
 
 /**
- * @param {HTMLButtonElement}
+ * Clears all the current displayed emojis and displays the one
+ * with the category of the provided button dataset.emojiPack.
+ * @param {HTMLButtonElement} button The button with the dataset containing
+ * the emoji category name.
  */
 function switch_emojis(button){
     const previous_emoji_class = document.querySelector('.emoji-class-active')
@@ -310,6 +271,7 @@ function switch_emojis(button){
     emoji_container.innerHTML = ''
     button.classList.add('emoji-class-active')
     load_emojis(button.dataset.emojiPack, button.parentElement.parentElement)
+    console.log(button.parentElement.parentElement)
 
 
 }

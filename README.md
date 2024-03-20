@@ -5,7 +5,6 @@
 
 - Add emojis in messages (emojis list...).
   - Fix why when clicking (swiching to a emoji class) more than one time doesnt resets the emojis container.
-  - Add a h1 in the emoji container (or before) that has the emojis category name.
   - **TO DO THIS MUST**:
     - Implement a function that when a emoji category btn is clicked,
     selects the button that has the 'emoji-class-active' class and removes its class
