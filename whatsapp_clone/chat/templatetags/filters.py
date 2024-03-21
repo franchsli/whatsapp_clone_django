@@ -3,6 +3,7 @@ from django.db.models import QuerySet
 from phonenumber_field.phonenumber import PhoneNumber
 from chat.models import Contact, User
 from typing import Union, List
+import re
 
 register = template.Library()
 
@@ -123,3 +124,17 @@ def get_contact_photo(phone: str) -> str:
         return user.photo.url
     else:
         return "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNBNdcMDNS2r9df1IWFVc8AY0QNtfNhEJv7fGS5TdhUWrlBqfGu1PCCn9lKpL-FqF9dWc&usqp=CAU"
+
+@register.simple_tag
+def only_emoji(text: str) -> bool:
+    """Returns if a text is only a emoji.
+
+    Args:
+        text (str): The text to be analized.
+
+    Returns:
+        bool: True if it's only a emoji, False otherwise.
+    """
+    #pattern = re.compile()
+    return re.match(r'\w+$', text)
+    

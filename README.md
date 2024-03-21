@@ -3,9 +3,9 @@
 
 ## DO RIGHT NOW
 
-- Add emojis in messages (emojis list...).
-  - **TO DO THIS MUST**:
-    - implement [scrollspy for emojis group](https://getbootstrap.com/docs/5.3/components/scrollspy/)
+- Use the new function in filters.py to manipulate the font size of the
+message text (if it is only a emoji, increase it, leave it normal [height auto] otherwise)
+- Optimize the images size (whithout decreasing quality).
 - Implement show/hide muted statuses logic (when you click show, it shows the muted statuses and then show dispay as 'hide'
 then when clicked again erase all the muted chats and 'hide' display a show again
 for do this 'diplay change' you actually need to change the show button to hide
