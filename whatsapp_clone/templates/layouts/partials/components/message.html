@@ -6,7 +6,12 @@
     {% if message.has_image %}
       <img class="mw-100 mh-100 mb-3" src="{{message.image.url}}" alt="">
     {% endif %}
-    <span id="text-{{message.id}}" class="d-block mw-100" style="height: auto; max-height: 200px; overflow: hidden;">{{message.text}}</span>
+    {% only_emoji message.text as only_emojis %}
+    {% if only_emojis %}
+      <span id="text-{{message.id}}" class="d-block mw-100" style="height: auto; max-height: 200px; overflow: hidden; font-size: 30px;">{{message.text}}</span>
+    {% else %}
+      <span id="text-{{message.id}}" class="d-block mw-100" style="height: auto; max-height: 200px; overflow: hidden;">{{message.text}}</span>
+    {% endif %}
     <script type="text/javascript">
       toggleReadMore('{{message.id}}')
     </script>      

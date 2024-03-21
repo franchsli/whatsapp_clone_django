@@ -134,7 +134,6 @@ def only_emoji(text: str) -> bool:
 
     Returns:
         bool: True if it's only a emoji, False otherwise.
-    """
-    #pattern = re.compile()
-    return re.match(r'\w+$', text)
+    """ 
+    return bool(re.match(r'\W+$', text))
     
