@@ -3,8 +3,6 @@
 
 ## DO RIGHT NOW
 
-- Use the new function in filters.py to manipulate the font size of the
-message text (if it is only a emoji, increase it, leave it normal [height auto] otherwise)
 - Optimize the images size (whithout decreasing quality).
 - Implement show/hide muted statuses logic (when you click show, it shows the muted statuses and then show dispay as 'hide'
 then when clicked again erase all the muted chats and 'hide' display a show again
