@@ -3,6 +3,7 @@
 
 ## DO RIGHT NOW
 
+- Check what happens when a contact with a unexistent phone_number (user not in database) is created.
 - Optimize the images size (whithout decreasing quality).
 - Implement show/hide muted statuses logic (when you click show, it shows the muted statuses and then show dispay as 'hide'
 then when clicked again erase all the muted chats and 'hide' display a show again
@@ -14,7 +15,6 @@ WEBSOCKET CONSUMER BEFORE DOING THIS)
   (to do this, you need to implement a new template.)
 - Create the search message logic (You can use FILTER ELEMENTS WITH `SHOW ... WHEN` from Hyperscript).
 - Add status form validation.
-- Add contact form validation.
 - Rework all the chat.views logics (check if there's a way to implement some view code into another [try to use django redirect
  to include another view funcionalities into another]).
 - Add something to delete statuses automatically every 24 hours.
@@ -30,7 +30,6 @@ to make the PATCH request for all the new messages] only if it is already False 
 - Add groups chats.
 - Redesign the login and register views.
 - Reconsider the exceptions.py file.
-- Check what happens when a contact with a unexistent phone_number (user not in database) is created.
 - Add chat wallpapers.
 - Rework show_dropdown animation.
 - Make the silence contact logic (booleand field)
@@ -102,6 +101,7 @@ Also don't forget to change the channel layer to redis.
 - [Closed tags checker](https://www.aliciaramirez.com/closing-tags-checker/)
 - [Queryset lists](https://docs.djangoproject.com/en/5.0/ref/models/querysets/#values-list)
 - [For...empty](https://docs.djangoproject.com/en/5.0/ref/templates/builtins/#for-empty)
+- [CSS Components](https://uiverse.io/)
 
 **You should also be aware that carousels in general can often cause usability and accessibility challenges.**
 For performance reasons, carousels must be manually initialized using the carousel constructor method. Without initialization, some of the event listeners (specifically, the events needed touch/swipe support) will not be registered until a user has explicitly activated a control or indicator.

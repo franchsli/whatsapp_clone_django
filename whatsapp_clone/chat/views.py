@@ -406,8 +406,6 @@ def create_status(request):
     text = request.POST.get('text')
     image = request.FILES.get('image')
     print(f'TEXT:{text}\nIMAGE:{image}')
-    #print(f'REQUEST POST{request.POST}\n REQUEST FILES: {request.FILES}')
-    #print(f'REQUEST:{request}')
     # new status creation
     if image or text:
         new_status = Status.objects.create(

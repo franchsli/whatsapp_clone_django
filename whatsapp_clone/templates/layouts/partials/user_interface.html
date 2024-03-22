@@ -45,7 +45,7 @@
     </div>
   </div>
   {% comment "tabs" %}Contacts and chats{% endcomment %}
-  <div id="chats-and-contacts" hx-get="{% url 'get_chats' %}" hx-target="this" hx-trigger="load delay:100ms" hx-swap="innerHTML"></div>
+  <div id="chats-and-contacts" hx-get="{% url 'get_chats' %}" hx-target="this" hx-trigger="load" hx-swap="innerHTML"></div>
 
   <button id="chats-collapse-toggle" class="collapse-switch btn btn-success position-absolute bottom-0 end-0 me-5 mb-3" 
   hx-get="{% url 'get_chats' %}" hx-target="#chats-and-contacts" hx-swap="innerHTML">
