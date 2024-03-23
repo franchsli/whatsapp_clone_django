@@ -15,12 +15,12 @@
     <nav class="navbar">
       <button onclick="switch_theme()" id="theme-toggler" class="btn rounded-fill me-3 action"><span><i id="theme-icon"
         class="bi bi-moon-fill"></i></span></button>
-      <button id="add-contact" class="action me-3 btn"  data-bs-toggle="modal" data-bs-target="#NewContact"><i class="bi bi-person-plus"></i></button>
+      <button id="add-contact" class="action me-3 btn" title="Add contact"  data-bs-toggle="modal" data-bs-target="#NewContact"><i class="bi bi-person-plus"></i></button>
         {% comment "Trigger new chat form modal" %}{% endcomment %}
-      <button id="create-chat" class="action me-3 btn" type="button" data-bs-toggle="modal" data-bs-target="#NewChat"><span><i class="bi bi-chat-left-dots"></i></span></button>
-      <button id="view-status" class="action me-3 btn" hx-get="{% url 'statuses' %}" hx-target="#chats-and-more"><i class="bi bi-plus-circle-dotted"></i></button>
+      <button id="create-chat" class="action me-3 btn" title="Add chat" type="button" data-bs-toggle="modal" data-bs-target="#NewChat"><span><i class="bi bi-chat-left-dots"></i></span></button>
+      <button id="view-status" class="action me-3 btn" title="Statuses" hx-get="{% url 'statuses' %}" hx-target="#chats-and-more"><i class="bi bi-plus-circle-dotted"></i></button>
       <div class="dropdown">
-        <button id="settings" class="action me-3 btn" data-bs-toggle="dropdown" onclick="run_element_animation(this.nextElementSibling)"><span><i class="bi bi-three-dots-vertical"></i></span></button>
+        <button id="settings" class="action me-3 btn" title="Settings" data-bs-toggle="dropdown" onclick="run_element_animation(this.nextElementSibling)"><span><i class="bi bi-three-dots-vertical"></i></span></button>
         <ul class="dropdown-menu animated-dropdown">
           <li><span class="dropdown-item">New group</span></li>
           <li><span class="dropdown-item">New community</span></li>
@@ -47,11 +47,13 @@
   {% comment "tabs" %}Contacts and chats{% endcomment %}
   <div id="chats-and-contacts" hx-get="{% url 'get_chats' %}" hx-target="this" hx-trigger="load" hx-swap="innerHTML"></div>
 
-  <button id="chats-collapse-toggle" class="collapse-switch btn btn-success position-absolute bottom-0 end-0 me-5 mb-3" 
+  <button id="chats-collapse-toggle" class="collapse-switch btn btn-success position-absolute bottom-0 end-0 me-5 mb-3"
+  title="My chats" 
   hx-get="{% url 'get_chats' %}" hx-target="#chats-and-contacts" hx-swap="innerHTML">
     <i class="bi bi-chat-right-dots-fill"></i>
   </button>
-  <button class="collapse-switch btn btn-success position-absolute bottom-0 end-0 mb-3" 
+  <button class="collapse-switch btn btn-success position-absolute bottom-0 end-0 mb-3"
+  title="Contacts" 
   hx-get="{% url 'get_contacts' %}" hx-target="#chats-and-contacts" hx-swap="innerHTML">
     <i class="bi bi-person-fill"></i>
   </button>

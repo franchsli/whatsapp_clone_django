@@ -32,6 +32,7 @@ to make the PATCH request for all the new messages] only if it is already False 
 - Add chat wallpapers.
 - Rework show_dropdown animation.
 - Make the silence contact logic (booleand field)
+- [Implement tooltips](https://getbootstrap.com/docs/5.3/components/tooltips/)
 
 ## Improvements
 
