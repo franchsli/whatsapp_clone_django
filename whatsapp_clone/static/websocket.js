@@ -11,6 +11,7 @@ const chat_form = document.getElementById("chat-creation-form")
 const chat_display = document.getElementById('chat-display')
 const contact_form = document.getElementById("contact-creation-form")
 const status_form = document.getElementById('status_form')
+const status_submit_button = document.getElementById('status-submit')
 const status_modal = document.getElementById('CreateStatusModal')
 const stauts_image_preview = document.getElementById('status-imagePreview')
 const status_image_input = document.getElementById('id_image')
@@ -18,6 +19,7 @@ const status_progress_bar = document.getElementById('status-upload-progress')
 console.log(`IMAGE INPUT: ${status_image_input}\nIMAGE PREVIEW: ${stauts_image_preview}`)
 const notification_audio = new Audio('static/Audio/app/message_received.mp3')
 const message_sent_audio = new Audio('static/Audio/app/message_sent.mp3')
+const error_audio = new Audio('static/Audio/app/error_sound.mp3')
 let actual_image_data
 
 // Callback function to execute when mutations are observed
@@ -222,6 +224,7 @@ socket.addEventListener('open', () => {
     chat_form.onsubmit = () => {
         console.log('HANDLED')
         if (!checked(chat_form)){
+            error_audio.play()
             const validation_message = document.getElementById('chat-validation-message')
             validation_message.innerText = 'Please select a contact to create chat with'
         }
@@ -258,6 +261,21 @@ socket.addEventListener('open', () => {
         status_progress_bar.setAttribute('value', 0)
         console.log('Modal has been closed!')
     })
+
+    status_submit_button.onclick = (event) => {
+        event.preventDefault()
+        if (not_empty(status_form)){
+            htmx.trigger('#status-submit', 'secure-submit', {})
+        }
+        else {
+            error_audio.play()
+            const validation_message = document.getElementById('status-validation-message')
+            validation_message.innerText = 'Please insert data!!!'
+            setTimeout(() => {
+                validation_message.textContent = ''
+            }, 5000)
+        }
+    }
     // fills the status form progress bar
     htmx.on('#status_form', 'htmx:xhr:progress', function(evt) {
         htmx.find('#status-upload-progress').setAttribute('value', evt.detail.loaded/evt.detail.total * 100)

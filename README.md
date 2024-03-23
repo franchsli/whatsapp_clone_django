@@ -3,6 +3,7 @@
 
 ## DO RIGHT NOW
 
+- Add status form validation.
 - Optimize the images size (whithout decreasing quality).
 - Implement show/hide muted statuses logic (when you click show, it shows the muted statuses and then show dispay as 'hide'
 then when clicked again erase all the muted chats and 'hide' display a show again
@@ -13,7 +14,6 @@ WEBSOCKET CONSUMER BEFORE DOING THIS)
   it should handle the 'Show' button and change it to a hidde one that when clicked returns to a not shown muted statuses
   (to do this, you need to implement a new template.)
 - Create the search message logic (You can use FILTER ELEMENTS WITH `SHOW ... WHEN` from Hyperscript).
-- Add status form validation.
 - Rework all the chat.views logics (check if there's a way to implement some view code into another [try to use django redirect
  to include another view funcionalities into another]).
 - Add something to delete statuses automatically every 24 hours.

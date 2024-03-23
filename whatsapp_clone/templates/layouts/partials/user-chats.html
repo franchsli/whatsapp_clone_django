@@ -64,7 +64,7 @@
         <div class="modal-body">
           <form id="status_form" enctype="multipart/form-data" 
           hx-encoding="multipart/form-data" hx-post="{% url 'create_status' %}"
-          hx-trigger="click from:#status-submit" 
+          hx-trigger="secure-submit from:#status-submit" 
           hx-target="#chats-and-more" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
             <div id="status-validation-message" class="validation-error"></div>
             {% csrf_token %}
