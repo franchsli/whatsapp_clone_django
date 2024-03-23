@@ -19,6 +19,9 @@ console.log(`IMAGE INPUT: ${status_image_input}\nIMAGE PREVIEW: ${stauts_image_p
 const notification_audio = new Audio('static/Audio/app/message_received.mp3')
 const message_sent_audio = new Audio('static/Audio/app/message_sent.mp3')
 let actual_image_data
+// initialize tooltips
+const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 
 // Callback function to execute when mutations are observed
 const mutationCallback = function(mutationsList, observer) {
