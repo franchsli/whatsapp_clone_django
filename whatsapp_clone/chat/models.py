@@ -30,6 +30,18 @@ class Contact(models.Model):
 
     def __str__(self) -> str:
         return self.name
+    
+    @property
+    def user_exists(self) -> bool:
+        """Returns if a user model exists with the contact object phone_number.
+
+        Returns:
+            bool: True if a user model exists with the contact object phone_number,
+            False othewise.
+        """
+        return User.objects.get(phone_number=self.phone_number).exists()
+
+
 
 class Chat(models.Model):
     users = models.ManyToManyField(User, related_name='chats')

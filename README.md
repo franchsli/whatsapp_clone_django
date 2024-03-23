@@ -3,7 +3,6 @@
 
 ## DO RIGHT NOW
 
-- Check what happens when a contact with a unexistent phone_number (user not in database) is created.
 - Optimize the images size (whithout decreasing quality).
 - Implement show/hide muted statuses logic (when you click show, it shows the muted statuses and then show dispay as 'hide'
 then when clicked again erase all the muted chats and 'hide' display a show again

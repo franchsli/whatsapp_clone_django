@@ -1,0 +1,12 @@
+{% load static %}
+{% load filters %}
+<li class="list-group-item p-3  d-flex flex-inline align-items-center contact" role="button" data-contact={{contact.id}} hx-target="this" hx-swap="outerHTML">
+    {% comment "contact profile photo" %}{% endcomment %}
+    <img class="ms-1 rounded-circle img-fluid" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNBNdcMDNS2r9df1IWFVc8AY0QNtfNhEJv7fGS5TdhUWrlBqfGu1PCCn9lKpL-FqF9dWc&usqp=CAU" alt="" style="max-width: 45px;">
+    <div class="d-flex flex-column ms-3 w-100">
+      <div class="d-flex justify-content-between align-items-center">
+        <span>{{ contact.name }}</span>
+        <span class="text-white-50">This contact does not have an account. <i class="bi bi-info-circle"></i></span>
+      </div>
+    </div>
+  </li>
