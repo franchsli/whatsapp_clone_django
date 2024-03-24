@@ -90,6 +90,7 @@ Also don't forget to change the channel layer to redis.
       4. To fix this you can change the image format to an optimized one.
 
     - I think is because the readmore height isn't kept in count when scrolling.
+- You can't archive chats who are not with a contact.
 
 **REFERENCE**:
 
