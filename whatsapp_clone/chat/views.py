@@ -268,22 +268,21 @@ def get_statuses(request):
 
 
 def get_muted_statuses(request):
-    if request.method == "GET":
-        user_instance = User(id=request.user.id)
-        muted_contacts = user_instance.contact_set.filter(statuses_muted=True)
-        contact_phone_numbers = muted_contacts.values_list("phone_number", flat=True)
-        statuses_with_muted_contacts = Status.objects.filter(
-            uploaded_by__phone_number__in=contact_phone_numbers
-        )
-        contacts_with_statuses = {}
-        for status in statuses_with_muted_contacts:
-            contact = muted_contacts.filter(
-                phone_number=status.uploaded_by.phone_number
-            ).first()
-            if contact:
-                contacts_with_statuses.setdefault(contact, []).append(status)
-        print(len([value for value in contacts_with_statuses.values()]))
-        print([value for value in contacts_with_statuses.values()])
+    user_instance = User(id=request.user.id)
+    muted_contacts = user_instance.contact_set.filter(statuses_muted=True)
+    contact_phone_numbers = muted_contacts.values_list("phone_number", flat=True)
+    statuses_with_muted_contacts = Status.objects.filter(
+        uploaded_by__phone_number__in=contact_phone_numbers
+    )
+    contacts_with_statuses = {}
+    for status in statuses_with_muted_contacts:
+        contact = muted_contacts.filter(
+            phone_number=status.uploaded_by.phone_number
+        ).first()
+        if contact:
+            contacts_with_statuses.setdefault(contact, []).append(status)
+    print(len([value for value in contacts_with_statuses.values()]))
+    print([value for value in contacts_with_statuses.values()])
 
     return render(
         request,
@@ -317,60 +316,11 @@ def unmute_contact_statuses(request, contact_id):
         print("CONTACT NOT FOUND WITH SUCH ID")
 
     finally:
-        user_instance = User(id=request.user.id)
-        contacts = user_instance.contact_set.filter(statuses_muted=False)
-        # Query for statuses uploaded by the user or the user's contacts
-        user_statuses = Status.objects.filter(uploaded_by=user_instance)
-        contacts_statuses = Status.objects.filter(
-            uploaded_by__phone_number__in=contacts.values("phone_number")
-        )
-        contact_phone_numbers = contacts.values_list("phone_number", flat=True)
-        statuses_with_contacts = Status.objects.filter(
-            uploaded_by__phone_number__in=contact_phone_numbers
-        )
-        contacts_with_statuses = {}
-        for status in statuses_with_contacts:
-            contact = contacts.filter(
-                phone_number=status.uploaded_by.phone_number
-            ).first()
-            if contact:
-                contacts_with_statuses.setdefault(contact, []).append(status)
-        print(len([value for value in contacts_with_statuses.values()]))
-        print([value for value in contacts_with_statuses.values()])
-
-        return render(
-            request,
-            "layouts/partials/statuses.html",
-            {
-                "contacts": contacts,
-                "user_statuses": user_statuses,
-                "contact_statuses": contacts_statuses,
-                "contacts_with_statuses": contacts_with_statuses,
-            },
-        )
+        return redirect('muted_statuses')
 
 
 def create_status(request):
-    user_instance = User(id=request.user.id)
-    contacts = user_instance.contact_set.filter(statuses_muted=False)
-    # Query for statuses uploaded by the user or the user's contacts
-    user_statuses = Status.objects.filter(uploaded_by=user_instance)
-    contacts_statuses = Status.objects.filter(
-        uploaded_by__phone_number__in=contacts.values("phone_number")
-    )
-    contact_phone_numbers = contacts.values_list("phone_number", flat=True)
-    statuses_with_contacts = Status.objects.filter(
-        uploaded_by__phone_number__in=contact_phone_numbers
-    )
-    contacts_with_statuses = {}
-    for status in statuses_with_contacts:
-        contact = contacts.filter(
-            phone_number=status.uploaded_by.phone_number
-        ).first()
-        if contact:
-            contacts_with_statuses.setdefault(contact, []).append(status)
-    print(len([value for value in contacts_with_statuses.values()]))
-    print([value for value in contacts_with_statuses.values()])
+    user_instance = User.objects.get(id=request.user.id)
     # gets the text and the image for the status creation
     text = request.POST.get('text')
     image = request.FILES.get('image')
@@ -388,16 +338,7 @@ def create_status(request):
             new_status.image.save(f"user_status_{new_status.id}.{image.content_type.split('/')[-1]}", image)
             new_status.save()
 
-    return render(
-        request,
-        "layouts/partials/statuses.html",
-        {
-            "contacts": contacts,
-            "user_statuses": user_statuses,
-            "contact_statuses": contacts_statuses,
-            "contacts_with_statuses": contacts_with_statuses,
-        },
-    )
+    return redirect('statuses')
 
 
 # tool functions
