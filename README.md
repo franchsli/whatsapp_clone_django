@@ -3,7 +3,8 @@
 
 ## DO RIGHT NOW
 
-- Optimize the images size (whithout decreasing quality).
+- Check why request.user.has_photo returns value but (in view) user_instance.has_photo returns False.
+- Split Chat Consumers into multiple consumers (e.g Status consumer and so)
 - Implement show/hide muted statuses logic (when you click show, it shows the muted statuses and then show dispay as 'hide'
 then when clicked again erase all the muted chats and 'hide' display a show again
 for do this 'diplay change' you actually need to change the show button to hide
@@ -12,6 +13,7 @@ WEBSOCKET CONSUMER BEFORE DOING THIS)
   - **DO THIS** When you click show, it does as expected, but in muted statuses html (template)
   it should handle the 'Show' button and change it to a hidde one that when clicked returns to a not shown muted statuses
   (to do this, you need to implement a new template.).
+- Optimize the images size (whithout decreasing quality).
 - Add something to delete statuses automatically every 24 hours.
 - Implement something to update the message receiver chat_list (websocket chatconsumer).
 
@@ -60,7 +62,6 @@ Also don't forget to change the channel layer to redis.
     the modal form title should change to 'create group' and a new input should appear that has the label
         'group name'.
 - Check if consumer functions arguments number can be reduced.
-- Split Chat Consumers into multiple consumers (e.g Status consumer and so)
 - Make it responsive.
 - Check and compare all the whatsapp web features with this project features.
 - Review all the code and delete spaguetti code.
@@ -75,7 +76,6 @@ Also don't forget to change the channel layer to redis.
   this cannot be implemented at the time because this won't display the newest muted statuses by clicking the show button.
 - When a user deletes a chat, the chat will be deleted from all the users in the chat
   - To fix this, you need to implement something similar to archive view logic.
-- Check why request.user.has_photo returns value but (in view) user_instance.has_photo returns False.
 - When scroll to bottom doesn't scroll to the botom anymore:
   - **THIS IS WHAT I THINK IT HAPPENS**:
     The chat gets displayed but somehow scroll_to_bottom doesn't work as expected.

@@ -310,15 +310,17 @@ socket.addEventListener('open', () => {
             notification_audio.play()
         }
 
-        else if (event === 'htmx:afterSettle' && data.pathInfo.requestPath === '/statuses/'){
+        else if (event === 'htmx:afterSettle' && data.pathInfo.requestPath === '/muted_statuses/'){
             const show_muted_statuses_button = document.getElementById('show-muted-statuses')
             const muted_statuses = document.getElementById('muted-statuses-contact-list')
+            show_muted_statuses_button.onclick = toggle_element_inner_text(show_muted_statuses_button, 'Show', 'Hide')
             show_muted_statuses_button.onclick = (event) => {
-                toggle_element_inner_text(show_muted_statuses_button, 'Show', 'Hide')
-                if (event === 'htmx:afterSettle' && show_muted_statuses_button.innerText === 'Show'){
+                if (show_muted_statuses_button.innerText === 'Hide'){
                     // FIX
+                    console.log('RAN, TRYING TO DELETE..')
                     function s(){
-                        muted_statuses.textContent = ''
+                        event.preventDefault()
+                        muted_statuses.innerHTML = ''
                         console.log('ERASED')
                         console.log(muted_statuses)
                     }
@@ -331,6 +333,16 @@ socket.addEventListener('open', () => {
             const emoji_container = document.getElementById('emojis-container')
             const emoji_class = document.querySelector('.emoji-class-active')
             load_emojis(emoji_class.dataset.emojiPack, emoji_container)
+            
+        }
+
+        else {
+            if (data.pathInfo){
+                console.log(event, data.pathInfo.requestPath)
+            }
+            else{
+                console.log(event)
+            }
             
         }
     }
