@@ -316,7 +316,7 @@ def unmute_contact_statuses(request, contact_id):
         print("CONTACT NOT FOUND WITH SUCH ID")
 
     finally:
-        return redirect('muted_statuses')
+        return redirect('statuses')
 
 
 def create_status(request):
