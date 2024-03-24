@@ -3,8 +3,6 @@
 
 ## DO RIGHT NOW
 
-- Rework all the chat.views logics (check if there's a way to implement some view code into another [try to use django redirect
- to include another view funcionalities into another]).
 - Optimize the images size (whithout decreasing quality).
 - Implement show/hide muted statuses logic (when you click show, it shows the muted statuses and then show dispay as 'hide'
 then when clicked again erase all the muted chats and 'hide' display a show again

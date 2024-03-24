@@ -82,19 +82,10 @@ def archive_chat(request, chat_id, archive):
     # returns all the desired chats depending on archive arg value
     chats = user_instance.chats.all()
     user_chats = []
-    for chat in chats:
-        contact = get_contact_in_chat(chat, user_instance)
-        if contact:
-            if not contact.archived and archive == True:
-                user_chats.append(chat)
-            elif contact.archived and archive == False:
-                user_chats.append(chat)
-        # if no contact is found it means is an unknow phone
-        # display it as normal chat
-        elif not contact and archive == True:
-            user_chats.append(chat)
-
-    return render(request, "layouts/partials/components/chats.html", {"chats": user_chats})
+    if archive == True:
+        return redirect('get_chats')
+    else:
+        return redirect('archived_chats')
 
 
 def display_user_ui(request):
