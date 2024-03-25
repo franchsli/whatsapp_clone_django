@@ -6,7 +6,7 @@ import { get, modifyNotification, scroll_to_bottom,
 console.log("websocket.js is loaded!");
 const user = document.getElementById('profile-pic')
 const user_id = user.getAttribute('data-user')
-const socket = new WebSocket(`ws://${window.location.host}/`)
+const chat_websocket = new WebSocket(`ws://${window.location.host}/`)
 const chat_form = document.getElementById("chat-creation-form")
 const chat_display = document.getElementById('chat-display')
 const contact_form = document.getElementById("contact-creation-form")
@@ -93,7 +93,7 @@ observer.observe(chat_display, observerConfig);
  * @param {HTMLElement} chat 
  */
 window.summon_chat = function(chat){
-    socket.send(JSON.stringify({
+    chat_websocket.send(JSON.stringify({
         'type':'reconnect',
         'reconnect_to': chat.dataset.chat
     }))
@@ -166,14 +166,14 @@ function create_instance(form, instance_type){
     
             if (element.checked){
                 console.log(`This element: ${element} is checked with id: ${element.id} and name ${element.dataset.contactName}`)
-                socket.send(JSON.stringify({
+                chat_websocket.send(JSON.stringify({
                     //'type': 'create_chat',
                     'type': instance_type,
                     'contact_name': element.dataset.contactName,
                     'contact_phone_number': element.id
                 }))}}}
     else if(instance_type === 'create_contact'){
-        socket.send(JSON.stringify({
+        chat_websocket.send(JSON.stringify({
             'type': instance_type,
             'contact_name': form_elements[1].value,
             'contact_phone_number': form_elements[2].value
@@ -191,7 +191,7 @@ function create_instance(form, instance_type){
  * @param {String} message_sender_id The id of who sent the chat message.
  */
 function send_message (message_type, message_text, message_image, message_sender_id){
-    socket.send(JSON.stringify({
+    chat_websocket.send(JSON.stringify({
         'type': message_type,
         'message': message_text,
         'image': message_image,
@@ -204,7 +204,7 @@ function send_message (message_type, message_text, message_image, message_sender
 }
 
 
-socket.addEventListener('open', () => {
+chat_websocket.addEventListener('open', () => {
     window.toggleReadMore = function(text_id){
         toggleReadMore(text_id)
     }
@@ -359,7 +359,7 @@ socket.addEventListener('open', () => {
 
 })
 
-socket.addEventListener('message',async (event) => {
+chat_websocket.addEventListener('message',async (event) => {
     console.log('message from server', event.data , 'type:', event.type)
     let message
     let sender_id
@@ -413,6 +413,6 @@ socket.addEventListener('message',async (event) => {
 
 })
 
-socket.addEventListener('error', (error) => {
+chat_websocket.addEventListener('error', (error) => {
     console.error(error)
 })

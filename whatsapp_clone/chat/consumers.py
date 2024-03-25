@@ -214,6 +214,38 @@ class ChatConsumer(AsyncWebsocketConsumer):
             name=contact_name, phone_number=phone.as_e164, created_by=self.user_instance
         )
 
+
+
+    async def disconnect(self, close_code):
+        await self.channel_layer.group_discard(self.room_group_name, self.channel_name)
+
+
+class StatusConsumer(AsyncWebsocketConsumer):
+    groups = ["broadcast"]
+
+    async def connect(self):
+        # default group name
+        self.room_group_name = "test"
+        self.user_instance = await self.get_user_by_id(self.scope["user"].id)
+        self.user_specific_group_name = (
+            f"user_group_{self.user_instance.phone_number.as_e164.replace('+', '')}"
+        )
+
+        await self.channel_layer.group_add(self.room_group_name, self.channel_name)
+        # joins the user to a unique group, which needs to be accessed by other users 
+        # if they want to communicate with said user.
+        await self.channel_layer.group_add(
+            self.user_specific_group_name, self.channel_name
+        )
+        await self.accept()
+
+    async def receive(self, text_data):
+        # transform the text_data (status received [json])
+        # to a python dictionary
+        text_data_json = json.loads(text_data)
+        print('STATUS DATA',text_data_json)
+
+    
     @database_sync_to_async
     def create_status(
         self,
@@ -256,34 +288,5 @@ class ChatConsumer(AsyncWebsocketConsumer):
             new_status.save()
 
     async def disconnect(self, close_code):
-        await self.channel_layer.group_discard(self.room_group_name, self.channel_name)
-
-
-class StatusConsumer(AsyncWebsocketConsumer):
-    groups = ["broadcast"]
-
-    async def connect(self):
-        # Called on connection.
-        # To accept the connection call:
-        await self.accept()
-        # Or accept the connection and specify a chosen subprotocol.
-        # A list of subprotocols specified by the connecting client
-        # will be available in self.scope['subprotocols']
-        await self.accept("subprotocol")
-        # To reject the connection, call:
-        await self.close()
-
-    async def receive(self, text_data=None, bytes_data=None):
-        # Called with either text_data or bytes_data for each frame
-        # You can call:
-        await self.send(text_data="Hello world!")
-        # Or, to send a binary frame:
-        await self.send(bytes_data="Hello world!")
-        # Want to force-close the connection? Call:
-        await self.close()
-        # Or add a custom WebSocket error code!
-        await self.close(code=4123)
-
-    async def disconnect(self, close_code):
         # Called when the socket closes
-        pass
+        await self.channel_layer.group_discard(self.room_group_name, self.channel_name)
