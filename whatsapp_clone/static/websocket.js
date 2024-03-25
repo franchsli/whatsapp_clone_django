@@ -433,3 +433,15 @@ status_websocket.addEventListener('message', async (event) => {
 status_websocket.addEventListener('error', (error) => {
     console.log(error)
 })
+
+
+// status_websocket.send(JSON.stringify({
+//     'type': 'CREATE',
+//     'text': 'SOME TEXT HERE',
+//     'image': 'IMAGE ENCODED DATA (GET IT FROM THE FORM)',
+// }))
+
+// status_websocket.send(JSON.stringify({
+//     'type':'DELETE',
+//     'status_id': 'status_id given from dataset'
+// }))

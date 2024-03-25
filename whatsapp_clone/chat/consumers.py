@@ -244,6 +244,11 @@ class StatusConsumer(AsyncWebsocketConsumer):
         # to a python dictionary
         text_data_json = json.loads(text_data)
         print('STATUS DATA',text_data_json)
+    
+
+
+    async def status(self, event):
+        await self.send(text_data=f"chat_message{event['text']}")
 
     
     @database_sync_to_async
@@ -286,6 +291,20 @@ class StatusConsumer(AsyncWebsocketConsumer):
             image_file = ContentFile(image_bytes_data, f"user_status.{file_extension}")
             new_status.image = image_file
             new_status.save()
+    
+    @database_sync_to_async
+    def delete_status(self, status_id:Union[str, int]) -> None:
+        """Deletes the status with the given id if exists,
+        raise an error otherwise.
+
+        Args:
+            status_id (Union[str, int]): The id of the status to be deleted.
+        """
+        try:
+            status = Status.objects.get(id=status_id)
+            status.delete() 
+        except Status.DoesNotExist:
+            raise StatusNotFoundException()
 
     async def disconnect(self, close_code):
         # Called when the socket closes
