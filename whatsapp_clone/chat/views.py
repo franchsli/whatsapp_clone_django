@@ -1,12 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
-from django.db.models import Q
-from django.core.files.base import ContentFile
 from .models import User, Chat, Contact, Message, Status
 from .forms import ChatForm, ContactForm, MessageForm, StatusForm
-from typing import Union, Optional
-import base64
+from typing import Union
 
 
 @login_required
@@ -76,9 +73,9 @@ def archive_chat(request, chat_id, archive):
     contact.save()
     # returns all the desired chats depending on archive arg value
     if archive == True:
-        return redirect('get_chats')
+        return redirect("get_chats")
     else:
-        return redirect('archived_chats')
+        return redirect("archived_chats")
 
 
 def display_user_ui(request):
@@ -104,8 +101,7 @@ def display_chat(request, pk):
     return render(
         request,
         "layouts/partials/selected-chat.html",
-        {"chat": chat, 
-         "messages": chat_messages},
+        {"chat": chat, "messages": chat_messages},
     )
 
 
@@ -137,7 +133,10 @@ def edit_contact(request, pk):
         return render(
             request,
             "layouts/partials/components/edit_contact.html",
-            {"contact": contact, "contact_form": contact_form,},
+            {
+                "contact": contact,
+                "contact_form": contact_form,
+            },
         )
     else:
         contact = Contact.objects.get(id=pk)
@@ -221,9 +220,7 @@ def get_statuses(request):
     )
     contacts_with_statuses = {}
     for status in statuses_with_contacts:
-        contact = contacts.filter(
-            phone_number=status.uploaded_by.phone_number
-        ).first()
+        contact = contacts.filter(phone_number=status.uploaded_by.phone_number).first()
         if contact:
             contacts_with_statuses.setdefault(contact, []).append(status)
     print(len([value for value in contacts_with_statuses.values()]))
@@ -276,7 +273,7 @@ def mute_contact_statuses(request, contact_id):
         print("CONTACT NOT FOUND WITH SUCH ID")
 
     finally:
-        return redirect('statuses')
+        return redirect("statuses")
 
 
 def unmute_contact_statuses(request, contact_id):
@@ -289,14 +286,14 @@ def unmute_contact_statuses(request, contact_id):
         print("CONTACT NOT FOUND WITH SUCH ID")
 
     finally:
-        return redirect('statuses')
+        return redirect("statuses")
 
 
 def create_status(request):
     # gets the text and the image for the status creation
-    text = request.POST.get('text')
-    image = request.FILES.get('image')
-    print(f'TEXT:{text}\nIMAGE:{image}')
+    text = request.POST.get("text")
+    image = request.FILES.get("image")
+    print(f"TEXT:{text}\nIMAGE:{image}")
     # new status creation
     if image or text:
         new_status = Status.objects.create(
@@ -307,10 +304,13 @@ def create_status(request):
             new_status.save()
 
         if image:
-            new_status.image.save(f"user_status_{new_status.id}.{image.content_type.split('/')[-1]}", image)
+            new_status.image.save(
+                f"user_status_{new_status.id}.{image.content_type.split('/')[-1]}",
+                image,
+            )
             new_status.save()
 
-    return redirect('statuses')
+    return redirect("statuses")
 
 
 # tool functions

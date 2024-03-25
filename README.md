@@ -3,7 +3,6 @@
 
 ## DO RIGHT NOW
 
-- Check why request.user.has_photo returns value but (in view) user_instance.has_photo returns False.
 - Split Chat Consumers into multiple consumers (e.g Status consumer and so)
 - Implement show/hide muted statuses logic (when you click show, it shows the muted statuses and then show dispay as 'hide'
 then when clicked again erase all the muted chats and 'hide' display a show again
