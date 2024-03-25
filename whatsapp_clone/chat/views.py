@@ -11,21 +11,19 @@ import base64
 
 @login_required
 def chat(request):
-    user_instance = User(id=request.user.id)
-    chats = user_instance.chats.all()
-    chat_form = ChatForm(initial={"users": user_instance})
-    contact_form = ContactForm(initial={"created_by": user_instance})
+    chats = request.user.chats.all()
+    chat_form = ChatForm(initial={"users": request.user})
+    contact_form = ContactForm(initial={"created_by": request.user})
     status_form = StatusForm(
-        initial={"uploaded_by": user_instance, "upload_date": timezone.now}
+        initial={"uploaded_by": request.user, "upload_date": timezone.now}
     )
-    contacts = user_instance.contact_set.all().order_by("name")
-    print(user_instance.has_photo)
-    print(f"User:{user_instance.get_username()}")
+    contacts = request.user.contact_set.all().order_by("name")
+    print(request.user.has_photo)
+    print(f"User:{request.user.get_username()}")
     return render(
         request,
         "index.html",
         {
-            "user": user_instance,
             "chats": chats,
             "chat_form": chat_form,
             "contacts": contacts,
@@ -37,11 +35,10 @@ def chat(request):
 
 # htmx
 def get_chats(request):
-    user_instance = User(id=request.user.id)
-    chats = user_instance.chats.all()
+    chats = request.user.chats.all()
     user_chats = []
     for chat in chats:
-        contact = get_contact_in_chat(chat, user_instance)
+        contact = get_contact_in_chat(chat, request.user)
         if contact:
             if not contact.archived:
                 user_chats.append(chat)
@@ -56,11 +53,10 @@ def get_chats(request):
 
 
 def get_archived_chats(request):
-    user_instance = User(id=request.user.id)
-    chats = user_instance.chats.all()
+    chats = request.user.chats.all()
     user_archived_chats = []
     for chat in chats:
-        contact = get_contact_in_chat(chat, user_instance)
+        contact = get_contact_in_chat(chat, request.user)
         if contact:
             if contact.archived:
                 user_archived_chats.append(chat)
@@ -71,17 +67,14 @@ def get_archived_chats(request):
 
 
 def archive_chat(request, chat_id, archive):
-    user_instance = User(id=request.user.id)
     # converts the str to boolean
     archive = True if archive == "True" else False
     # arhives or unarchives the contact
     chat = Chat.objects.get(id=chat_id)
-    contact = get_contact_in_chat(chat, user_instance)
+    contact = get_contact_in_chat(chat, request.user)
     contact.archived = archive
     contact.save()
     # returns all the desired chats depending on archive arg value
-    chats = user_instance.chats.all()
-    user_chats = []
     if archive == True:
         return redirect('get_chats')
     else:
@@ -89,18 +82,16 @@ def archive_chat(request, chat_id, archive):
 
 
 def display_user_ui(request):
-    user_instance = User(id=request.user.id)
-    chats = user_instance.chats.all()
-    chat_form = ChatForm(initial={"users": user_instance})
-    contact_form = ContactForm(initial={"created_by": user_instance})
-    contacts = user_instance.contact_set.all().order_by("name")
-    print(user_instance.has_photo)
-    print(f"User:{user_instance.get_username()}")
+    chats = request.user.chats.all()
+    chat_form = ChatForm(initial={"users": request.user})
+    contact_form = ContactForm(initial={"created_by": request.user})
+    contacts = request.user.contact_set.all().order_by("name")
+    print(request.user.has_photo)
+    print(f"User:{request.user.get_username()}")
     return render(
         request,
         "layouts/partials/user_interface.html",
         {
-            "user": user_instance,
             "chats": chats,
             "contacts": contacts,
         },
@@ -108,27 +99,25 @@ def display_user_ui(request):
 
 
 def display_chat(request, pk):
-    user_instance = User(id=request.user.id)
     chat = Chat.objects.get(id=pk)
     chat_messages = chat.message_set.all().order_by("date")
     return render(
         request,
         "layouts/partials/selected-chat.html",
-        {"user": user_instance, "chat": chat, "messages": chat_messages},
+        {"chat": chat, 
+         "messages": chat_messages},
     )
 
 
 def delete_chat(request, pk):
-    user_instance = User(id=request.user.id)
     chat = Chat.objects.get(id=pk)
     chat.delete()
-    chats = user_instance.chats.all()
+    chats = request.user.chats.all()
     return render(request, "layouts/partials/components/chats.html", {"chats": chats})
 
 
 def get_contacts(request):
-    user_instance = User(id=request.user.id)
-    contacts = user_instance.contact_set.all()
+    contacts = request.user.contact_set.all()
     return render(
         request, "layouts/partials/components/contacts.html", {"contacts": contacts}
     )
@@ -142,14 +131,13 @@ def get_contact(request, pk):
 
 
 def edit_contact(request, pk):
-    user_instance = User(id=request.user.id)
     if request.method == "GET":
         contact = Contact.objects.get(id=pk)
         contact_form = ContactForm(instance=contact)
         return render(
             request,
             "layouts/partials/components/edit_contact.html",
-            {"contact": contact, "contact_form": contact_form, "user": user_instance},
+            {"contact": contact, "contact_form": contact_form,},
         )
     else:
         contact = Contact.objects.get(id=pk)
@@ -162,10 +150,9 @@ def edit_contact(request, pk):
 
 
 def delete_contact(request, pk):
-    user_instance = User(id=request.user.id)
     contact = Contact.objects.get(id=pk)
     contact.delete()
-    contacts = user_instance.contact_set.all()
+    contacts = request.user.contact_set.all()
     return render(
         request, "layouts/partials/components/contacts.html", {"contacts": contacts}
     )
@@ -179,7 +166,6 @@ def get_message(request, pk):
 
 
 def edit_message(request, pk):
-    user_instance = User(id=request.user.id)
     if request.method == "GET":
         message_instance = Message.objects.get(id=pk)
         message_form = MessageForm(instance=message_instance)
@@ -189,7 +175,6 @@ def edit_message(request, pk):
             {
                 "message": message_instance,
                 "message_form": message_form,
-                "user": user_instance,
             },
         )
     else:
@@ -217,18 +202,16 @@ def delete_message(request, chat_id, message_id):
 
 
 def update_chat_form(request):
-    user_instance = User(id=request.user.id)
-    contacts = user_instance.contact_set.all()
+    contacts = request.user.contact_set.all()
     return render(
         request, "layouts/partials/chat_form_elements.html", {"contacts": contacts}
     )
 
 
 def get_statuses(request):
-    user_instance = User(id=request.user.id)
-    contacts = user_instance.contact_set.filter(statuses_muted=False)
+    contacts = request.user.contact_set.filter(statuses_muted=False)
     # Query for statuses uploaded by the user or the user's contacts
-    user_statuses = Status.objects.filter(uploaded_by=user_instance)
+    user_statuses = Status.objects.filter(uploaded_by=request.user)
     contacts_statuses = Status.objects.filter(
         uploaded_by__phone_number__in=contacts.values("phone_number")
     )
@@ -259,8 +242,7 @@ def get_statuses(request):
 
 
 def get_muted_statuses(request):
-    user_instance = User(id=request.user.id)
-    muted_contacts = user_instance.contact_set.filter(statuses_muted=True)
+    muted_contacts = request.user.contact_set.filter(statuses_muted=True)
     contact_phone_numbers = muted_contacts.values_list("phone_number", flat=True)
     statuses_with_muted_contacts = Status.objects.filter(
         uploaded_by__phone_number__in=contact_phone_numbers
@@ -311,7 +293,6 @@ def unmute_contact_statuses(request, contact_id):
 
 
 def create_status(request):
-    user_instance = User.objects.get(id=request.user.id)
     # gets the text and the image for the status creation
     text = request.POST.get('text')
     image = request.FILES.get('image')
@@ -319,7 +300,7 @@ def create_status(request):
     # new status creation
     if image or text:
         new_status = Status.objects.create(
-            uploaded_by=user_instance, upload_date=timezone.now()
+            uploaded_by=request.user, upload_date=timezone.now()
         )
         if text:
             new_status.text = text
