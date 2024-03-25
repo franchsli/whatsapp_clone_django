@@ -244,21 +244,34 @@ class StatusConsumer(AsyncWebsocketConsumer):
         # to a python dictionary
         text_data_json = json.loads(text_data)
         print('STATUS DATA',text_data_json)
+
+        if text_data_json['type'] == 'CREATE':
+            await self.create_status()
+        elif text_data_json['type'] == 'DELETE':
+            await self.delete_status()
+        
+        await self.channel_layer.group_send(
+                self.room_group_name,
+                {
+                    "type": "status",
+                    "text": f"{text_data_json['sender_user_id']}-{text_data_json['message']}-{text_data_json['image']}",
+                },
+            )
+
     
 
 
     async def status(self, event):
-        await self.send(text_data=f"chat_message{event['text']}")
+        await self.send(text_data=f"status{event['text']}")
 
     
     @database_sync_to_async
     def create_status(
         self,
-        uploaded_by: Union[str, int],
         text: Optional[str] = None,
         image: Optional[str] = None,
     ) -> None:
-        status_creator = User.objects.get(id=uploaded_by)
+        status_creator = User.objects.get(id=self.scope['user'].id)
         if text and image:
             new_status = Status.objects.create(
                 uploaded_by=status_creator, text=text, upload_date=timezone.now()
