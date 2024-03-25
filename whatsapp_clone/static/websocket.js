@@ -7,6 +7,7 @@ console.log("websocket.js is loaded!");
 const user = document.getElementById('profile-pic')
 const user_id = user.getAttribute('data-user')
 const chat_websocket = new WebSocket(`ws://${window.location.host}/`)
+const status_websocket = new WebSocket(`ws://${window.location.host}/status/`)
 const chat_form = document.getElementById("chat-creation-form")
 const chat_display = document.getElementById('chat-display')
 const contact_form = document.getElementById("contact-creation-form")
@@ -336,15 +337,15 @@ chat_websocket.addEventListener('open', () => {
             
         }
 
-        else {
-            if (data.pathInfo){
-                console.log(event, data.pathInfo.requestPath)
-            }
-            else{
-                console.log(event)
-            }
+        // else {
+        //     if (data.pathInfo){
+        //         console.log(event, data.pathInfo.requestPath)
+        //     }
+        //     else{
+        //         console.log(event)
+        //     }
             
-        }
+        // }
     }
     htmx.logger()
     // initialize tooltips
@@ -415,4 +416,20 @@ chat_websocket.addEventListener('message',async (event) => {
 
 chat_websocket.addEventListener('error', (error) => {
     console.error(error)
+})
+
+
+
+// status websocket handling
+status_websocket.addEventListener('open', () => {
+    console.log('CONNECTION OPENED WITH STATUS WEBSOCKET')
+})
+
+status_websocket.addEventListener('message', async (event) => {
+    console.log('MESSAGE')
+    console.log(event.data , 'type:', event.type)
+})
+
+status_websocket.addEventListener('error', (error) => {
+    console.log(error)
 })
