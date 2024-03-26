@@ -181,17 +181,10 @@ class StatusConsumer(AsyncWebsocketConsumer):
         groups = [contact_phone.as_e164.replace('+', '') for contact_phone in user_contacts]
         print('GROUPS')
         print(groups)
-        # self.user_instance = await self.get_user_by_id(self.scope["user"].id)
-        # self.user_specific_group_name = (
-        #     f"user_group_{self.user_instance.phone_number.as_e164.replace('+', '')}"
-        # )
+
 
         await self.channel_layer.group_add(self.room_group_name, self.channel_name)
-        # # joins the user to a unique group, which needs to be accessed by other users 
-        # # if they want to communicate with said user.
-        # await self.channel_layer.group_add(
-        #     self.user_specific_group_name, self.channel_name
-        #)
+
         await self.accept()
 
     async def receive(self, text_data):
