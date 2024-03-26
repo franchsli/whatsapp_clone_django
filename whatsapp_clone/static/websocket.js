@@ -417,7 +417,36 @@ status_websocket.addEventListener('open', () => {
 status_websocket.addEventListener('message', async (event) => {
     console.log('STATUS MESSAGE')
     console.log(event.data , 'type:', event.type)
-    let status_event_data = event.data
+    let status_event_data = event.data.replace('status_notification-','')
+    status_event_data = status_event_data.split('-')
+    console.log('SPLITTED')
+    console.log(status_event_data)
+    if (status_event_data.includes('CREATE')){
+        // if the user_id of the user who triggered the message is not the same
+        // as the auth user, display a notification.
+        if (status_event_data[1] !== user_id){
+            const toastNotification = document.getElementById('liveToast')
+            modifyNotification('Server', `One of your contacts uploaded a status!!!`)
+            const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
+            toastBootstrap.show()
+            notification_audio.play()
+
+            // if the status UI is already displayed, reload it
+            // to be able to see the brand new contact status....
+            if (true){
+
+            }
+        }
+    }
+
+    else if (status_event_data.includes('DELETE')){
+        // if the user_id of the user who triggered the message is not the same
+        // as the auth user, and the status UI is displayed, reload the statuses UI using HTMX.
+        if (status_event_data[1] !== user_id && true){
+            // logic here
+        }
+
+    }
 })
 
 status_websocket.addEventListener('error', (error) => {
