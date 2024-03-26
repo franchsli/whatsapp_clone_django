@@ -202,11 +202,9 @@ class StatusConsumer(AsyncWebsocketConsumer):
                 self.room_group_name,
                 {
                     "type": "status",
-                    "text": f"{text_data_json['sender_user_id']}-{text_data_json['message']}-{text_data_json['image']}",
+                    "text": f"{[value for value in text_data_json.values()]}",
                 },
             )
-
-    
 
 
     async def status(self, event):

@@ -426,7 +426,7 @@ status_websocket.addEventListener('open', () => {
 })
 
 status_websocket.addEventListener('message', async (event) => {
-    console.log('MESSAGE')
+    console.log('STATUS MESSAGE')
     console.log(event.data , 'type:', event.type)
 })
 
