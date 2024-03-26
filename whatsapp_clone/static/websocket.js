@@ -266,7 +266,14 @@ chat_websocket.addEventListener('open', () => {
     status_submit_button.onclick = (event) => {
         event.preventDefault()
         if (not_empty(status_form)){
-            htmx.trigger('#status-submit', 'secure-submit', {})
+            const status_input = document.getElementById('id_text')
+            const image_container = document.getElementById('status-imagePreview')
+            status_websocket.send(JSON.stringify({
+                'type': 'CREATE',
+                'text': status_input.value,
+                'image': image_container.firstElementChild.src,
+
+            }))
         }
         else {
             error_audio.play()

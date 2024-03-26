@@ -194,7 +194,7 @@ class StatusConsumer(AsyncWebsocketConsumer):
         print('STATUS DATA',text_data_json)
 
         if text_data_json['type'] == 'CREATE':
-            await self.create_status()
+            await self.create_status(text_data_json['text'], text_data_json['image'])
         elif text_data_json['type'] == 'DELETE':
             await self.delete_status()
         
@@ -218,38 +218,26 @@ class StatusConsumer(AsyncWebsocketConsumer):
         image: Optional[str] = None,
     ) -> None:
         status_creator = User.objects.get(id=self.scope['user'].id)
-        if text and image:
-            new_status = Status.objects.create(
-                uploaded_by=status_creator, text=text, upload_date=timezone.now()
-            )
-            file_format, image_string_data = image.split(";base64,")
-            # Get the file format extension (png, jpg, jpeg, etc.)
-            file_extension = file_format.split("/")[-1]
-
-            image_bytes_data = base64.b64decode(image_string_data)
-
-            image_file = ContentFile(image_bytes_data, f"user_status.{file_extension}")
-            new_status.image = image_file
-            new_status.save()
-
-        elif text and not image:
-            new_status = Status.objects.create(
-                uploaded_by=status_creator, text=text, upload_date=timezone.now()
-            )
-
-        else:
+        if text or image:
             new_status = Status.objects.create(
                 uploaded_by=status_creator, upload_date=timezone.now()
             )
-            file_format, image_string_data = image.split(";base64,")
-            # Get the file format extension (png, jpg, jpeg, etc.)
-            file_extension = file_format.split("/")[-1]
 
-            image_bytes_data = base64.b64decode(image_string_data)
+            if text:
+                new_status.text = text
+                new_status.save()
 
-            image_file = ContentFile(image_bytes_data, f"user_status.{file_extension}")
-            new_status.image = image_file
-            new_status.save()
+            if image:
+                file_format, image_string_data = image.split(";base64,")
+                # Get the file format extension (png, jpg, jpeg, etc.)
+                file_extension = file_format.split("/")[-1]
+
+                image_bytes_data = base64.b64decode(image_string_data)
+
+                image_file = ContentFile(image_bytes_data, f"user_status.{file_extension}")
+                new_status.image = image_file
+                new_status.save()
+                
     
     @database_sync_to_async
     def delete_status(self, status_id:Union[str, int]) -> None:

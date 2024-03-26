@@ -61,10 +61,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form id="status_form" enctype="multipart/form-data" 
-          hx-encoding="multipart/form-data" hx-post="{% url 'create_status' %}"
-          hx-trigger="secure-submit from:#status-submit" 
-          hx-target="#chats-and-more" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+          <form id="status_form" enctype="multipart/form-data">
             <div id="status-validation-message" class="validation-error"></div>
             {% csrf_token %}
             {{ status_form | crispy }}
