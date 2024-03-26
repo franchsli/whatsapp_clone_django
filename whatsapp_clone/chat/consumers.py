@@ -2,11 +2,11 @@ from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.db import database_sync_to_async
 from .models import User, Chat, Message, Contact, Status
 from .views import get_contact_in_chat
+from .tools import *
 from django.utils import timezone
 from django.core.files.base import ContentFile
 from phonenumber_field.phonenumber import PhoneNumber
 from typing import Union, Optional
-from .exceptions import *
 import json, base64
 
 
@@ -14,7 +14,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         # default group name
         self.room_group_name = "test"
-        self.user_instance = await self.get_user_by_id(self.scope["user"].id)
+        self.user_instance = await  database_sync_to_async(get_user_by_id)(self.scope["user"].id)
         self.user_specific_group_name = (
             f"user_group_{self.user_instance.phone_number.as_e164.replace('+', '')}"
         )
@@ -75,14 +75,15 @@ class ChatConsumer(AsyncWebsocketConsumer):
             await self.channel_layer.group_add(self.room_group_name, self.channel_name)
 
         elif text_data_json["type"] == "create_chat":
-            contact = await self.get_user_by_phone(
+            contact = await database_sync_to_async(get_user_by_phone)(
                 text_data_json["contact_phone_number"]
             )
             await self.create_chat([self.user_instance, contact])
 
         elif text_data_json["type"] == "create_contact":
-            await self.create_contact(
-                text_data_json["contact_name"], text_data_json["contact_phone_number"]
+            await database_sync_to_async(create_contact)(
+                text_data_json["contact_name"], text_data_json["contact_phone_number"],
+                self.scope['user'].id
             )
 
     async def chat_message(self, event):
@@ -91,43 +92,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
     async def chat_notification(self, event):
         await self.send(text_data=f"chat_notification{event['text']}")
 
-    @database_sync_to_async
-    def get_user_by_id(self, user_id: Union[str, int]) -> Union[object, Exception]:
-        """Returns the user in the database found with the given id,
-        raises an exception if not found
-
-        Args:
-            user_id (Union[str, int]): A numeric (integer) value that identify the user.
-
-        Raises:
-            UserNotFoundException: Raised when there's no user with the given id.
-
-        Returns:
-            Union[object, Exception]: The user object in the database or an exception if not found.
-        """
-        try:
-            return User.objects.get(id=user_id)
-        except User.DoesNotExist:
-            raise UserNotFoundException("NO USER FOUND WITH SUCH ID")
-
-    @database_sync_to_async
-    def get_user_by_phone(self, phone_number: str) -> Union[object, Exception]:
-        """Returns the user in the database found with the given phone_number,
-        raises an exception if not found
-
-        Args:
-            phone_number (str): The phone number of the wanted user.
-
-        Raises:
-            UserNotFoundException: Raised when there's no user with such phone
-
-        Returns:
-            Union[object, Exception]: The user object in the database or an exception if not found.
-        """
-        try:
-            return User.objects.get(phone_number=phone_number)
-        except User.DoesNotExist:
-            raise UserNotFoundException("NO USER FOUND WITH SUCH PHONE")
 
     @database_sync_to_async
     def create_message(
@@ -201,37 +165,28 @@ class ChatConsumer(AsyncWebsocketConsumer):
             chat = Chat.objects.get(id=chat_id)
             return chat.archived if field == "archived" else chat.users
 
-    @database_sync_to_async
-    def create_contact(self, contact_name: str, contact_phone_number: str) -> None:
-        """Creates and stores a new contact object in the database.
-
-        Args:
-            contact_name (str): The name that the user thought for the contact.
-            contact_phone_number (str): The phone number of the contact.
-        """
-        phone = PhoneNumber.from_string(contact_phone_number)
-        new_contact = Contact.objects.create(
-            name=contact_name, phone_number=phone.as_e164, created_by=self.user_instance
-        )
-
-
 
     async def disconnect(self, close_code):
         await self.channel_layer.group_discard(self.room_group_name, self.channel_name)
 
 
 class StatusConsumer(AsyncWebsocketConsumer):
-    groups = ["broadcast"]
+    # groups = ["broadcast"]
 
     async def connect(self):
-        # default group name
-        self.room_group_name = "test"
+        # user broadcast for statuses
+        self.user_phone_number = self.scope['user'].phone_number.as_e164.replace('+', '')
+        self.room_group_name = f'{self.user_phone_number}'
+        user_contacts = await database_sync_to_async(get_user_contacts)(self.scope['user'].id, 'phone_number')
+        groups = [contact_phone.as_e164.replace('+', '') for contact_phone in user_contacts]
+        print('GROUPS')
+        print(groups)
         # self.user_instance = await self.get_user_by_id(self.scope["user"].id)
         # self.user_specific_group_name = (
         #     f"user_group_{self.user_instance.phone_number.as_e164.replace('+', '')}"
         # )
 
-        # await self.channel_layer.group_add(self.room_group_name, self.channel_name)
+        await self.channel_layer.group_add(self.room_group_name, self.channel_name)
         # # joins the user to a unique group, which needs to be accessed by other users 
         # # if they want to communicate with said user.
         # await self.channel_layer.group_add(

@@ -39,6 +39,8 @@ to make the PATCH request for all the new messages] only if it is already False 
 ## Improvements
 
 - Review previewImage func.
+- Make it so users can't create contacts with phone numbers who are not
+used for some user yet (notify the user creating that the number is incorrect)
 - Test all statuses features.
 - Remove all unnecesary datasets and such from chats, contact templates (remember to check websocket.js before deleting).
 - Give the user creation form image preview logic.
