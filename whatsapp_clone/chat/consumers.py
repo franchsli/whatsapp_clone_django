@@ -178,12 +178,17 @@ class StatusConsumer(AsyncWebsocketConsumer):
         self.user_phone_number = self.scope['user'].phone_number.as_e164.replace('+', '')
         self.room_group_name = f'{self.user_phone_number}'
         user_contacts = await database_sync_to_async(get_user_contacts)(self.scope['user'].id, 'phone_number')
-        groups = [contact_phone.as_e164.replace('+', '') for contact_phone in user_contacts]
-        print('GROUPS')
-        print(groups)
+        #groups = [contact_phone.as_e164.replace('+', '') for contact_phone in user_contacts]
+        #print('GROUPS')
+        #print(groups)
 
 
         await self.channel_layer.group_add(self.room_group_name, self.channel_name)
+
+        for contact_phone in user_contacts:
+            await self.channel_layer.group_add(
+                contact_phone.as_e164.replace('+', ''), self.channel_name)
+        
 
         await self.accept()
 
@@ -195,20 +200,33 @@ class StatusConsumer(AsyncWebsocketConsumer):
 
         if text_data_json['type'] == 'CREATE':
             await self.create_status(text_data_json['text'], text_data_json['image'])
-        elif text_data_json['type'] == 'DELETE':
-            await self.delete_status()
-        
-        await self.channel_layer.group_send(
+            await self.channel_layer.group_send(
                 self.room_group_name,
                 {
-                    "type": "status",
-                    "text": f"{[value for value in text_data_json.values()]}",
+                    "type": "status_notification",
+                    "text": '-'.join([value for value in text_data_json.values() if value != None]),
                 },
             )
 
+        elif text_data_json['type'] == 'DELETE':
+            await self.delete_status(text_data_json['status_id'])
+            await self.channel_layer.group_send(
+                self.room_group_name,
+                {
+                    "type": "status_deletion",
+                    "text": text_data_json['status_id'],
+                }
+            )
+        
 
-    async def status(self, event):
-        await self.send(text_data=f"status{event['text']}")
+
+
+    async def status_deletion(self, event):
+        await self.send(text_data=f"status_deletion-{event['text']}")
+    
+    async def status_notification(self, event):
+        await self.send(text_data=f"status_notification-{event['text']}")
+
 
     
     @database_sync_to_async

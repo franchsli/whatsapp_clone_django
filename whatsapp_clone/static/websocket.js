@@ -268,10 +268,12 @@ chat_websocket.addEventListener('open', () => {
         if (not_empty(status_form)){
             const status_input = document.getElementById('id_text')
             const image_container = document.getElementById('status-imagePreview')
+            const image = image_container.firstElementChild
             status_websocket.send(JSON.stringify({
                 'type': 'CREATE',
+                'user_id': user_id,
                 'text': status_input.value,
-                'image': image_container.firstElementChild.src,
+                'image': image !== null ? image.src : null,
 
             }))
         }
@@ -297,28 +299,8 @@ chat_websocket.addEventListener('open', () => {
      * @param {Object} data 
      */
     htmx.logger = function(elt, event, data) {
-        // cleans the status creation form fields (text, image and preview if exists.)
-        if (event === 'htmx:afterSettle' && data.pathInfo.requestPath === '/create_status/'){
-            const form_text = document.getElementById('id_text')
-            const form_image = document.getElementById('id_image')
-            const form_image_preview_container = document.getElementById('status-imagePreview')
-            const form_image_preview = form_image_preview_container.querySelector('img')
 
-            form_text.value = ''
-            form_image.value = ''
-            if (form_image_preview){
-                form_image_preview.src = ''
-                form_image_preview.alt = ''
-            }
-            // notify the user that the status has been succesfully created.
-            const toastNotification = document.getElementById('liveToast')
-            modifyNotification('Server', 'Status uploaded succesfully!')
-            const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
-            toastBootstrap.show()
-            notification_audio.play()
-        }
-
-        else if (event === 'htmx:afterSettle' && data.pathInfo.requestPath === '/muted_statuses/'){
+        if (event === 'htmx:afterSettle' && data.pathInfo.requestPath === '/muted_statuses/'){
             const show_muted_statuses_button = document.getElementById('show-muted-statuses')
             const muted_statuses = document.getElementById('muted-statuses-contact-list')
             show_muted_statuses_button.onclick = toggle_element_inner_text(show_muted_statuses_button, 'Show', 'Hide')
@@ -435,6 +417,7 @@ status_websocket.addEventListener('open', () => {
 status_websocket.addEventListener('message', async (event) => {
     console.log('STATUS MESSAGE')
     console.log(event.data , 'type:', event.type)
+    let status_event_data = event.data
 })
 
 status_websocket.addEventListener('error', (error) => {
@@ -444,11 +427,13 @@ status_websocket.addEventListener('error', (error) => {
 
 // status_websocket.send(JSON.stringify({
 //     'type': 'CREATE',
+//     'user_id': 'THE ID OF THE USER WHO TRIGGERED THE ACTION',
 //     'text': 'SOME TEXT HERE',
 //     'image': 'IMAGE ENCODED DATA (GET IT FROM THE FORM)',
 // }))
 
 // status_websocket.send(JSON.stringify({
 //     'type':'DELETE',
+//     'user_id': 'THE ID OF THE USER WHO TRIGGERED THE ACTION',
 //     'status_id': 'status_id given from dataset'
 // }))
