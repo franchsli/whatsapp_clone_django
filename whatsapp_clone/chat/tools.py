@@ -49,6 +49,13 @@ def create_contact(contact_name: str, contact_phone_number: str, user_id: Union[
     )
 
 def get_user_contacts(user_id: Union[str, int], desired_value:str) -> List[Contact]:
-
     user_instance = User.objects.get(id=user_id)
     return list(user_instance.contact_set.values_list(desired_value, flat=True))
+
+def contact_archived(user:User, contact_phone_number: str) -> bool:
+    contact = user.contact_set.filter(phone_number=contact_phone_number).first()
+    print(f'CONTACT IS ARCHIVED??? {contact}')
+    if contact:
+        return contact.archived
+    else:
+        return False

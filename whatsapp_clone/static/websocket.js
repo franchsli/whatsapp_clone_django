@@ -356,6 +356,7 @@ chat_websocket.addEventListener('message',async (event) => {
     let message_data
     let text
     let image
+    let sender_is_archived
     if (event.data.includes('chat_message')){
         message = event.data.replace('chat_message', '')
         message_data = message.split('-')
@@ -387,8 +388,11 @@ chat_websocket.addEventListener('message',async (event) => {
 
     else if (event.data.includes('chat_notification')){
         message = event.data.replace('chat_notification', '')
+        message = message.split('-')
         sender_id = message[0]
-        message = message.replace(sender_id, '')
+        text = message[1]
+        sender_is_archived = message[2] === 'True' ? true : false
+
         let sender_user_data = await get(`/api/users/${sender_id}`)
 
         console.warn(message)
@@ -402,12 +406,14 @@ chat_websocket.addEventListener('message',async (event) => {
             }
             
         }
-       
-        const toastNotification = document.getElementById('liveToast')
-        modifyNotification(sender_user_data.username, message)
-        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
-        toastBootstrap.show()
-        notification_audio.play()
+
+        if(!sender_is_archived){
+            const toastNotification = document.getElementById('liveToast')
+            modifyNotification(sender_user_data.username, message)
+            const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
+            toastBootstrap.show()
+            notification_audio.play()
+        }
     }
 
 

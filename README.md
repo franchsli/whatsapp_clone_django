@@ -3,6 +3,7 @@
 
 ## DO RIGHT NOW
 
+- Implement something to display the contact name, not the sender (user object) username.
 - Implement show/hide muted statuses logic (when you click show, it shows the muted statuses and then show dispay as 'hide'
 then when clicked again erase all the muted chats and 'hide' display a show again
 for do this 'diplay change' you actually need to change the show button to hide
@@ -88,8 +89,6 @@ Also don't forget to change the channel layer to redis.
 
     - I think is because the readmore height isn't kept in count when scrolling.
 - You can't archive chats who are not with a contact.
-- Archived contacts sill notify users who archived them.
-  - The thing is that in the consumer, there's no way to know if the receiver archived the sender or not.
 
 **REFERENCE**:
 
