@@ -409,7 +409,7 @@ chat_websocket.addEventListener('message',async (event) => {
 
         if(!sender_is_archived){
             const toastNotification = document.getElementById('liveToast')
-            modifyNotification(sender_username, message)
+            modifyNotification(sender_username, text)
             const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
             toastBootstrap.show()
             notification_audio.play()
