@@ -430,12 +430,11 @@ status_websocket.addEventListener('message', async (event) => {
             const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
             toastBootstrap.show()
             notification_audio.play()
-
-            // if the status UI is already displayed, reload it
-            // to be able to see the brand new contact status....
-            if (true){
-
-            }
+        }
+        // if the status UI is already displayed, reload it
+        // to be able to see the brand new contact status....
+        if (document.getElementById('contact-statuses-list') !== null){
+                htmx.ajax('GET', '/statuses', '#chats-and-more')
         }
     }
 
