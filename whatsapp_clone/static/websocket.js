@@ -431,21 +431,34 @@ status_websocket.addEventListener('message', async (event) => {
             toastBootstrap.show()
             notification_audio.play()
         }
-        // if the status UI is already displayed, reload it
-        // to be able to see the brand new contact status....
-        if (document.getElementById('contact-statuses-list') !== null){
-                htmx.ajax('GET', '/statuses', '#chats-and-more')
+        // otherwise, it means that the user
+        // used the form, so clean it and display a success notification
+        else {
+            const status_form_text = document.getElementById('id_text')
+            const status_form_image = document.getElementById('id_image')
+            const image_preview_container = document.getElementById('status-imagePreview')
+            status_form_text.value = ''
+            status_form_image.value = ''
+            // if the image preview exists, delete it.
+            if (image_preview_container.firstElementChild !== null){
+                image_preview_container.firstElementChild.src = ''
+            }
+            //notify the user
+            const toastNotification = document.getElementById('liveToast')
+            modifyNotification('Server', 'Status uploaded successfully!')
+            const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
+            toastBootstrap.show()
+            notification_audio.play()
+
         }
+
+    }
+    // if the status UI is already displayed, reload it
+    // to be able to see the brand new contact status....
+    if (document.getElementById('contact-statuses-list') !== null){
+            htmx.ajax('GET', '/statuses', '#chats-and-more')
     }
 
-    else if (status_event_data.includes('DELETE')){
-        // if the user_id of the user who triggered the message is not the same
-        // as the auth user, and the status UI is displayed, reload the statuses UI using HTMX.
-        if (status_event_data[1] !== user_id && true){
-            // logic here
-        }
-
-    }
 })
 
 status_websocket.addEventListener('error', (error) => {
