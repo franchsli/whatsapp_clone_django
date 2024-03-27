@@ -88,6 +88,8 @@ Also don't forget to change the channel layer to redis.
 
     - I think is because the readmore height isn't kept in count when scrolling.
 - You can't archive chats who are not with a contact.
+- Archived contacts sill notify users who archived them.
+  - The thing is that in the consumer, there's no way to know if the receiver archived the sender or not.
 
 **REFERENCE**:
 
