@@ -3,10 +3,6 @@
 
 ## DO RIGHT NOW
 
-- Split Chat Consumers into multiple consumers (e.g Status consumer and so)
-  - Implement Status consumer:
-    - [Channel layers](https://channels.readthedocs.io/en/latest/topics/consumers.html#basic-layout)
-    - [Groups](https://channels.readthedocs.io/en/latest/topics/channel_layers.html#groups)
 - Implement show/hide muted statuses logic (when you click show, it shows the muted statuses and then show dispay as 'hide'
 then when clicked again erase all the muted chats and 'hide' display a show again
 for do this 'diplay change' you actually need to change the show button to hide
@@ -17,7 +13,6 @@ WEBSOCKET CONSUMER BEFORE DOING THIS)
   (to do this, you need to implement a new template.).
 - Optimize the images size (whithout decreasing quality).
 - Add something to delete statuses automatically every 24 hours.
-- Implement something to update the message receiver chat_list (websocket chatconsumer).
 
 ## ANOTHER THINGS TO DO
 

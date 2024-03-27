@@ -393,6 +393,16 @@ chat_websocket.addEventListener('message',async (event) => {
 
         console.warn(message)
         console.log(message)
+        // if the chats UI is displayed, reload it
+        if (document.getElementById('chat-list') !== null){
+            if (document.getElementById('archived-chats') !== null) {
+                htmx.ajax('GET', '/archived_chats', {target:'#chats-and-more', swap:'innerHTML'})
+            } else {
+                htmx.ajax('GET', '/chats', {target:'#chat-list', swap:'outerHTML'})
+            }
+            
+        }
+       
         const toastNotification = document.getElementById('liveToast')
         modifyNotification(sender_user_data.username, message)
         const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
