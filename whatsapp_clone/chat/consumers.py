@@ -53,7 +53,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             )
             chat_data = await self.get_chat(text_data_json["chat_id"])
             receiver_instance = await database_sync_to_async(get_user_by_phone)(text_data_json["contact_phone_number"])
-            sender_is_archived = await database_sync_to_async(contact_archived)(receiver_instance, self.user_instance.phone_number)
+            sender_contact_instance = await database_sync_to_async(contact_from_user)(receiver_instance, self.user_instance.phone_number)
 
             await self.channel_layer.group_send(
                 f"user_group_{self.receiver}",
@@ -61,7 +61,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
                     "type": "chat_notification",
                     "sender_id": f"{text_data_json['sender_user_id']}",
                     "text": f"-{text_data_json['message'] if len(text_data_json['message']) > 0 else 'Photo 📷'}",
-                    "sender_is_archived": f"-{sender_is_archived}"
+                    "sender_is_archived": f"-{sender_contact_instance.archived}"
                 },
             )
         # if the type of the 'request' is 'reconnect'

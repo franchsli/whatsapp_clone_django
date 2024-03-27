@@ -4,6 +4,7 @@
 ## DO RIGHT NOW
 
 - Implement something to display the contact name, not the sender (user object) username.
+- Display the chats in archived list the same way the normal chats do.
 - Implement show/hide muted statuses logic (when you click show, it shows the muted statuses and then show dispay as 'hide'
 then when clicked again erase all the muted chats and 'hide' display a show again
 for do this 'diplay change' you actually need to change the show button to hide
