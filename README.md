@@ -4,6 +4,8 @@
 ## DO RIGHT NOW
 
 - Implement something to send (from the status consumer) who uploaded the status (look the chat notification logic from chat consumer)
+  - Try to send to the consumer the user phone number.
+  - Nah bro, just think it.
 - Implement show/hide muted statuses logic (when you click show, it shows the muted statuses and then show dispay as 'hide'
 then when clicked again erase all the muted chats and 'hide' display a show again
 for do this 'diplay change' you actually need to change the show button to hide
