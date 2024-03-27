@@ -61,7 +61,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
                     "type": "chat_notification",
                     "sender_id": f"{text_data_json['sender_user_id']}",
                     "text": f"-{text_data_json['message'] if len(text_data_json['message']) > 0 else 'Photo 📷'}",
+                    "sender_contact_name": f"-{sender_contact_instance.name}",
                     "sender_is_archived": f"-{sender_contact_instance.archived}"
+                    
                 },
             )
         # if the type of the 'request' is 'reconnect'
@@ -93,7 +95,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         await self.send(text_data=f"chat_message{event['text']}")
 
     async def chat_notification(self, event):
-        await self.send(text_data=f"chat_notification{event['sender_id'] + event['text']  + event['sender_is_archived']}")
+        await self.send(text_data=f"chat_notification{event['sender_id'] + event['text']  + event['sender_contact_name'] + event['sender_is_archived']}")
 
 
     @database_sync_to_async

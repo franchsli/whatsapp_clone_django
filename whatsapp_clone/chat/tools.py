@@ -62,4 +62,13 @@ def get_user_contacts(user_id: Union[str, int], desired_value:str) -> List[Conta
     return list(user_instance.contact_set.values_list(desired_value, flat=True))
 
 def contact_from_user(user:User, contact_phone_number: str) -> Union[Contact, None]:
+    """Returns the contact with the provided phone number from the given User. 
+
+    Args:
+        user (User): The User that created the contact.
+        contact_phone_number (str): The phone-number of the contact that we're looking for.
+
+    Returns:
+        Union[Contact, None]: The found Contact or None if no Contact is found.
+    """
     return user.contact_set.filter(phone_number=contact_phone_number).first()

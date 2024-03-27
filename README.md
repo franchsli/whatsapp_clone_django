@@ -3,7 +3,7 @@
 
 ## DO RIGHT NOW
 
-- Implement something to display the contact name, not the sender (user object) username.
+- Implement something to send (from the status consumer) who uploaded the status (look the chat notification logic from chat consumer)
 - Display the chats in archived list the same way the normal chats do.
 - Implement show/hide muted statuses logic (when you click show, it shows the muted statuses and then show dispay as 'hide'
 then when clicked again erase all the muted chats and 'hide' display a show again
