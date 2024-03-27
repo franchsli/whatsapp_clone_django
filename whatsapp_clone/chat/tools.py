@@ -49,10 +49,30 @@ def create_contact(contact_name: str, contact_phone_number: str, user_id: Union[
     )
 
 def get_user_contacts(user_id: Union[str, int], desired_value:str) -> List[Contact]:
+    """Returns all the contacts desired values (fields) of the User with the given id.
+
+    Args:
+        user_id (Union[str, int]): The id of the User.
+        desired_value (str): The desired field of the contacts objects.
+
+    Returns:
+        List[Contact]: The list of the contacts values.
+    """
     user_instance = User.objects.get(id=user_id)
     return list(user_instance.contact_set.values_list(desired_value, flat=True))
 
 def contact_archived(user:User, contact_phone_number: str) -> bool:
+    """Searchs for the contact object with the given phone_number 
+    in the contact list of the provided User
+    and returns if its archived or not.
+
+    Args:
+        user (User): The User object.
+        contact_phone_number (str): The phone number of the contact that we are looking for.
+
+    Returns:
+        bool: contact.arhived field, returns False if no contact is found.
+    """
     contact = user.contact_set.filter(phone_number=contact_phone_number).first()
     print(f'CONTACT IS ARCHIVED??? {contact}')
     if contact:
