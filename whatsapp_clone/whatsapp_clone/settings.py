@@ -30,6 +30,7 @@ DJANGO_APPS = [
 
 THIRD_APPS = [
     'rest_framework',
+    'django_filters',
     'crispy_forms',
     'crispy_bootstrap5',
     'phonenumber_field',

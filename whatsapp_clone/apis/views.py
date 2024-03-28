@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django_filters.rest_framework import DjangoFilterBackend
 from chat.models import Message, Chat, User, Contact, Status
 from .serializers import (
     UserSerializer,
@@ -19,6 +20,8 @@ class UserViewSet(ModelViewSet):
 class ContactViewSet(ModelViewSet):
     queryset = Contact.objects.all()
     serializer_class = ContactSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['phone_number', 'created_by']
 
 
 class MessageViewSet(ModelViewSet):

@@ -6,6 +6,9 @@
 - Implement something to send (from the status consumer) who uploaded the status (look the chat notification logic from chat consumer)
   - Try to send to the consumer the user phone number.
   - Nah bro, just think it.
+- Make it so when a message gets updated or deleted, the other user will be able to see the message edition
+(add 'edited' field in message model to do this)
+- Check if consumer functions arguments number can be reduced.
 - Implement show/hide muted statuses logic (when you click show, it shows the muted statuses and then show dispay as 'hide'
 then when clicked again erase all the muted chats and 'hide' display a show again
 for do this 'diplay change' you actually need to change the show button to hide
@@ -56,14 +59,10 @@ Also don't forget to change the channel layer to redis.
   - Combine related request views so the server calls reduce and do two jobs in the same response.
   - Reduce the HTMX responsability and use consumers.
 - Check what happens when contact user send a message and htmx.ajax runs anyway.
-- Make a way to handle image decoding (async way).
-- Make it so when a message gets updated or deleted, the other user will be able to see the message edition
-(add 'edited' field in message model to do this)
     or deletion in real time. (This has to be with the way the chat  and it's message are displayed)
 - When a user is creating a new chat and selects more than a contact,
     the modal form title should change to 'create group' and a new input should appear that has the label
         'group name'.
-- Check if consumer functions arguments number can be reduced.
 - Make it responsive.
 - Check and compare all the whatsapp web features with this project features.
 - Review all the code and delete spaguetti code.
