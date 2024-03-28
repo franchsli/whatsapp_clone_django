@@ -4,6 +4,7 @@ from django.utils import timezone
 from .models import User, Chat, Contact, Message, Status
 from .forms import ChatForm, ContactForm, MessageForm, StatusForm
 from typing import Union
+from .tools import get_contact_in_chat
 
 
 @login_required
@@ -312,27 +313,3 @@ def create_status(request):
 
     return redirect("statuses")
 
-
-# tool functions
-def get_contact_in_chat(chat: Chat, logged_user: User) -> Union[Contact, None]:
-    """Returns the contact object in the chat among all the users.
-
-    Args:
-        chat (Chat): The chat object
-        logged_user (User): The currentlly logged user.
-
-    Returns:
-        Contact: The contact object in the Chat (if found).
-        None: If the contact isn't found
-    """
-    # gets the user who is not the logged user in the chat
-    other_user: User = chat.users.exclude(id=logged_user.pk).first()
-
-    try:
-        contact = Contact.objects.get(
-            created_by=logged_user, phone_number=other_user.phone_number
-        )
-        return contact
-    except Contact.DoesNotExist:
-        print("CONTACT NOT FOUND!")
-        return None

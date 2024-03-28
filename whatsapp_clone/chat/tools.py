@@ -72,3 +72,27 @@ def contact_from_user(user:User, contact_phone_number: str) -> Union[Contact, No
         Union[Contact, None]: The found Contact or None if no Contact is found.
     """
     return user.contact_set.filter(phone_number=contact_phone_number).first()
+
+
+def get_contact_in_chat(chat: Chat, logged_user: User) -> Union[Contact, None]:
+    """Returns the contact object in the chat among all the users.
+
+    Args:
+        chat (Chat): The chat object
+        logged_user (User): The currentlly logged user.
+
+    Returns:
+        Contact: The contact object in the Chat (if found).
+        None: If the contact isn't found
+    """
+    # gets the user who is not the logged user in the chat
+    other_user: User = chat.users.exclude(id=logged_user.pk).first()
+
+    try:
+        contact = Contact.objects.get(
+            created_by=logged_user, phone_number=other_user.phone_number
+        )
+        return contact
+    except Contact.DoesNotExist:
+        print("CONTACT NOT FOUND!")
+        return None
