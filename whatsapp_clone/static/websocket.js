@@ -288,11 +288,6 @@ chat_websocket.addEventListener('open', () => {
             }, 5000)
         }
     }
-    // fills the status form progress bar
-    htmx.on('#status_form', 'htmx:xhr:progress', function(evt) {
-        htmx.find('#status-upload-progress').setAttribute('value', evt.detail.loaded/evt.detail.total * 100)
-        console.log(evt.detail.loaded/evt.detail.total * 100)
-    })
 
     /**
      * handle different htmx events and what to do after they're executed.

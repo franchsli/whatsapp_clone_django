@@ -3,8 +3,11 @@
 
 ## DO RIGHT NOW
 
+- Users shouldn't be able to create TWO OR MORE chats with the same user.
+- Make it so users can't create contacts with phone numbers who are not
+used for some user yet (notify the user creating that the number is incorrect)
 - Make it so when a message gets updated or deleted, the other user will be able to see the message edition
-(add 'edited' field in message model to do this)
+(add 'edited' field in message model to do this )
 - Implement show/hide muted statuses logic (when you click show, it shows the muted statuses and then show dispay as 'hide'
 then when clicked again erase all the muted chats and 'hide' display a show again
 for do this 'diplay change' you actually need to change the show button to hide
@@ -21,25 +24,25 @@ WEBSOCKET CONSUMER BEFORE DOING THIS)
 - Add read and unread logic (you can implement it that any message (in the viewport makes a
 PATCH request to update the 'read' field in the message model from False to True [This makes the user needs to scroll down or up
 to make the PATCH request for all the new messages] only if it is already False [To prevent unnecesary API calls])).
-- Users shouldn't be able to create TWO OR MORE chats with the same user.
 - Write test for the exceptions and functions.
 - Rework search messages:
   - Add the whatsapp date tags in HTML in the normal chat and in the searching message UI.
+  - Make it so every chat has days and days (model) has messages....
+  - Or make a way to display a div telling the date if the  next message in the list have more than one day of difference
+  or was send the next day (the div should be displayed over the said next message [under the current message.]
+  and the div should only be displayed if the current message it's not the last.)
 - Add groups chats.
 - Redesign the login and register views.
 - Reconsider the exceptions.py file.
 - Add chat wallpapers.
 - Rework show_dropdown animation.
-- Make the silence contact logic (booleand field)
+- Make the silence contact logic (booleand field [think it bro])
 - [Implement tooltips](https://getbootstrap.com/docs/5.3/components/tooltips/)
 
 ## Improvements
 
-- Review previewImage func.
-- Make it so users can't create contacts with phone numbers who are not
-used for some user yet (notify the user creating that the number is incorrect)
 - Test all statuses features.
-- Remove all unnecesary datasets and such from chats, contact templates (remember to check websocket.js before deleting).
+- Check if self.scope['user'] in consumers acts the exact way as request.user does.
 - Give the user creation form image preview logic.
 - Optimize the js code (delete all the cloned code.)
 - Optimize filters.py code.
