@@ -4,6 +4,9 @@
 ## DO RIGHT NOW
 
 - Users shouldn't be able to create TWO OR MORE chats with the same user.
+  - Try to remake the selection, if you click one contact, his checkbox
+  will be checked, if another contact checkbox is clicked, the first clicked contact
+  checkbox will be unchecked and the clicked one will be checked
 - Make it so users can't create contacts with phone numbers who are not
 used for some user yet (notify the user creating that the number is incorrect)
 - Make it so when a message gets updated or deleted, the other user will be able to see the message edition
@@ -57,6 +60,7 @@ Also don't forget to change the channel layer to redis.
 - **OPTIMIZE REQUESTS**:
   - Combine related request views so the server calls reduce and do two jobs in the same response.
   - Reduce the HTMX responsability and use consumers.
+  - Re think if consumers should create contacts.....
 - Check what happens when contact user send a message and htmx.ajax runs anyway.
     or deletion in real time. (This has to be with the way the chat  and it's message are displayed)
 - When a user is creating a new chat and selects more than a contact,

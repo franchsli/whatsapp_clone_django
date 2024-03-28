@@ -241,17 +241,43 @@ chat_websocket.addEventListener('open', () => {
         return false;   
     }
 
-    contact_form.onsubmit = () => {
-        create_instance(contact_form, 'create_contact')
-        const toastNotification = document.getElementById('liveToast')
-        modifyNotification('Server', 
-        'The contact was created successfully! Update your contacts list by clicking the "contacts" button.')
-        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
-        toastBootstrap.show()
+    contact_form.onsubmit = async () => {
         const inputs = contact_form.getElementsByTagName('input')
-        // clears phonenumber and contact name fields.
-        inputs[1].value = ''
-        inputs[2].value = ''
+        // gets the 'list' of Users who have the provided phone_number
+        // in the form
+        const users = await get(`/api/users/?phone_number=${inputs[2].value}`)
+        // gets a list of Contacts created by the User
+        // with the provided phone_number
+        const contacts = await get(`/api/contacts/?phone_number=${inputs[2].value}&created_by=${user_id}`)
+        // if no User created has the introduced phone_number
+        // notify the user
+        if (users.length === 0){
+            const validation_message = document.getElementById('contact-validation-message')
+            validation_message.innerText = 'No User with provided Phone, the Phone is not registered in this app.'
+            error_audio.play()
+        }
+        // if the User already created a Contact with such phone, notify the user
+        else if (contacts.length > 0){
+            const validation_message = document.getElementById('contact-validation-message')
+            validation_message.innerText = 'You already created a Contact with that Phone'
+            error_audio.play()
+            console.log(contacts)
+        }
+        // if nothing happens, create the contact
+        else {
+            create_instance(contact_form, 'create_contact')
+            const toastNotification = document.getElementById('liveToast')
+            modifyNotification('Server', 
+            'The contact was created successfully! Update your contacts list by clicking the "contacts" button.')
+            const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
+            toastBootstrap.show()
+            notification_audio.play()
+            // clears phonenumber and contact name fields.
+            inputs[1].value = ''
+            inputs[2].value = ''
+
+        }
+
         return false;
     }
     // gets the image preview div and updated it over time.

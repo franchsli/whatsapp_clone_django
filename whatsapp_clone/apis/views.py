@@ -15,6 +15,8 @@ from rest_framework.viewsets import ModelViewSet
 class UserViewSet(ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['phone_number']
 
 
 class ContactViewSet(ModelViewSet):
