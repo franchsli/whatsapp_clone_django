@@ -47,11 +47,10 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
             await self.create_message(
                 text_data_json["sender_user_id"],
+                text_data_json["chat_id"],
                 text_data_json["message"],
                 text_data_json["image"],
-                text_data_json["chat_id"],
             )
-            chat_data = await self.get_chat(text_data_json["chat_id"])
             receiver_instance = await database_sync_to_async(get_user_by_phone)(text_data_json["contact_phone_number"])
             sender_contact_instance = await database_sync_to_async(contact_from_user)(receiver_instance, self.user_instance.phone_number)
 
@@ -102,27 +101,31 @@ class ChatConsumer(AsyncWebsocketConsumer):
     def create_message(
         self,
         sender_user_id: Union[str, int],
-        text: str,
-        image: Optional[str],
         chat_id: Union[str, int],
+        text: Optional[str] = None,
+        image: Optional[str] = None,
+
     ) -> None:
         """Creates and stores a new message object in the database.
 
         Args:
             sender_user_id (Union[str, int]): The id (numeric value) of the user that sent the message.
+            chat_id (Union[str, int]): The id (numeric value) of the chat that the sender sent this message on.
             text (str): What the message says.
             image (str): The image encoded base64  image data.
-            chat_id (Union[str, int]): The id (numeric value) of the chat that the sender sent this message on.
         """
         sender_user_instance = User.objects.get(id=sender_user_id)
         chat_instance = Chat.objects.get(id=chat_id)
         new_message = Message.objects.create(
             sender_user=sender_user_instance,
-            text=text,
             date=timezone.now(),
             chat=chat_instance,
         )
-        if image != "":
+        if text:
+            new_message.text = text
+            new_message.save()
+
+        if image:
             file_format, image_string_data = image.split(";base64,")
             # Get the file format extension (png, jpg, jpeg, etc.)
             file_extension = file_format.split("/")[-1]
@@ -146,14 +149,14 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
     @database_sync_to_async
     def get_chat(
-        self, chat_id: Union[str, int], field: str = ""
+        self, chat_id: Union[str, int], field_name: Optional[str] = None
     ) -> Union[Chat, Chat._meta.fields]:
         """Returns the chat with the provided id or the value from the specified field
         in the found chat.
 
         Args:
             chat_id (Union[str, int]): The id of the chat to search.
-            field (str, optional): The field to search in the found chat. Defaults to "".
+            field_name (str, optional): The field to search in the found chat. Defaults to "".
 
         Raises:
             Exception: Raised if the chat is not found.
@@ -161,14 +164,14 @@ class ChatConsumer(AsyncWebsocketConsumer):
         Returns:
             Union[Chat, Chat._meta.fields]: Returns the entire chat object or the value from the desired field.
         """
-        if field == "":
+        if not field_name:
             try:
                 return Chat.objects.get(id=chat_id)
             except Chat.DoesNotExist:
                 raise ChatNotFoundException("NO CHAT FOUND WITH SUCH ID")
         else:
             chat = Chat.objects.get(id=chat_id)
-            return chat.archived if field == "archived" else chat.users
+            return chat.archived if field_name == "archived" else chat.users
 
 
     async def disconnect(self, close_code):
@@ -176,16 +179,12 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
 
 class StatusConsumer(AsyncWebsocketConsumer):
-    # groups = ["broadcast"]
 
     async def connect(self):
         # user broadcast for statuses
         self.user_phone_number = self.scope['user'].phone_number.as_e164.replace('+', '')
         self.room_group_name = f'{self.user_phone_number}'
         user_contacts = await database_sync_to_async(get_user_contacts)(self.scope['user'].id, 'phone_number')
-        #groups = [contact_phone.as_e164.replace('+', '') for contact_phone in user_contacts]
-        #print('GROUPS')
-        #print(groups)
 
 
         await self.channel_layer.group_add(self.room_group_name, self.channel_name)

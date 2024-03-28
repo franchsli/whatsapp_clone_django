@@ -5,7 +5,6 @@
 
 - Make it so when a message gets updated or deleted, the other user will be able to see the message edition
 (add 'edited' field in message model to do this)
-- Check if consumer functions arguments number can be reduced.
 - Implement show/hide muted statuses logic (when you click show, it shows the muted statuses and then show dispay as 'hide'
 then when clicked again erase all the muted chats and 'hide' display a show again
 for do this 'diplay change' you actually need to change the show button to hide
@@ -99,6 +98,7 @@ Also don't forget to change the channel layer to redis.
 - [Queryset lists](https://docs.djangoproject.com/en/5.0/ref/models/querysets/#values-list)
 - [For...empty](https://docs.djangoproject.com/en/5.0/ref/templates/builtins/#for-empty)
 - [CSS Components](https://uiverse.io/)
+- [Filtering Views and ViewSets](https://www.django-rest-framework.org/api-guide/filtering/)
 
 **You should also be aware that carousels in general can often cause usability and accessibility challenges.**
 For performance reasons, carousels must be manually initialized using the carousel constructor method. Without initialization, some of the event listeners (specifically, the events needed touch/swipe support) will not be registered until a user has explicitly activated a control or indicator.
