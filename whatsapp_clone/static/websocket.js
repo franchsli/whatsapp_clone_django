@@ -365,7 +365,6 @@ chat_websocket.addEventListener('message',async (event) => {
         text = message_data[1]
         image = message_data[2]
         console.log(`IMAGE:${image}`)
-        console.log(typeof(localStorage.getItem('image_data')))
         // if the message was sent by the auth user, play a sound and update the chat list
         // only render the HTML otherwise
         if (user_id === sender_id){
