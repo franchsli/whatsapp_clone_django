@@ -6,6 +6,7 @@ import { get, modifyNotification, scroll_to_bottom,
 console.log("websocket.js is loaded!");
 const user = document.getElementById('profile-pic')
 const user_id = user.getAttribute('data-user')
+const user_phone_number = user.getAttribute('data-phone')
 const chat_websocket = new WebSocket(`ws://${window.location.host}/`)
 const status_websocket = new WebSocket(`ws://${window.location.host}/status/`)
 const chat_form = document.getElementById("chat-creation-form")
@@ -272,6 +273,7 @@ chat_websocket.addEventListener('open', () => {
             status_websocket.send(JSON.stringify({
                 'type': 'CREATE',
                 'user_id': user_id,
+                'sender_phone_number': user_phone_number,
                 'text': status_input.value,
                 'image': image !== null ? image.src : null,
 
@@ -441,7 +443,8 @@ status_websocket.addEventListener('message', async (event) => {
         // as the auth user, display a notification.
         if (status_event_data[1] !== user_id){
             const toastNotification = document.getElementById('liveToast')
-            modifyNotification('Server', `One of your contacts uploaded a status!!!`)
+            const status_sender_data = await get(`/api/contacts/?phone_number=${status_event_data[2]}&created_by=${user_id}`)
+            modifyNotification('Server', `${status_sender_data[0].name} uploaded a status!!!`)
             const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
             toastBootstrap.show()
             notification_audio.play()

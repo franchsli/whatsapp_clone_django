@@ -3,9 +3,6 @@
 
 ## DO RIGHT NOW
 
-- Implement something to send (from the status consumer) who uploaded the status (look the chat notification logic from chat consumer)
-  - Try to send to the consumer the user phone number.
-  - Nah bro, just think it.
 - Make it so when a message gets updated or deleted, the other user will be able to see the message edition
 (add 'edited' field in message model to do this)
 - Check if consumer functions arguments number can be reduced.
