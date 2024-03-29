@@ -12,12 +12,12 @@ const status_websocket = new WebSocket(`ws://${window.location.host}/status/`)
 const chat_form = document.getElementById("chat-creation-form")
 const chat_display = document.getElementById('chat-display')
 const contact_form = document.getElementById("contact-creation-form")
+const contact_modal = document.getElementById('NewContact')
 const status_form = document.getElementById('status_form')
-const status_submit_button = document.getElementById('status-submit')
 const status_modal = document.getElementById('CreateStatusModal')
+const status_submit_button = document.getElementById('status-submit')
 const stauts_image_preview = document.getElementById('status-imagePreview')
 const status_image_input = document.getElementById('id_image')
-const status_progress_bar = document.getElementById('status-upload-progress')
 console.log(`IMAGE INPUT: ${status_image_input}\nIMAGE PREVIEW: ${stauts_image_preview}`)
 const notification_audio = new Audio('static/Audio/app/message_received.mp3')
 const message_sent_audio = new Audio('static/Audio/app/message_sent.mp3')
@@ -275,6 +275,9 @@ chat_websocket.addEventListener('open', () => {
             // clears phonenumber and contact name fields.
             inputs[1].value = ''
             inputs[2].value = ''
+            // clears the checkboxes
+            inputs[3].checked = false
+            inputs[4].checked = false
 
         }
 
@@ -284,11 +287,33 @@ chat_websocket.addEventListener('open', () => {
     status_image_input.addEventListener('change', () => {
         previewImage(status_image_input, stauts_image_preview)
     })
-    // resets the status form progess bar value when the modal is closed.
-    status_modal.addEventListener('hidden.bs.modal', function (event) {
-        status_progress_bar.setAttribute('value', 0)
-        console.log('Modal has been closed!')
+    // resets the contact form values and validation errors when the modal is closed.
+    contact_modal.addEventListener('hidden.bs.modal', function (event) {
+        const inputs = contact_form.getElementsByTagName('input')
+        const validation_message = document.getElementById('contact-validation-message')
+        console.log('CONTACT INPUTS', inputs)
+        inputs[1].value = ''
+        inputs[2].value = ''
+        inputs[3].checked = false
+        inputs[4].checked = false
+        validation_message.innerText = ''
     })
+
+    // same for the status modal.
+    status_modal.addEventListener('hidden.bs.modal', function (event) {
+        const inputs = status_form.elements
+        const validation_message = document.getElementById('status-validation-message')
+        const image_container = document.getElementById('status-imagePreview')
+        const image = image_container.firstElementChild
+        console.log('STATUS INPUTS',inputs)
+        inputs[2].value = ''
+        inputs[3].value = ''
+        if (image){
+            image.remove()
+        }
+        validation_message.innerText = ''
+    })
+    
 
     status_submit_button.onclick = (event) => {
         event.preventDefault()
