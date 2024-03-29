@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.db.models import Count
 from django_filters.rest_framework import DjangoFilterBackend, FilterSet, ModelMultipleChoiceFilter
 from chat.models import Message, Chat, User, Contact, Status
 from .serializers import (
@@ -37,15 +38,18 @@ class MessageViewSet(ModelViewSet):
 class ChatViewSet(ModelViewSet):
     queryset = Chat.objects.all()
     serializer_class = ChatSerializer
-def get_queryset(self):
-    queryset = self.queryset.select_related('users')  # Pre-fetch related users
+    def get_queryset(self):
+        # example /api/chats/?user_id=1&user_id=8 (and more user_id can be added)
+        queryset = self.queryset.prefetch_related('users')  # Pre-fetch related users
+        print('queryset',queryset)
 
-    user_ids = self.request.query_params.getlist('user_id')  # Get a list of user IDs
+        user_ids = self.request.query_params.getlist('user_id')  # Get a list of user IDs
+        print('user_ids',user_ids)
 
-    if user_ids:
-        queryset = queryset.filter(users__id__in=user_ids).distinct()
+        if user_ids:
+            queryset = queryset.filter(users__id__in=user_ids).annotate(user_count=Count('users')).filter(user_count=len(user_ids))
 
-    return queryset
+        return queryset
 
 
 
