@@ -10,6 +10,7 @@ const user_phone_number = user.getAttribute('data-phone')
 const chat_websocket = new WebSocket(`ws://${window.location.host}/`)
 const status_websocket = new WebSocket(`ws://${window.location.host}/status/`)
 const chat_form = document.getElementById("chat-creation-form")
+const chat_modal = document.getElementById('NewChat')
 const chat_display = document.getElementById('chat-display')
 const contact_form = document.getElementById("contact-creation-form")
 const contact_modal = document.getElementById('NewContact')
@@ -286,6 +287,19 @@ chat_websocket.addEventListener('open', () => {
     // gets the image preview div and updated it over time.
     status_image_input.addEventListener('change', () => {
         previewImage(status_image_input, stauts_image_preview)
+    })
+
+    // resets the contact form values and validation errors when the modal is closed.
+    chat_modal.addEventListener('hidden.bs.modal', function (event) {
+        const validation_message = document.getElementById('chat-validation-message')
+        console.log('CONTACT INPUTS', chat_form.elements)
+        for (let index = 0; index < chat_form.elements.length; index++) {
+            if (chat_form.elements[index].type === 'checkbox'){
+                chat_form.elements[index].checked = false
+            }
+            
+        }
+        validation_message.innerText = ''
     })
     // resets the contact form values and validation errors when the modal is closed.
     contact_modal.addEventListener('hidden.bs.modal', function (event) {

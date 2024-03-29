@@ -31,23 +31,22 @@ class MessageViewSet(ModelViewSet):
     serializer_class = MessageSerializer
 
 
-class ChatFilter(FilterSet):
-    users = ModelMultipleChoiceFilter(
-        field_name='users',
-        to_field_name = 'id',
-        queryset=User.objects.all(),
-        lookup_expr='exact'
-        )
-    class Meta:
-        model = Chat
-        fields = ['users']
+
 
 
 class ChatViewSet(ModelViewSet):
     queryset = Chat.objects.all()
     serializer_class = ChatSerializer
-    filter_backends = [DjangoFilterBackend]
-    filterset_class = ChatFilter
+def get_queryset(self):
+    queryset = self.queryset.select_related('users')  # Pre-fetch related users
+
+    user_ids = self.request.query_params.getlist('user_id')  # Get a list of user IDs
+
+    if user_ids:
+        queryset = queryset.filter(users__id__in=user_ids).distinct()
+
+    return queryset
+
 
 
 class StatusViewSet(ModelViewSet):
