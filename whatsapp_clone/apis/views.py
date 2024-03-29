@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django_filters.rest_framework import DjangoFilterBackend
+from django_filters.rest_framework import DjangoFilterBackend, FilterSet, ModelMultipleChoiceFilter
 from chat.models import Message, Chat, User, Contact, Status
 from .serializers import (
     UserSerializer,
@@ -31,9 +31,23 @@ class MessageViewSet(ModelViewSet):
     serializer_class = MessageSerializer
 
 
+class ChatFilter(FilterSet):
+    users = ModelMultipleChoiceFilter(
+        field_name='users',
+        to_field_name = 'id',
+        queryset=User.objects.all(),
+        lookup_expr='exact'
+        )
+    class Meta:
+        model = Chat
+        fields = ['users']
+
+
 class ChatViewSet(ModelViewSet):
     queryset = Chat.objects.all()
     serializer_class = ChatSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = ChatFilter
 
 
 class StatusViewSet(ModelViewSet):

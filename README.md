@@ -6,9 +6,10 @@
 - Make something to uncheck all the checked checkboxes in the chat form after it's modal is closed
   - See websockets.js line 300
 - Users shouldn't be able to create TWO OR MORE chats with the same user.
-  - Try to remake the selection, if you click one contact, his checkbox
+- Try to remake the selection, if you click one contact, his checkbox
   will be checked, if another contact checkbox is clicked, the first clicked contact
   checkbox will be unchecked and the clicked one will be checked
+- Implement the right click logic to show the contacts and chats dropdowns (see messages dropdowns).
 - Make it so when a message gets updated or deleted, the other user will be able to see the message edition
 (add 'edited' field in message model to do this )
 - Implement show/hide muted statuses logic (when you click show, it shows the muted statuses and then show dispay as 'hide'
