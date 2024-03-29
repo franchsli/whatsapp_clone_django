@@ -170,7 +170,6 @@ function create_instance(form, instance_type){
             if (element.checked){
                 console.log(`This element: ${element} is checked with id: ${element.id} and name ${element.dataset.contactName}`)
                 chat_websocket.send(JSON.stringify({
-                    //'type': 'create_chat',
                     'type': instance_type,
                     'contact_name': element.dataset.contactName,
                     'contact_phone_number': element.id
@@ -231,7 +230,19 @@ chat_websocket.addEventListener('open', () => {
             const validation_message = document.getElementById('chat-validation-message')
             validation_message.innerText = 'Please select a contact to create chat with'
         }
+
+
         else{
+            for (let index = 0; index < chat_form.elements.length; index++) {
+                // when the selected contact (checkbox) is found
+                // do a API request and check if the user already have a chat with the
+                // said contact (User object id)
+                if(chat_form.elements[index].checked){
+                    const contact_phone_number = chat_form.elements[index].id
+                    break
+                }
+                
+            }
             create_instance(chat_form, 'create_chat')
             const toastNotification = document.getElementById('liveToast')
             modifyNotification('Server', 

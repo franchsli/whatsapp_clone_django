@@ -3,8 +3,6 @@
 
 ## DO RIGHT NOW
 
-- Make something to uncheck all the checked checkboxes in the chat form after it's modal is closed
-  - See websockets.js line 300
 - Users shouldn't be able to create TWO OR MORE chats with the same user.
 - Try to remake the selection, if you click one contact, his checkbox
   will be checked, if another contact checkbox is clicked, the first clicked contact
