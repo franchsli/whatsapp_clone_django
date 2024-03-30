@@ -315,35 +315,17 @@ chat_websocket.addEventListener('open', () => {
     })
 
 
-    // resets the contact form values and validation errors when the modal is closed.
+    // if I check a checkbox the previous checked checkbox is unchecked, so only one checkbox can be checked
     chat_modal.addEventListener('shown.bs.modal', function (event) {
-        const validation_message = document.getElementById('chat-validation-message')
-        const chat_form_elements = chat_form.elements
-        console.log('CHAT INPUTS', chat_form_elements)
-        for (let index = 0; index < chat_form_elements.length; index++) {
-            const contact =  chat_form_elements[index]
-            if (contact.type === 'checkbox'){
-                contact.addEventListener('change', () => {
-                    if(contact.checked){
-                        for (let index = 0; index < chat_form_elements.length; index++) {
-                            const other_contact = chat_form_elements[index];
-                            if(contact !== other_contact){
-                                other_contact.checked = false
-                            }
-                            
-                        }
-                    }
-                    
-                })
+        // logic here
             
         }
-    }
-    })
+    )
 
     // resets the contact form values and validation errors when the modal is closed.
     chat_modal.addEventListener('hidden.bs.modal', function (event) {
         const validation_message = document.getElementById('chat-validation-message')
-        console.log('CHAT INPUTS', chat_form.elements)
+        //console.log('CHAT INPUTS', chat_form.elements)
         for (let index = 0; index < chat_form.elements.length; index++) {
             if (chat_form.elements[index].type === 'checkbox'){
                 chat_form.elements[index].checked = false

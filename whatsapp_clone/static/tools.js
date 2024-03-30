@@ -132,7 +132,7 @@ function showDropdown(event, dropdown_id) {
     event.preventDefault();
 
     // Set the position of the dropdown
-    const dropdown = document.getElementById(`customDropdown-${dropdown_id}`);
+    const dropdown = document.getElementById(dropdown_id);
     dropdown.style.position = 'fixed';
     dropdown.style.left = `${event.clientX}px`;
     dropdown.style.top = `${event.clientY}px`;
