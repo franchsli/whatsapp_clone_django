@@ -16,7 +16,8 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form id="chat-creation-form" hx-get="{% url 'update_chat_form' %}" hx-target="this" hx-trigger="load, click from:#create-chat">
+        <form id="chat-creation-form" hx-get="{% url 'update_chat_form' %}" hx-target="this" 
+        hx-trigger="load, click from:#create-chat">
           {% include 'layouts/partials/chat_form_elements.html' %}
         </form>
         

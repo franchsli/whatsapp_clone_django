@@ -22,6 +22,7 @@ WEBSOCKET CONSUMER BEFORE DOING THIS)
 
 ## ANOTHER THINGS TO DO
 
+- Delete the HTML code (invite to the app) for contacts with no user created.
 - Add read and unread logic (you can implement it that any message (in the viewport makes a
 PATCH request to update the 'read' field in the message model from False to True [This makes the user needs to scroll down or up
 to make the PATCH request for all the new messages] only if it is already False [To prevent unnecesary API calls])).
@@ -59,6 +60,7 @@ Also don't forget to change the channel layer to redis.
   - Combine related request views so the server calls reduce and do two jobs in the same response.
   - Reduce the HTMX responsability and use consumers.
   - Re think if consumers should create contacts.....
+  - Re think if the chat form should be updated with the 'load' event (HTMX).
 - Check what happens when contact user send a message and htmx.ajax runs anyway.
     or deletion in real time. (This has to be with the way the chat  and it's message are displayed)
 - When a user is creating a new chat and selects more than a contact,
