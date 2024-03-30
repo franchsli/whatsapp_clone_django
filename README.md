@@ -3,8 +3,6 @@
 
 ## DO RIGHT NOW
 
-- Fully implement the way to check if a chat with the current user and the contact (user object) is already created.
-- Users shouldn't be able to create TWO OR MORE chats with the same user.
 - Try to remake the selection, if you click one contact, his checkbox
   will be checked, if another contact checkbox is clicked, the first clicked contact
   checkbox will be unchecked and the clicked one will be checked

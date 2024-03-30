@@ -223,7 +223,9 @@ chat_websocket.addEventListener('open', () => {
         switch_emojis(button)
     }
 
-    chat_form.onsubmit = () => {
+    chat_form.onsubmit = async (event) => {
+        event.preventDefault()
+
         console.log('HANDLED')
         if (!checked(chat_form)){
             error_audio.play()
@@ -235,20 +237,33 @@ chat_websocket.addEventListener('open', () => {
         else{
             for (let index = 0; index < chat_form.elements.length; index++) {
                 // when the selected contact (checkbox) is found
-                // do a API request and check if the user already have a chat with the
-                // said contact (User object id)
                 if(chat_form.elements[index].checked){
                     const contact_phone_number = chat_form.elements[index].id
+                    const contact_user_object = await get(`/api/users/?phone_number=${contact_phone_number}`)
+                    const contact_user_id = contact_user_object[0].id
+                    // do an API request and check if the user already have a chat with the
+                    // said contact (User object id)
+                    const already_created_chats_with_contact = await get(`/api/chats/?user_id=${user_id}&user_id=${contact_user_id}`)
+                    
+                    
+                    // if the user has already a chat with the contact, display an error
+                    if(already_created_chats_with_contact.length > 0){
+                        error_audio.play()
+                        const validation_message = document.getElementById('chat-validation-message')
+                        validation_message.innerText = 'You already have a chat with this contact, check your chat list.'
+                    }
+                    // create the chat otherwise
+                    else {
+                        create_instance(chat_form, 'create_chat')
+                        const toastNotification = document.getElementById('liveToast')
+                        modifyNotification('Server', 
+                        'The chat was created successfully!! Update your chat list by clicking the "chats" button.')
+                        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
+                        toastBootstrap.show()
+                    }
                     break
                 }
-                
             }
-            create_instance(chat_form, 'create_chat')
-            const toastNotification = document.getElementById('liveToast')
-            modifyNotification('Server', 
-            'The chat was created successfully!! Update your chat list by clicking the "chats" button.')
-            const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
-            toastBootstrap.show()
         }
         return false;   
     }

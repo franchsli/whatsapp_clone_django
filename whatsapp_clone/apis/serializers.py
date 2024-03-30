@@ -4,7 +4,7 @@ from chat.models import Message, Chat, User, Contact, Status
 class UserSerializer(ModelSerializer):
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name', 'email', 'phone_number', 'photo')
+        fields = ('id' ,'username', 'first_name', 'last_name', 'email', 'phone_number', 'photo')
 
 class ContactSerializer(ModelSerializer):
     class Meta:
