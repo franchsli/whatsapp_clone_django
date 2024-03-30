@@ -305,7 +305,6 @@ chat_websocket.addEventListener('open', () => {
             // clears the checkboxes
             inputs[3].checked = false
             inputs[4].checked = false
-
         }
 
         return false;
@@ -315,10 +314,23 @@ chat_websocket.addEventListener('open', () => {
         previewImage(status_image_input, stauts_image_preview)
     })
 
+
+    // resets the contact form values and validation errors when the modal is closed.
+    chat_modal.addEventListener('shown.bs.modal', function (event) {
+        const validation_message = document.getElementById('chat-validation-message')
+        console.log('CHAT INPUTS', chat_form.elements)
+        for (let index = 0; index < chat_form.elements.length; index++) {
+            if (chat_form.elements[index].type === 'checkbox'){
+                console.log(chat_form.elements[index])
+            
+        }
+    }
+    })
+
     // resets the contact form values and validation errors when the modal is closed.
     chat_modal.addEventListener('hidden.bs.modal', function (event) {
         const validation_message = document.getElementById('chat-validation-message')
-        console.log('CONTACT INPUTS', chat_form.elements)
+        console.log('CHAT INPUTS', chat_form.elements)
         for (let index = 0; index < chat_form.elements.length; index++) {
             if (chat_form.elements[index].type === 'checkbox'){
                 chat_form.elements[index].checked = false
