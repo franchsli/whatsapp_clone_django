@@ -1,7 +1,7 @@
 import { get, modifyNotification, scroll_to_bottom,
   create_message_html, toggleReadMore, showDropdown,
    run_element_animation, checked, not_empty,
-    toggle_element_inner_text, load_emojis, switch_emojis, switch_checkboxes } from  './tools.js';
+    toggle_element_inner_text, load_emojis, switch_emojis, switch_checkboxes, toggle_element_display } from  './tools.js';
 
 console.log("websocket.js is loaded!");
 const user = document.getElementById('profile-pic')
@@ -226,6 +226,15 @@ chat_websocket.addEventListener('open', () => {
     window.switch_checkboxes = function(form){
         switch_checkboxes(form)
     }
+
+    window.toggle_element_inner_text = function(HTML_element, text_a, text_b){
+        toggle_element_inner_text(HTML_element, text_a, text_b)
+    }
+
+    window.toggle_element_display = function(HTML_element){
+        toggle_element_display(HTML_element)
+    }
+
 
     chat_form.onsubmit = async (event) => {
         event.preventDefault()

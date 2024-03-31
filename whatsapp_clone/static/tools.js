@@ -300,10 +300,24 @@ function switch_checkboxes(form){
 
 }
 
+/**
+ * 
+ * @param {HTMLElement} HTML_element 
+ */
+function toggle_element_display(HTML_element){
+    if(HTML_element.style.display === 'none'){
+        HTML_element.style.display = 'block'
+    }
+    else {
+        HTML_element.style.display = 'none'
+    }
+    run_element_animation(HTML_element)
+}
+
 
 export {get, post, modifyNotification,
      scroll_to_bottom, create_message_html, 
      toggleReadMore, showDropdown, run_element_animation,
       checked, not_empty, toggle_element_inner_text,
-    load_emojis, switch_emojis, switch_checkboxes
+    load_emojis, switch_emojis, switch_checkboxes, toggle_element_display
 }

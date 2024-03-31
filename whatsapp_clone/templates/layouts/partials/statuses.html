@@ -168,6 +168,14 @@
     <li class="p-3 d-flex flex-inline align-items-center justify-content-between">
       <span class="text-success">MUTED</span>
       <button id="show-muted-statuses" class="btn text-success">Show</button>
+      <script>
+        const toggle_muted_statuses_button = document.getElementById("show-muted-statuses")
+        const muted_contacts_statuses = document.getElementById("muted-statuses-contact-list")
+        toggle_muted_statuses_button.onclick = function(){
+          toggle_element_inner_text(this, 'Show', 'Hide')
+          toggle_element_display(muted_contacts_statuses)
+        }
+      </script>
     </li>
 
     {% include 'layouts/partials/muted_statuses.html' %}
