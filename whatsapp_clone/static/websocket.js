@@ -1,7 +1,7 @@
 import { get, modifyNotification, scroll_to_bottom,
   create_message_html, toggleReadMore, showDropdown,
    run_element_animation, checked, not_empty,
-    toggle_element_inner_text, load_emojis, switch_emojis } from  './tools.js';
+    toggle_element_inner_text, load_emojis, switch_emojis, switch_checkboxes } from  './tools.js';
 
 console.log("websocket.js is loaded!");
 const user = document.getElementById('profile-pic')
@@ -223,6 +223,10 @@ chat_websocket.addEventListener('open', () => {
         switch_emojis(button)
     }
 
+    window.switch_checkboxes = function(form){
+        switch_checkboxes(form)
+    }
+
     chat_form.onsubmit = async (event) => {
         event.preventDefault()
 
@@ -313,14 +317,6 @@ chat_websocket.addEventListener('open', () => {
     status_image_input.addEventListener('change', () => {
         previewImage(status_image_input, stauts_image_preview)
     })
-
-
-    // if I check a checkbox the previous checked checkbox is unchecked, so only one checkbox can be checked
-    chat_modal.addEventListener('shown.bs.modal', function (event) {
-        // logic here
-            
-        }
-    )
 
     // resets the contact form values and validation errors when the modal is closed.
     chat_modal.addEventListener('hidden.bs.modal', function (event) {

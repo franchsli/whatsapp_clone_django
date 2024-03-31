@@ -275,10 +275,35 @@ function switch_emojis(button){
     load_emojis(button.dataset.emojiPack, emoji_container)
 }
 
+/**
+ * 
+ * @param {HTMLFormElement} form 
+ */
+function switch_checkboxes(form){
+    const elements = form.elements
+    for (let i = 0; i < elements.length; i++) {
+        if(elements[i].type === 'checkbox'){
+            elements[i].addEventListener('change', () => {
+                // if the current checkbox is checked
+                // uncheck all the other checkboxes
+                if(elements[i].checked){
+                    for (let j = 0; j < elements.length; j++) {
+                        if(elements[i] !== elements[j]){
+                            elements[j].checked = false
+                        }
+                    }
+                }
+            })
+        }
+        
+    }
+
+}
+
 
 export {get, post, modifyNotification,
      scroll_to_bottom, create_message_html, 
      toggleReadMore, showDropdown, run_element_animation,
       checked, not_empty, toggle_element_inner_text,
-    load_emojis, switch_emojis
+    load_emojis, switch_emojis, switch_checkboxes
 }
