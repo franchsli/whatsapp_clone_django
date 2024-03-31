@@ -70,7 +70,6 @@ Also don't forget to change the channel layer to redis.
   - You can retrieve all the statuses (muted and unmuted) in one view but the muted statuses list is display: none;
   and only by clicking the show button will show it changing display to flex and flex direction to column
   this cannot be implemented at the time because this won't display the newest muted statuses by clicking the show button.
-- Muted statuses giving notifications anyway (test this)
 - When a user deletes a chat, the chat will be deleted from all the users in the chat
   - To fix this, you need to implement something similar to archive view logic.
 - When scroll to bottom doesn't scroll to the botom anymore:

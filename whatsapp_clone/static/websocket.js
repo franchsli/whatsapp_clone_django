@@ -529,14 +529,19 @@ status_websocket.addEventListener('message', async (event) => {
     console.log(status_event_data)
     if (status_event_data.includes('CREATE')){
         // if the user_id of the user who triggered the message is not the same
-        // as the auth user, display a notification.
+        // as the auth user, think displaying a notification.
         if (status_event_data[1] !== user_id){
-            const toastNotification = document.getElementById('liveToast')
             const status_sender_data = await get(`/api/contacts/?phone_number=${status_event_data[2]}&created_by=${user_id}`)
-            modifyNotification('Server', `${status_sender_data[0].name} uploaded a status!!!`)
-            const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
-            toastBootstrap.show()
-            notification_audio.play()
+            // if the contacts IS NOT muted from statuses
+            // display a notification
+            if (!status_sender_data[0].statuses_muted){
+                const toastNotification = document.getElementById('liveToast')
+                modifyNotification('Server', `${status_sender_data[0].name} uploaded a status!!!`)
+                const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
+                toastBootstrap.show()
+                notification_audio.play()
+
+            }
         }
         // otherwise, it means that the user
         // used the form, so clean it and display a success notification
