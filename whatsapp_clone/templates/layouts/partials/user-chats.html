@@ -16,10 +16,25 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form onchange="console.log('APPLIED'); switch_checkboxes(this);" id="chat-creation-form" hx-get="{% url 'update_chat_form' %}" hx-target="this" 
+        <form id="chat-creation-form" hx-get="{% url 'update_chat_form' %}" hx-target="this" 
         hx-trigger="load, click from:#create-chat">
           {% include 'layouts/partials/chat_form_elements.html' %}
         </form>
+
+        <script>
+          const myForm = document.getElementById("chat-creation-form");
+          const observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+              if (mutation.type === "childList") {
+                // Form elements have changed
+                console.log('APPLIED')
+                switch_checkboxes(myForm)
+              }
+            });
+          });
+        
+          observer.observe(myForm, { childList: true }); // Observe for child list changes
+        </script>
         
       </div>
       <div class="modal-footer">
