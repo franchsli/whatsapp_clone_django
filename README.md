@@ -47,6 +47,7 @@ to make the PATCH request for all the new messages] only if it is already False 
 - Test if edit/delete contact and delete chat works in any case.
 - Re think the delete message modal (Delete for everyone or for me logic).
 - Re think if image input (status form) should be changed.
+- Re think if chat dropdown toggle button should be re added (see difference between march 30 last two commits in chats.html ONLY,  don't touch js )
 **IMPLEMENT**
 READ THE CHATGPT Django Channels Websocket chat for IMPORTANT improvement.
 Also don't forget to change the channel layer to redis.
@@ -54,13 +55,9 @@ Also don't forget to change the channel layer to redis.
 - **OPTIMIZE REQUESTS**:
   - Combine related request views so the server calls reduce and do two jobs in the same response.
   - Reduce the HTMX responsability and use consumers.
-  - Re think if consumers should create contacts.....
-  - Re think if the chat form should be updated with the 'load' event (HTMX).
+  - Re think if consumers should create contacts or create another consumer for that (i don't think so).....
 - Check what happens when contact user send a message and htmx.ajax runs anyway.
     or deletion in real time. (This has to be with the way the chat  and it's message are displayed)
-- When a user is creating a new chat and selects more than a contact,
-    the modal form title should change to 'create group' and a new input should appear that has the label
-        'group name'.
 - Make it responsive.
 - Check and compare all the whatsapp web features with this project features.
 - Review all the code and delete spaguetti code.
@@ -70,9 +67,10 @@ Also don't forget to change the channel layer to redis.
 
 - When an user uploads a status, the response returns all the statuses (depending on the view data)
  to fix this, you need to make an independent status consumer and send a receive status from there and use HTMX to display it.
-  - You can retrieve all the statuses (muted and unmuted) in one view but the but the muted statuses list is display: none;
+  - You can retrieve all the statuses (muted and unmuted) in one view but the muted statuses list is display: none;
   and only by clicking the show button will show it changing display to flex and flex direction to column
   this cannot be implemented at the time because this won't display the newest muted statuses by clicking the show button.
+- Muted statuses giving notifications anyway (test this)
 - When a user deletes a chat, the chat will be deleted from all the users in the chat
   - To fix this, you need to implement something similar to archive view logic.
 - When scroll to bottom doesn't scroll to the botom anymore:
