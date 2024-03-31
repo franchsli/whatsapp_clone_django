@@ -77,6 +77,27 @@ main,  #base {
   };
 }
 
+@keyframes show_list {
+  /**
+  Cool animation for showing
+  lists and it's elements
+  **/
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+  
+}
+
+.animated-list{
+  animation-name: show_list;
+  animation-duration: 1s;
+  animation-play-state: paused;
+
+}
+
 .animated-dropdown {
   animation-name: show_dropdown;
   animation-duration: 0.4s;

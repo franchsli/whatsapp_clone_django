@@ -301,7 +301,8 @@ function switch_checkboxes(form){
 }
 
 /**
- * 
+ * If the given element is already displayed,
+ * hides it, displays it otherwise
  * @param {HTMLElement} HTML_element 
  */
 function toggle_element_display(HTML_element){
