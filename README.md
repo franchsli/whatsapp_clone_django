@@ -3,6 +3,11 @@
 
 ## DO RIGHT NOW
 
+- **FIX** When a user uploads a status, the response returns all the statuses (depending on the view data)
+ to fix this, you need to make an independent status consumer and send a receive status from there and use HTMX to display it.
+  - You can retrieve all the statuses (muted and unmuted) in one view but the muted statuses list is display: none;
+  and only by clicking the show button will show it changing display to flex and flex direction to column
+  this cannot be implemented at the time because this won't display the newest muted statuses by clicking the show button.
 - Make it so when a message gets updated or deleted, the other user will be able to see the message edition
 (add 'edited' field in message model to do this )
 - Implement show/hide muted statuses logic (when you click show, it shows the muted statuses and then show dispay as 'hide'
@@ -65,11 +70,6 @@ Also don't forget to change the channel layer to redis.
 
 ## BUGS TO FIX
 
-- When an user uploads a status, the response returns all the statuses (depending on the view data)
- to fix this, you need to make an independent status consumer and send a receive status from there and use HTMX to display it.
-  - You can retrieve all the statuses (muted and unmuted) in one view but the muted statuses list is display: none;
-  and only by clicking the show button will show it changing display to flex and flex direction to column
-  this cannot be implemented at the time because this won't display the newest muted statuses by clicking the show button.
 - When a user deletes a chat, the chat will be deleted from all the users in the chat
   - To fix this, you need to implement something similar to archive view logic.
 - When scroll to bottom doesn't scroll to the botom anymore:

@@ -96,3 +96,23 @@ def get_contact_in_chat(chat: Chat, logged_user: User) -> Union[Contact, None]:
     except Contact.DoesNotExist:
         print("CONTACT NOT FOUND!")
         return None
+
+def get_contacts_statuses(user:User, muted:bool) -> dict:
+    contacts = user.contact_set.filter(statuses_muted=muted)
+    # Query for statuses uploaded by the user or the user's contacts
+    user_statuses = Status.objects.filter(uploaded_by=user)
+    contacts_statuses = Status.objects.filter(
+        uploaded_by__phone_number__in=contacts.values("phone_number")
+    )
+    contact_phone_numbers = contacts.values_list("phone_number", flat=True)
+    statuses_with_contacts = Status.objects.filter(
+        uploaded_by__phone_number__in=contact_phone_numbers
+    )
+    contacts_with_statuses = {}
+    for status in statuses_with_contacts:
+        contact = contacts.filter(phone_number=status.uploaded_by.phone_number).first()
+        if contact:
+            contacts_with_statuses.setdefault(contact, []).append(status)
+    print(len([value for value in contacts_with_statuses.values()]))
+    print([value for value in contacts_with_statuses.values()])
+    return contacts_with_statuses

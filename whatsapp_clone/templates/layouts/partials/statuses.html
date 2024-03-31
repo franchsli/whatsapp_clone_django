@@ -167,12 +167,10 @@
 
     <li class="p-3 d-flex flex-inline align-items-center justify-content-between">
       <span class="text-success">MUTED</span>
-      <button id="show-muted-statuses" class="btn text-success" hx-get="{% url 'muted_statuses' %}" hx-target="#muted-statuses-contact-list"
-      hx-swap="outerHTML">Show</button>
+      <button id="show-muted-statuses" class="btn text-success">Show</button>
     </li>
 
-    <ul id="muted-statuses-contact-list" class="scroll-section list-group list-group-flush">
-    </ul>
+    {% include 'layouts/partials/muted_statuses.html' %}
     
       
     </ul>
