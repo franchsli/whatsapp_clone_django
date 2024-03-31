@@ -21,7 +21,6 @@ WEBSOCKET CONSUMER BEFORE DOING THIS)
 
 ## ANOTHER THINGS TO DO
 
-- Delete the HTML code (invite to the app) for contacts with no user created.
 - Add read and unread logic (you can implement it that any message (in the viewport makes a
 PATCH request to update the 'read' field in the message model from False to True [This makes the user needs to scroll down or up
 to make the PATCH request for all the new messages] only if it is already False [To prevent unnecesary API calls])).

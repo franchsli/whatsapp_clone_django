@@ -2,11 +2,6 @@
 
 <ul id="contact-list" class="scroll-section list-group list-group-flush overflow-y-scroll" style="max-height: 615px; height: 500px;">
     {% for contact in contacts %}
-      {% if contact.user_exists %}
-        {% include 'layouts/partials/components/contact.html' %}
-      {% else %}
-        <li class="list-group-item p-3 d-flex flex-inline align-items-center text-success">INVITE TO THE APP</li>
-        {% include 'layouts/partials/components/not_registered_contact.html' %}
-      {% endif %}
+      {% include 'layouts/partials/components/contact.html' %}
     {% endfor %}
   </ul>
