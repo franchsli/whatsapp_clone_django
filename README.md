@@ -4,7 +4,11 @@
 ## DO RIGHT NOW
 
 - Implement status deletion.
-- Make it so when a message gets updated or deleted, the other user will be able to see the message edition
+  - Every status carousel will have a button containing in it's dataset
+  the status ID.
+- Make it so when a message gets updated or deleted, the other user will be able to see the message edition.
+  - When the message is updated or deleted, IT MUST reload the chat for both
+  of the users (if they have displayed the chat obviously)
 (add 'edited' field in message model to do this )
 - Implement show/hide muted statuses logic (when you click show, it shows the muted statuses and then show dispay as 'hide'
 then when clicked again erase all the muted chats and 'hide' display a show again
