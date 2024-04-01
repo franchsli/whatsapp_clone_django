@@ -8,7 +8,6 @@
   - You can retrieve all the statuses (muted and unmuted) in one view but the muted statuses list is display: none;
   and only by clicking the show button will show it changing display to flex and flex direction to column
   this cannot be implemented at the time because this won't display the newest muted statuses by clicking the show button.
-- **FIX** Show button not working after muting a contact status.
 - Implement status deletion.
 - Make it so when a message gets updated or deleted, the other user will be able to see the message edition
 (add 'edited' field in message model to do this )
