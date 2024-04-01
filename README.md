@@ -3,11 +3,6 @@
 
 ## DO RIGHT NOW
 
-- **FIX** When a user uploads a status, the response returns all the statuses (depending on the view data)
- to fix this, you need to make an independent status consumer and send a receive status from there and use HTMX to display it.
-  - You can retrieve all the statuses (muted and unmuted) in one view but the muted statuses list is display: none;
-  and only by clicking the show button will show it changing display to flex and flex direction to column
-  this cannot be implemented at the time because this won't display the newest muted statuses by clicking the show button.
 - Implement status deletion.
 - Make it so when a message gets updated or deleted, the other user will be able to see the message edition
 (add 'edited' field in message model to do this )

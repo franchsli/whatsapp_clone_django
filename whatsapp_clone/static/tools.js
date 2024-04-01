@@ -276,7 +276,9 @@ function switch_emojis(button){
 }
 
 /**
- * 
+ * Applies an event listener
+ * in the provided form checkboxes,
+ * to prevent multiple checkboxes being selected.
  * @param {HTMLFormElement} form 
  */
 function switch_checkboxes(form){
@@ -302,12 +304,12 @@ function switch_checkboxes(form){
 
 /**
  * If the given element is already displayed,
- * hides it, displays it otherwise
+ * hides it and vice versa.
  * @param {HTMLElement} HTML_element 
  */
 function toggle_element_display(HTML_element){
     if(HTML_element.style.display === 'none'){
-        HTML_element.style.display = 'block'
+        HTML_element.style.display = 'flex'
     }
     else {
         HTML_element.style.display = 'none'
