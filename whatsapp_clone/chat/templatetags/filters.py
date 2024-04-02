@@ -1,8 +1,7 @@
 from django import template
 from django.db.models import QuerySet
-from phonenumber_field.phonenumber import PhoneNumber
 from chat.models import Contact, User
-from typing import Union, List
+from typing import Union
 import re
 
 register = template.Library()

@@ -1,7 +1,6 @@
 from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.db import database_sync_to_async
 from .models import User, Chat, Message, Contact, Status
-from .views import get_contact_in_chat
 from .tools import *
 from django.utils import timezone
 from django.core.files.base import ContentFile
@@ -87,7 +86,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         elif text_data_json["type"] == "create_contact":
             await database_sync_to_async(create_contact)(
                 text_data_json["contact_name"], text_data_json["contact_phone_number"],
-                self.scope['user'].id
+                self.user_instance
             )
 
     async def chat_message(self, event):

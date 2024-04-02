@@ -35,17 +35,16 @@ def get_user_by_phone(phone_number: str) -> Union[object, Exception]:
         raise UserNotFoundException("NO USER FOUND WITH SUCH PHONE")
     
 
-def create_contact(contact_name: str, contact_phone_number: str, user_id: Union[str, int]) -> None:
+def create_contact(contact_name: str, contact_phone_number: str, creator: User) -> None:
     """Creates and stores a new contact object in the database.
     Args:
         contact_name (str): The name that the user thought for the contact.
         contact_phone_number (str): The phone number of the contact.
         user_id Union[str, int]: The id of the user who is creating the contact.
     """
-    user_instance = User.objects.get(id=user_id)
     phone = PhoneNumber.from_string(contact_phone_number)
     new_contact = Contact.objects.create(
-        name=contact_name, phone_number=phone.as_e164, created_by=user_instance
+        name=contact_name, phone_number=phone.as_e164, created_by=creator
     )
 
 def get_user_contacts(user_id: Union[str, int], desired_value:str) -> List[Contact]:

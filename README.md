@@ -3,7 +3,6 @@
 
 ## DO RIGHT NOW
 
-- Check if self.scope['user'] in consumers acts the exact way as request.user does.
 - Implement status deletion.
   - Every status carousel will have a button containing in it's dataset
   the status ID.
@@ -27,7 +26,7 @@ WEBSOCKET CONSUMER BEFORE DOING THIS)
 - Add read and unread logic (you can implement it that any message (in the viewport makes a
 PATCH request to update the 'read' field in the message model from False to True [This makes the user needs to scroll down or up
 to make the PATCH request for all the new messages] only if it is already False [To prevent unnecesary API calls])).
-- Write test for the exceptions and functions.
+- Write tests for the exceptions and functions.
 - Rework search messages:
   - Add the whatsapp date tags in HTML in the normal chat and in the searching message UI.
   - Make it so every chat has days and days (model) has messages....
@@ -72,7 +71,7 @@ Also don't forget to change the channel layer to redis.
 
 - When a user deletes a chat, the chat will be deleted from all the users in the chat
   - To fix this, you need to implement something similar to archive view logic.
-- When scroll to bottom doesn't scroll to the botom anymore:
+- Scroll to bottom func doesn't scroll to the botom anymore:
   - **THIS IS WHAT I THINK IT HAPPENS**:
     The chat gets displayed but somehow scroll_to_bottom doesn't work as expected.
     There's two approaches:
