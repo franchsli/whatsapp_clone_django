@@ -14,7 +14,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         # default group name
         self.room_group_name = "test"
-        self.user_instance = await  database_sync_to_async(get_user_by_id)(self.scope["user"].id)
+        self.user_instance = self.scope['user']
         self.user_specific_group_name = (
             f"user_group_{self.user_instance.phone_number.as_e164.replace('+', '')}"
         )
@@ -239,7 +239,7 @@ class StatusConsumer(AsyncWebsocketConsumer):
         text: Optional[str] = None,
         image: Optional[str] = None,
     ) -> None:
-        status_creator = User.objects.get(id=self.scope['user'].id)
+        status_creator = self.scope['user']
         if text or image:
             new_status = Status.objects.create(
                 uploaded_by=status_creator, upload_date=timezone.now()

@@ -3,6 +3,7 @@
 
 ## DO RIGHT NOW
 
+- Check if self.scope['user'] in consumers acts the exact way as request.user does.
 - Implement status deletion.
   - Every status carousel will have a button containing in it's dataset
   the status ID.
@@ -44,7 +45,6 @@ to make the PATCH request for all the new messages] only if it is already False 
 ## Improvements
 
 - Test all statuses features.
-- Check if self.scope['user'] in consumers acts the exact way as request.user does.
 - Give the user creation form image preview logic.
 - Optimize the js code (delete all the cloned code.)
 - Optimize filters.py code.
