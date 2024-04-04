@@ -4,20 +4,12 @@
 ## DO RIGHT NOW
 
 - Implement status deletion.
-  - Every status carousel will have a button containing in it's dataset
-  the status ID.
+  - Every status carousel will have a button containing in it's dataset the status ID.
 - Make it so when a message gets updated or deleted, the other user will be able to see the message edition.
   - When the message is updated or deleted, IT MUST reload the chat for both
   of the users (if they have displayed the chat obviously)
 (add 'edited' field in message model to do this )
-- Implement show/hide muted statuses logic (when you click show, it shows the muted statuses and then show dispay as 'hide'
-then when clicked again erase all the muted chats and 'hide' display a show again
-for do this 'diplay change' you actually need to change the show button to hide
-use htxm from and when the muted statuses gets displayed it should change the button from show to hide **REMEMBER** IMPLEMENT STATUS
-WEBSOCKET CONSUMER BEFORE DOING THIS)
-  - **DO THIS** When you click show, it does as expected, but in muted statuses html (template)
-  it should handle the 'Show' button and change it to a hidde one that when clicked returns to a not shown muted statuses
-  (to do this, you need to implement a new template.).
+- [Implement tooltips](https://getbootstrap.com/docs/5.3/components/tooltips/)
 - Optimize the images size (whithout decreasing quality).
 - Add something to delete statuses automatically every 24 hours.
 
@@ -39,7 +31,6 @@ to make the PATCH request for all the new messages] only if it is already False 
 - Add chat wallpapers.
 - Rework show_dropdown animation.
 - Make the silence contact logic (booleand field [think it bro])
-- [Implement tooltips](https://getbootstrap.com/docs/5.3/components/tooltips/)
 
 ## Improvements
 
@@ -62,7 +53,7 @@ Also don't forget to change the channel layer to redis.
   - Re think if consumers should create contacts or create another consumer for that (i don't think so).....
 - Check what happens when contact user send a message and htmx.ajax runs anyway.
     or deletion in real time. (This has to be with the way the chat  and it's message are displayed)
-- Make it responsive.
+- Make it responsive (or maybe not).
 - Check and compare all the whatsapp web features with this project features.
 - Review all the code and delete spaguetti code.
 - Implement all of these features at [dj-chat](https://github.com/adilmohak/dj-chat?tab=readme-ov-file#current-features)
