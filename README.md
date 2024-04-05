@@ -3,13 +3,11 @@
 
 ## DO RIGHT NOW
 
-- Modify the previewImage function to create the HTMLDIV element (The element were the preview will be shown)
-if the provided one is null
+- Implement script tag that has type module and the script from register.js
+  - This script tag needs to be before the form tag.
 - Implement status deletion.
   - Every status carousel will have a button containing in it's dataset the status ID.
-- Re think if image input (status form) should be changed.
 - Re think if chat dropdown toggle button should be re added (see difference between march 30 last two commits in chats.html ONLY,  don't touch js )
-- Give the user creation form image preview logic.
 - Make it so when a message gets updated or deleted, the other user will be able to see the message edition.
   - When the message is updated or deleted, IT MUST reload the chat for both
   of the users (if they have displayed the chat obviously)
