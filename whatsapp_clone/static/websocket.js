@@ -1,7 +1,7 @@
 import { get, modifyNotification, scroll_to_bottom,
   create_message_html, toggleReadMore, showDropdown,
    run_element_animation, checked, not_empty,
-    toggle_element_inner_text, load_emojis, switch_emojis, switch_checkboxes, toggle_element_display } from  './tools.js';
+    toggle_element_inner_text, load_emojis, switch_emojis, switch_checkboxes, toggle_element_display, previewImage } from  './tools.js';
 
 console.log("websocket.js is loaded!");
 const user = document.getElementById('profile-pic')
@@ -106,50 +106,7 @@ window.summon_chat = function(chat){
 
 }
 
-/**
- * Displays a preview of the image provided image input element in the provided HTML div element..
- * @param {HTMLInputElement} image_input The element that contains the image.
- * @param {HTMLDivElement} image_preview The element that will contain the image preview.
- */
-function previewImage(image_input=undefined, image_preview=undefined) {
-    // if no image preview element have been provided
-    // creates default preview HTML element
-    if (image_preview === undefined){
-        console.log('IF STATEMENT RAN')
-        image_preview = document.createElement('div')
-        //image_input.parentElement.appendChild(image_preview)
-        image_input.insertAdjacentElement('afterend', image_preview)
 
-    }
-    console.log('GOT THE IMAGE INPUT AND PREVIEW')
-    console.log(`IMAGE INPUT: ${image_input}\nIMAGE PREVIEW: ${image_preview}`)
-
-    let file = image_input.files[0];
-
-    if (file) {
-        let reader = new FileReader();
-
-        reader.onload = function (event) {
-            // Display image preview
-            let preview = document.createElement('img');
-            preview.style.maxHeight = '200px'
-            preview.style.maxWidth = '200px'
-            preview.classList.add('m-3')
-            preview.src = event.target.result;
-            actual_image_data = event.target.result
-            preview.alt = 'Image Preview';
-
-            // Clear previous previews
-            while (image_preview.firstChild) {
-                image_preview.removeChild(image_preview.firstChild);
-            }
-
-            image_preview.appendChild(preview);
-        };
-
-        reader.readAsDataURL(file);
-    }
-}
 
 /**
  * Sends a message to the websocket for creating the desired instance using the given form data.
@@ -202,12 +159,7 @@ function send_message (message_type, message_text, message_image, message_sender
 
 }
 
-console.log(status_image_input)
-// gets the image preview div of the register form and updates it over time.
-status_image_input.addEventListener('change', () => {
-    console.log('CONNECTED')
-    previewImage(status_image_input, stauts_image_preview)
-})
+
 
 
 chat_websocket.addEventListener('open', () => {

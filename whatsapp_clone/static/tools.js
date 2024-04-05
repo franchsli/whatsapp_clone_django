@@ -317,10 +317,54 @@ function toggle_element_display(HTML_element){
     run_element_animation(HTML_element)
 }
 
+/**
+ * Displays a preview of the image provided image input element in the provided HTML div element..
+ * @param {HTMLInputElement} image_input The element that contains the image.
+ * @param {HTMLDivElement} image_preview The element that will contain the image preview.
+ */
+function previewImage(image_input=null, image_preview=null) {
+    // if no image preview element have been provided
+    // creates default preview HTML element
+    if (image_preview === null){
+        console.log('IF STATEMENT RAN')
+        image_preview = document.createElement('div')
+        //image_input.parentElement.appendChild(image_preview)
+        image_input.insertAdjacentElement('afterend', image_preview)
+
+    }
+    console.log('GOT THE IMAGE INPUT AND PREVIEW')
+    console.log(`IMAGE INPUT: ${image_input}\nIMAGE PREVIEW: ${image_preview}`)
+
+    let file = image_input.files[0];
+
+    if (file) {
+        let reader = new FileReader();
+
+        reader.onload = function (event) {
+            // Display image preview
+            let preview = document.createElement('img');
+            preview.style.maxHeight = '200px'
+            preview.style.maxWidth = '200px'
+            preview.classList.add('m-3')
+            preview.src = event.target.result;
+            preview.alt = 'Image Preview';
+
+            // Clear previous previews
+            while (image_preview.firstChild) {
+                image_preview.removeChild(image_preview.firstChild);
+            }
+
+            image_preview.appendChild(preview);
+        };
+
+        reader.readAsDataURL(file);
+    }
+}
+
 
 export {get, post, modifyNotification,
      scroll_to_bottom, create_message_html, 
      toggleReadMore, showDropdown, run_element_animation,
       checked, not_empty, toggle_element_inner_text,
-    load_emojis, switch_emojis, switch_checkboxes, toggle_element_display
+    load_emojis, switch_emojis, switch_checkboxes, toggle_element_display, previewImage
 }
