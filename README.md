@@ -8,6 +8,7 @@
 - Implement status deletion.
   - Every status carousel will have a button containing in it's dataset the status ID.
 - Re think if chat dropdown toggle button should be re added (see difference between march 30 last two commits in chats.html ONLY,  don't touch js )
+- Modify the messages HTML and style to display the 'read' icon and the hour from the date.
 - Make it so when a message gets updated or deleted, the other user will be able to see the message edition.
   - When the message is updated or deleted, IT MUST reload the chat for both
   of the users (if they have displayed the chat obviously)
