@@ -5,8 +5,8 @@ import { get, modifyNotification, scroll_to_bottom,
 
 console.log("websocket.js is loaded!");
 const user = document.getElementById('profile-pic')
-const user_id = user.getAttribute('data-user')
-const user_phone_number = user.getAttribute('data-phone')
+const user_id = user !== null ? user.getAttribute('data-user') : null
+const user_phone_number = user !== null ?  user.getAttribute('data-phone') : null
 const chat_websocket = new WebSocket(`ws://${window.location.host}/`)
 const status_websocket = new WebSocket(`ws://${window.location.host}/status/`)
 const chat_form = document.getElementById("chat-creation-form")
@@ -202,8 +202,10 @@ function send_message (message_type, message_text, message_image, message_sender
 
 }
 
+console.log(status_image_input)
 // gets the image preview div of the register form and updates it over time.
 status_image_input.addEventListener('change', () => {
+    console.log('CONNECTED')
     previewImage(status_image_input, stauts_image_preview)
 })
 
