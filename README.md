@@ -13,6 +13,10 @@
   - When the message is updated or deleted, IT MUST reload the chat for both
   of the users (if they have displayed the chat obviously)
 (add 'edited' field in message model to do this )
+- Test all statuses features.
+- Optimize filters.py code (ask an AI what's faster why and test it).
+- Test if edit/delete contact and delete chat works in any case.
+- Restrict chat views (check if the request method is the correct one if not, raise an error).
 - [Implement tooltips](https://getbootstrap.com/docs/5.3/components/tooltips/)
 - Optimize the images size (whitout decreasing quality).
 - Add something to delete statuses automatically every 24 hours.
@@ -38,11 +42,6 @@ to make the PATCH request for all the new messages] only if it is already False 
 
 ## Improvements
 
-- Test all statuses features.
-- Optimize the js code (delete all the cloned code.)
-- Optimize filters.py code.
-- Restrict chat views (check if the request method is the correct one if not, raise an error).
-- Test if edit/delete contact and delete chat works in any case.
 - Re think the delete message modal (Delete for everyone or for me logic).
 **IMPLEMENT**
 READ THE CHATGPT Django Channels Websocket chat for IMPORTANT improvement.

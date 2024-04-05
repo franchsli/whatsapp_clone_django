@@ -15,6 +15,14 @@ def exclude_user(value, user):
 
 @register.filter
 def to_list(value):
+    """Converts the provided Queryset into a list.
+
+    Args:
+        value (Queryset): The Queryset.
+
+    Returns:
+        _list_: A list made from the queryset data.
+    """
     # you CAN ALSO use list comprehension (super effective)
     # print(value.values_list('sender_user', 'text').order_by('-date'))
     # list(value.values_list('sender_user', 'text').order_by('-date'))
