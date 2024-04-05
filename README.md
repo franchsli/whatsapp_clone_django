@@ -3,6 +3,8 @@
 
 ## DO RIGHT NOW
 
+- Modify the previewImage function to create the HTMLDIV element (The element were the preview will be shown)
+if the provided one is null
 - Implement status deletion.
   - Every status carousel will have a button containing in it's dataset the status ID.
 - Re think if image input (status form) should be changed.

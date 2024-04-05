@@ -205,7 +205,7 @@ function send_message (message_type, message_text, message_image, message_sender
 
 }
 
-// gets the image preview div of the register form and updated it over time.
+// gets the image preview div of the register form and updates it over time.
 status_image_input.addEventListener('change', () => {
     previewImage(status_image_input, stauts_image_preview)
 })
