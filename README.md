@@ -5,12 +5,15 @@
 
 - Implement status deletion.
   - Every status carousel will have a button containing in it's dataset the status ID.
+- Re think if image input (status form) should be changed.
+- Re think if chat dropdown toggle button should be re added (see difference between march 30 last two commits in chats.html ONLY,  don't touch js )
+- Give the user creation form image preview logic.
 - Make it so when a message gets updated or deleted, the other user will be able to see the message edition.
   - When the message is updated or deleted, IT MUST reload the chat for both
   of the users (if they have displayed the chat obviously)
 (add 'edited' field in message model to do this )
 - [Implement tooltips](https://getbootstrap.com/docs/5.3/components/tooltips/)
-- Optimize the images size (whithout decreasing quality).
+- Optimize the images size (whitout decreasing quality).
 - Add something to delete statuses automatically every 24 hours.
 
 ## ANOTHER THINGS TO DO
@@ -35,14 +38,11 @@ to make the PATCH request for all the new messages] only if it is already False 
 ## Improvements
 
 - Test all statuses features.
-- Give the user creation form image preview logic.
 - Optimize the js code (delete all the cloned code.)
 - Optimize filters.py code.
 - Restrict chat views (check if the request method is the correct one if not, raise an error).
 - Test if edit/delete contact and delete chat works in any case.
 - Re think the delete message modal (Delete for everyone or for me logic).
-- Re think if image input (status form) should be changed.
-- Re think if chat dropdown toggle button should be re added (see difference between march 30 last two commits in chats.html ONLY,  don't touch js )
 **IMPLEMENT**
 READ THE CHATGPT Django Channels Websocket chat for IMPORTANT improvement.
 Also don't forget to change the channel layer to redis.
