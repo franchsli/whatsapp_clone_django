@@ -112,18 +112,15 @@ window.summon_chat = function(chat){
  * @param {HTMLDivElement} image_preview The element that will contain the image preview.
  */
 function previewImage(image_input=undefined, image_preview=undefined) {
-    // if no image input and image preview elements have been provided
-    // gets the default image input and preview HTML elements
-    if (image_input === undefined && image_preview === undefined){
+    // if no image preview element have been provided
+    // creates default preview HTML element
+    if (image_preview === undefined){
         console.log('IF STATEMENT RAN')
-        image_input = document.getElementById('imageInput');
-        image_preview = document.getElementById('imagePreview');
-    }
+        image_preview = document.createElement('div')
+        //image_input.parentElement.appendChild(image_preview)
+        image_input.insertAdjacentElement('afterend', image_preview)
 
-    //else if (typeof(image_input)){}
-    console.log(typeof(image_input))
-    console.log(typeof(image_preview))
-    console.log(typeof(image_input) === typeof(HTMLInputElement))
+    }
     console.log('GOT THE IMAGE INPUT AND PREVIEW')
     console.log(`IMAGE INPUT: ${image_input}\nIMAGE PREVIEW: ${image_preview}`)
 
@@ -404,42 +401,13 @@ chat_websocket.addEventListener('open', () => {
      * @param {Object} data 
      */
     htmx.logger = function(elt, event, data) {
-
-        if (event === 'htmx:afterSettle' && data.pathInfo.requestPath === '/muted_statuses/'){
-            const show_muted_statuses_button = document.getElementById('show-muted-statuses')
-            const muted_statuses = document.getElementById('muted-statuses-contact-list')
-            show_muted_statuses_button.onclick = toggle_element_inner_text(show_muted_statuses_button, 'Show', 'Hide')
-            show_muted_statuses_button.onclick = (event) => {
-                if (show_muted_statuses_button.innerText === 'Hide'){
-                    // FIX
-                    console.log('RAN, TRYING TO DELETE..')
-                    function s(){
-                        event.preventDefault()
-                        muted_statuses.innerHTML = ''
-                        console.log('ERASED')
-                        console.log(muted_statuses)
-                    }
-                    s()   
-                }
-            }
-        }
         // loads the default emojis
-        else if (event === 'htmx:afterSettle' && data.pathInfo.requestPath.includes('display_chat')){
+        if (event === 'htmx:afterSettle' && data.pathInfo.requestPath.includes('display_chat')){
             const emoji_container = document.getElementById('emojis-container')
             const emoji_class = document.querySelector('.emoji-class-active')
             load_emojis(emoji_class.dataset.emojiPack, emoji_container)
             
         }
-
-        // else {
-        //     if (data.pathInfo){
-        //         console.log(event, data.pathInfo.requestPath)
-        //     }
-        //     else{
-        //         console.log(event)
-        //     }
-            
-        // }
     }
     htmx.logger()
     // initialize tooltips
