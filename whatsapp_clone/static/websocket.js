@@ -362,6 +362,23 @@ chat_websocket.addEventListener('open', () => {
             load_emojis(emoji_class.dataset.emojiPack, emoji_container)
             
         }
+
+        else if (event === 'htmx:afterSettle' && data.pathInfo.requestPath === '/statuses/'){
+            let status_deletion_buttons = document.querySelectorAll('.status-deletion')
+            console.log(typeof(status_deletion_buttons))
+            status_deletion_buttons.forEach( button => {
+                button.onclick = () => {
+                    status_websocket.send(JSON.stringify({
+                        'type':'DELETE',
+                        'user_id': button.dataset.creator,
+                        'status_id': button.dataset.status
+                    }))
+                }
+
+            })
+            console.log('APPLIED FUNC TO ALL BUTTONS')
+        }
+
     }
     htmx.logger()
     // initialize tooltips
