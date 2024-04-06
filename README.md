@@ -3,10 +3,6 @@
 
 ## DO RIGHT NOW
 
-- Implement script tag that has type module and the script from register.js
-  - This script tag needs to be before the form tag.
-- Implement status deletion.
-  - Every status carousel will have a button containing in it's dataset the status ID.
 - Re think if chat dropdown toggle button should be re added (see difference between march 30 last two commits in chats.html ONLY,  don't touch js )
 - Modify the messages HTML and style to display the 'read' icon and the hour from the date.
 - Make it so when a message gets updated or deleted, the other user will be able to see the message edition.
@@ -38,6 +34,8 @@ to make the PATCH request for all the new messages] only if it is already False 
 - Reconsider the exceptions.py file.
 - Add chat wallpapers.
 - Rework show_dropdown animation.
+- Implement status deletion.
+  - Every status carousel will have a button containing in it's dataset the status ID.
 - Make the silence contact logic (booleand field [think it bro])
 
 ## Improvements
@@ -57,6 +55,8 @@ Also don't forget to change the channel layer to redis.
 - Check and compare all the whatsapp web features with this project features.
 - Review all the code and delete spaguetti code.
 - Implement all of these features at [dj-chat](https://github.com/adilmohak/dj-chat?tab=readme-ov-file#current-features)
+- Implement script tag that has type module and the script from register.js
+  - This script tag needs to be after the form tag.
 
 ## BUGS TO FIX
 
