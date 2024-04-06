@@ -37,7 +37,6 @@
       <h1 class="modal-title fs-5" id="status-modal{{ status.id }}Label">Status</h1>
       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      </div>
       <div class="modal-body">
           <!-- ========== Status Carousel========== -->
           <div id="carouselExampleCaptionsUser" class="carousel slide" data-bs-ride="carousel">
@@ -59,7 +58,7 @@
                   {% endif %}
                   <!-- ========== BUTTON FOR STATUS DELETION ========== -->
                   
-                  <!-- ========== <button type="button" class="btn position-relative bottom-0 end-0 delete-action mx-1">Delete <i class="bi bi-trash"></i></button> ========== -->
+                  <button type="button" class="btn position-relative bottom-0 end-0 delete-action mx-1">Delete <i class="bi bi-trash"></i></button>
                   
                     {% if status.has_image and status.has_text is True %}
                       <img src="{{status.image.url}}" class="d-block w-100" alt="">
