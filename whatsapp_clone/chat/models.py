@@ -83,7 +83,7 @@ class Status(models.Model):
     
     @property
     def has_text(self):
-        return True if len(self.text) > 0 else False 
+        return len(self.text) > 0
         
     class Meta:
         verbose_name_plural = 'statuses'

@@ -3,8 +3,6 @@
 
 ## DO RIGHT NOW
 
-- Implement status deletion.
-  - Check why status deletion doesn't work (status consumer)
 - Modify the messages HTML and style to display the 'read' icon and the hour from the date.
 - Make it so when a message gets updated or deleted, the other user will be able to see the message edition.
   - When the message is updated or deleted, IT MUST reload the chat for both
@@ -59,6 +57,8 @@ Also don't forget to change the channel layer to redis.
 
 ## BUGS TO FIX
 
+- The status deletion button it's weirdly positioned.
+- Deleting a status will show like a status is displaying but nothing is.
 - When a user deletes a chat, the chat will be deleted from all the users in the chat
   - To fix this, you need to implement something similar to archive view logic.
 - Scroll to bottom func doesn't scroll to the botom anymore:
