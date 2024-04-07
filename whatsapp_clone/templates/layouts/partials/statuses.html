@@ -58,7 +58,7 @@
                   {% endif %}
                   <!-- ========== BUTTON FOR STATUS DELETION ========== -->
                   
-                  <button type="button" class="btn position-relative bottom-0 end-0 delete-action mx-1 status-deletion" data-status="{{status.id}}" data-creator="{{status.created_by.id}}">Delete <i class="bi bi-trash"></i></button>
+                  <button type="button" class="btn position-relative bottom-0 end-0 delete-action mx-1 status-deletion" data-status="{{status.id}}" data-creator="{{request.user.id}}">Delete <i class="bi bi-trash"></i></button>
                   
                     {% if status.has_image and status.has_text is True %}
                       <img src="{{status.image.url}}" class="d-block w-100" alt="">

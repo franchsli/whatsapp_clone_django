@@ -373,6 +373,8 @@ chat_websocket.addEventListener('open', () => {
                         'user_id': button.dataset.creator,
                         'status_id': button.dataset.status
                     }))
+                    console.log('FRONT-END SENT:')
+                    console.log(`user:${button.dataset.creator}\nstatus:${button.dataset.status}`)
                 }
 
             })

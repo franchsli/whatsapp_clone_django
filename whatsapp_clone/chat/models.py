@@ -72,7 +72,7 @@ class Status(models.Model):
     upload_date = models.DateTimeField(default=timezone.now)
 
     def __str__(self) -> str:
-        return self.text if self.text else self.uploaded_by.username
+        return self.text
     
     @property
     def has_image(self):
