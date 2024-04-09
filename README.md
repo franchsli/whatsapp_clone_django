@@ -3,6 +3,12 @@
 
 ## DO RIGHT NOW
 
+- Rework the statuses modals (customize modal content by declaring for loop after it)
+  - Like so:
+    "modal-content"
+    {% for status in user_statuses %}
+    "modal-header"
+  - And then use the if-else in every place that it is right now
 - Modify the messages HTML and style to display the 'read' icon and the hour from the date.
 - Make it so when a message gets updated or deleted, the other user will be able to see the message edition.
   - When the message is updated or deleted, IT MUST reload the chat for both
@@ -10,7 +16,7 @@
 (add 'edited' field in message model to do this )
 - Test all statuses features.
 - Optimize filters.py code (ask an AI what's faster why and test it).
-- Test if edit/delete contact and delete chat works in any case.
+- Test if edit/delete contact and delete chat works in any case (even right click).
 - Restrict chat views (check if the request method is the correct one if not, raise an error).
 - [Implement tooltips](https://getbootstrap.com/docs/5.3/components/tooltips/)
 - Optimize the images size (whitout decreasing quality).
@@ -57,7 +63,6 @@ Also don't forget to change the channel layer to redis.
 
 ## BUGS TO FIX
 
-- The status deletion button it's weirdly positioned.
 - Deleting a status will show like a status is displaying but nothing is.
 - When a user deletes a chat, the chat will be deleted from all the users in the chat
   - To fix this, you need to implement something similar to archive view logic.
