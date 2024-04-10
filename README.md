@@ -20,13 +20,14 @@
 - Restrict chat views (check if the request method is the correct one if not, raise an error).
 - [Implement tooltips](https://getbootstrap.com/docs/5.3/components/tooltips/)
 - Optimize the images size (whitout decreasing quality).
-- Add something to delete statuses automatically every 24 hours.
+- Add something to delete statuses automatically every 24 hours (cronjobs maybe).
 
 ## ANOTHER THINGS TO DO
 
 - Add read and unread logic (you can implement it that any message (in the viewport makes a
 PATCH request to update the 'read' field in the message model from False to True [This makes the user needs to scroll down or up
 to make the PATCH request for all the new messages] only if it is already False [To prevent unnecesary API calls])).
+  - The 'read' icon of the message will change depending on if the message is read or not.
 - Write tests for the exceptions and functions.
 - Rework search messages:
   - Add the whatsapp date tags in HTML in the normal chat and in the searching message UI.
@@ -47,7 +48,6 @@ to make the PATCH request for all the new messages] only if it is already False 
 **IMPLEMENT**
 READ THE CHATGPT Django Channels Websocket chat for IMPORTANT improvement.
 Also don't forget to change the channel layer to redis.
-- Delete all console.logs
 - **OPTIMIZE REQUESTS**:
   - Combine related request views so the server calls reduce and do two jobs in the same response.
   - Reduce the HTMX responsability and use consumers.
@@ -60,6 +60,7 @@ Also don't forget to change the channel layer to redis.
 - Implement all of these features at [dj-chat](https://github.com/adilmohak/dj-chat?tab=readme-ov-file#current-features)
 - Implement script tag that has type module and the script from register.js
   - This script tag needs to be after the form tag.
+- Delete all console.logs
 
 ## BUGS TO FIX
 
@@ -92,6 +93,8 @@ Also don't forget to change the channel layer to redis.
 - [For...empty](https://docs.djangoproject.com/en/5.0/ref/templates/builtins/#for-empty)
 - [CSS Components](https://uiverse.io/)
 - [Filtering Views and ViewSets](https://www.django-rest-framework.org/api-guide/filtering/)
+- [CSS Animations](https://xsgames.co/animatiss/)
+- [Languages Documentation](https://devdocs.io/)
 
 **You should also be aware that carousels in general can often cause usability and accessibility challenges.**
 For performance reasons, carousels must be manually initialized using the carousel constructor method. Without initialization, some of the event listeners (specifically, the events needed touch/swipe support) will not be registered until a user has explicitly activated a control or indicator.
