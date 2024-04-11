@@ -183,7 +183,6 @@ function toggle_element_inner_text(HTML_element, text_a, text_b){
  * @returns {Boolean} Returns true if at least a checkbox in the form was checked, false otherwise.
  */
 function checked(form){
-    console.log(form.elements)
     for (let index = 0; index < form.elements.length; index++) {
         let element = form.elements[index];
         if (element.checked){
@@ -198,11 +197,9 @@ function checked(form){
  * @returns {Boolean}
  */
 function not_empty(form){
-    console.log(form.elements)
     for (let index = 0; index < form.elements.length; index++) {
         let element = form.elements[index];
         if (element.value.trim() != '' && element.type !== 'hidden'){
-            console.log(`ELEMENT:${element}\nVALUE:${element.value}\nTYPE${element.type}`)
             return true}
     }
     return false
@@ -323,14 +320,10 @@ function previewImage(image_input=null, image_preview=null) {
     // if no image preview element have been provided
     // creates default preview HTML element
     if (image_preview === null){
-        console.log('IF STATEMENT RAN')
         image_preview = document.createElement('div')
-        //image_input.parentElement.appendChild(image_preview)
         image_input.insertAdjacentElement('afterend', image_preview)
 
     }
-    console.log('GOT THE IMAGE INPUT AND PREVIEW')
-    console.log(`IMAGE INPUT: ${image_input}\nIMAGE PREVIEW: ${image_preview}`)
 
     let file = image_input.files[0];
 

@@ -3,7 +3,6 @@ import { get, modifyNotification, scroll_to_bottom,
    run_element_animation, checked, not_empty,
     toggle_element_inner_text, load_emojis, switch_emojis, switch_checkboxes, toggle_element_display, previewImage } from  './tools.js';
 
-console.log("websocket.js is loaded!");
 const user = document.getElementById('profile-pic')
 const user_id = user.getAttribute('data-user')
 const user_phone_number = user.getAttribute('data-phone')
@@ -19,7 +18,6 @@ const status_modal = document.getElementById('CreateStatusModal')
 const status_submit_button = document.getElementById('status-submit')
 const stauts_image_preview = document.getElementById('status-imagePreview')
 const status_image_input = document.getElementById('id_image')
-console.log(`IMAGE INPUT: ${status_image_input}\nIMAGE PREVIEW: ${stauts_image_preview}`)
 const notification_audio = new Audio('static/Audio/app/message_received.mp3')
 const message_sent_audio = new Audio('static/Audio/app/message_sent.mp3')
 const error_audio = new Audio('static/Audio/app/error_sound.mp3')
@@ -32,9 +30,9 @@ const mutationCallback = function(mutationsList, observer) {
             // Check if a new element is added
             const addedNodes = mutation.addedNodes;
             for (const addedNode of addedNodes) {
-                if (addedNode.nodeType === 1 && addedNode.tagName === 'FOOTER'){ // Check if it's an footer element node
+                if (addedNode.nodeType === 1 && addedNode.tagName === 'FOOTER'){ 
+                    // Check if it's an footer element node
                     // Execute your code when a new element is created
-                    //console.log('ITS A FOOTER')
                     window.new_message_input = document.getElementById('new-message')
                     window.new_message_button = document.getElementById('send-message-button')
                     window.delete_message_option_buttons = document.querySelectorAll('.delete-message')
@@ -163,6 +161,8 @@ function send_message (message_type, message_text, message_image, message_sender
 
 
 chat_websocket.addEventListener('open', () => {
+    console.log('CONNECTION OPENED WITH CHAT WEBSOCKET')
+
     window.toggleReadMore = function(text_id){
         toggleReadMore(text_id)
     }
@@ -257,7 +257,6 @@ chat_websocket.addEventListener('open', () => {
             const validation_message = document.getElementById('contact-validation-message')
             validation_message.innerText = 'You already created a Contact with that Phone'
             error_audio.play()
-            console.log(contacts)
         }
         // if nothing happens, create the contact
         else {
@@ -286,7 +285,6 @@ chat_websocket.addEventListener('open', () => {
     // resets the contact form values and validation errors when the modal is closed.
     chat_modal.addEventListener('hidden.bs.modal', function (event) {
         const validation_message = document.getElementById('chat-validation-message')
-        //console.log('CHAT INPUTS', chat_form.elements)
         for (let index = 0; index < chat_form.elements.length; index++) {
             if (chat_form.elements[index].type === 'checkbox'){
                 chat_form.elements[index].checked = false
@@ -299,7 +297,6 @@ chat_websocket.addEventListener('open', () => {
     contact_modal.addEventListener('hidden.bs.modal', function (event) {
         const inputs = contact_form.getElementsByTagName('input')
         const validation_message = document.getElementById('contact-validation-message')
-        console.log('CONTACT INPUTS', inputs)
         inputs[1].value = ''
         inputs[2].value = ''
         inputs[3].checked = false
@@ -365,7 +362,6 @@ chat_websocket.addEventListener('open', () => {
 
         else if (event === 'htmx:afterSettle' && data.pathInfo.requestPath === '/statuses/'){
             let status_deletion_buttons = document.querySelectorAll('.status-deletion')
-            console.log(typeof(status_deletion_buttons))
             status_deletion_buttons.forEach( button => {
                 button.onclick = () => {
                     status_websocket.send(JSON.stringify({
