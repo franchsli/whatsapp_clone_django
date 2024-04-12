@@ -362,6 +362,7 @@ chat_websocket.addEventListener('open', () => {
 
         else if (event === 'htmx:afterSettle' && data.pathInfo.requestPath === '/statuses/'){
             let status_deletion_buttons = document.querySelectorAll('.status-deletion')
+            let contact_carousels = document.querySelectorAll('.contact-status')
             status_deletion_buttons.forEach( button => {
                 button.onclick = () => {
                     status_websocket.send(JSON.stringify({
