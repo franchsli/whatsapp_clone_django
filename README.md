@@ -8,6 +8,7 @@
     "modal-content"
     {% for status in user_statuses %}
     "modal-header"
+  - Check if it worked out
   - And then use the if-else in every place that it is right now
 - Modify the messages HTML and style to display the 'read' icon and the hour from the date.
 - Make it so when a message gets updated or deleted, the other user will be able to see the message edition.

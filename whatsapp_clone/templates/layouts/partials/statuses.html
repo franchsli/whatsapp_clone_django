@@ -33,6 +33,7 @@
 <div class="modal fade" id="user-status-modal{{ request.user.id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="status-modal{{ request.user.id }}Label" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
+      {% for status in user_statuses %}
       <div class="modal-header">
       <h1 class="modal-title fs-5" id="status-modal{{ status.id }}Label">Status</h1>
       <button type="button" class="btn delete-action mx-1 status-deletion" data-status="{{status.id}}" data-creator="{{request.user.id}}">Delete <i class="bi bi-trash"></i></button>
@@ -42,16 +43,16 @@
           <!-- ========== Status Carousel========== -->
           <div id="carouselExampleCaptionsUser" class="carousel slide" data-bs-ride="carousel">
               <div class="carousel-indicators">
-                {% for status in user_statuses %}
+                
                   {% if forloop.first %}
                     <button type="button" data-bs-target="#carouselExampleCaptionsUser" data-bs-slide-to="{{forloop.counter0}}" class="active" aria-current="true" aria-label="Slide {{forloop.counter}}"></button>
                   {% else %}
                     <button type="button" data-bs-target="#carouselExampleCaptionsUser" data-bs-slide-to="{{forloop.counter0}}" aria-label="Slide {{forloop.counter}}"></button>
                   {% endif %}
-                {% endfor %}
+                
               </div>
               <div class="carousel-inner">
-                {% for status in user_statuses %}
+                
                   {% if forloop.first %}
                     <div class="carousel-item active" data-bs-interval="10000">
                   {% else %}
@@ -71,7 +72,7 @@
                     </div>
                     {% endif %}
                     </div>
-                {% endfor %}
+                
 
               <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptionsUser" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -85,6 +86,7 @@
       </div>
     </div>
   </div>
+  {% endfor %}
 </div>
 </div>
 </div>
