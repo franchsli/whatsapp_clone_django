@@ -361,6 +361,7 @@ chat_websocket.addEventListener('open', () => {
         }
 
         else if (event === 'htmx:afterSettle' && data.pathInfo.requestPath === '/statuses/'){
+            const user_statuses_caller = document.querySelector('#user-status-caller')
             let status_deletion_buttons = document.querySelectorAll('.status-deletion')
             let contacts_with_statuses_caller = document.querySelectorAll('.contact-status-caller')
             let carousel
@@ -377,7 +378,7 @@ chat_websocket.addEventListener('open', () => {
                 }
             })
             console.log('APPLIED FUNC TO ALL BUTTONS')
-            // contact statuses carousel initialitation
+            // statuses carousel initialitation
             contacts_with_statuses_caller.forEach( async contact => {
                 contact.onclick =  async () => {
                     carousel = document.querySelector(`#contact${contact.dataset.contact}status`)
@@ -389,6 +390,16 @@ chat_websocket.addEventListener('open', () => {
                     console.log('INITIALIZED')
                 }
             })
+            user_statuses_caller.onclick = async () => {
+                carousel = document.querySelector('#UserStatusesCarousel')
+
+                carousel_instance = new bootstrap.Carousel(carousel, {
+                interval: 5000,
+                touch: false
+                })
+                console.log('INITIALIZED USER CAROUSEL')
+
+            }
         }
 
     }
