@@ -52,6 +52,7 @@ to make the PATCH request for all the new messages] only if it is already False 
 **IMPLEMENT**
 READ THE CHATGPT Django Channels Websocket chat for IMPORTANT improvement.
 Also don't forget to change the channel layer to redis.
+
 - **OPTIMIZE REQUESTS**:
   - Combine related request views so the server calls reduce and do two jobs in the same response.
   - Reduce the HTMX responsability and use consumers.
