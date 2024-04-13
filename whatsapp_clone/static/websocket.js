@@ -351,7 +351,7 @@ chat_websocket.addEventListener('open', () => {
      * @param {Event} event 
      * @param {Object} data 
      */
-    htmx.logger = function(elt, event, data) {
+    htmx.logger = async function(elt, event, data) {
         // loads the default emojis
         if (event === 'htmx:afterSettle' && data.pathInfo.requestPath.includes('display_chat')){
             const emoji_container = document.getElementById('emojis-container')
@@ -365,8 +365,8 @@ chat_websocket.addEventListener('open', () => {
             let contacts_with_statuses_caller = document.querySelectorAll('.contact-status-caller')
             let carousel
             let carousel_instance
-            status_deletion_buttons.forEach( button => {
-                button.onclick = () => {
+            status_deletion_buttons.forEach(async  button => {
+                button.onclick = async () => {
                     status_websocket.send(JSON.stringify({
                         'type':'DELETE',
                         'user_id': button.dataset.creator,
@@ -378,8 +378,8 @@ chat_websocket.addEventListener('open', () => {
             })
             console.log('APPLIED FUNC TO ALL BUTTONS')
             // contact statuses carousel initialitation
-            contacts_with_statuses_caller.forEach( contact => {
-                contact.onclick =  () => {
+            contacts_with_statuses_caller.forEach( async contact => {
+                contact.onclick =  async () => {
                     carousel = document.querySelector(`#contact${contact.dataset.contact}status`)
 
                     carousel_instance = new bootstrap.Carousel(carousel, {
