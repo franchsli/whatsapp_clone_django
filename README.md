@@ -3,10 +3,6 @@
 
 ## DO RIGHT NOW
 
-**You should also be aware that carousels in general can often cause usability and accessibility challenges.**
-For performance reasons, carousels must be manually initialized using the carousel constructor method. Without initialization, some of the event listeners (specifically, the events needed touch/swipe support) will not be registered until a user has explicitly activated a control or indicator.
-The only exception are autoplaying carousels with the data-bs-ride="carousel" attribute as these are initialized automatically on page load.If you’re using autoplaying carousels with the data attribute, don’t explicitly initialize the same carousels with the constructor method.
-
 - Modify the messages HTML and style to display the 'read' icon and the hour from the date.
 - Make it so when a message gets updated or deleted, the other user will be able to see the message edition.
   - When the message is updated or deleted, IT MUST reload the chat for both
@@ -22,6 +18,7 @@ The only exception are autoplaying carousels with the data-bs-ride="carousel" at
 
 ## ANOTHER THINGS TO DO
 
+- Add status complex status creation (like Whatsapp).
 - Add read and unread logic (you can implement it that any message (in the viewport makes a
 PATCH request to update the 'read' field in the message model from False to True [This makes the user needs to scroll down or up
 to make the PATCH request for all the new messages] only if it is already False [To prevent unnecesary API calls])).

@@ -213,7 +213,7 @@ def get_statuses(request):
     muted_contacts_statuses = get_contacts_statuses(request.user, True)
     
     # Query for statuses uploaded by the user
-    user_statuses = Status.objects.filter(uploaded_by=request.user)
+    user_statuses = Status.objects.filter(uploaded_by=request.user).order_by('upload_date')
     
     return render(
         request,
