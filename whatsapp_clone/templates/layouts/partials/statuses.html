@@ -93,13 +93,13 @@
 
 <ul id="contact-statuses-list" class="scroll-section list-group list-group-flush overflow-y-scroll mt-3" style="max-height: 459px;">
     {% for contact, statuses in contacts_with_statuses.items %}
-        <li class="list-group-item p-3  d-flex flex-inline align-items-center contact" role="button" data-status={{status.id}}>
+        <li class="list-group-item p-3  d-flex flex-inline align-items-center contact" role="button" data-contact="{{contact.id}}">
             {% comment "status profile photo" %}{% endcomment %}
-            <img class="ms-1 rounded-circle img-fluid" src="{% get_contact_photo contact.phone_number %}" alt="" style="max-width: 45px;" type="button" data-bs-toggle="modal" data-bs-target="#status-modal{{ contact.id }}">
+            <img class="ms-1 rounded-circle img-fluid contact-status-caller" src="{% get_contact_photo contact.phone_number %}" alt="" style="max-width: 45px;" data-contact="{{contact.id}}" type="button" data-bs-toggle="modal" data-bs-target="#status-modal{{ contact.id }}">
             <div class="d-flex flex-column ms-3 w-100">
               <div class="d-flex justify-content-between">
                   <span>{{ contact.name }}</span>
-                  <button class="btn btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" onclick="run_element_animation(this.nextElementSibling)"></button>
+                  <button class="btn btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" onclick="run_element_animation(this.nextElementSibling);"></button>
                   <ul class="dropdown-menu animated-dropdown">
                   <li><span class="dropdown-item edit-action" hx-patch="{% url 'mute_contact_statuses' contact.id %}" hx-target="#chats-and-more" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'><i class="bi bi-volume-mute"></i> Mute contact</span></li>
                   </ul>
@@ -130,9 +130,9 @@
                       <div class="carousel-inner">
                         {% for status in statuses %}
                           {% if forloop.first %}
-                            <div class="carousel-item active" data-bs-interval="10000">
+                            <div class="carousel-item active">
                           {% else %}
-                            <div class="carousel-item" data-bs-interval="10000">
+                            <div class="carousel-item">
                           {% endif %}
                             {% if status.has_image and status.has_text is True %}
                               <img src="{{status.image.url}}" class="d-block w-100" alt="">

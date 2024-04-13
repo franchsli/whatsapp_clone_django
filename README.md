@@ -3,6 +3,10 @@
 
 ## DO RIGHT NOW
 
+**You should also be aware that carousels in general can often cause usability and accessibility challenges.**
+For performance reasons, carousels must be manually initialized using the carousel constructor method. Without initialization, some of the event listeners (specifically, the events needed touch/swipe support) will not be registered until a user has explicitly activated a control or indicator.
+The only exception are autoplaying carousels with the data-bs-ride="carousel" attribute as these are initialized automatically on page load.If you’re using autoplaying carousels with the data attribute, don’t explicitly initialize the same carousels with the constructor method.
+
 - Modify the messages HTML and style to display the 'read' icon and the hour from the date.
 - Make it so when a message gets updated or deleted, the other user will be able to see the message edition.
   - When the message is updated or deleted, IT MUST reload the chat for both
@@ -39,6 +43,12 @@ to make the PATCH request for all the new messages] only if it is already False 
 ## Improvements
 
 - Re think the delete message modal (Delete for everyone or for me logic).
+- Implement a dynamic status length:
+  - If its a photo 5 secs
+  - if its a long text (more than 200 chars) 10 secs
+  - if its a video, the length of the video.
+  - Or if its not a video, 5 secs and users should be able to pause the event (like whatsapp)
+
 **IMPLEMENT**
 READ THE CHATGPT Django Channels Websocket chat for IMPORTANT improvement.
 Also don't forget to change the channel layer to redis.
@@ -89,7 +99,3 @@ Also don't forget to change the channel layer to redis.
 - [Filtering Views and ViewSets](https://www.django-rest-framework.org/api-guide/filtering/)
 - [CSS Animations](https://xsgames.co/animatiss/)
 - [Languages Documentation](https://devdocs.io/)
-
-**You should also be aware that carousels in general can often cause usability and accessibility challenges.**
-For performance reasons, carousels must be manually initialized using the carousel constructor method. Without initialization, some of the event listeners (specifically, the events needed touch/swipe support) will not be registered until a user has explicitly activated a control or indicator.
-The only exception are autoplaying carousels with the data-bs-ride="carousel" attribute as these are initialized automatically on page load.If you’re using autoplaying carousels with the data attribute, don’t explicitly initialize the same carousels with the constructor method.
