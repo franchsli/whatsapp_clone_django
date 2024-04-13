@@ -3,6 +3,7 @@
 
 ## DO RIGHT NOW
 
+- **FIX** When user hides a modal, bugs the hidden value and at_least_one_attr returns false
 - Modify the messages HTML and style to display the 'read' icon and the hour from the date.
 - Make it so when a message gets updated or deleted, the other user will be able to see the message edition.
   - When the message is updated or deleted, IT MUST reload the chat for both
@@ -66,8 +67,6 @@ Also don't forget to change the channel layer to redis.
 
 ## BUGS TO FIX
 
-- Deleting a status will show like a status is displaying but nothing is.
-  - The modal that contains the status is deleted.
 - When a user deletes a chat, the chat will be deleted from all the users in the chat
   - To fix this, you need to implement something similar to archive view logic.
 - Scroll to bottom func doesn't scroll to the botom anymore:

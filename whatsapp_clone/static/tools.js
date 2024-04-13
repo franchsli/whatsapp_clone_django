@@ -351,10 +351,32 @@ function previewImage(image_input=null, image_preview=null) {
     }
 }
 
+/**
+ * Returns if at least one HTML
+ * element in html_elements have the given
+ * attribute with the desired value
+ * @param {Array} html_elements 
+ * @param {String} attribute 
+ * @param {String} value
+ * @return {Boolean} True if at least
+ * one html element meet the requirements.
+ */
+function at_least_one_attr(html_elements, attribute, value){
+    let found = false
+    for (let index = 0; index < html_elements.length; index++) {
+        const element = html_elements[index];
+        if (element.getAttribute(attribute) === value){
+            found = true
+            break
+        }
+    }
+    return found
+}
+
 
 export {get, post, modifyNotification,
      scroll_to_bottom, create_message_html, 
      toggleReadMore, showDropdown, run_element_animation,
       checked, not_empty, toggle_element_inner_text,
-    load_emojis, switch_emojis, switch_checkboxes, toggle_element_display, previewImage
+    load_emojis, switch_emojis, switch_checkboxes, toggle_element_display, previewImage, at_least_one_attr
 }

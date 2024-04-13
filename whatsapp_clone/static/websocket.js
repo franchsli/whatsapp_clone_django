@@ -1,7 +1,8 @@
 import { get, modifyNotification, scroll_to_bottom,
   create_message_html, toggleReadMore, showDropdown,
    run_element_animation, checked, not_empty,
-    toggle_element_inner_text, load_emojis, switch_emojis, switch_checkboxes, toggle_element_display, previewImage } from  './tools.js';
+    toggle_element_inner_text, load_emojis, switch_emojis, switch_checkboxes, toggle_element_display, previewImage,
+    at_least_one_attr } from  './tools.js';
 
 const user = document.getElementById('profile-pic')
 const user_id = user.getAttribute('data-user')
@@ -363,6 +364,7 @@ chat_websocket.addEventListener('open', () => {
         else if (event === 'htmx:afterSettle' && data.pathInfo.requestPath === '/statuses/'){
             const user_statuses_caller = document.querySelector('#user-status-caller')
             const user_status_modal = document.querySelector(`#user-status-modal${user_id}`)
+            const contacts_status_modals = document.querySelectorAll('.contact-status-modal')
             let status_deletion_buttons = document.querySelectorAll('.status-deletion')
             let contacts_with_statuses_caller = document.querySelectorAll('.contact-status-caller')
             let carousel
@@ -415,6 +417,24 @@ chat_websocket.addEventListener('open', () => {
                         status_app.pending_updates = false
                     })
                 }
+            })
+            contacts_status_modals.forEach( modal => {
+                modal.addEventListener('shown.bs.modal', () => {
+                    modal.setAttribute('status', 'showing')
+                })
+
+                modal.addEventListener('hidden.bs.modal', () => {
+                    modal.setAttribute('status', 'hidden')
+                    // if there any pendient updates in the UI, update it
+                    if(status_app.pending_updates){
+                        htmx.ajax('GET', '/statuses', '#chats-and-more')
+                        .then( () => {
+                            status_app.pending_updates = false
+                        })
+                    }
+                })
+
+
             })
         }
 
@@ -510,6 +530,9 @@ chat_websocket.addEventListener('error', (error) => {
 // status websocket handling
 status_websocket.addEventListener('open', () => {
     console.log('CONNECTION OPENED WITH STATUS WEBSOCKET')
+    window.status_app = {
+        pending_updates : false
+    }
 })
 
 status_websocket.addEventListener('message', async (event) => {
@@ -560,11 +583,14 @@ status_websocket.addEventListener('message', async (event) => {
     // if the status UI is already displayed and the user status modal is hidden, reload the view
     // to be able to see the brand new contact status....
     const user_status_modal = document.querySelector(`#user-status-modal${user_id}`)
+    const contacts_modal = document.querySelectorAll('.contact-status-modal')
+    const contact_modals_showing = at_least_one_attr(contacts_modal, 'status', 'showing')
+    console.log(contact_modals_showing)
     if (document.getElementById('contact-statuses-list') !== null){
-        window.status_app = {
+        status_app = {
             pending_updates : true
         }
-        if (user_status_modal.getAttribute('status') !== 'showing'){
+        if (user_status_modal.getAttribute('status') !== 'showing' && !contact_modals_showing){
             htmx.ajax('GET', '/statuses', '#chats-and-more')
             .then( () => {
                 status_app.pending_updates = false
