@@ -67,6 +67,7 @@ Also don't forget to change the channel layer to redis.
 ## BUGS TO FIX
 
 - Deleting a status will show like a status is displaying but nothing is.
+  - The modal that contains the status is deleted.
 - When a user deletes a chat, the chat will be deleted from all the users in the chat
   - To fix this, you need to implement something similar to archive view logic.
 - Scroll to bottom func doesn't scroll to the botom anymore:

@@ -362,12 +362,13 @@ chat_websocket.addEventListener('open', () => {
 
         else if (event === 'htmx:afterSettle' && data.pathInfo.requestPath === '/statuses/'){
             const user_statuses_caller = document.querySelector('#user-status-caller')
+            const user_status_modal = document.querySelector(`#user-status-modal${user_id}`)
             let status_deletion_buttons = document.querySelectorAll('.status-deletion')
             let contacts_with_statuses_caller = document.querySelectorAll('.contact-status-caller')
             let carousel
             let carousel_instance
-            status_deletion_buttons.forEach(async  button => {
-                button.onclick = async () => {
+            status_deletion_buttons.forEach(async button => {
+                button.onclick = () => {
                     status_websocket.send(JSON.stringify({
                         'type':'DELETE',
                         'user_id': button.dataset.creator,
@@ -375,6 +376,8 @@ chat_websocket.addEventListener('open', () => {
                     }))
                     console.log('FRONT-END SENT:')
                     console.log(`user:${button.dataset.creator}\nstatus:${button.dataset.status}`)
+                    console.log('NEXT STATUS')
+                    carousel_instance.next()
                 }
             })
             console.log('APPLIED FUNC TO ALL BUTTONS')
@@ -400,6 +403,19 @@ chat_websocket.addEventListener('open', () => {
                 console.log('INITIALIZED USER CAROUSEL')
 
             }
+            user_status_modal.addEventListener('shown.bs.modal', async () => {
+                user_status_modal.setAttribute('status', 'showing')
+            })
+            user_status_modal.addEventListener('hidden.bs.modal', async () => {
+                user_status_modal.setAttribute('status', 'hidden')
+                // if there any pendient updates in the UI, update it
+                if(status_app.pending_updates){
+                    htmx.ajax('GET', '/statuses', '#chats-and-more')
+                    .then( () => {
+                        status_app.pending_updates = false
+                    })
+                }
+            })
         }
 
     }
@@ -541,10 +557,20 @@ status_websocket.addEventListener('message', async (event) => {
         }
 
     }
-    // if the status UI is already displayed, reload it
+    // if the status UI is already displayed and the user status modal is hidden, reload the view
     // to be able to see the brand new contact status....
+    const user_status_modal = document.querySelector(`#user-status-modal${user_id}`)
     if (document.getElementById('contact-statuses-list') !== null){
+        window.status_app = {
+            pending_updates : true
+        }
+        if (user_status_modal.getAttribute('status') !== 'showing'){
             htmx.ajax('GET', '/statuses', '#chats-and-more')
+            .then( () => {
+                status_app.pending_updates = false
+            })
+        }
+            
     }
 
 })
