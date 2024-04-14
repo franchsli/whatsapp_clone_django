@@ -11,7 +11,7 @@
 
 
 {% comment "My status" %}{% endcomment %}
-<div onclick="show_modal(document.querySelector(`#user-status-modal{{ request.user.id }}`))" id="user-status-caller" class="contact mt-3 d-flex flex-row" role="button" type="button" data-bs-toggle="modal" data-bs-target="#user-status-modal{{ request.user.id }}">
+<div onclick="show_modal(document.querySelector(`#user-status-modal{{ request.user.id }}`)); init_status_carousel(document.querySelector('#UserStatusesCarousel'))" id="user-status-caller" class="contact mt-3 d-flex flex-row" role="button" type="button" data-bs-toggle="modal" data-bs-target="#user-status-modal{{ request.user.id }}">
     <div class="p-2" id="profile-pic" data-user={{request.user.id}} data-username={{request.user.username}}>
         {% if request.user.has_photo %}
           <img class="ms-3 rounded-circle img-fluid" src="{{request.user.photo.url}}" alt="" style="max-width: 50px;" role="button">
@@ -56,7 +56,7 @@
                   {% else %}
                     <div class="carousel-item">
                   {% endif %}
-                  <button type="button" class="btn delete-action mx-1 status-deletion" data-status="{{status.id}}" data-creator="{{request.user.id}}">Delete <i class="bi bi-trash"></i></button>
+                  <button onclick="delete_status(this)" type="button" class="btn delete-action mx-1 status-deletion" data-status="{{status.id}}" data-creator="{{request.user.id}}">Delete <i class="bi bi-trash"></i></button>
                     {% if status.has_image and status.has_text is True %}
                       <img src="{{status.image.url}}" class="d-block w-100" alt="">
                       <div class="carousel-status d-none d-md-flex">

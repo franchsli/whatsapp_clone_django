@@ -480,32 +480,14 @@ status_websocket.addEventListener('open', () => {
             carousel_instance.next()
         }
     }
-    window.init_contacts_statuses_carousel = function(){
-    // statuses carousel initialitation
-    contacts_with_statuses_caller.forEach( async contact => {
-        contact.onclick =  async () => {
-            carousel = document.querySelector(`#contact${contact.dataset.contact}status`)
+    window.init_status_carousel = function(status_carousel){
+        carousel = status_carousel
 
-            carousel_instance = new bootstrap.Carousel(carousel, {
-            interval: 5000,
-            touch: false
-            })
-            console.log('INITIALIZED')
-            }
+        carousel_instance = new bootstrap.Carousel(carousel, {
+        interval: 5000,
+        touch: false
         })
-    }
-    window.init_user_statuses_carousel = function(){
-        user_statuses_caller.onclick = async () => {
-            carousel = document.querySelector('#UserStatusesCarousel')
-    
-            carousel_instance = new bootstrap.Carousel(carousel, {
-            interval: 5000,
-            touch: false
-            })
-            console.log('INITIALIZED USER CAROUSEL')
-    
-        }
-
+        console.log('INITIALIZED CAROUSEL')
     }
 
     window.show_modal = function(modal){
