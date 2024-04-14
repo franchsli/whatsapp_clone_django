@@ -30,7 +30,7 @@
 
 
 
-<div class="modal fade" id="user-status-modal{{ request.user.id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="status-modal{{ request.user.id }}Label" aria-hidden="true" status>
+<div class="modal fade status-modal" id="user-status-modal{{ request.user.id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="status-modal{{ request.user.id }}Label" aria-hidden="true" status>
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
@@ -107,7 +107,7 @@
         </li>
         
         <!--Status Modal -->
-        <div class="modal fade contact-status-modal" id="status-modal{{ contact.id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="status-modal{{ contact.id }}Label" aria-hidden="true" status>
+        <div class="modal fade contact-status-modal status-modal" id="status-modal{{ contact.id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="status-modal{{ contact.id }}Label" aria-hidden="true" status>
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
               <div class="modal-header">

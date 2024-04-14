@@ -574,15 +574,14 @@ status_websocket.addEventListener('message', async (event) => {
     }
     // if the status UI is already displayed and the user status modal is hidden, reload the view
     // to be able to see the brand new contact status....
-    const user_status_modal = document.querySelector(`#user-status-modal${user_id}`)
-    const contacts_modal = document.querySelectorAll('.contact-status-modal')
-    const contact_modals_showing = at_least_one_attr(contacts_modal, 'status', 'showing')
-    console.log(contact_modals_showing)
+    const status_modals = document.querySelectorAll('.status-modal')
+    const status_modals_showing = at_least_one_attr(status_modals, 'status', 'showing')
+    console.log(status_modals_showing)
     if (document.getElementById('contact-statuses-list') !== null){
         status_app = {
             pending_updates : true
         }
-        if (user_status_modal.getAttribute('status') !== 'showing' && !contact_modals_showing){
+        if (!status_modals_showing){
             htmx.ajax('GET', '/statuses', '#chats-and-more')
             .then( () => {
                 status_app.pending_updates = false

@@ -3,7 +3,6 @@
 
 ## DO RIGHT NOW
 
-- **FIX** When user hides a modal, bugs the hidden value and at_least_one_attr returns false
 - Modify the messages HTML and style to display the 'read' icon and the hour from the date.
 - Make it so when a message gets updated or deleted, the other user will be able to see the message edition.
   - When the message is updated or deleted, IT MUST reload the chat for both
