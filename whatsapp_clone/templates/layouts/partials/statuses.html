@@ -11,7 +11,7 @@
 
 
 {% comment "My status" %}{% endcomment %}
-<div id="user-status-caller" class="contact mt-3 d-flex flex-row" role="button" type="button" data-bs-toggle="modal" data-bs-target="#user-status-modal{{ request.user.id }}">
+<div onclick="show_modal(document.querySelector(`#user-status-modal{{ request.user.id }}`))" id="user-status-caller" class="contact mt-3 d-flex flex-row" role="button" type="button" data-bs-toggle="modal" data-bs-target="#user-status-modal{{ request.user.id }}">
     <div class="p-2" id="profile-pic" data-user={{request.user.id}} data-username={{request.user.username}}>
         {% if request.user.has_photo %}
           <img class="ms-3 rounded-circle img-fluid" src="{{request.user.photo.url}}" alt="" style="max-width: 50px;" role="button">
@@ -35,7 +35,7 @@
     <div class="modal-content">
       <div class="modal-header">
       <h1 class="modal-title fs-5" id="status-modal{{ status.id }}Label">Status</h1>
-      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      <button onclick="hide_modal(document.querySelector(`#user-status-modal{{ request.user.id }}`))" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
           <!-- ========== Status Carousel========== -->

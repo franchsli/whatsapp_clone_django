@@ -367,6 +367,7 @@ function at_least_one_attr(html_elements, attribute, value){
         const element = html_elements[index];
         if (element.getAttribute(attribute) === value){
             found = true
+            console.log(element)
             break
         }
     }

@@ -362,80 +362,14 @@ chat_websocket.addEventListener('open', () => {
         }
 
         else if (event === 'htmx:afterSettle' && data.pathInfo.requestPath === '/statuses/'){
-            const user_statuses_caller = document.querySelector('#user-status-caller')
-            const user_status_modal = document.querySelector(`#user-status-modal${user_id}`)
-            const contacts_status_modals = document.querySelectorAll('.contact-status-modal')
-            let status_deletion_buttons = document.querySelectorAll('.status-deletion')
-            let contacts_with_statuses_caller = document.querySelectorAll('.contact-status-caller')
-            let carousel
-            let carousel_instance
-            status_deletion_buttons.forEach(async button => {
-                button.onclick = () => {
-                    status_websocket.send(JSON.stringify({
-                        'type':'DELETE',
-                        'user_id': button.dataset.creator,
-                        'status_id': button.dataset.status
-                    }))
-                    console.log('FRONT-END SENT:')
-                    console.log(`user:${button.dataset.creator}\nstatus:${button.dataset.status}`)
-                    console.log('NEXT STATUS')
-                    carousel_instance.next()
-                }
-            })
-            console.log('APPLIED FUNC TO ALL BUTTONS')
-            // statuses carousel initialitation
-            contacts_with_statuses_caller.forEach( async contact => {
-                contact.onclick =  async () => {
-                    carousel = document.querySelector(`#contact${contact.dataset.contact}status`)
-
-                    carousel_instance = new bootstrap.Carousel(carousel, {
-                    interval: 5000,
-                    touch: false
-                    })
-                    console.log('INITIALIZED')
-                }
-            })
-            user_statuses_caller.onclick = async () => {
-                carousel = document.querySelector('#UserStatusesCarousel')
-
-                carousel_instance = new bootstrap.Carousel(carousel, {
-                interval: 5000,
-                touch: false
-                })
-                console.log('INITIALIZED USER CAROUSEL')
-
-            }
-            user_status_modal.addEventListener('shown.bs.modal', async () => {
-                user_status_modal.setAttribute('status', 'showing')
-            })
-            user_status_modal.addEventListener('hidden.bs.modal', async () => {
-                user_status_modal.setAttribute('status', 'hidden')
-                // if there any pendient updates in the UI, update it
-                if(status_app.pending_updates){
-                    htmx.ajax('GET', '/statuses', '#chats-and-more')
-                    .then( () => {
-                        status_app.pending_updates = false
-                    })
-                }
-            })
-            contacts_status_modals.forEach( modal => {
-                modal.addEventListener('shown.bs.modal', () => {
-                    modal.setAttribute('status', 'showing')
-                })
-
-                modal.addEventListener('hidden.bs.modal', () => {
-                    modal.setAttribute('status', 'hidden')
-                    // if there any pendient updates in the UI, update it
-                    if(status_app.pending_updates){
-                        htmx.ajax('GET', '/statuses', '#chats-and-more')
-                        .then( () => {
-                            status_app.pending_updates = false
-                        })
-                    }
-                })
-
-
-            })
+            // logic there
+            window.user_statuses_caller = document.querySelector('#user-status-caller')
+            window.user_status_modal = document.querySelector(`#user-status-modal${user_id}`)
+            window.contacts_status_modals = document.querySelectorAll('.contact-status-modal')
+            window.status_deletion_buttons = document.querySelectorAll('.status-deletion')
+            window.contacts_with_statuses_caller = document.querySelectorAll('.contact-status-caller')
+            window.carousel = null
+            window.carousel_instance = null
         }
 
     }
@@ -533,6 +467,64 @@ status_websocket.addEventListener('open', () => {
     window.status_app = {
         pending_updates : false
     }
+    window.delete_status = function(button){
+        status_websocket.send(JSON.stringify({
+            'type':'DELETE',
+            'user_id': button.dataset.creator,
+            'status_id': button.dataset.status
+        }))
+        console.log('FRONT-END SENT:')
+        console.log(`user:${button.dataset.creator}\nstatus:${button.dataset.status}`)
+        console.log('NEXT STATUS')
+        if (carousel_instance !== null){
+            carousel_instance.next()
+        }
+    }
+    window.init_contacts_statuses_carousel = function(){
+    // statuses carousel initialitation
+    contacts_with_statuses_caller.forEach( async contact => {
+        contact.onclick =  async () => {
+            carousel = document.querySelector(`#contact${contact.dataset.contact}status`)
+
+            carousel_instance = new bootstrap.Carousel(carousel, {
+            interval: 5000,
+            touch: false
+            })
+            console.log('INITIALIZED')
+            }
+        })
+    }
+    window.init_user_statuses_carousel = function(){
+        user_statuses_caller.onclick = async () => {
+            carousel = document.querySelector('#UserStatusesCarousel')
+    
+            carousel_instance = new bootstrap.Carousel(carousel, {
+            interval: 5000,
+            touch: false
+            })
+            console.log('INITIALIZED USER CAROUSEL')
+    
+        }
+
+    }
+
+    window.show_modal = function(modal){
+        modal.setAttribute('status', 'showing')
+        console.log('CHANGED TO SHOWING')
+    }
+    window.hide_modal = function(modal){
+        modal.setAttribute('status', 'hidden')
+        // if there any pendient updates in the UI, update it
+        if(status_app.pending_updates){
+            htmx.ajax('GET', '/statuses', '#chats-and-more')
+            .then( () => {
+                status_app.pending_updates = false
+            })
+        }
+        console.log('CHANGED TO HIDDEN')
+    }
+
+
 })
 
 status_websocket.addEventListener('message', async (event) => {
