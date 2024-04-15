@@ -81,8 +81,6 @@ def archive_chat(request, chat_id, archive):
 
 def display_user_ui(request):
     chats = request.user.chats.all()
-    chat_form = ChatForm(initial={"users": request.user})
-    contact_form = ContactForm(initial={"created_by": request.user})
     contacts = request.user.contact_set.all().order_by("name")
     print(request.user.has_photo)
     print(f"User:{request.user.get_username()}")

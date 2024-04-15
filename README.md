@@ -52,6 +52,8 @@ Also don't forget to change the channel layer to redis.
 
 - **OPTIMIZE REQUESTS**:
   - Combine related request views so the server calls reduce and do two jobs in the same response.
+    - Check why /chats/ endpoint is so slow.
+    - Implement unmute and mute contact statuses views in one view.
   - Reduce the HTMX responsability and use consumers.
   - Re think if consumers should create contacts or create another consumer for that (i don't think so).....
 - Check what happens when contact user send a message and htmx.ajax runs anyway.
@@ -60,8 +62,6 @@ Also don't forget to change the channel layer to redis.
 - Check and compare all the whatsapp web features with this project features.
 - Review all the code and delete spaguetti code.
 - Implement all of these features at [dj-chat](https://github.com/adilmohak/dj-chat?tab=readme-ov-file#current-features)
-- Implement script tag that has type module and the script from register.js
-  - This script tag needs to be after the form tag.
 - Delete all console.logs
 
 ## BUGS TO FIX
