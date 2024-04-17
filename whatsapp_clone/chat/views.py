@@ -209,10 +209,12 @@ def update_chat_form(request):
 def get_statuses(request):
     contacts_statuses = get_contacts_statuses(request.user, False)
     muted_contacts_statuses = get_contacts_statuses(request.user, True)
-    
+
     # Query for statuses uploaded by the user
-    user_statuses = Status.objects.filter(uploaded_by=request.user).order_by('upload_date')
-    
+    user_statuses = Status.objects.filter(uploaded_by=request.user).order_by(
+        "upload_date"
+    )
+
     return render(
         request,
         "layouts/partials/statuses.html",
@@ -222,8 +224,6 @@ def get_statuses(request):
             "muted_contacts_with_statuses": muted_contacts_statuses,
         },
     )
-
-
 
 
 def mute_contact_statuses(request, contact_id):
@@ -274,4 +274,3 @@ def create_status(request):
             new_status.save()
 
     return redirect("statuses")
-

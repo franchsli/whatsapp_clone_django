@@ -3,6 +3,7 @@ from .models import User, Chat, Message, Contact, Status
 from phonenumber_field.phonenumber import PhoneNumber
 from .exceptions import *
 
+
 def get_user_by_id(user_id: Union[str, int]) -> Union[object, Exception]:
     """Returns the user in the database found with the given id,
     raises an exception if not found
@@ -17,7 +18,7 @@ def get_user_by_id(user_id: Union[str, int]) -> Union[object, Exception]:
         return User.objects.get(id=user_id)
     except User.DoesNotExist:
         raise UserNotFoundException("NO USER FOUND WITH SUCH ID")
-    
+
 
 def get_user_by_phone(phone_number: str) -> Union[object, Exception]:
     """Returns the user in the database found with the given phone_number,
@@ -33,7 +34,7 @@ def get_user_by_phone(phone_number: str) -> Union[object, Exception]:
         return User.objects.get(phone_number=phone_number)
     except User.DoesNotExist:
         raise UserNotFoundException("NO USER FOUND WITH SUCH PHONE")
-    
+
 
 def create_contact(contact_name: str, contact_phone_number: str, creator: User) -> None:
     """Creates and stores a new contact object in the database.
@@ -47,7 +48,8 @@ def create_contact(contact_name: str, contact_phone_number: str, creator: User) 
         name=contact_name, phone_number=phone.as_e164, created_by=creator
     )
 
-def get_user_contacts(user_id: Union[str, int], desired_value:str) -> List[Contact]:
+
+def get_user_contacts(user_id: Union[str, int], desired_value: str) -> List[Contact]:
     """Returns all the contacts desired values (fields) of the User with the given id.
 
     Args:
@@ -60,8 +62,9 @@ def get_user_contacts(user_id: Union[str, int], desired_value:str) -> List[Conta
     user_instance = User.objects.get(id=user_id)
     return list(user_instance.contact_set.values_list(desired_value, flat=True))
 
-def contact_from_user(user:User, contact_phone_number: str) -> Union[Contact, None]:
-    """Returns the contact with the provided phone number from the given User. 
+
+def contact_from_user(user: User, contact_phone_number: str) -> Union[Contact, None]:
+    """Returns the contact with the provided phone number from the given User.
 
     Args:
         user (User): The User that created the contact.
@@ -96,7 +99,8 @@ def get_contact_in_chat(chat: Chat, logged_user: User) -> Union[Contact, None]:
         print("CONTACT NOT FOUND!")
         return None
 
-def get_contacts_statuses(user:User, muted:bool) -> dict:
+
+def get_contacts_statuses(user: User, muted: bool) -> dict:
     contacts = user.contact_set.filter(statuses_muted=muted)
     # Query for statuses uploaded by the user or the user's contacts
     contact_phone_numbers = contacts.values_list("phone_number", flat=True)
