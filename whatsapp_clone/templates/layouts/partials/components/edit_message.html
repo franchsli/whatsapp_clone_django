@@ -1,7 +1,8 @@
 {% load static %}
 {% load crispy_forms_tags %}
 
-<form id="edit-message-form" hx-post="{% url 'edit_message' message.id %}" hx-target="this" hx-swap="outerHTML" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' enctype="multipart/form-data">
+<form id="edit-message-form" hx-post="{% url 'edit_message' message.id %}" hx-target="this" hx-swap="outerHTML"
+    hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' enctype="multipart/form-data">
     {{ message_form | crispy }}
     <button id="submit-message-form" class="btn" type="submit">Submit</button>
     <button class="btn" hx-get="{% url 'get_message' message.id %}">Cancel</button>

@@ -1,7 +1,8 @@
 {% load static %}
 
-<ul id="contact-list" class="scroll-section list-group list-group-flush overflow-y-scroll" style="max-height: 615px; height: 500px;">
-    {% for contact in contacts %}
-      {% include 'layouts/partials/components/contact.html' %}
-    {% endfor %}
-  </ul>
+<ul id="contact-list" class="scroll-section list-group list-group-flush overflow-y-scroll"
+  style="max-height: 615px; height: 500px;">
+  {% for contact in contacts %}
+  {% include 'layouts/partials/components/contact.html' %}
+  {% endfor %}
+</ul>

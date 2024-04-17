@@ -1,13 +1,15 @@
-  <div id="chat-validation-message" class="validation-error" ></div>
-  <ul id="new-chat-contact-select-inputs" class="scroll-section list-group list-group-flush overflow-y-scroll" style="max-height: 615px;">
+<div id="chat-validation-message" class="validation-error"></div>
+<ul id="new-chat-contact-select-inputs" class="scroll-section list-group list-group-flush overflow-y-scroll"
+  style="max-height: 615px;">
   {% for contact in contacts %}
-    <li class="list-group-item p-3  d-flex flex-inline align-items-center contact" role="button" data-contact={{contact.id}} >
-      <input type="checkbox" class="form-check-input" id="{{ contact.phone_number }}" data-contact-name={{contact.name}}>
-      <label class="form-check-label ms-3" for={{ contact.phone_number }}>{{contact.name}}</label>
-    </li>
+  <li class="list-group-item p-3  d-flex flex-inline align-items-center contact" role="button"
+    data-contact={{contact.id}}>
+    <input type="checkbox" class="form-check-input" id="{{ contact.phone_number }}" data-contact-name={{contact.name}}>
+    <label class="form-check-label ms-3" for={{ contact.phone_number }}>{{contact.name}}</label>
+  </li>
   {% empty %}
-    <h1 class="text-white-50">No contacts <i class="bi bi-emoji-frown"></i></h1>
+  <h1 class="text-white-50">No contacts <i class="bi bi-emoji-frown"></i></h1>
   {% endfor %}
-  </ul>
-  <button type="submit" class="btn btn-success float-end mt-3">Create chat</button>
-  <button type="button" class="btn btn-secondary float-end mt-3 me-3" data-bs-dismiss="modal">Close</button>
+</ul>
+<button type="submit" class="btn btn-success float-end mt-3">Create chat</button>
+<button type="button" class="btn btn-secondary float-end mt-3 me-3" data-bs-dismiss="modal">Close</button>

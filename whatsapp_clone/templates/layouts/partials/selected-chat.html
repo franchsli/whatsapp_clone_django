@@ -1,68 +1,84 @@
 {% load static %}
 {% load filters %}
 
-  <nav class="navbar bg-body-tertiary justify-content-between">
-    <div class="d-flex align-items-center ms-3 col-6" role="button">
-      {% comment "chat contact info" %}{% endcomment %}
-      <img id="contact-picture" class="rounded-circle img-fluid" src="{% get_contact_in_chat chat.users.all request.user 'photo' %}" alt="" style="max-width: 50px;">
-      <p class="ms-3 my-auto" id="contact-name">{% get_contact_in_chat chat.users.all request.user 'name' %}</p>
-    </div>
-      {% comment "settings or details of contacts" %}{% endcomment %}
-      <div class="d-flex align-items-center">
-        <form class="d-flex me-3" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search message..." aria-label="Search"
-          _="on keyup show <li/> in #chat-messages
+<nav class="navbar bg-body-tertiary justify-content-between">
+  <div class="d-flex align-items-center ms-3 col-6" role="button">
+    {% comment "chat contact info" %}{% endcomment %}
+    <img id="contact-picture" class="rounded-circle img-fluid"
+      src="{% get_contact_in_chat chat.users.all request.user 'photo' %}" alt="" style="max-width: 50px;">
+    <p class="ms-3 my-auto" id="contact-name">{% get_contact_in_chat chat.users.all request.user 'name' %}</p>
+  </div>
+  {% comment "settings or details of contacts" %}{% endcomment %}
+  <div class="d-flex align-items-center">
+    <form class="d-flex me-3" role="search">
+      <input class="form-control me-2" type="search" placeholder="Search message..." aria-label="Search" _="on keyup show <li/> in #chat-messages
           when it's innerHTML contains my value">
-          <button class="btn btn-outline-success" type="submit"><i class="bi bi-search"></i></button>
-        </form>
-        <button class="btn rounded-fill action me-3" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-three-dots-vertical"></i></button>
-        <ul class="dropdown-menu">
-          <li class="dropdown-item"><button class="btn">View Contact</button></li>
-          <li class="dropdown-item"><button class="btn">Media, links and docs</button></li>
-          <li class="dropdown-item"><button class="btn">Mute notifications</button></li>
-          <li class="dropdown-item"><button class="btn">Disappearing messages</button></li>
-          <li class="dropdown-item"><button class="btn">Wallpaper</button></li>
-          <li class="dropdown-item"><button class="btn">More...</button></li>
-        </ul>
+      <button class="btn btn-outline-success" type="submit"><i class="bi bi-search"></i></button>
+    </form>
+    <button class="btn rounded-fill action me-3" data-bs-toggle="dropdown" aria-expanded="false"><i
+        class="bi bi-three-dots-vertical"></i></button>
+    <ul class="dropdown-menu">
+      <li class="dropdown-item"><button class="btn">View Contact</button></li>
+      <li class="dropdown-item"><button class="btn">Media, links and docs</button></li>
+      <li class="dropdown-item"><button class="btn">Mute notifications</button></li>
+      <li class="dropdown-item"><button class="btn">Disappearing messages</button></li>
+      <li class="dropdown-item"><button class="btn">Wallpaper</button></li>
+      <li class="dropdown-item"><button class="btn">More...</button></li>
+    </ul>
+  </div>
+</nav>
+{% comment "messages in the chat with the contact" %}{% endcomment %}
+{% include 'layouts/partials/components/messages.html' %}
+
+{% comment "send message" %}{% endcomment %}
+<footer class="d-flex flex-inline align-items-center bg-body-tertiary p-1">
+  <div class="btn-group dropup">
+    <button class="btn p-3" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-emoji-smile"></i>
+    </button>
+    <ul id="emojis-ui" class="dropdown-menu scroll-section overflow-y-scroll"
+      style="min-height: 350px; max-height: 350px; min-width: 1000px;">
+      <div class="d-flex flex-row align-items-center mb-3">
+        <button onclick="event.stopPropagation(); switch_emojis(this);"
+          class="btn emoji-class-button emoji-class-active d-flex flex-fill justify-content-center p-1"
+          data-emoji-pack="smileys-and-people">Smileys and people😃🙌</button>
+        <button onclick="event.stopPropagation(); switch_emojis(this);"
+          class="btn emoji-class-button d-flex flex-fill justify-content-center p-1"
+          data-emoji-pack="animals-and-nature">Animals 🐻</button>
+        <button onclick="event.stopPropagation(); switch_emojis(this);"
+          class="btn emoji-class-button d-flex flex-fill justify-content-center p-1"
+          data-emoji-pack="food-and-drink">Food 🍔</button>
+        <button onclick="event.stopPropagation(); switch_emojis(this);"
+          class="btn emoji-class-button d-flex flex-fill justify-content-center p-1"
+          data-emoji-pack="activities">Activity ⚽</button>
+        <button onclick="event.stopPropagation(); switch_emojis(this);"
+          class="btn emoji-class-button d-flex flex-fill justify-content-center p-1"
+          data-emoji-pack="travel-and-places">Travel and places 🚀</button>
+        <button onclick="event.stopPropagation(); switch_emojis(this);"
+          class="btn emoji-class-button d-flex flex-fill justify-content-center p-1" data-emoji-pack="objects">Objects
+          💡</button>
+        <button onclick="event.stopPropagation(); switch_emojis(this);"
+          class="btn emoji-class-button d-flex flex-fill justify-content-center p-1" data-emoji-pack="symbols">Symbols
+          💕</button>
+        <button onclick="event.stopPropagation(); switch_emojis(this);"
+          class="btn emoji-class-button d-flex flex-fill justify-content-center p-1" data-emoji-pack="flags">Flags
+          🎌</button>
       </div>
-  </nav>
-  {% comment "messages in the chat with the contact" %}{% endcomment %}
-  {% include 'layouts/partials/components/messages.html' %}
 
-  {% comment "send message" %}{% endcomment %}
-  <footer class="d-flex flex-inline align-items-center bg-body-tertiary p-1">
-    <div class="btn-group dropup">
-      <button class="btn p-3" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-        <i class="bi bi-emoji-smile"></i>
-      </button>
-      <ul id="emojis-ui" class="dropdown-menu scroll-section overflow-y-scroll" style="min-height: 350px; max-height: 350px; min-width: 1000px;">
-        <div class="d-flex flex-row align-items-center mb-3">
-          <button onclick="event.stopPropagation(); switch_emojis(this);" class="btn emoji-class-button emoji-class-active d-flex flex-fill justify-content-center p-1" data-emoji-pack="smileys-and-people">Smileys and people😃🙌</button>
-          <button onclick="event.stopPropagation(); switch_emojis(this);" class="btn emoji-class-button d-flex flex-fill justify-content-center p-1" data-emoji-pack="animals-and-nature">Animals 🐻</button>
-          <button onclick="event.stopPropagation(); switch_emojis(this);" class="btn emoji-class-button d-flex flex-fill justify-content-center p-1" data-emoji-pack="food-and-drink">Food 🍔</button>
-          <button onclick="event.stopPropagation(); switch_emojis(this);" class="btn emoji-class-button d-flex flex-fill justify-content-center p-1" data-emoji-pack="activities">Activity ⚽</button>
-          <button onclick="event.stopPropagation(); switch_emojis(this);" class="btn emoji-class-button d-flex flex-fill justify-content-center p-1" data-emoji-pack="travel-and-places">Travel and places 🚀</button>
-          <button onclick="event.stopPropagation(); switch_emojis(this);" class="btn emoji-class-button d-flex flex-fill justify-content-center p-1" data-emoji-pack="objects">Objects 💡</button>
-          <button onclick="event.stopPropagation(); switch_emojis(this);" class="btn emoji-class-button d-flex flex-fill justify-content-center p-1" data-emoji-pack="symbols">Symbols 💕</button>
-          <button onclick="event.stopPropagation(); switch_emojis(this);" class="btn emoji-class-button d-flex flex-fill justify-content-center p-1" data-emoji-pack="flags">Flags 🎌</button>
-        </div>
+      <div id="emojis-container">
+        <!-- ========== EMOJIS HERE ========== -->
+      </div>
 
-        <div id="emojis-container">
-           <!-- ========== EMOJIS HERE ========== -->
-        </div>
-  
-      </ul>
-    </div>
-    <label for="imageInput" class="custom-file-input">
-      <h5 class="p-3" role="button"><i class="bi bi-plus"></i></h5>
-    </label>
-    <input type="file" id="imageInput" name="image" accept="image/*" style="display: none;">
-    <div class="d-flex flex-column w-100">
-      <div id="imagePreview" class="d-flex align-items-center justify-content-center"></div>
-      <input id="new-message" class="form-control" type="text" name="new-message">
-    </div>
-    <h5 id="send-message-button" class="p-3" role="button"><i class="bi bi-send"></i></h5>
-    <h5 class="p-3" role="button"><i class="bi bi-mic"></i></h5>
-  </footer>
-
-
+    </ul>
+  </div>
+  <label for="imageInput" class="custom-file-input">
+    <h5 class="p-3" role="button"><i class="bi bi-plus"></i></h5>
+  </label>
+  <input type="file" id="imageInput" name="image" accept="image/*" style="display: none;">
+  <div class="d-flex flex-column w-100">
+    <div id="imagePreview" class="d-flex align-items-center justify-content-center"></div>
+    <input id="new-message" class="form-control" type="text" name="new-message">
+  </div>
+  <h5 id="send-message-button" class="p-3" role="button"><i class="bi bi-send"></i></h5>
+  <h5 class="p-3" role="button"><i class="bi bi-mic"></i></h5>
+</footer>

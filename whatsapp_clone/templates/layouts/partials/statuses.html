@@ -3,186 +3,219 @@
 {% load crispy_forms_tags %}
 
 <nav class="d-flex align-items-center justify-content-between bg-body-tertiary">
-    <div class="row d-flex align-items-center p-3">
-        <button class="action btn col-auto ms-2" hx-get="{% url 'display_user_ui' %}" hx-target="#chats-and-more"><i class="bi bi-arrow-left"></i></button>
-        <span class="col-auto fs-5">Status</span>
-    </div>
+  <div class="row d-flex align-items-center p-3">
+    <button class="action btn col-auto ms-2" hx-get="{% url 'display_user_ui' %}" hx-target="#chats-and-more"><i
+        class="bi bi-arrow-left"></i></button>
+    <span class="col-auto fs-5">Status</span>
+  </div>
 </nav>
 
 
 {% comment "My status" %}{% endcomment %}
-<div onclick="show_modal(document.querySelector(`#user-status-modal{{ request.user.id }}`)); init_status_carousel(document.querySelector('#UserStatusesCarousel'))" id="user-status-caller" class="contact mt-3 d-flex flex-row" role="button" type="button" data-bs-toggle="modal" data-bs-target="#user-status-modal{{ request.user.id }}">
-    <div class="p-2" id="profile-pic" data-user={{request.user.id}} data-username={{request.user.username}}>
-        {% if request.user.has_photo %}
-          <img class="ms-3 rounded-circle img-fluid" src="{{request.user.photo.url}}" alt="" style="max-width: 50px;" role="button">
-        {% else %}
-          <img class="ms-3 rounded-circle img-fluid" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNBNdcMDNS2r9df1IWFVc8AY0QNtfNhEJv7fGS5TdhUWrlBqfGu1PCCn9lKpL-FqF9dWc&usqp=CAU" alt="" style="max-width: 50px;" role="button">
-        {% endif %}
+<div
+  onclick="show_modal(document.querySelector(`#user-status-modal{{ request.user.id }}`)); init_status_carousel(document.querySelector('#UserStatusesCarousel'))"
+  id="user-status-caller" class="contact mt-3 d-flex flex-row" role="button" type="button" data-bs-toggle="modal"
+  data-bs-target="#user-status-modal{{ request.user.id }}">
+  <div class="p-2" id="profile-pic" data-user={{request.user.id}} data-username={{request.user.username}}>
+    {% if request.user.has_photo %}
+    <img class="ms-3 rounded-circle img-fluid" src="{{request.user.photo.url}}" alt="" style="max-width: 50px;"
+      role="button">
+    {% else %}
+    <img class="ms-3 rounded-circle img-fluid"
+      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNBNdcMDNS2r9df1IWFVc8AY0QNtfNhEJv7fGS5TdhUWrlBqfGu1PCCn9lKpL-FqF9dWc&usqp=CAU"
+      alt="" style="max-width: 50px;" role="button">
+    {% endif %}
+  </div>
+  <div class="d-flex justify-content-between w-75">
+    <div class="d-flex flex-column ms-3 w-100">
+      <span class="col-auto fs-6 mt-2">My status</span>
+      <span class="col-auto fs-6">No updates</span>
     </div>
-    <div class="d-flex justify-content-between w-75">
-        <div class="d-flex flex-column ms-3 w-100">
-            <span class="col-auto fs-6 mt-2">My status</span>
-            <span class="col-auto fs-6">No updates</span>
-        </div>
-        <button class="btn action" type="button" data-bs-toggle="modal" data-bs-target="#CreateStatusModal"><span class="fs-4"><i class="bi bi-plus-circle-dotted"></i></span></button>
-    </div>
+    <button class="btn action" type="button" data-bs-toggle="modal" data-bs-target="#CreateStatusModal"><span
+        class="fs-4"><i class="bi bi-plus-circle-dotted"></i></span></button>
+  </div>
 </div>
 
 
 
-<div class="modal fade status-modal" id="user-status-modal{{ request.user.id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="status-modal{{ request.user.id }}Label" aria-hidden="true" status>
+<div class="modal fade status-modal" id="user-status-modal{{ request.user.id }}" data-bs-backdrop="static"
+  data-bs-keyboard="false" tabindex="-1" aria-labelledby="status-modal{{ request.user.id }}Label" aria-hidden="true"
+  status>
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-      <h1 class="modal-title fs-5" id="status-modal{{ status.id }}Label">Status</h1>
-      <button onclick="hide_modal(document.querySelector(`#user-status-modal{{ request.user.id }}`))" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h1 class="modal-title fs-5" id="status-modal{{ status.id }}Label">Status</h1>
+        <button onclick="hide_modal(document.querySelector(`#user-status-modal{{ request.user.id }}`))" type="button"
+          class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-          <!-- ========== Status Carousel========== -->
-          <div id="UserStatusesCarousel" class="carousel slide" data-bs-ride="carousel">
-              <div class="carousel-indicators">
-                {% for status in user_statuses %}
-                  {% if forloop.first %}
-                    <button type="button" data-bs-target="#UserStatusesCarousel" data-bs-slide-to="{{forloop.counter0}}" class="active" aria-current="true" aria-label="Slide {{forloop.counter}}"></button>
-                  {% else %}
-                    <button type="button" data-bs-target="#UserStatusesCarousel" data-bs-slide-to="{{forloop.counter0}}" aria-label="Slide {{forloop.counter}}"></button>
-                  {% endif %}
-                {% endfor %}
+        <!-- ========== Status Carousel========== -->
+        <div id="UserStatusesCarousel" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-indicators">
+            {% for status in user_statuses %}
+            {% if forloop.first %}
+            <button type="button" data-bs-target="#UserStatusesCarousel" data-bs-slide-to="{{forloop.counter0}}"
+              class="active" aria-current="true" aria-label="Slide {{forloop.counter}}"></button>
+            {% else %}
+            <button type="button" data-bs-target="#UserStatusesCarousel" data-bs-slide-to="{{forloop.counter0}}"
+              aria-label="Slide {{forloop.counter}}"></button>
+            {% endif %}
+            {% endfor %}
+          </div>
+          <div class="carousel-inner">
+            {% for status in user_statuses %}
+            {% if forloop.first %}
+            <div class="carousel-item active">
+              {% else %}
+              <div class="carousel-item">
+                {% endif %}
+                <button onclick="delete_status(this)" type="button" class="btn delete-action mx-1 status-deletion"
+                  data-status="{{status.id}}" data-creator="{{request.user.id}}">Delete <i
+                    class="bi bi-trash"></i></button>
+                {% if status.has_image and status.has_text is True %}
+                <img src="{{status.image.url}}" class="d-block w-100" alt="">
+                <div class="carousel-status d-none d-md-flex">
+                  <p>{{status.text}}</p>
+                </div>
+                {% elif status.has_image %}
+                <img src="{{status.image.url}}" class="d-block w-100" alt="">
+                {% else %}
+                <div class="text-status d-none d-md-flex">
+                  <p>{{status.text}}</p>
+                </div>
+                {% endif %}
               </div>
-              <div class="carousel-inner">
-                {% for status in user_statuses %}
-                  {% if forloop.first %}
-                    <div class="carousel-item active">
-                  {% else %}
-                    <div class="carousel-item">
-                  {% endif %}
-                  <button onclick="delete_status(this)" type="button" class="btn delete-action mx-1 status-deletion" data-status="{{status.id}}" data-creator="{{request.user.id}}">Delete <i class="bi bi-trash"></i></button>
-                    {% if status.has_image and status.has_text is True %}
-                      <img src="{{status.image.url}}" class="d-block w-100" alt="">
-                      <div class="carousel-status d-none d-md-flex">
-                        <p>{{status.text}}</p>
-                      </div>
-                    {% elif status.has_image %}
-                    <img src="{{status.image.url}}" class="d-block w-100" alt="">
-                    {% else %}
-                    <div class="text-status d-none d-md-flex">
-                      <p>{{status.text}}</p>
-                    </div>
-                    {% endif %}
-                    </div>
-                {% endfor %}
+              {% endfor %}
 
-              <button class="carousel-control-prev" type="button" data-bs-target="#UserStatusesCarousel" data-bs-slide="prev">
+              <button class="carousel-control-prev" type="button" data-bs-target="#UserStatusesCarousel"
+                data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
               </button>
-              <button class="carousel-control-next" type="button" data-bs-target="#UserStatusesCarousel" data-bs-slide="next">
+              <button class="carousel-control-next" type="button" data-bs-target="#UserStatusesCarousel"
+                data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
               </button>
             </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
-</div>
-</div>
 
 
 
-<ul id="contact-statuses-list" class="scroll-section list-group list-group-flush overflow-y-scroll mt-3" style="max-height: 459px;">
-    {% for contact, statuses in contacts_with_statuses.items %}
-        <li class="list-group-item p-3  d-flex flex-inline align-items-center contact" role="button" data-contact="{{contact.id}}">
-            {% comment "status profile photo" %}{% endcomment %}
-            <img onclick="show_modal(document.querySelector(`#status-modal{{ contact.id }}`)); init_status_carousel(document.querySelector(`#contact{{contact.id}}status`));" class="ms-1 rounded-circle img-fluid contact-status-caller" src="{% get_contact_photo contact.phone_number %}" alt="" style="max-width: 45px;" data-contact="{{contact.id}}" type="button" data-bs-toggle="modal" data-bs-target="#status-modal{{ contact.id }}">
-            <div class="d-flex flex-column ms-3 w-100">
-              <div class="d-flex justify-content-between">
-                  <span>{{ contact.name }}</span>
-                  <button class="btn btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" onclick="run_element_animation(this.nextElementSibling);"></button>
-                  <ul class="dropdown-menu animated-dropdown">
-                  <li><span class="dropdown-item edit-action" hx-patch="{% url 'mute_contact_statuses' contact.id %}" hx-target="#chats-and-more" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'><i class="bi bi-volume-mute"></i> Mute contact</span></li>
-                  </ul>
-              </div>
-            </div>
-        </li>
-        
-        <!--Status Modal -->
-        <div class="modal fade contact-status-modal status-modal" id="status-modal{{ contact.id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="status-modal{{ contact.id }}Label" aria-hidden="true" status>
-          <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-              <div class="modal-header">
-              <h1 class="modal-title fs-5" id="status-modal{{ status.id }}Label">Status</h1>
-              <button onclick="hide_modal(document.querySelector(`#status-modal{{ contact.id }}`))" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                  <!-- ========== Status Carousel========== -->
-                  <div id="contact{{contact.id}}status" class="carousel slide contact-status" data-bs-ride="carousel">
-                      <div class="carousel-indicators">
-                        {% for status in statuses %}
-                          {% if forloop.first %}
-                            <button type="button" data-bs-target="#contact{{contact.id}}status" data-bs-slide-to="{{forloop.counter0}}" class="active" aria-current="true" aria-label="Slide {{forloop.counter}}"></button>
-                          {% else %}
-                            <button type="button" data-bs-target="#contact{{contact.id}}status" data-bs-slide-to="{{forloop.counter0}}" aria-label="Slide {{forloop.counter}}"></button>
-                          {% endif %}
-                        {% endfor %}
-                      </div>
-                      <div class="carousel-inner">
-                        {% for status in statuses %}
-                          {% if forloop.first %}
-                            <div class="carousel-item active">
-                          {% else %}
-                            <div class="carousel-item">
-                          {% endif %}
-                            {% if status.has_image and status.has_text is True %}
-                              <img src="{{status.image.url}}" class="d-block w-100" alt="">
-                              <div class="carousel-status d-none d-md-flex">
-                                <p>{{status.text}}</p>
-                              </div>
-                            {% elif status.has_image %}
-                            <img src="{{status.image.url}}" class="d-block w-100" alt="">
-                            {% else %}
-                            <div class="text-status d-none d-md-flex">
-                              <p>{{status.text}}</p>
-                            </div>
-                            {% endif %}
-                            </div>
-                        {% endfor %}
-
-                        <button class="carousel-control-prev" type="button" data-bs-target="#contact{{contact.id}}status" data-bs-slide="prev">
-                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                          <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#contact{{contact.id}}status" data-bs-slide="next">
-                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                          <span class="visually-hidden">Next</span>
-                        </button>
-                      </div>
-              </div>
-            </div>
-          </div>
-          </div>
-          </div>
+<ul id="contact-statuses-list" class="scroll-section list-group list-group-flush overflow-y-scroll mt-3"
+  style="max-height: 459px;">
+  {% for contact, statuses in contacts_with_statuses.items %}
+  <li class="list-group-item p-3  d-flex flex-inline align-items-center contact" role="button"
+    data-contact="{{contact.id}}">
+    {% comment "status profile photo" %}{% endcomment %}
+    <img
+      onclick="show_modal(document.querySelector(`#status-modal{{ contact.id }}`)); init_status_carousel(document.querySelector(`#contact{{contact.id}}status`));"
+      class="ms-1 rounded-circle img-fluid contact-status-caller" src="{% get_contact_photo contact.phone_number %}"
+      alt="" style="max-width: 45px;" data-contact="{{contact.id}}" type="button" data-bs-toggle="modal"
+      data-bs-target="#status-modal{{ contact.id }}">
+    <div class="d-flex flex-column ms-3 w-100">
+      <div class="d-flex justify-content-between">
+        <span>{{ contact.name }}</span>
+        <button class="btn btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"
+          onclick="run_element_animation(this.nextElementSibling);"></button>
+        <ul class="dropdown-menu animated-dropdown">
+          <li><span class="dropdown-item edit-action" hx-patch="{% url 'mute_contact_statuses' contact.id %}"
+              hx-target="#chats-and-more" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'><i
+                class="bi bi-volume-mute"></i> Mute contact</span></li>
+        </ul>
       </div>
-    {% empty %}
-        <li class="d-flex align-items-center justify-content-center"><span>No statuses.</span></li>
-    {% endfor %}
+    </div>
+  </li>
 
-    <li class="p-3 d-flex flex-inline align-items-center justify-content-between">
-      <span class="text-success">MUTED</span>
-      <button id="show-muted-statuses" class="btn text-success">Show</button>
-      <script>
-        toggle_muted_statuses_button = document.getElementById("show-muted-statuses")
-        muted_contacts_statuses = document.getElementById("muted-statuses-contact-list")
-        toggle_muted_statuses_button.onclick = function(){
-          toggle_element_inner_text(this, 'Show', 'Hide')
-          toggle_element_display(muted_contacts_statuses)
-        }
-      </script>
-    </li>
+  <!--Status Modal -->
+  <div class="modal fade contact-status-modal status-modal" id="status-modal{{ contact.id }}" data-bs-backdrop="static"
+    data-bs-keyboard="false" tabindex="-1" aria-labelledby="status-modal{{ contact.id }}Label" aria-hidden="true"
+    status>
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="status-modal{{ status.id }}Label">Status</h1>
+          <button onclick="hide_modal(document.querySelector(`#status-modal{{ contact.id }}`))" type="button"
+            class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- ========== Status Carousel========== -->
+          <div id="contact{{contact.id}}status" class="carousel slide contact-status" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+              {% for status in statuses %}
+              {% if forloop.first %}
+              <button type="button" data-bs-target="#contact{{contact.id}}status"
+                data-bs-slide-to="{{forloop.counter0}}" class="active" aria-current="true"
+                aria-label="Slide {{forloop.counter}}"></button>
+              {% else %}
+              <button type="button" data-bs-target="#contact{{contact.id}}status"
+                data-bs-slide-to="{{forloop.counter0}}" aria-label="Slide {{forloop.counter}}"></button>
+              {% endif %}
+              {% endfor %}
+            </div>
+            <div class="carousel-inner">
+              {% for status in statuses %}
+              {% if forloop.first %}
+              <div class="carousel-item active">
+                {% else %}
+                <div class="carousel-item">
+                  {% endif %}
+                  {% if status.has_image and status.has_text is True %}
+                  <img src="{{status.image.url}}" class="d-block w-100" alt="">
+                  <div class="carousel-status d-none d-md-flex">
+                    <p>{{status.text}}</p>
+                  </div>
+                  {% elif status.has_image %}
+                  <img src="{{status.image.url}}" class="d-block w-100" alt="">
+                  {% else %}
+                  <div class="text-status d-none d-md-flex">
+                    <p>{{status.text}}</p>
+                  </div>
+                  {% endif %}
+                </div>
+                {% endfor %}
 
-    {% include 'layouts/partials/muted_statuses.html' %}
-    
-      
-    </ul>
+                <button class="carousel-control-prev" type="button" data-bs-target="#contact{{contact.id}}status"
+                  data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#contact{{contact.id}}status"
+                  data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% empty %}
+  <li class="d-flex align-items-center justify-content-center"><span>No statuses.</span></li>
+  {% endfor %}
+
+  <li class="p-3 d-flex flex-inline align-items-center justify-content-between">
+    <span class="text-success">MUTED</span>
+    <button id="show-muted-statuses" class="btn text-success">Show</button>
+    <script>
+      toggle_muted_statuses_button = document.getElementById("show-muted-statuses")
+      muted_contacts_statuses = document.getElementById("muted-statuses-contact-list")
+      toggle_muted_statuses_button.onclick = function () {
+        toggle_element_inner_text(this, 'Show', 'Hide')
+        toggle_element_display(muted_contacts_statuses)
+      }
+    </script>
+  </li>
+
+  {% include 'layouts/partials/muted_statuses.html' %}
+
+
 </ul>
-
+</ul>

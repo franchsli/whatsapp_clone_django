@@ -6,9 +6,9 @@
 </div>
 
 
-  
- <!-- New Chat Form Modal -->
- <div class="modal fade" id="NewChat" tabindex="-1" aria-labelledby="NewChatLabel" aria-hidden="true">
+
+<!-- New Chat Form Modal -->
+<div class="modal fade" id="NewChat" tabindex="-1" aria-labelledby="NewChatLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
@@ -16,15 +16,15 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form id="chat-creation-form" hx-get="{% url 'update_chat_form' %}" hx-target="this" 
-        hx-trigger="load, click from:#create-chat">
+        <form id="chat-creation-form" hx-get="{% url 'update_chat_form' %}" hx-target="this"
+          hx-trigger="load, click from:#create-chat">
           {% include 'layouts/partials/chat_form_elements.html' %}
         </form>
 
         <script>
           const myForm = document.getElementById("chat-creation-form");
-          const observer = new MutationObserver(function(mutations) {
-            mutations.forEach(function(mutation) {
+          const observer = new MutationObserver(function (mutations) {
+            mutations.forEach(function (mutation) {
               if (mutation.type === "childList") {
                 // Form elements have changed
                 console.log('APPLIED')
@@ -32,10 +32,10 @@
               }
             });
           });
-        
+
           observer.observe(myForm, { childList: true }); // Observe for child list changes
         </script>
-        
+
       </div>
       <div class="modal-footer">
       </div>
@@ -54,13 +54,14 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-      <form id="contact-creation-form" hx-get="{% url 'get_contacts' %}" hx-target="#chats-and-contacts" hx-swap="innerHTML" hx-trigger="submit delay:250ms">
-        <div id="contact-validation-message" class="validation-error"></div>
-        {% csrf_token %}
-        {{ contact_form | crispy }}
-        <button class="btn btn-success float-end" type="submit">Create contact</button>
-        <button type="button" class="btn btn-secondary float-end me-3" data-bs-dismiss="modal">Close</button>
-      </form>
+        <form id="contact-creation-form" hx-get="{% url 'get_contacts' %}" hx-target="#chats-and-contacts"
+          hx-swap="innerHTML" hx-trigger="submit delay:250ms">
+          <div id="contact-validation-message" class="validation-error"></div>
+          {% csrf_token %}
+          {{ contact_form | crispy }}
+          <button class="btn btn-success float-end" type="submit">Create contact</button>
+          <button type="button" class="btn btn-secondary float-end me-3" data-bs-dismiss="modal">Close</button>
+        </form>
       </div>
       <div class="modal-footer">
       </div>
@@ -69,26 +70,27 @@
 </div>
 
 
-  <!--Status Modal Form -->
-  <div class="modal fade" id="CreateStatusModal" tabindex="-1" aria-labelledby="CreateStatusModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="CreateStatusModalLabel">Add Status</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form id="status_form" enctype="multipart/form-data">
-            <div id="status-validation-message" class="validation-error"></div>
-            {% csrf_token %}
-            {{ status_form | crispy }}
-            <div class="d-flex flex-column w-100">
-              <div id="status-imagePreview" class="d-flex align-items-center justify-content-center"></div>
-            </div>
-            <button id="status-submit" class="btn btn-success">Create status</button>
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-          </form>
-        </div>
+<!--Status Modal Form -->
+<div class="modal fade" id="CreateStatusModal" tabindex="-1" aria-labelledby="CreateStatusModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="CreateStatusModalLabel">Add Status</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="status_form" enctype="multipart/form-data">
+          <div id="status-validation-message" class="validation-error"></div>
+          {% csrf_token %}
+          {{ status_form | crispy }}
+          <div class="d-flex flex-column w-100">
+            <div id="status-imagePreview" class="d-flex align-items-center justify-content-center"></div>
+          </div>
+          <button id="status-submit" class="btn btn-success">Create status</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        </form>
       </div>
     </div>
   </div>
+</div>
