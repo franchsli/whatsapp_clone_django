@@ -77,6 +77,19 @@ class StatusTest(TestCase):
         self.assertTrue(Status.objects.filter(id=2).exists())
     
     def test_image_only_status_created(self):
-        self.create_status(2, self.user, image=ENCODED_IMAGE)
-        self.assertTrue(Status.objects.filter(id=2).exists())
+        self.create_status(3, self.user, image=ENCODED_IMAGE)
+        self.assertTrue(Status.objects.filter(id=3).exists())
+    
+    def test_status_text_only(self):
+        self.create_status(4, self.user, 'ADIOS MI GENTEEEEE')
+        status_instance = Status.objects.get(id=4)
+        self.assertTrue(status_instance.has_text and status_instance.has_image == False)
+    
+    def test_status_text_only(self):
+        self.create_status(5, self.user, image=ENCODED_IMAGE)
+        status_instance = Status.objects.get(id=5)
+        self.assertTrue(status_instance.has_image and status_instance.has_text == False)
+    
+
+
 
