@@ -33,7 +33,7 @@ to make the PATCH request for all the new messages] only if it is already False 
 - Add groups chats.
 - Redesign the login and register views.
 - Reconsider the exceptions.py file.
-- Add chat wallpapers.
+- Add chat wallpapers user CSS url for images and a JS color selector for colors.
 - Rework show_dropdown animation.
 - Make the silence contact logic (booleand field [think it bro])
 
