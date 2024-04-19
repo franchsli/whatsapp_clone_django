@@ -62,7 +62,7 @@ class Group(Chat):
             bool: True if the User is in the queryset of admins
             False otherwise.
         """
-        return User in self.admins
+        return user.group_chat.exists()
 
 
 class Message(models.Model):
