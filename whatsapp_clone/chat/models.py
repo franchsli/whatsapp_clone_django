@@ -52,6 +52,18 @@ class Group(Chat):
     def __str__(self) -> str:
         return self.name
 
+    def user_is_admin(self, user:User) -> bool:
+        """Returns if the provided user is an admin in the group
+
+        Args:
+            user (User): The user object
+
+        Returns:
+            bool: True if the User is in the queryset of admins
+            False otherwise.
+        """
+        return User in self.admins
+
 
 class Message(models.Model):
     sender_user = models.ForeignKey(User, on_delete=models.CASCADE)
