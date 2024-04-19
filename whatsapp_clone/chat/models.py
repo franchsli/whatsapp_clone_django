@@ -45,6 +45,13 @@ class Contact(models.Model):
 class Chat(models.Model):
     users = models.ManyToManyField(User, related_name="chats")
 
+class Group(Chat):
+    admins = models.ManyToManyField(User, related_name="group_chat")
+    name = models.CharField(max_length=72)
+
+    def __str__(self) -> str:
+        return self.name
+
 
 class Message(models.Model):
     sender_user = models.ForeignKey(User, on_delete=models.CASCADE)
