@@ -1,6 +1,7 @@
 from django import template
 from django.db.models import QuerySet
 from chat.models import Contact, User
+from chat.tools import DEFAULT_USER_PHOTO_URL
 from typing import Union
 import re
 
@@ -113,7 +114,7 @@ def get_contact_in_chat(user_set: QuerySet, auth_user: User, desired_value: str)
         if contact.has_photo:
             return contact.photo.url
         else:
-            return "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNBNdcMDNS2r9df1IWFVc8AY0QNtfNhEJv7fGS5TdhUWrlBqfGu1PCCn9lKpL-FqF9dWc&usqp=CAU"
+            return DEFAULT_USER_PHOTO_URL
 
 
 @register.simple_tag
@@ -130,7 +131,7 @@ def get_contact_photo(phone: str) -> str:
     if user.has_photo:
         return user.photo.url
     else:
-        return "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNBNdcMDNS2r9df1IWFVc8AY0QNtfNhEJv7fGS5TdhUWrlBqfGu1PCCn9lKpL-FqF9dWc&usqp=CAU"
+        return DEFAULT_USER_PHOTO_URL
 
 @register.simple_tag
 def only_emoji(text: str) -> bool:
