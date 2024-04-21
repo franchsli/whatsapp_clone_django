@@ -22,6 +22,7 @@ class CustomUserAdmin(UserAdmin):
 class ChatAdmin(admin.ModelAdmin):
     pass
 
+
 class GroupAdmin(admin.ModelAdmin):
     search_fields = ("name",)
     list_display = ("name",)

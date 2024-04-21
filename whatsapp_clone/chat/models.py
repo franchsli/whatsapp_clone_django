@@ -45,6 +45,7 @@ class Contact(models.Model):
 class Chat(models.Model):
     users = models.ManyToManyField(User, related_name="chats")
 
+
 class Group(Chat):
     admins = models.ManyToManyField(User, related_name="group_chat")
     name = models.CharField(max_length=72)
@@ -52,7 +53,7 @@ class Group(Chat):
     def __str__(self) -> str:
         return self.name
 
-    def user_is_admin(self, user:User) -> bool:
+    def user_is_admin(self, user: User) -> bool:
         """Returns if the provided user is an admin in the group
 
         Args:

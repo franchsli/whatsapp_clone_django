@@ -6,6 +6,7 @@ from django.core.files.base import ContentFile
 from .tools import ENCODED_IMAGE
 import base64
 
+
 # Create your tests here.
 class GroupTest(TestCase):
     def setUp(self) -> None:
@@ -16,10 +17,10 @@ class GroupTest(TestCase):
 
     def test_user_exists(self):
         self.assertTrue(User.objects.get(id=1).exists())
-    
+
     def test_user_is_not_admin(self):
         self.assertFalse(Group.objects.get(id=1).user_is_admin(User.objects.get(id=1)))
-    
+
     def test_user_is_admin(self):
         user_instance = User.objects.get(id=1)
         group_instance = Group.objects.get(id=1)
@@ -27,11 +28,12 @@ class GroupTest(TestCase):
         group_instance.save()
         self.assertTrue(Group.objects.get(id=1).user_is_admin(User.objects.get(id=1)))
 
+
 class StatusTest(TestCase):
     def create_status(
         self,
-        id:int,
-        status_creator:User,
+        id: int,
+        status_creator: User,
         text: Optional[str] = None,
         image: Optional[str] = None,
     ) -> None:
@@ -61,35 +63,30 @@ class StatusTest(TestCase):
         )
         self.status = Status.objects.create(id=1, uploaded_by=self.user)
 
-    
     def test_user_exists(self):
         self.assertTrue(User.objects.get(id=1).exists())
-    
+
     def test_status_exists(self):
         self.assertTrue(Status.objects.filter(id=1).exists())
 
     def test_blank_status_not_created(self):
         self.create_status(2, self.user)
         self.assertFalse(Status.objects.filter(id=2).exists())
-    
+
     def test_text_only_status_created(self):
-        self.create_status(2, self.user, 'HOLA MI GENTEEEEE')
+        self.create_status(2, self.user, "HOLA MI GENTEEEEE")
         self.assertTrue(Status.objects.filter(id=2).exists())
-    
+
     def test_image_only_status_created(self):
         self.create_status(3, self.user, image=ENCODED_IMAGE)
         self.assertTrue(Status.objects.filter(id=3).exists())
-    
+
     def test_status_text_only(self):
-        self.create_status(4, self.user, 'ADIOS MI GENTEEEEE')
+        self.create_status(4, self.user, "ADIOS MI GENTEEEEE")
         status_instance = Status.objects.get(id=4)
         self.assertTrue(status_instance.has_text and status_instance.has_image == False)
-    
+
     def test_status_text_only(self):
         self.create_status(5, self.user, image=ENCODED_IMAGE)
         status_instance = Status.objects.get(id=5)
         self.assertTrue(status_instance.has_image and status_instance.has_text == False)
-    
-
-
-
