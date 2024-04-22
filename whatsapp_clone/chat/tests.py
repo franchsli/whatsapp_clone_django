@@ -86,7 +86,12 @@ class StatusTest(TestCase):
         status_instance = Status.objects.get(id=4)
         self.assertTrue(status_instance.has_text and status_instance.has_image == False)
 
-    def test_status_text_only(self):
+    def test_status_image_only(self):
         self.create_status(5, self.user, image=ENCODED_IMAGE)
         status_instance = Status.objects.get(id=5)
         self.assertTrue(status_instance.has_image and status_instance.has_text == False)
+    
+    def test_full_status(self):
+        self.create_status(6, self.user, 'TEST', ENCODED_IMAGE)
+        status_instance = Status.objects.get(id=6)
+        self.assertTrue(status_instance.has_image and status_instance.has_text)
