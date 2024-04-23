@@ -3,6 +3,7 @@
 
 ## DO RIGHT NOW
 
+- **DO NOW** CHECK WHY THE USERS USERNAME AREN'T GETTING DISPLAYED.
 - **IMPORTANT** ADD TESTS FOR MESSAGE AND USER MODELS (HAS_IMAGE FUNC REWORK [LIKE STATUS HAS_IMAGE REWORK])
 - Modify the messages HTML and style to display the 'read' icon and the hour from the date.
 - Make it so when a message gets updated or deleted, the other user will be able to see the message edition.
@@ -25,13 +26,13 @@ PATCH request to update the 'read' field in the message model from False to True
 to make the PATCH request for all the new messages] only if it is already False [To prevent unnecesary API calls])).
   - The 'read' icon of the message will change depending on if the message is read or not.
 - Write tests for the exceptions and functions.
-- Rework search messages:
+- Rework messages list:
   - Add the whatsapp date tags in HTML in the normal chat and in the searching message UI.
   - Make it so every chat has days and days (model) has messages....
   - Or make a way to display a div telling the date if the  next message in the list have more than one day of difference
   or was send the next day (the div should be displayed over the said next message [under the current message.]
   and the div should only be displayed if the current message it's not the last.)
-- Add groups chats.
+- Add groups chats (front-end).
 - Redesign the login and register views.
 - Reconsider the exceptions.py file.
 - Add chat wallpapers user CSS url for images and a JS color selector for colors.

@@ -1,3 +1,5 @@
+"""Functions for global use."""
+
 from typing import Union, Optional, List
 from .models import User, Chat, Message, Contact, Status
 from phonenumber_field.phonenumber import PhoneNumber
