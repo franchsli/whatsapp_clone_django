@@ -3,7 +3,6 @@
 
 ## DO RIGHT NOW
 
-- **DO NOW** CHECK WHY THE USERS USERNAME AREN'T GETTING DISPLAYED.
 - **IMPORTANT** ADD TESTS FOR MESSAGE AND USER MODELS (HAS_IMAGE FUNC REWORK [LIKE STATUS HAS_IMAGE REWORK])
 - Modify the messages HTML and style to display the 'read' icon and the hour from the date.
 - Make it so when a message gets updated or deleted, the other user will be able to see the message edition.
@@ -65,6 +64,7 @@ Also don't forget to change the channel layer to redis.
 - Review all the code and delete spaguetti code.
 - Implement all of these features at [dj-chat](https://github.com/adilmohak/dj-chat?tab=readme-ov-file#current-features)
 - Delete all console.logs
+- Reformatte HTML code, PLEASE.
 
 ## BUGS TO FIX
 
