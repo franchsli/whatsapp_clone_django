@@ -3,7 +3,6 @@
 
 ## DO RIGHT NOW
 
-- **IMPORTANT** ADD TESTS FOR MESSAGE AND USER MODELS (HAS_IMAGE FUNC REWORK [LIKE STATUS HAS_IMAGE REWORK])
 - Modify the messages HTML and style to display the 'read' icon and the hour from the date.
 - Make it so when a message gets updated or deleted, the other user will be able to see the message edition.
   - When the message is updated or deleted, IT MUST reload the chat for both
@@ -24,7 +23,6 @@
 PATCH request to update the 'read' field in the message model from False to True [This makes the user needs to scroll down or up
 to make the PATCH request for all the new messages] only if it is already False [To prevent unnecesary API calls])).
   - The 'read' icon of the message will change depending on if the message is read or not.
-- Write tests for the exceptions and functions.
 - Rework messages list:
   - Add the whatsapp date tags in HTML in the normal chat and in the searching message UI.
   - Make it so every chat has days and days (model) has messages....
