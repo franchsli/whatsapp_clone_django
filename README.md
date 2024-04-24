@@ -65,6 +65,7 @@ Also don't forget to change the channel layer to redis.
 - Implement all of these features at [dj-chat](https://github.com/adilmohak/dj-chat?tab=readme-ov-file#current-features)
 - Delete all console.logs
 - Reformatte HTML code, PLEASE.
+- Use the logic to upload images with code in a function in tools.py
 
 ## BUGS TO FIX
 

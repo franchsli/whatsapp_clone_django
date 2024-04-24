@@ -8,6 +8,28 @@ import base64
 
 
 # Create your tests here.
+class UserTest(TestCase):
+    def setUp(self) -> None:
+        self.user = User.objects.create(
+            id=1, phone_number="3145538787", username="testfranch"
+        )
+    
+    def test_user_has_not_photo(self):
+        self.assertFalse(self.user.has_photo)
+    
+    def test_user_has_photo(self):
+        file_format, image_string_data = ENCODED_IMAGE.split(";base64,")
+        # Get the file format extension (png, jpg, jpeg, etc.)
+        file_extension = file_format.split("/")[-1]
+        image_bytes_data = base64.b64decode(image_string_data)
+        image_file = ContentFile(
+            image_bytes_data, f"user_photo.{file_extension}"
+        )
+        self.user.photo = image_file
+        self.user.save()
+        self.assertTrue(self.user.has_photo)
+
+        
 class GroupTest(TestCase):
     def setUp(self) -> None:
         user = User.objects.create(

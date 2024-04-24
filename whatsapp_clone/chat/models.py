@@ -15,10 +15,7 @@ class User(AbstractUser, UserManager):
 
     @property
     def has_photo(self):
-        try:
-            return self.photo.url
-        except ValueError:
-            return False
+        return True if self.photo else False
 
 
 class Contact(models.Model):
