@@ -75,10 +75,7 @@ class Message(models.Model):
 
     @property
     def has_image(self):
-        try:
-            return self.image.url
-        except ValueError:
-            return False
+        return True if self.image else False
 
 
 class Status(models.Model):
