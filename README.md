@@ -3,6 +3,7 @@
 
 ## DO RIGHT NOW
 
+- Reconsider the exceptions.py file. (check last Gemini chat and rework the Exceptions logic.)
 - Modify the messages HTML and style to display the 'read' icon and the hour from the date.
 - Make it so when a message gets updated or deleted, the other user will be able to see the message edition.
   - When the message is updated or deleted, IT MUST reload the chat for both
@@ -31,7 +32,6 @@ to make the PATCH request for all the new messages] only if it is already False 
   and the div should only be displayed if the current message it's not the last.)
 - Add groups chats (front-end).
 - Redesign the login and register views.
-- Reconsider the exceptions.py file.
 - Add chat wallpapers user CSS url for images and a JS color selector for colors.
 - Rework show_dropdown animation.
 - Make the silence contact logic (booleand field [think it bro])

@@ -2,6 +2,7 @@ from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.db import database_sync_to_async
 from .models import User, Chat, Message, Contact, Status
 from .tools import *
+from .custom_exceptions import *
 from django.utils import timezone
 from django.core.files.base import ContentFile
 from phonenumber_field.phonenumber import PhoneNumber

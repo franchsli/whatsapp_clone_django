@@ -3,7 +3,7 @@
 from typing import Union, Optional, List
 from .models import User, Chat, Message, Contact, Status
 from phonenumber_field.phonenumber import PhoneNumber
-from .exceptions import *
+from .custom_exceptions import *
 
 
 def get_user_by_id(user_id: Union[str, int]) -> Union[object, Exception]:
