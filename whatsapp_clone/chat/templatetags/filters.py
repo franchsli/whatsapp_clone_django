@@ -32,7 +32,7 @@ def to_list(value):
 
 @register.filter
 def last_message(value: QuerySet, data: str) -> str:
-    """Returns the latest message desired data in the provided value.
+    """Returns the latest message desired data in the provided value (messages Queryset).
 
     Args:
         value (Queryset): A queryset containing messages objects.
@@ -44,10 +44,10 @@ def last_message(value: QuerySet, data: str) -> str:
     messages_data = list(value.values_list(data, flat=True).order_by("date"))
 
     if data == "text":
-        # if the last message text is an empty string, return 'image'
         if len(messages_data) > 0 and len(messages_data[-1]) > 0:
             return messages_data[-1]
-
+        # if the last message text is an empty string,
+        # it means the last message is a Photo.
         elif len(messages_data) > 0 and len(messages_data[-1]) == 0:
             return "Photo 📷"
 
@@ -69,9 +69,13 @@ def exclude_user_tag(user_set: QuerySet, user: User, value: str) -> str:
     Returns:
         str: The user left after excluding the given user.
     """
-    user_list = list(user_set.values_list(value, flat=True))
-    comparison = user.username if value == "username" else user.phone_number
-    return user_list[1] if user_list[1] != comparison else user_list[0]
+    user_list = user_set.exclude(id=user.id)
+    users_values  = list(user_list.values_list(value, flat=True))
+    
+    if len(users_values) < 2:
+        return users_values[0] if value != 'phone_number' else users_values[0].national_number
+    else:
+        return users_values
 
 
 @register.simple_tag
