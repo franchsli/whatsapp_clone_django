@@ -3,12 +3,15 @@
 
 ## DO RIGHT NOW
 
+- Check why /chats/ endpoint is so slow sometimes.
+- Combine related request views so the server calls reduce and do two jobs in the same response.
+  - Implement unmute and mute contact statuses views in one view.
 - Reconsider the exceptions.py file. (check last Gemini chat and rework the Exceptions logic.)
 - Modify the messages HTML and style to display the 'read' icon and the hour from the date.
 - Make it so when a message gets updated or deleted, the other user will be able to see the message edition.
   - When the message is updated or deleted, IT MUST reload the chat for both
   of the users (if they have displayed the chat obviously)
-(add 'edited' field in message model to do this )
+  (add 'edited' field in message model to do this)
 - Test all statuses features.
 - Optimize filters.py code (ask an AI what's faster why and test it).
 - Test if edit/delete contact and delete chat works in any case (even right click).
@@ -50,10 +53,6 @@ READ THE CHATGPT Django Channels Websocket chat for IMPORTANT improvement.
 Also don't forget to change the channel layer to redis.
 
 - **OPTIMIZE REQUESTS**:
-  - Combine related request views so the server calls reduce and do two jobs in the same response.
-    - Check why /chats/ endpoint is so slow.
-    - Implement unmute and mute contact statuses views in one view.
-  - Reduce the HTMX responsability and use consumers.
   - Re think if consumers should create contacts or create another consumer for that (i don't think so).....
 - Check what happens when contact user send a message and htmx.ajax runs anyway.
     or deletion in real time. (This has to be with the way the chat  and it's message are displayed)
