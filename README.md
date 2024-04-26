@@ -14,7 +14,7 @@
 - Test if edit/delete contact and delete chat works in any case (even right click).
 - Restrict chat views (check if the request method is the correct one if not, raise an error).
 - [Implement tooltips](https://getbootstrap.com/docs/5.3/components/tooltips/)
-- Optimize the images size (whitout decreasing quality).
+- Optimize the images size (whithout decreasing quality if possible).
 - Add something to delete statuses automatically every 24 hours (cronjobs maybe).
 
 ## ANOTHER THINGS TO DO
@@ -31,7 +31,7 @@ to make the PATCH request for all the new messages] only if it is already False 
   or was send the next day (the div should be displayed over the said next message [under the current message.]
   and the div should only be displayed if the current message it's not the last.)
 - Add groups chats (front-end).
-- Redesign the login and register views.
+- Redesign the login and register views (CSS).
 - Add chat wallpapers user CSS url for images and a JS color selector for colors.
 - Rework show_dropdown animation.
 - Make the silence contact logic (booleand field [think it bro])
