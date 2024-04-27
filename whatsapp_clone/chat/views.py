@@ -226,24 +226,11 @@ def get_statuses(request):
     )
 
 
-def mute_contact_statuses(request, contact_id):
+def mute_contact_statuses(request, contact_id:Union[str, int], mute:bool):
     try:
         contact_to_mute = Contact.objects.get(id=contact_id)
-        contact_to_mute.statuses_muted = True
+        contact_to_mute.statuses_muted = True if mute == 'True' else False
         contact_to_mute.save()
-
-    except Contact.DoesNotExist:
-        print("CONTACT NOT FOUND WITH SUCH ID")
-
-    finally:
-        return redirect("statuses")
-
-
-def unmute_contact_statuses(request, contact_id):
-    try:
-        contact_to_unmute = Contact.objects.get(id=contact_id)
-        contact_to_unmute.statuses_muted = False
-        contact_to_unmute.save()
 
     except Contact.DoesNotExist:
         print("CONTACT NOT FOUND WITH SUCH ID")

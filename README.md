@@ -3,9 +3,6 @@
 
 ## DO RIGHT NOW
 
-- Check why /chats/ endpoint is so slow sometimes.
-- Combine related request views so the server calls reduce and do two jobs in the same response.
-  - Implement unmute and mute contact statuses views in one view.
 - Reconsider the exceptions.py file. (check last Gemini chat and rework the Exceptions logic.)
 - Modify the messages HTML and style to display the 'read' icon and the hour from the date.
 - Make it so when a message gets updated or deleted, the other user will be able to see the message edition.

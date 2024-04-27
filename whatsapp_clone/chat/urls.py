@@ -30,13 +30,9 @@ urlpatterns = [
     path("statuses/", views.get_statuses, name="statuses"),
     path("create_status/", views.create_status, name="create_status"),
     path(
-        "mute_contact_statuses/<int:contact_id>",
+        "mute_contact_statuses/<int:contact_id>/<str:mute>/",
         views.mute_contact_statuses,
         name="mute_contact_statuses",
     ),
-    path(
-        "unmute_contact_statuses/<int:contact_id>",
-        views.unmute_contact_statuses,
-        name="unmute_contact_statuses",
-    ),
+
 ]

@@ -18,7 +18,7 @@
                     onclick="run_element_animation(this.nextElementSibling)"></button>
                 <ul class="dropdown-menu animated-dropdown">
                     <li><span class="dropdown-item edit-action"
-                            hx-patch="{% url 'unmute_contact_statuses' contact.id %}" hx-target="#chats-and-more"
+                            hx-patch="{% url 'mute_contact_statuses' contact.id 'False' %}" hx-target="#chats-and-more"
                             hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'><i class="bi bi-volume-off"></i> Unmute
                             contact</span></li>
                 </ul>
