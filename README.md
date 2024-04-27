@@ -3,7 +3,13 @@
 
 ## DO RIGHT NOW
 
+- Find out if using match case in filters.py  get_contact_in_chat_tag() function is faster
+  than if-else statements
 - Reconsider the exceptions.py file. (check last Gemini chat and rework the Exceptions logic.)
+- **OPTIMIZE REQUESTS**:
+  - Re think if consumers should create contacts or create another consumer for that (i don't think so).....
+- Check what happens when contact user send a message and htmx.ajax runs anyway.
+    or deletion in real time. (This has to be with the way the chat  and it's message are displayed)
 - Modify the messages HTML and style to display the 'read' icon and the hour from the date.
 - Make it so when a message gets updated or deleted, the other user will be able to see the message edition.
   - When the message is updated or deleted, IT MUST reload the chat for both
@@ -48,10 +54,6 @@ to make the PATCH request for all the new messages] only if it is already False 
 READ THE CHATGPT Django Channels Websocket chat for IMPORTANT improvement.
 Also don't forget to change the channel layer to redis.
 
-- **OPTIMIZE REQUESTS**:
-  - Re think if consumers should create contacts or create another consumer for that (i don't think so).....
-- Check what happens when contact user send a message and htmx.ajax runs anyway.
-    or deletion in real time. (This has to be with the way the chat  and it's message are displayed)
 - Make it responsive (or maybe not).
 - Check and compare all the whatsapp web features with this project features.
 - Review all the code and delete spaguetti code.
