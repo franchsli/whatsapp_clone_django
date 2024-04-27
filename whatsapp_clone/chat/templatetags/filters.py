@@ -83,7 +83,7 @@ def get_contact_in_chat_tag(chat: Chat, auth_user: User, desired_value: str) -> 
     """Returns the contact in the chat desired data.
 
     Args:
-        chat (QuerySet): The queryset where the contact is.
+        chat (QuerySet): The Chat model where the contact is.
         auth_user (User): The authenticated user.
         desired_value (str): The desired field of the Contact model.
 

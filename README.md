@@ -10,7 +10,6 @@
   of the users (if they have displayed the chat obviously)
   (add 'edited' field in message model to do this)
 - Test all statuses features.
-- Optimize filters.py code (ask an AI what's faster why and test it).
 - Test if edit/delete contact and delete chat works in any case (even right click).
 - Restrict chat views (check if the request method is the correct one if not, raise an error).
 - [Implement tooltips](https://getbootstrap.com/docs/5.3/components/tooltips/)
