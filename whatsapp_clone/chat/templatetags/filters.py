@@ -1,7 +1,7 @@
 from django import template
 from django.db.models import QuerySet
-from chat.models import Contact, User
-from chat.tools import DEFAULT_USER_PHOTO_URL
+from chat.models import Contact, User, Chat
+from chat.tools import DEFAULT_USER_PHOTO_URL, get_contact_in_chat
 from typing import Union
 import re
 
@@ -79,46 +79,42 @@ def exclude_user_tag(user_set: QuerySet, user: User, value: str) -> str:
 
 
 @register.simple_tag
-def get_contact_in_chat(user_set: QuerySet, auth_user: User, desired_value: str) -> Union[str, bool, int]:
-    """Gets the contact in the chat desired data by excluding the auth user and using the left user
-    data to obtain the appropiate Contact model object desired value.
+def get_contact_in_chat_tag(chat: Chat, auth_user: User, desired_value: str) -> Union[str, bool, int]:
+    """Returns the contact in the chat desired data.
 
     Args:
-        user_set (QuerySet): The queryset where the contact is.
+        chat (QuerySet): The queryset where the contact is.
         auth_user (User): The authenticated user.
         desired_value (str): The desired field of the Contact model.
 
     Returns:
         Union[str, bool, int]: Either a string (name or phone number), or a bool (archived) or a int (id).
     """
-    phones_list = list(user_set.values_list("phone_number", flat=True))
-    result = (
-        phones_list[0] if auth_user.phone_number != phones_list[0] else phones_list[1]
-    )
-    contact_created_by_user = Contact.objects.filter(
-        created_by=auth_user, phone_number=result
-    ).exists()
-    if desired_value == "name" and contact_created_by_user:
-        contact = Contact.objects.get(created_by=auth_user, phone_number=result)
-        return contact.name
+    contact = get_contact_in_chat(chat, auth_user)
 
-    elif desired_value == "name" and contact_created_by_user == False:
-        return result
-
-    elif desired_value == "archived" and contact_created_by_user:
-        contact = Contact.objects.get(created_by=auth_user, phone_number=result)
-        return contact.archived
-
-    elif desired_value == "id" and contact_created_by_user:
-        contact = Contact.objects.get(created_by=auth_user, phone_number=result)
-        return contact.pk
-
-    elif desired_value == "photo":
-        contact = User.objects.get(phone_number=result)
-        if contact.has_photo:
-            return contact.photo.url
+    if contact:
+        if desired_value == "name":
+            return contact.name
+        elif desired_value == "archived":
+            return contact.archived
+        elif desired_value == "id":
+            return contact.pk
+        elif desired_value == "photo":
+            contact = User.objects.get(phone_number=contact.phone_number)
+            if contact.has_photo:
+                return contact.photo.url
+            else:
+                return DEFAULT_USER_PHOTO_URL
+    else:
+        users_model_phone = list(chat.users.values_list("phone_number", flat=True))
+        contact_user_model_phone = users_model_phone[0] if users_model_phone[0] != auth_user.phone_number else users_model_phone[1]
+        user = User.objects.get(phone_number=contact_user_model_phone)
+        if desired_value != "photo":
+            return user.phone_number
         else:
-            return DEFAULT_USER_PHOTO_URL
+            return user.photo.url if user.has_photo else DEFAULT_USER_PHOTO_URL
+
+
 
 
 @register.simple_tag
