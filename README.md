@@ -3,8 +3,6 @@
 
 ## DO RIGHT NOW
 
-- Find out if using match case in filters.py  get_contact_in_chat_tag() function is faster
-  than if-else statements
 - Reconsider the exceptions.py file. (check last Gemini chat and rework the Exceptions logic.)
 - **OPTIMIZE REQUESTS**:
   - Re think if consumers should create contacts or create another consumer for that (i don't think so).....
@@ -60,7 +58,7 @@ Also don't forget to change the channel layer to redis.
 - Implement all of these features at [dj-chat](https://github.com/adilmohak/dj-chat?tab=readme-ov-file#current-features)
 - Delete all console.logs
 - Reformatte HTML code, PLEASE.
-- Use the logic to upload images with code in a function in tools.py
+- Use the logic to create a image file with code in a function in tools.py.
 
 ## BUGS TO FIX
 
