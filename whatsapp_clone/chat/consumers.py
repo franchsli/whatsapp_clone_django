@@ -151,32 +151,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
         new_chat.users.set(users)
         new_chat.save()
 
-    @database_sync_to_async
-    def get_chat(
-        self, chat_id: Union[str, int], field_name: Optional[str] = None
-    ) -> Union[Chat, Chat._meta.fields]:
-        """Returns the chat with the provided id or the value from the specified field
-        in the found chat.
-
-        Args:
-            chat_id (Union[str, int]): The id of the chat to search.
-            field_name (str, optional): The field to search in the found chat. Defaults to "".
-
-        Raises:
-            Exception: Raised if the chat is not found.
-
-        Returns:
-            Union[Chat, Chat._meta.fields]: Returns the entire chat object or the value from the desired field.
-        """
-        if not field_name:
-            try:
-                return Chat.objects.get(id=chat_id)
-            except Chat.DoesNotExist:
-                raise ModelNotFoundException(f"NO CHAT FOUND WITH SUCH ID: {chat_id}")
-        else:
-            chat = Chat.objects.get(id=chat_id)
-            return chat.archived if field_name == "archived" else chat.users
-
     async def disconnect(self, close_code):
         await self.channel_layer.group_discard(self.room_group_name, self.channel_name)
 

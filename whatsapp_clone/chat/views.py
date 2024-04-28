@@ -5,6 +5,7 @@ from .models import User, Chat, Contact, Message, Status
 from .forms import ChatForm, ContactForm, MessageForm, StatusForm
 from typing import Union
 from .tools import get_contact_in_chat, get_contacts_statuses
+from .custom_exceptions import *
 
 
 @login_required
@@ -16,8 +17,8 @@ def chat(request):
         initial={"uploaded_by": request.user, "upload_date": timezone.now}
     )
     contacts = request.user.contact_set.all().order_by("name")
-    print(request.user.has_photo)
-    print(f"User:{request.user.get_username()}")
+    #print(request.user.has_photo)
+    #print(f"User:{request.user.get_username()}")
     return render(
         request,
         "index.html",
@@ -82,8 +83,8 @@ def archive_chat(request, chat_id, archive):
 def display_user_ui(request):
     chats = request.user.chats.all()
     contacts = request.user.contact_set.all().order_by("name")
-    print(request.user.has_photo)
-    print(f"User:{request.user.get_username()}")
+    #print(request.user.has_photo)
+    #print(f"User:{request.user.get_username()}")
     return render(
         request,
         "layouts/partials/user_interface.html",
@@ -233,7 +234,7 @@ def mute_contact_statuses(request, contact_id:Union[str, int], mute:bool):
         contact_to_mute.save()
 
     except Contact.DoesNotExist:
-        print("CONTACT NOT FOUND WITH SUCH ID")
+        raise ModelNotFoundException(f"NO CONTACT FOUND WITH SUCH ID: {contact_id}")
 
     finally:
         return redirect("statuses")
