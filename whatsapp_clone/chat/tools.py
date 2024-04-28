@@ -12,14 +12,14 @@ def get_user_by_id(user_id: Union[str, int]) -> Union[object, Exception]:
     Args:
         user_id (Union[str, int]): A numeric (integer) value that identify the user.
     Raises:
-        UserNotFoundException: Raised when there's no user with the given id.
+        ModelNotFoundException: Raised when there's no user with the given id.
     Returns:
         Union[object, Exception]: The user object in the database or an exception if not found.
     """
     try:
         return User.objects.get(id=user_id)
     except User.DoesNotExist:
-        raise UserNotFoundException("NO USER FOUND WITH SUCH ID")
+        raise ModelNotFoundException(f"NO USER FOUND WITH SUCH ID: {user_id}")
 
 
 def get_user_by_phone(phone_number: str) -> Union[object, Exception]:
@@ -28,14 +28,14 @@ def get_user_by_phone(phone_number: str) -> Union[object, Exception]:
     Args:
         phone_number (str): The phone number of the wanted user.
     Raises:
-        UserNotFoundException: Raised when there's no user with such phone
+        ModelNotFoundException: Raised when there's no user with such phone
     Returns:
         Union[object, Exception]: The user object in the database or an exception if not found.
     """
     try:
         return User.objects.get(phone_number=phone_number)
     except User.DoesNotExist:
-        raise UserNotFoundException("NO USER FOUND WITH SUCH PHONE")
+        raise ModelNotFoundException(f"NO USER FOUND WITH SUCH PHONE: {phone_number}")
 
 
 def create_contact(contact_name: str, contact_phone_number: str, creator: User) -> None:
