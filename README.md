@@ -3,7 +3,6 @@
 
 ## DO RIGHT NOW
 
-- Reconsider the exceptions.py file. (check last Gemini chat and rework the Exceptions logic.)
 - **OPTIMIZE REQUESTS**:
   - Re think if consumers should create contacts or create another consumer for that (i don't think so).....
 - Check what happens when contact user send a message and htmx.ajax runs anyway.

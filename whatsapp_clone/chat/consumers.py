@@ -172,7 +172,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             try:
                 return Chat.objects.get(id=chat_id)
             except Chat.DoesNotExist:
-                raise ChatNotFoundException("NO CHAT FOUND WITH SUCH ID")
+                raise ModelNotFoundException(f"NO CHAT FOUND WITH SUCH ID: {chat_id}")
         else:
             chat = Chat.objects.get(id=chat_id)
             return chat.archived if field_name == "archived" else chat.users
@@ -277,7 +277,7 @@ class StatusConsumer(AsyncWebsocketConsumer):
             status = Status.objects.get(id=status_id)
             status.delete()
         except Status.DoesNotExist:
-            raise StatusNotFoundException()
+            raise ModelNotFoundException(f"NO STATUS FOUND WITH SUCJ ID: {status_id}")
 
     async def disconnect(self, close_code):
         # Called when the socket closes
