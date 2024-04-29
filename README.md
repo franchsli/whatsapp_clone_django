@@ -77,7 +77,7 @@ Also don't forget to change the channel layer to redis.
     - I think is because the readmore height isn't kept in count when scrolling.
 - You can't archive chats who are not with a contact.
 
-**REFERENCE**:
+**RESOURCES**:
 
 - [Outer queryset](https://docs.djangoproject.com/en/5.0/ref/models/expressions/#referencing-columns-from-the-outer-queryset)
 - [db queries with Q](https://docs.djangoproject.com/en/5.0/topics/db/queries/#complex-lookups-with-q-objects)
@@ -91,3 +91,5 @@ Also don't forget to change the channel layer to redis.
 - [Filtering Views and ViewSets](https://www.django-rest-framework.org/api-guide/filtering/)
 - [CSS Animations](https://xsgames.co/animatiss/)
 - [Languages Documentation](https://devdocs.io/)
+- [The Stocks V3 CSS RESORUCES](https://v3.thestocks.im/)
+- [More CSS RESOURCES](https://thestocks.im/?ref=buffer-resources)
