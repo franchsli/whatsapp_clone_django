@@ -372,6 +372,16 @@ chat_websocket.addEventListener('open', () => {
             window.carousel_instance = null
         }
 
+        else if(event === 'htmx:afterSettle' && data.pathInfo.requestPath.includes('delete_message')){
+            /**
+             * send a message to the chat websocket to tell the receiver
+             * that the chat list needs to be updated,
+             * the JS code (receiver) analises the websocket message
+             * and then decides whether or not to update the UI using
+             * a HTMX.ajax request.
+             */
+        }
+
     }
     htmx.logger()
     // initialize tooltips

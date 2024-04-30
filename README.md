@@ -3,12 +3,11 @@
 
 ## DO RIGHT NOW
 
-- **FIX RN** When a contact sends a message, the receiver UI doesn't gets updated....
+- Implement messages edition and deletion in real time for both users.
+  (Right now only the sender UI is updated when the message is either deleted or updated)
 - Think if it's possible to implement an Exception in tools.py get_contact_in_chat function.
 - **OPTIMIZE REQUESTS**:
   - Re think if consumers should create contacts or create another consumer for that (i don't think so).....
-- Check what happens when contact user send a message and htmx.ajax runs anyway.
-    or deletion in real time. (This has to be with the way the chat  and it's message are displayed)
 - Modify the messages HTML and style to display the 'read' icon and the hour from the date.
 - Make it so when a message gets updated or deleted, the other user will be able to see the message edition.
   - When the message is updated or deleted, IT MUST reload the chat for both
