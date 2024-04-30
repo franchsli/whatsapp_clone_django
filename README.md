@@ -3,6 +3,8 @@
 
 ## DO RIGHT NOW
 
+- **FIX RN** When a contact sends a message, the receiver UI doesn't gets updated....
+- Think if it's possible to implement an Exception in tools.py get_contact_in_chat function.
 - **OPTIMIZE REQUESTS**:
   - Re think if consumers should create contacts or create another consumer for that (i don't think so).....
 - Check what happens when contact user send a message and htmx.ajax runs anyway.

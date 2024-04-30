@@ -98,11 +98,9 @@ def get_contact_in_chat(chat: Chat, logged_user: User) -> Union[Contact, None]:
         )
         return contact
     except Contact.DoesNotExist:
-        raise ModelNotFoundException(
+        print(
             f"NO CONTACT FOUND WITH SUCH ARGUMENTS:\ncreated_by={logged_user}\nphone_number={other_user.phone_number}"
         )
-    finally:
-        return None
 
 
 def get_contacts_statuses(user: User, muted: bool) -> dict:
