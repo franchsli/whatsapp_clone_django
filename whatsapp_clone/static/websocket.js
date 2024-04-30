@@ -395,6 +395,8 @@ chat_websocket.addEventListener('message',async (event) => {
     let image
     let sender_username
     let sender_is_archived
+    console.log(event.data.includes('chat_message'))
+    console.log(event.data.includes('chat_notification'))
     if (event.data.includes('chat_message')){
         message = event.data.replace('chat_message', '')
         message_data = message.split('-')

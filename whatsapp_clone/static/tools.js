@@ -247,8 +247,8 @@ function load_emojis(emoji_list_name, parent_element){
                 display_button_inner_text(new_button, input)
             }
             parent_element.appendChild(new_button)
-            const pattern = /^[A-Za-z0-9]+$/;
-            console.log(pattern.test(new_button.innerHTML))
+            //const pattern = /^[A-Za-z0-9]+$/;
+            //console.log(pattern.test(new_button.innerHTML))
     }
     })
     .catch((error) => {console.log(error.message)})
