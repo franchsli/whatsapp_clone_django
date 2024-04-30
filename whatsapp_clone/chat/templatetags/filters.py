@@ -73,7 +73,7 @@ def exclude_user_tag(user_set: QuerySet, user: User, value: str) -> str:
     users_values  = list(user_list.values_list(value, flat=True))
     
     if len(users_values) < 2:
-        return users_values[0] if value != 'phone_number' else users_values[0].national_number
+        return users_values[0] if value != 'phone_number' else f'{users_values[0].country_code}{users_values[0].national_number}'
     else:
         return users_values
 
