@@ -26,6 +26,7 @@ class MessageForm(ModelForm):
             "text": Textarea(attrs={"cols": 1, "rows": 1}),
             "date": HiddenInput(),
             "chat": HiddenInput(),
+            "edited": HiddenInput(),
         }
 
 

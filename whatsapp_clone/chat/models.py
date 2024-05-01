@@ -68,6 +68,7 @@ class Message(models.Model):
     text = models.TextField(blank=False, null=False)
     image = models.ImageField(blank=True, null=True, upload_to="messages/")
     date = models.DateTimeField(default=timezone.now)
+    edited = models.BooleanField(blank=False, null=False, default=False)
     chat = models.ForeignKey(Chat, on_delete=models.CASCADE)
 
     def __str__(self) -> str:

@@ -167,7 +167,7 @@ def get_message(request, pk):
 def edit_message(request, pk):
     if request.method == "GET":
         message_instance = Message.objects.get(id=pk)
-        message_form = MessageForm(instance=message_instance)
+        message_form = MessageForm(instance=message_instance, initial={"edited": True})
         return render(
             request,
             "layouts/partials/components/edit_message.html",
