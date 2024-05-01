@@ -3,9 +3,13 @@
 
 ## DO RIGHT NOW
 
+- Add read and unread logic (you can implement it that any message (in the viewport makes a
+PATCH request to update the 'read' field in the message model from False to True [This makes the user needs to scroll down or up
+to make the PATCH request for all the new messages] only if it is already False [To prevent unnecesary API calls])).
+  - The 'read' icon of the message will change depending on if the message is read or not.
 - Implement messages edition in real time for both users.
-  - Make it so the edited message shows that is edited (like in Whatsapp [add 'edited' field in message model to do this])
-  **IMPORTAN** YOU NEED TO DISPLAY THE READ ICON AND HE HOUR BEFORE DOING THIS.
+  - Make it so the edited message shows that is edited (like in Whatsapp)
+  **IMPORTANT** YOU NEED TO DISPLAY THE READ ICON AND HE HOUR BEFORE DOING THIS.
 - Think if it's possible to implement an Exception in tools.py get_contact_in_chat function.
 - **OPTIMIZE REQUESTS**:
   - Re think if consumers should create contacts or create another consumer for that (i don't think so).....
@@ -20,10 +24,6 @@
 ## ANOTHER THINGS TO DO
 
 - Add status complex status creation (like Whatsapp).
-- Add read and unread logic (you can implement it that any message (in the viewport makes a
-PATCH request to update the 'read' field in the message model from False to True [This makes the user needs to scroll down or up
-to make the PATCH request for all the new messages] only if it is already False [To prevent unnecesary API calls])).
-  - The 'read' icon of the message will change depending on if the message is read or not.
 - Rework messages list:
   - Add the whatsapp date tags in HTML in the normal chat and in the searching message UI.
   - Make it so every chat has days and days (model) has messages....
@@ -38,7 +38,6 @@ to make the PATCH request for all the new messages] only if it is already False 
 
 ## Improvements
 
-- Re think the delete message modal (Delete for everyone or for me logic).
 - Implement a dynamic status length:
   - If its a photo 5 secs
   - if its a long text (more than 200 chars) 10 secs
@@ -54,7 +53,7 @@ Also don't forget to change the channel layer to redis.
 - Review all the code and delete spaguetti code.
 - Implement all of these features at [dj-chat](https://github.com/adilmohak/dj-chat?tab=readme-ov-file#current-features)
 - Delete all console.logs
-- Reformatte HTML code, PLEASE.
+- Reformat HTML code, PLEASE.
 - Use the logic to create a image file with code in a function in tools.py.
 
 ## BUGS TO FIX
