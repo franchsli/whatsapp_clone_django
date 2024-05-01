@@ -380,6 +380,7 @@ chat_websocket.addEventListener('open', () => {
              * and then decides whether or not to update the UI using
              * a HTMX.ajax request.
              */
+            send_message('message_deletion', '', '', user_id)
         }
 
     }
@@ -407,6 +408,7 @@ chat_websocket.addEventListener('message',async (event) => {
     let sender_is_archived
     console.log(event.data.includes('chat_message'))
     console.log(event.data.includes('chat_notification'))
+    console.log(event.data.includes('chat_message_deletion'))
     if (event.data.includes('chat_message')){
         message = event.data.replace('chat_message', '')
         message_data = message.split('-')
@@ -462,6 +464,35 @@ chat_websocket.addEventListener('message',async (event) => {
             toastBootstrap.show()
             notification_audio.play()
         }
+    }
+
+    else if (event.data.includes('chat_message_deletion')){
+        message = event.data.replace('chat_message_deletion', '')
+        message = message.split('-')
+        sender_id = message[0]
+        sender_username = message[1]
+        sender_is_archived = message[2] === 'True' ? true : false
+        /**
+        * the JS code (receiver) analises the websocket message
+        * and then decides whether or not to update the UI using
+        * a HTMX.ajax request.
+        */
+        if (document.getElementById('chat-list') !== null){
+            if (document.getElementById('archived-chats') !== null) {
+                htmx.ajax('GET', '/archived_chats', {target:'#chats-and-more', swap:'innerHTML'})
+            } else {
+                htmx.ajax('GET', '/chats', {target:'#chat-list', swap:'outerHTML'})
+            }
+            
+        }
+
+        if (document.getElementById('contact-name') !== null){
+            if (document.getElementById('contact-name').innerText === sender_username) {
+                htmx.trigger(`#chat-${localStorage.getItem('chat_id')}`, 'click')
+            }
+            
+        }
+
     }
 
 
