@@ -38,30 +38,3 @@
   </script>
 </div>
 {% endif %}
-
-
-<!-- Delete Message Form Modal -->
-<!-- <div class="modal fade" id="DeleteMessage{{message.id}}" tabindex="-1" aria-labelledby="DeleteMessageLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="DeleteMessageLabel">Delete message?</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-              <div class="user-message m-3 rounded message">
-                  {% if message.has_image %}
-                  <img class="mw-100 mh-100" src="{{message.image.url}}" alt="">
-                {% else %}
-                  <img class="mw-100 mh-100" src="undefined" alt="">
-                {% endif %}
-                <span class="p-3">{{message.text}}</span>
-              </div>
-              <div class="button-group d-flex justify-content-between">
-                <button class="btn btn-success rounded-pill">Delete for everyone</button>
-                <button class="btn btn-secondary rounded-pill">Delete for me</button>
-              </div>
-          </div>
-        </div>
-      </div>
-    </div> -->

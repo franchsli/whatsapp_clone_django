@@ -3,16 +3,13 @@
 
 ## DO RIGHT NOW
 
-- Implement messages edition and deletion in real time for both users.
-  (Right now only the sender UI is updated when the message is either deleted or updated)
+- Implement messages edition in real time for both users.
+  (Right now only the sender UI is updated when the message is updated)
+  - Make it so the edited message shows that is edited (like in Whatsapp [add 'edited' field in message model to do this])
 - Think if it's possible to implement an Exception in tools.py get_contact_in_chat function.
 - **OPTIMIZE REQUESTS**:
   - Re think if consumers should create contacts or create another consumer for that (i don't think so).....
 - Modify the messages HTML and style to display the 'read' icon and the hour from the date.
-- Make it so when a message gets updated or deleted, the other user will be able to see the message edition.
-  - When the message is updated or deleted, IT MUST reload the chat for both
-  of the users (if they have displayed the chat obviously)
-  (add 'edited' field in message model to do this)
 - Test all statuses features.
 - Test if edit/delete contact and delete chat works in any case (even right click).
 - Restrict chat views (check if the request method is the correct one if not, raise an error).
