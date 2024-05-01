@@ -4,8 +4,8 @@
 ## DO RIGHT NOW
 
 - Implement messages edition in real time for both users.
-  (Right now only the sender UI is updated when the message is updated)
   - Make it so the edited message shows that is edited (like in Whatsapp [add 'edited' field in message model to do this])
+  **IMPORTAN** YOU NEED TO DISPLAY THE READ ICON AND HE HOUR BEFORE DOING THIS.
 - Think if it's possible to implement an Exception in tools.py get_contact_in_chat function.
 - **OPTIMIZE REQUESTS**:
   - Re think if consumers should create contacts or create another consumer for that (i don't think so).....
