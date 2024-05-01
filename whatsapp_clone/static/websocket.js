@@ -375,12 +375,18 @@ chat_websocket.addEventListener('open', () => {
         else if(event === 'htmx:afterSettle' && data.pathInfo.requestPath.includes('delete_message')){
             /**
              * send a message to the chat websocket to tell the receiver
-             * that the chat list needs to be updated,
-             * the JS code (receiver) analises the websocket message
+             * that the chat list needs to be updated due to a message deletion,
+             * so the JS code (receiver) analises the websocket message
              * and then decides whether or not to update the UI using
              * a HTMX.ajax request.
              */
             send_message('message_deletion', '', '', user_id)
+        }
+
+        else if(event === 'htmx:afterSettle' && data.pathInfo.requestPath.includes('edit_message')){
+            // same logic as real-time message deletion
+            // but this is due to a message edition
+            send_message('message_edition', '', '', user_id)
         }
 
     }
@@ -409,6 +415,7 @@ chat_websocket.addEventListener('message',async (event) => {
     console.log(event.data.includes('chat_message'))
     console.log(event.data.includes('chat_notification'))
     console.log(event.data.includes('message_deletion'))
+    console.log(event.data.includes('message_edition'))
     if (event.data.includes('chat_message')){
         message = event.data.replace('chat_message', '')
         message_data = message.split('-')
@@ -487,7 +494,41 @@ chat_websocket.addEventListener('message',async (event) => {
             }
             
         }
+        if (document.getElementById('contact-name') !== null){
+            console.log('CHAT IS DISPLAYED.. TRYING TO RELOAD...')
+            if (document.getElementById('contact-name').innerText === sender_username) {
+    
+                htmx.ajax('GET', `/display_chat/${localStorage.getItem('chat_id')}`, '#chat-display').then(() => {
+                    console.log('MESSAGES RELOADED')
+                })
+                
+            }
+            
+        }
 
+    }
+
+    else if (event.data.includes('message_edition')){
+        message = event.data.replace('chat_message_deletion', '')
+        message = message.split('-')
+        sender_id = message[0]
+        sender_username = message[1]
+        /**
+        * the JS code (receiver) analises the websocket message
+        * and then decides whether or not to update the UI using
+        * a HTMX.ajax request.
+        */
+        if (document.getElementById('chat-list') !== null){
+            console.log('UPDATING CHAT LIST....')
+            if (document.getElementById('archived-chats') !== null) {
+                htmx.ajax('GET', '/archived_chats', {target:'#chats-and-more', swap:'innerHTML'})
+                console.log('UPDATED CHAT LIST!')
+            } else {
+                htmx.ajax('GET', '/chats', {target:'#chat-list', swap:'outerHTML'})
+                console.log('UPDATED CHAT LIST!')
+            }
+            
+        }
         if (document.getElementById('contact-name') !== null){
             console.log('CHAT IS DISPLAYED.. TRYING TO RELOAD...')
             if (document.getElementById('contact-name').innerText === sender_username) {

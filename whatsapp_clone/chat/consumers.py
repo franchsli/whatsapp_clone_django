@@ -109,14 +109,32 @@ class ChatConsumer(AsyncWebsocketConsumer):
                     "sender_contact_name": f"-{sender_contact_instance.name if sender_contact_instance else self.user_instance.phone_number}",
                 },
             )
+        
+        elif text_data_json["type"] == "message_edition":
+            receiver_instance = await database_sync_to_async(get_user_by_phone)(
+                text_data_json["contact_phone_number"]
+            )
+            sender_contact_instance = await database_sync_to_async(contact_from_user)(
+                receiver_instance, self.user_instance.phone_number
+            )
+            await self.channel_layer.group_send(
+                self.room_group_name,
+                {
+                    "type": "chat_message_edition",
+                    "sender_id": f"{text_data_json['sender_user_id']}",
+                    "sender_contact_name": f"-{sender_contact_instance.name if sender_contact_instance else self.user_instance.phone_number}",
+                },
+            )
 
     async def chat_message(self, event):
         await self.send(text_data=f"chat_message{event['text']}")
     
     async def chat_message_deletion(self, event):
         await self.send(text_data=f"message_deletion{event['sender_id'] + event['sender_contact_name']}")
-
-
+    
+    async def chat_message_edition(self, event):
+        await self.send(text_data=f"message_edition{event['sender_id'] + event['sender_contact_name']}")
+    
     async def chat_notification(self, event):
         await self.send(
             text_data=f"chat_notification{event['sender_id'] + event['text']  + event['sender_contact_name'] + event['sender_is_archived']}"
