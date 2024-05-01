@@ -491,13 +491,11 @@ chat_websocket.addEventListener('message',async (event) => {
         if (document.getElementById('contact-name') !== null){
             console.log('CHAT IS DISPLAYED.. TRYING TO RELOAD...')
             if (document.getElementById('contact-name').innerText === sender_username) {
-                //  THE BUG IS DOWN THERE
-                htmx.trigger(`#chat-${localStorage.getItem('chat_id')}`, 'click')
-                // WHEN THE CHAT LIST IS NOT PRESENT IN THE UI
-                // THE HTMX FUNCTION TRIGGERED DOESN'T WORK...
-                // TO FIX IT YOU NEED TO CREATE A FUNCTION THAT UPDATES THE
-                // PROVIDED CHAT MESSAGES
-                console.log('MESSAGES RELOADED')
+    
+                htmx.ajax('GET', `/display_chat/${localStorage.getItem('chat_id')}`, '#chat-display').then(() => {
+                    console.log('MESSAGES RELOADED')
+                })
+                
             }
             
         }
