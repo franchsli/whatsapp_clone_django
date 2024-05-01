@@ -102,7 +102,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 receiver_instance, self.user_instance.phone_number
             )
             await self.channel_layer.group_send(
-                f"user_group_{self.receiver}",
+                self.room_group_name,
                 {
                     "type": "chat_message_deletion",
                     "sender_id": f"{text_data_json['sender_user_id']}",
@@ -114,7 +114,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         await self.send(text_data=f"chat_message{event['text']}")
     
     async def chat_message_deletion(self, event):
-        await self.send(text_data=f"message_deletion{event['sender_id'] + event['sender_contact_name'] + event['sender_is_archived']}")
+        await self.send(text_data=f"message_deletion{event['sender_id'] + event['sender_contact_name']}")
 
 
     async def chat_notification(self, event):
