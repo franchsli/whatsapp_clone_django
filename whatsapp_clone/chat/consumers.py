@@ -116,7 +116,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         await self.send(text_data=f"chat_message{event['text']}")
     
     async def chat_message_deletion(self, event):
-        await self.send(text_data=f"chat_message_deletion{event['sender_id'] + event['sender_contact_name'] + event['sender_is_archived']}")
+        await self.send(text_data=f"message_deletion{event['sender_id'] + event['sender_contact_name'] + event['sender_is_archived']}")
 
 
     async def chat_notification(self, event):

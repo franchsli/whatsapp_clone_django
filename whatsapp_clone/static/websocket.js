@@ -408,7 +408,7 @@ chat_websocket.addEventListener('message',async (event) => {
     let sender_is_archived
     console.log(event.data.includes('chat_message'))
     console.log(event.data.includes('chat_notification'))
-    console.log(event.data.includes('chat_message_deletion'))
+    console.log(event.data.includes('message_deletion'))
     if (event.data.includes('chat_message')){
         message = event.data.replace('chat_message', '')
         message_data = message.split('-')
@@ -466,7 +466,7 @@ chat_websocket.addEventListener('message',async (event) => {
         }
     }
 
-    else if (event.data.includes('chat_message_deletion')){
+    else if (event.data.includes('message_deletion')){
         message = event.data.replace('chat_message_deletion', '')
         message = message.split('-')
         sender_id = message[0]
@@ -478,10 +478,13 @@ chat_websocket.addEventListener('message',async (event) => {
         * a HTMX.ajax request.
         */
         if (document.getElementById('chat-list') !== null){
+            console.log('UPDATING CHAT LIST....')
             if (document.getElementById('archived-chats') !== null) {
                 htmx.ajax('GET', '/archived_chats', {target:'#chats-and-more', swap:'innerHTML'})
+                console.log('UPDATED CHAT LIST!')
             } else {
                 htmx.ajax('GET', '/chats', {target:'#chat-list', swap:'outerHTML'})
+                console.log('UPDATED CHAT LIST!')
             }
             
         }
@@ -489,6 +492,7 @@ chat_websocket.addEventListener('message',async (event) => {
         if (document.getElementById('contact-name') !== null){
             if (document.getElementById('contact-name').innerText === sender_username) {
                 htmx.trigger(`#chat-${localStorage.getItem('chat_id')}`, 'click')
+                console.log('MESSAGES RELOADED')
             }
             
         }
