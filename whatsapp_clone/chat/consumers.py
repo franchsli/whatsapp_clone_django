@@ -106,9 +106,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 {
                     "type": "chat_message_deletion",
                     "sender_id": f"{text_data_json['sender_user_id']}",
-                    "text": f"-{text_data_json['message'] if len(text_data_json['message']) > 0 else 'Photo 📷'}",
                     "sender_contact_name": f"-{sender_contact_instance.name if sender_contact_instance else self.user_instance.phone_number}",
-                    "sender_is_archived": f"-{sender_contact_instance.archived if sender_contact_instance else 'False'}",
                 },
             )
 

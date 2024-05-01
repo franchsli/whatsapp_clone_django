@@ -471,7 +471,6 @@ chat_websocket.addEventListener('message',async (event) => {
         message = message.split('-')
         sender_id = message[0]
         sender_username = message[1]
-        sender_is_archived = message[2] === 'True' ? true : false
         /**
         * the JS code (receiver) analises the websocket message
         * and then decides whether or not to update the UI using
