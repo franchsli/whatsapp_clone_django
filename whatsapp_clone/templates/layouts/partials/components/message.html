@@ -35,12 +35,24 @@
 
 </div>
 {% else %}
-<div class="p-2">
+<div class="p-2" style="display: grid;">
   {% if message.has_image %}
   <img class="mw-100 mh-100 mb-3" src="{{message.image.url}}" alt="">
   {% endif %}
-  <span id="text-{{message.id}}" class="d-flex mw-100"
+  {% only_emoji message.text as only_emojis %}
+  {% if only_emojis %}
+  <span id="text-{{message.id}}" class="d-flex"
+    style="height: auto; max-height: 200px; overflow: hidden; font-size: 30px;">{{message.text}}</span>
+  {% else %}
+  <span id="text-{{message.id}}" class="d-flex"
     style="height: auto; max-height: 200px; overflow: hidden;">{{message.text}}</span>
+  {% endif %}
+  <div class="message-info" style="justify-self: end;">
+      <!-- ========== Hour display ========== -->
+      <span class="chat-message-date text-white-50">{{ message.date|date:"h:i A" }}</span>
+      <!-- ========== 'READ' icon ========== -->
+      <i class="bi bi-check2-all text-white-50"></i>
+  </div>
   <script type="text/javascript">
     toggleReadMore('{{message.id}}')
   </script>
