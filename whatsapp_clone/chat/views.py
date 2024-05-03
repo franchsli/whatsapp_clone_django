@@ -17,8 +17,8 @@ def chat(request):
         initial={"uploaded_by": request.user, "upload_date": timezone.now}
     )
     contacts = request.user.contact_set.all().order_by("name")
-    #print(request.user.has_photo)
-    #print(f"User:{request.user.get_username()}")
+    # print(request.user.has_photo)
+    # print(f"User:{request.user.get_username()}")
     return render(
         request,
         "index.html",
@@ -83,8 +83,8 @@ def archive_chat(request, chat_id, archive):
 def display_user_ui(request):
     chats = request.user.chats.all()
     contacts = request.user.contact_set.all().order_by("name")
-    #print(request.user.has_photo)
-    #print(f"User:{request.user.get_username()}")
+    # print(request.user.has_photo)
+    # print(f"User:{request.user.get_username()}")
     return render(
         request,
         "layouts/partials/user_interface.html",
@@ -227,10 +227,10 @@ def get_statuses(request):
     )
 
 
-def mute_contact_statuses(request, contact_id:Union[str, int], mute:bool):
+def mute_contact_statuses(request, contact_id: Union[str, int], mute: bool):
     try:
         contact_to_mute = Contact.objects.get(id=contact_id)
-        contact_to_mute.statuses_muted = True if mute == 'True' else False
+        contact_to_mute.statuses_muted = True if mute == "True" else False
         contact_to_mute.save()
 
     except Contact.DoesNotExist:

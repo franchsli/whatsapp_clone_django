@@ -13,18 +13,16 @@ class UserTest(TestCase):
         self.user = User.objects.create(
             id=1, phone_number="3145538787", username="testfranch"
         )
-    
+
     def test_user_has_not_photo(self):
         self.assertFalse(self.user.has_photo)
-    
+
     def test_user_has_photo(self):
         file_format, image_string_data = ENCODED_IMAGE.split(";base64,")
         # Get the file format extension (png, jpg, jpeg, etc.)
         file_extension = file_format.split("/")[-1]
         image_bytes_data = base64.b64decode(image_string_data)
-        image_file = ContentFile(
-            image_bytes_data, f"user_photo.{file_extension}"
-        )
+        image_file = ContentFile(image_bytes_data, f"user_photo.{file_extension}")
         self.user.photo = image_file
         self.user.save()
         self.assertTrue(self.user.has_photo)
@@ -37,23 +35,22 @@ class MessageTest(TestCase):
         )
         self.chat = Chat.objects.create()
         self.chat.users.add(self.user)
-        self.message = Message.objects.create(id=1, sender_user=self.user, chat=self.chat)
-    
+        self.message = Message.objects.create(
+            id=1, sender_user=self.user, chat=self.chat
+        )
+
     def test_message_has_not_image(self):
         self.assertFalse(self.message.has_image)
-    
+
     def test_message_has_image(self):
         file_format, image_string_data = ENCODED_IMAGE.split(";base64,")
         # Get the file format extension (png, jpg, jpeg, etc.)
         file_extension = file_format.split("/")[-1]
         image_bytes_data = base64.b64decode(image_string_data)
-        image_file = ContentFile(
-            image_bytes_data, f"user_photo.{file_extension}"
-        )
+        image_file = ContentFile(image_bytes_data, f"user_photo.{file_extension}")
         self.message.image = image_file
         self.message.save()
         self.assertTrue(self.message.has_image)
-
 
 
 class GroupTest(TestCase):
@@ -138,8 +135,8 @@ class StatusTest(TestCase):
         self.create_status(5, self.user, image=ENCODED_IMAGE)
         status_instance = Status.objects.get(id=5)
         self.assertTrue(status_instance.has_image and status_instance.has_text == False)
-    
+
     def test_full_status(self):
-        self.create_status(6, self.user, 'TEST', ENCODED_IMAGE)
+        self.create_status(6, self.user, "TEST", ENCODED_IMAGE)
         status_instance = Status.objects.get(id=6)
         self.assertTrue(status_instance.has_image and status_instance.has_text)

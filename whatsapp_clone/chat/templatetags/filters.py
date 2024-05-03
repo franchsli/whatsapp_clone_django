@@ -70,16 +70,22 @@ def exclude_user_tag(user_set: QuerySet, user: User, value: str) -> str:
         str: The user left after excluding the given user.
     """
     user_list = user_set.exclude(id=user.id)
-    users_values  = list(user_list.values_list(value, flat=True))
-    
+    users_values = list(user_list.values_list(value, flat=True))
+
     if len(users_values) < 2:
-        return users_values[0] if value != 'phone_number' else f'{users_values[0].country_code}{users_values[0].national_number}'
+        return (
+            users_values[0]
+            if value != "phone_number"
+            else f"{users_values[0].country_code}{users_values[0].national_number}"
+        )
     else:
         return users_values
 
 
 @register.simple_tag
-def get_contact_in_chat_tag(chat: Chat, auth_user: User, desired_value: str) -> Union[str, bool, int]:
+def get_contact_in_chat_tag(
+    chat: Chat, auth_user: User, desired_value: str
+) -> Union[str, bool, int]:
     """Returns the contact in the chat desired data.
 
     Args:
@@ -107,14 +113,16 @@ def get_contact_in_chat_tag(chat: Chat, auth_user: User, desired_value: str) -> 
                 return DEFAULT_USER_PHOTO_URL
     else:
         users_model_phone = list(chat.users.values_list("phone_number", flat=True))
-        contact_user_model_phone = users_model_phone[0] if users_model_phone[0] != auth_user.phone_number else users_model_phone[1]
+        contact_user_model_phone = (
+            users_model_phone[0]
+            if users_model_phone[0] != auth_user.phone_number
+            else users_model_phone[1]
+        )
         user = User.objects.get(phone_number=contact_user_model_phone)
         if desired_value != "photo":
             return user.phone_number
         else:
             return user.photo.url if user.has_photo else DEFAULT_USER_PHOTO_URL
-
-
 
 
 @register.simple_tag
@@ -133,6 +141,7 @@ def get_contact_photo(phone: str) -> str:
     else:
         return DEFAULT_USER_PHOTO_URL
 
+
 @register.simple_tag
 def only_emoji(text: str) -> bool:
     """Returns if a text is only a emoji.
@@ -142,6 +151,5 @@ def only_emoji(text: str) -> bool:
 
     Returns:
         bool: True if it's only a emoji, False otherwise.
-    """ 
-    return bool(re.match(r'\W+', text))
-    
+    """
+    return bool(re.match(r"\W+", text))

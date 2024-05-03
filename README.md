@@ -25,6 +25,8 @@ to make the PATCH request for all the new messages] only if it is already False 
 ## ANOTHER THINGS TO DO
 
 - Add status complex status creation (like Whatsapp).
+  - Users could select the color of the background for
+    statuses.
 - Rework messages list:
   - Add the whatsapp date tags in HTML in the normal chat and in the searching message UI.
   - Make it so every chat has days and days (model) has messages....
