@@ -15,6 +15,10 @@
     style="height: auto; max-height: 200px; overflow: hidden;">{{message.text}}</span>
   {% endif %}
   <div class="message-info" style="justify-self: end;">
+    <!-- ========== Say if the message was edited or not ========== -->
+    {% if message.edited %}
+      <span class="chat-message-edited text-white-50">Edited</span>
+    {% endif %}
     <!-- ========== Hour display ========== -->
     <span class="chat-message-date text-white-50">{{ message.date|date:"h:i A" }}</span>
     <!-- ========== 'READ' icon ========== -->
