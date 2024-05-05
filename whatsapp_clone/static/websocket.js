@@ -38,8 +38,9 @@ const mutationCallback = function(mutationsList, observer) {
                     window.new_message_button = document.getElementById('send-message-button')
                     window.delete_message_option_buttons = document.querySelectorAll('.delete-message')
                     const imageInput = document.getElementById('imageInput')
+                    const imagePreview = document.getElementById('imagePreview')
                     imageInput.addEventListener('change', () => {
-                        previewImage(imageInput)
+                        previewImage(imageInput, imagePreview)
                     });
 
                     
