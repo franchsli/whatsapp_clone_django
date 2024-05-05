@@ -3,7 +3,6 @@
 
 ## DO RIGHT NOW
 
-- **FIX** Users CAN'T SEND images.
 - Add read and unread logic (you can implement it that any message (in the viewport makes a
 PATCH request to update the 'read' field in the message model from False to True [This makes the user needs to scroll down or up
 to make the PATCH request for all the new messages] only if it is already False [To prevent unnecesary API calls])).

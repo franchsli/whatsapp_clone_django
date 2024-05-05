@@ -22,7 +22,6 @@ const status_image_input = document.getElementById('id_image')
 const notification_audio = new Audio('static/Audio/app/message_received.mp3')
 const message_sent_audio = new Audio('static/Audio/app/message_sent.mp3')
 const error_audio = new Audio('static/Audio/app/error_sound.mp3')
-let actual_image_data
 
 // Callback function to execute when mutations are observed
 const mutationCallback = function(mutationsList, observer) {
@@ -55,14 +54,14 @@ const mutationCallback = function(mutationsList, observer) {
                     
                     new_message_input.addEventListener('keypress', (event) => {
                         if (event.key === 'Enter' && (new_message_input.value !== '' || imageInput.value !== '')){
-                
-                            send_message('message', new_message_input.value, imageInput.value !== '' ? actual_image_data : '', user_id)
+                            let image = document.getElementById('imagePreview').firstElementChild
+                            send_message('message', new_message_input.value, imageInput.value !== '' ? image.src : '', user_id)
                             
                             new_message_input.value = ''
                             //deletes the selected image
                             if (imageInput.value != ''){
                                 imageInput.value = ''
-                                document.getElementById('imagePreview').firstChild.remove()
+                                image.remove()
                             }
                             
                         }})
@@ -70,13 +69,14 @@ const mutationCallback = function(mutationsList, observer) {
                 
                     new_message_button.onclick = () => {
                         if (new_message_input.value !== '' || imageInput.value !== ''){
-                            send_message('message', new_message_input.value, imageInput.value !== '' ? actual_image_data : '', user_id)
+                            let image = document.getElementById('imagePreview').firstElementChild    
+                            send_message('message', new_message_input.value, imageInput.value !== '' ? image.src : '', user_id)
                             
                             new_message_input.value = ''
                             //deletes the selected image
                             if (imageInput.value != ''){
                                 imageInput.value = ''
-                                document.getElementById('imagePreview').firstChild.remove()
+                                image.remove()
                             }}}
                         scroll_to_bottom()
 
