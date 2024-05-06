@@ -53,7 +53,7 @@
         
         <!-- ========== ESPACE TO PUT THE NUMBERS OF UNREAD MESSAGES ========== -->
           {% if not last_message_was_read and chat.message_set.all|last_message:'sender_user' != request.user.id %}
-            <span class="badge bg-success">{{ chat.message_set.all|unread_messages_counter }}</span>
+            <span class="badge bg-success rounded-pill">{{ chat.message_set.all|unread_messages_counter }}</span>
           {% endif %}
         {% endwith %}
         <ul id="chat-dropdown{{chat.id}}" class="dropdown-menu animated-dropdown">
