@@ -59,7 +59,7 @@ def last_message(value: QuerySet, data: str) -> str:
 @register.filter
 def unread_messages_counter(messages_queryset: QuerySet) -> int:
     unread_counter = 0
-    for message in messages_queryset:
+    for message in messages_queryset.iterator():
         if not message.read:
             unread_counter += 1
 
