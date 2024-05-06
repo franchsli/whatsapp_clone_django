@@ -58,8 +58,6 @@
       {% endif %}
       <!-- ========== Hour display ========== -->
       <span class="chat-message-date">{{ message.date|date:"h:i A" }}</span>
-      <!-- ========== 'READ' icon ========== -->
-      <i class="bi bi-check2-all"></i>
   </div>
   <script type="text/javascript">
     toggleReadMore('{{message.id}}')
