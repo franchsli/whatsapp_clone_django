@@ -44,14 +44,18 @@
               {% endif %}
               {{chat.message_set.all|last_message:'text'}}</span>
           {% else %}
-            <span class="last-chat-message text-truncate text-white-50">{{chat.message_set.all|last_message:'text'}}</span>
+            {% if last_message_was_read %}
+              <span class="last-chat-message text-truncate text-white-50">{{chat.message_set.all|last_message:'text'}}</span>
+            {% else %}
+              <span class="last-chat-message text-truncate text-white">{{chat.message_set.all|last_message:'text'}}</span>
+            {% endif %}
+          {% endif %}
+        
+        <!-- ========== ESPACE TO PUT THE NUMBERS OF UNREAD MESSAGES ========== -->
+          {% if not last_message_was_read and chat.message_set.all|last_message:'sender_user' != request.user.id %}
+            <span class="badge bg-success">1</span>
           {% endif %}
         {% endwith %}
-        <!-- ========== ESPACE TO PUT THE READ AND UNREAD ICON========== -->
-        
-        <button class="btn btn-sm dropdown-toggle" type="button" 
-        data-bs-toggle="dropdown" aria-expanded="false" 
-        onclick="run_element_animation(this.nextElementSibling); event.stopPropagation();"></button>
         <ul id="chat-dropdown{{chat.id}}" class="dropdown-menu animated-dropdown">
           <li onclick="event.stopPropagation();">
             <span class="dropdown-item delete-action" hx-delete="{% url 'delete_chat' chat.id %}" 
