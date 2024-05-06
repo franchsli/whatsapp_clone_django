@@ -3,9 +3,11 @@
 
 ## DO RIGHT NOW
 
-- Add read and unread logic (you can implement it that any message (in the viewport makes a
-PATCH request to update the 'read' field in the message model from False to True [This makes the user needs to scroll down or up
-to make the PATCH request for all the new messages] only if it is already False [To prevent unnecesary API calls])).
+- Add read and unread logic:
+  - You can implement it that any message (in the viewport makes a PATCH request to update the 'read' field in the message model from False to True [This makes the user needs to scroll down or up to make the PATCH request for all the new messages] only if it is already False [To prevent unnecesary API calls]).
+  - You can make a for loop in display_chat() view that iterates over the messages list,
+    if the message is not read yet, change 'read' to True and save it,
+    do nothing otherwise.
   - The 'read' icon of the message will change depending on if the message is read or not.
   **IMPORTANT** YOU NEED TO DISPLAY THE READ ICON AND HE HOUR BEFORE DOING THIS.
 - Think if it's possible to implement an Exception in tools.py get_contact_in_chat function.
