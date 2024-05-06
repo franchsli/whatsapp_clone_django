@@ -65,7 +65,7 @@ class Group(Chat):
 
 class Message(models.Model):
     sender_user = models.ForeignKey(User, on_delete=models.CASCADE)
-    text = models.TextField(blank=False, null=False)
+    text = models.TextField(blank=True, null=False)
     image = models.ImageField(blank=True, null=True, upload_to="messages/")
     date = models.DateTimeField(default=timezone.now)
     edited = models.BooleanField(blank=False, null=False, default=False)
