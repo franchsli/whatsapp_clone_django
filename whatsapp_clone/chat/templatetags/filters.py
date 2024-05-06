@@ -56,6 +56,15 @@ def last_message(value: QuerySet, data: str) -> str:
     else:
         return messages_data[-1] if len(messages_data) > 0 else ""
 
+@register.filter
+def unread_messages_counter(messages_queryset: QuerySet) -> int:
+    unread_counter = 0
+    for message in messages_queryset:
+        if not message.read:
+            unread_counter += 1
+
+    return unread_counter
+
 
 @register.simple_tag
 def exclude_user_tag(user_set: QuerySet, user: User, value: str) -> str:
