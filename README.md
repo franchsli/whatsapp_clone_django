@@ -3,11 +3,6 @@
 
 ## DO RIGHT NOW
 
-- Add read and unread logic:
-  - You can make a for loop in display_chat() view that iterates over the messages list,
-    if the message is not read yet, change 'read' to True and save it,
-    do nothing otherwise.
-  - The 'read' icon of the message will change depending on if the message is read or not.
 - Think if it's possible to implement an Exception in tools.py get_contact_in_chat function.
 - **OPTIMIZE REQUESTS**:
   - Re think if consumers should create contacts or create another consumer for that (i don't think so).....
