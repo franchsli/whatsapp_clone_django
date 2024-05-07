@@ -4,12 +4,10 @@
 ## DO RIGHT NOW
 
 - Add read and unread logic:
-  - You can implement it that any message (in the viewport makes a PATCH request to update the 'read' field in the message model from False to True [This makes the user needs to scroll down or up to make the PATCH request for all the new messages] only if it is already False [To prevent unnecesary API calls]).
   - You can make a for loop in display_chat() view that iterates over the messages list,
     if the message is not read yet, change 'read' to True and save it,
     do nothing otherwise.
   - The 'read' icon of the message will change depending on if the message is read or not.
-  **IMPORTANT** YOU NEED TO DISPLAY THE READ ICON AND HE HOUR BEFORE DOING THIS.
 - Think if it's possible to implement an Exception in tools.py get_contact_in_chat function.
 - **OPTIMIZE REQUESTS**:
   - Re think if consumers should create contacts or create another consumer for that (i don't think so).....
@@ -75,6 +73,11 @@ Also don't forget to change the channel layer to redis.
 
     - I think is because the readmore height isn't kept in count when scrolling.
 - You can't archive chats who are not with a contact.
+
+## NOTES FOR LATER
+
+- If there's something slowing down displaying things like messages in a specific chat
+  it could be iterator() method in display_chat() view for-loop.
 
 **RESOURCES**:
 

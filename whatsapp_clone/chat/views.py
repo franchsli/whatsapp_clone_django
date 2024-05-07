@@ -98,6 +98,11 @@ def display_user_ui(request):
 def display_chat(request, pk):
     chat = Chat.objects.get(id=pk)
     chat_messages = chat.message_set.all().order_by("date")
+    for message in chat_messages.iterator():
+        if not message.read:
+            message.read = True
+            message.save()
+ 
     return render(
         request,
         "layouts/partials/selected-chat.html",
