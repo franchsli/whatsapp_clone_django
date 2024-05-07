@@ -6,9 +6,8 @@
 - Think if it's possible to implement an Exception in tools.py get_contact_in_chat function.
 - **OPTIMIZE REQUESTS**:
   - Re think if consumers should create contacts or create another consumer for that (i don't think so).....
-- Modify the messages HTML and style to display the 'read' icon and the hour from the date.
 - Test all statuses features.
-- Test if edit/delete contact and delete chat works in any case (even right click).
+- Test if edit/delete contact and delete chat works in any case.
 - Restrict chat views (check if the request method is the correct one if not, raise an error).
 - [Implement tooltips](https://getbootstrap.com/docs/5.3/components/tooltips/)
 - Optimize the images size (whithout decreasing quality if possible).
@@ -47,10 +46,10 @@ Also don't forget to change the channel layer to redis.
 - Make it responsive (or maybe not).
 - Check and compare all the whatsapp web features with this project features.
 - Review all the code and delete spaguetti code.
-- Implement all of these features at [dj-chat](https://github.com/adilmohak/dj-chat?tab=readme-ov-file#current-features)
-- Delete all console.logs
+- Implement all of the features at [dj-chat](https://github.com/adilmohak/dj-chat?tab=readme-ov-file#current-features)
 - Reformat HTML code, PLEASE.
 - Use the logic to create a image file with code in a function in tools.py.
+- Delete all console.logs
 
 ## BUGS TO FIX
 
@@ -68,7 +67,9 @@ Also don't forget to change the channel layer to redis.
       4. To fix this you can change the image format to an optimized one.
 
     - I think is because the readmore height isn't kept in count when scrolling.
-- You can't archive chats who are not with a contact.
+- Users can't archive chats who are not with a contact, and they won't if the chat archiving logic stills working like it's right now.
+  The only way to archive chats that are not with a Contact its to add the archive field to the Chat model, but that
+    would means that the Chat will be archived for all the Users in it.
 
 ## NOTES FOR LATER
 
