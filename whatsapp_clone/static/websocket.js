@@ -103,6 +103,15 @@ window.summon_chat = function(chat){
     localStorage.setItem('receiver_username', chat.dataset.contact)
     localStorage.setItem('chat_id', chat.dataset.chat)
     localStorage.setItem('contact_phone_number', chat.dataset.contactPhone)
+    // HTMX REQUEST TO UPDATE THE CHAT LIST
+    if (document.getElementById('chat-list') !== null){
+        if (document.getElementById('archived-chats') !== null) {
+            htmx.ajax('GET', '/archived_chats', {target:'#chats-and-more', swap:'innerHTML'})
+        } else {
+            htmx.ajax('GET', '/chats', {target:'#chat-list', swap:'outerHTML'})
+        }
+        
+    }
 
 }
 

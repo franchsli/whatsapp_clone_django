@@ -38,6 +38,7 @@
 
 ## Improvements
 
+- CREATE A FUNCTION THAT UPDATED THE CHAT LIST WITH HTMX (SEE WEBSOCKET LINE 107)
 - Implement a dynamic status length:
   - If its a photo 5 secs
   - if its a long text (more than 200 chars) 10 secs
@@ -58,6 +59,7 @@ Also don't forget to change the channel layer to redis.
 
 ## BUGS TO FIX
 
+- Sent messages are marked as read even though the contact has not read it yet.
 - When a user deletes a chat, the chat will be deleted from all the users in the chat
   - To fix this, you need to implement something similar to archive view logic.
 - Scroll to bottom func doesn't scroll to the botom anymore:
