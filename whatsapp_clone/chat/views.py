@@ -99,7 +99,7 @@ def display_chat(request, pk):
     chat = Chat.objects.get(id=pk)
     chat_messages = chat.message_set.all().order_by("date")
     for message in chat_messages.iterator():
-        if not message.read:
+        if not message.read and message.sender_user.pk != request.user.id:
             message.read = True
             message.save()
  
