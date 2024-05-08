@@ -6,8 +6,6 @@
 - Think if it's possible to implement an Exception in tools.py get_contact_in_chat function.
 - **OPTIMIZE REQUESTS**:
   - Re think if consumers should create contacts or create another consumer for that (i don't think so).....
-- Test all statuses features.
-- Test if edit/delete contact and delete chat works in any case.
 - Restrict chat views (check if the request method is the correct one if not, raise an error).
 - [Implement tooltips](https://getbootstrap.com/docs/5.3/components/tooltips/)
 - Optimize the images size (whithout decreasing quality if possible).
@@ -53,6 +51,7 @@ Also don't forget to change the channel layer to redis.
 
 ## BUGS TO FIX
 
+- New chats display that are 0 messages unread.
 - When a user deletes a chat, the chat will be deleted from all the users in the chat
   - To fix this, you need to implement something similar to archive view logic.
 - Scroll to bottom func doesn't scroll to the botom anymore:

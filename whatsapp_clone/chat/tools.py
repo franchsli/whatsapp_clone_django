@@ -109,7 +109,7 @@ def get_contacts_statuses(user: User, muted: bool) -> dict:
     contact_phone_numbers = contacts.values_list("phone_number", flat=True)
     statuses_with_contacts = Status.objects.filter(
         uploaded_by__phone_number__in=contact_phone_numbers
-    )
+    ).order_by("upload_date")
     contacts_with_statuses = {}
     for status in statuses_with_contacts:
         contact = contacts.filter(phone_number=status.uploaded_by.phone_number).first()
