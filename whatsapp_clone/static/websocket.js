@@ -1,7 +1,7 @@
 import { get, modifyNotification, scroll_to_bottom,
   create_message_html, toggleReadMore, showDropdown,
    run_element_animation, checked, not_empty,
-    toggle_element_inner_text, load_emojis, switch_emojis, switch_checkboxes, toggle_element_display, previewImage,
+    toggle_element_inner_text, load_emojis, switch_emojis, switch_checkboxes, toggle_element_display, previewImage, update_chat_list,
     at_least_one_attr } from  './tools.js';
 
 const user = document.getElementById('profile-pic')
@@ -104,14 +104,7 @@ window.summon_chat = function(chat){
     localStorage.setItem('chat_id', chat.dataset.chat)
     localStorage.setItem('contact_phone_number', chat.dataset.contactPhone)
     // HTMX REQUEST TO UPDATE THE CHAT LIST
-    if (document.getElementById('chat-list') !== null){
-        if (document.getElementById('archived-chats') !== null) {
-            htmx.ajax('GET', '/archived_chats', {target:'#chats-and-more', swap:'innerHTML'})
-        } else {
-            htmx.ajax('GET', '/chats', {target:'#chat-list', swap:'outerHTML'})
-        }
-        
-    }
+    update_chat_list()
 
 }
 
@@ -438,14 +431,7 @@ chat_websocket.addEventListener('message',async (event) => {
         if (user_id === sender_id){
             message_sent_audio.play()
             htmx.ajax('GET', `/display_chat/${localStorage.getItem('chat_id')}`, '#chat-display').then(() => {
-                if (document.getElementById('chat-list') !== null){
-                    if (document.getElementById('archived-chats') !== null) {
-                        htmx.ajax('GET', '/archived_chats', {target:'#chats-and-more', swap:'innerHTML'})
-                    } else {
-                        htmx.ajax('GET', '/chats', {target:'#chat-list', swap:'outerHTML'})
-                    }
-                    
-                }
+                update_chat_list()
             })
         }
         else {
@@ -465,14 +451,7 @@ chat_websocket.addEventListener('message',async (event) => {
         console.warn(message)
         console.log(message)
         // if the chats UI is displayed, reload it
-        if (document.getElementById('chat-list') !== null){
-            if (document.getElementById('archived-chats') !== null) {
-                htmx.ajax('GET', '/archived_chats', {target:'#chats-and-more', swap:'innerHTML'})
-            } else {
-                htmx.ajax('GET', '/chats', {target:'#chat-list', swap:'outerHTML'})
-            }
-            
-        }
+        update_chat_list()
 
         if(!sender_is_archived){
             const toastNotification = document.getElementById('liveToast')
@@ -493,17 +472,7 @@ chat_websocket.addEventListener('message',async (event) => {
         * and then decides whether or not to update the UI using
         * a HTMX.ajax request.
         */
-        if (document.getElementById('chat-list') !== null){
-            console.log('UPDATING CHAT LIST....')
-            if (document.getElementById('archived-chats') !== null) {
-                htmx.ajax('GET', '/archived_chats', {target:'#chats-and-more', swap:'innerHTML'})
-                console.log('UPDATED CHAT LIST!')
-            } else {
-                htmx.ajax('GET', '/chats', {target:'#chat-list', swap:'outerHTML'})
-                console.log('UPDATED CHAT LIST!')
-            }
-            
-        }
+        update_chat_list()
         if (document.getElementById('contact-name') !== null){
             console.log('CHAT IS DISPLAYED.. TRYING TO RELOAD...')
             if (document.getElementById('contact-name').innerText === sender_username) {
@@ -528,17 +497,7 @@ chat_websocket.addEventListener('message',async (event) => {
         * and then decides whether or not to update the UI using
         * a HTMX.ajax request.
         */
-        if (document.getElementById('chat-list') !== null){
-            console.log('UPDATING CHAT LIST....')
-            if (document.getElementById('archived-chats') !== null) {
-                htmx.ajax('GET', '/archived_chats', {target:'#chats-and-more', swap:'innerHTML'})
-                console.log('UPDATED CHAT LIST!')
-            } else {
-                htmx.ajax('GET', '/chats', {target:'#chat-list', swap:'outerHTML'})
-                console.log('UPDATED CHAT LIST!')
-            }
-            
-        }
+        update_chat_list()
         if (document.getElementById('contact-name') !== null){
             console.log('CHAT IS DISPLAYED.. TRYING TO RELOAD...')
             if (document.getElementById('contact-name').innerText === sender_username) {

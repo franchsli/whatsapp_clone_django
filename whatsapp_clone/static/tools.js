@@ -351,6 +351,17 @@ function previewImage(image_input=null, image_preview=null) {
     }
 }
 
+function update_chat_list(){
+    if (document.getElementById('chat-list') !== null){
+        if (document.getElementById('archived-chats') !== null) {
+            htmx.ajax('GET', '/archived_chats', {target:'#chats-and-more', swap:'innerHTML'})
+        } else {
+            htmx.ajax('GET', '/chats', {target:'#chat-list', swap:'outerHTML'})
+        }
+        
+    }
+}
+
 /**
  * Returns if at least one HTML
  * element in html_elements have the given
@@ -379,5 +390,5 @@ export {get, post, modifyNotification,
      scroll_to_bottom, create_message_html, 
      toggleReadMore, showDropdown, run_element_animation,
       checked, not_empty, toggle_element_inner_text,
-    load_emojis, switch_emojis, switch_checkboxes, toggle_element_display, previewImage, at_least_one_attr
+    load_emojis, switch_emojis, switch_checkboxes, toggle_element_display, previewImage, update_chat_list, at_least_one_attr
 }
