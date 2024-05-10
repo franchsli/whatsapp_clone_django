@@ -3,8 +3,6 @@
 
 ## DO RIGHT NOW
 
-- Test if all the places where update_chat_list() runs in websocket.js work as expected.
-  - Check if deleting a message updates the receiver chat list.
 - Think if it's possible to implement an Exception in tools.py get_contact_in_chat function.
 - **OPTIMIZE REQUESTS**:
   - Re think if consumers should create contacts or create another consumer for that (i don't think so).....
@@ -32,7 +30,6 @@
 
 ## Improvements
 
-- CREATE A FUNCTION THAT UPDATED THE CHAT LIST WITH HTMX (SEE WEBSOCKET LINE 107)
 - Implement a dynamic status length:
   - If its a photo 5 secs
   - if its a long text (more than 200 chars) 10 secs
