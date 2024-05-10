@@ -1,4 +1,4 @@
-"""Functions for global use."""
+"""Functions and variables for global use."""
 
 from django.core.files.base import ContentFile
 from typing import Union, Optional, List
@@ -117,11 +117,19 @@ def get_contacts_statuses(user: User, muted: bool) -> dict:
         contact = contacts.filter(phone_number=status.uploaded_by.phone_number).first()
         if contact:
             contacts_with_statuses.setdefault(contact, []).append(status)
-    # print(len([value for value in contacts_with_statuses.values()]))
-    # print([value for value in contacts_with_statuses.values()])
+
     return contacts_with_statuses
 
-def encoded_image_to_file(image_encoded_data:str, file_name:str) -> ContentFile:
+def encoded_image_to_file(image_encoded_data:Union[bytes, str], file_name:str) -> ContentFile:
+    """Converts a encoded image data to a ContentFile object.
+
+    Args:
+        image_encoded_data (Union[bytes, str]): The encoded image data.
+        file_name (str): The name that will be given to the file.
+
+    Returns:
+        ContentFile: A File-like object that takes just raw content.
+    """
     file_format, image_string_data = image_encoded_data.split(";base64,")
     # Get the file format extension (png, jpg, jpeg, etc.)
     file_extension = file_format.split("/")[-1]
