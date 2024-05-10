@@ -172,13 +172,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             new_message.save()
 
         if image:
-            file_format, image_string_data = image.split(";base64,")
-            # Get the file format extension (png, jpg, jpeg, etc.)
-            file_extension = file_format.split("/")[-1]
-
-            image_bytes_data = base64.b64decode(image_string_data)
-
-            image_file = ContentFile(image_bytes_data, f"user_message.{file_extension}")
+            image_file = encoded_image_to_file(image, "user_message")
             new_message.image = image_file
             new_message.save()
 
@@ -269,15 +263,7 @@ class StatusConsumer(AsyncWebsocketConsumer):
                 new_status.save()
 
             if image:
-                file_format, image_string_data = image.split(";base64,")
-                # Get the file format extension (png, jpg, jpeg, etc.)
-                file_extension = file_format.split("/")[-1]
-
-                image_bytes_data = base64.b64decode(image_string_data)
-
-                image_file = ContentFile(
-                    image_bytes_data, f"user_status.{file_extension}"
-                )
+                image_file = encoded_image_to_file(image, "user_status")
                 new_status.image = image_file
                 new_status.save()
 

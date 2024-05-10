@@ -45,7 +45,6 @@ Also don't forget to change the channel layer to redis.
 - Review all the code and delete spaguetti code.
 - Implement all of the features at [dj-chat](https://github.com/adilmohak/dj-chat?tab=readme-ov-file#current-features)
 - Reformat HTML code, PLEASE.
-- Use the logic to create a image file with code in a function in tools.py.
 - Delete all console.logs
 
 ## BUGS TO FIX

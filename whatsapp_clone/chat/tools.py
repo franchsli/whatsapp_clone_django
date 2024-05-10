@@ -1,9 +1,11 @@
 """Functions for global use."""
 
+from django.core.files.base import ContentFile
 from typing import Union, Optional, List
 from .models import User, Chat, Message, Contact, Status
 from phonenumber_field.phonenumber import PhoneNumber
 from .custom_exceptions import *
+import base64
 
 
 def get_user_by_id(user_id: Union[str, int]) -> Union[object, Exception]:
@@ -119,6 +121,13 @@ def get_contacts_statuses(user: User, muted: bool) -> dict:
     # print([value for value in contacts_with_statuses.values()])
     return contacts_with_statuses
 
+def encoded_image_to_file(image_encoded_data:str, file_name:str) -> ContentFile:
+    file_format, image_string_data = image_encoded_data.split(";base64,")
+    # Get the file format extension (png, jpg, jpeg, etc.)
+    file_extension = file_format.split("/")[-1]
+    image_bytes_data = base64.b64decode(image_string_data)
+    image_file = ContentFile(image_bytes_data, f"{file_name}.{file_extension}")
+    return image_file
 
 # CONSTANT VARIABLES
 DEFAULT_USER_PHOTO_URL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNBNdcMDNS2r9df1IWFVc8AY0QNtfNhEJv7fGS5TdhUWrlBqfGu1PCCn9lKpL-FqF9dWc&usqp=CAU"
