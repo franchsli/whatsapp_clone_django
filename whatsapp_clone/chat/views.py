@@ -34,6 +34,7 @@ def chat(request):
 
 # htmx
 def get_chats(request):
+    #chats = request.user.chats.order_by("last_message_date")
     chats = request.user.chats.all()
     user_chats = []
     for chat in chats:

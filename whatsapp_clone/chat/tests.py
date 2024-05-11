@@ -51,6 +51,27 @@ class MessageTest(TestCase):
         self.message.image = image_file
         self.message.save()
         self.assertTrue(self.message.has_image)
+    
+class ChatTest(TestCase):
+    def setUp(self) -> None:
+        self.user = User.objects.create(
+            id=1, phone_number="3145538787", username="testfranch"
+        )
+        self.another_user = User.objects.create(
+            id=2, phone_number="3105538780", username="testcontact"
+        )
+        self.chat = Chat.objects.create()
+        self.chat.users.add(self.user, self.another_user)
+        self.message = Message.objects.create(
+            id=1, sender_user=self.user, chat=self.chat
+        )
+        self.another_message = Message.objects.create(
+            id=2, sender_user=self.another_user, chat=self.chat
+        )
+    
+    def test_chat_has_last_message(self):
+        print(self.chat.last_message_date)
+        return self.assertIsNotNone(self.chat.last_message_date)
 
 
 class GroupTest(TestCase):

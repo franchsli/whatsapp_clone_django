@@ -42,6 +42,10 @@ class Contact(models.Model):
 class Chat(models.Model):
     users = models.ManyToManyField(User, related_name="chats")
 
+    @property
+    def last_message_date(self):
+        return self.message_set.latest("date")
+
 
 class Group(Chat):
     admins = models.ManyToManyField(User, related_name="group_chat")
