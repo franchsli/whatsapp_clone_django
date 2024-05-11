@@ -51,7 +51,8 @@ class MessageTest(TestCase):
         self.message.image = image_file
         self.message.save()
         self.assertTrue(self.message.has_image)
-    
+
+
 class ChatTest(TestCase):
     def setUp(self) -> None:
         self.user = User.objects.create(
@@ -68,7 +69,7 @@ class ChatTest(TestCase):
         self.another_message = Message.objects.create(
             id=2, sender_user=self.another_user, chat=self.chat
         )
-    
+
     def test_chat_has_last_message(self):
         print(self.chat.last_message_date)
         return self.assertIsNotNone(self.chat.last_message_date)

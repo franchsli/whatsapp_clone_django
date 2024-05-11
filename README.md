@@ -3,12 +3,14 @@
 
 ## DO RIGHT NOW
 
+- Restrict chat views
+  - Check if the request method is the correct one (GET, PATCH, UPDATE, DELETE)
+    if not, raise an error (django error if possible).
 - Rework the chat list to display the chats depending on the date of the last message.
   - Try reworking Chat model.
 - Think if it's possible to implement an Exception in tools.py get_contact_in_chat function.
 - **OPTIMIZE REQUESTS**:
   - Re think if consumers should create contacts or create another consumer for that (i don't think so).....
-- Restrict chat views (check if the request method is the correct one if not, raise an error).
 - [Implement tooltips](https://getbootstrap.com/docs/5.3/components/tooltips/)
 - Optimize the images size (whithout decreasing quality if possible).
 - Add something to delete statuses automatically every 24 hours (cronjobs maybe).

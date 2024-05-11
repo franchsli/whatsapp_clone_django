@@ -18,8 +18,7 @@ def chat(request):
         initial={"uploaded_by": request.user, "upload_date": timezone.now}
     )
     contacts = request.user.contact_set.all().order_by("name")
-    # print(request.user.has_photo)
-    # print(f"User:{request.user.get_username()}")
+
     return render(
         request,
         "index.html",
@@ -86,8 +85,7 @@ def archive_chat(request, chat_id, archive):
 def display_user_ui(request):
     chats = request.user.chats.all()
     contacts = request.user.contact_set.all().order_by("name")
-    # print(request.user.has_photo)
-    # print(f"User:{request.user.get_username()}")
+
     return render(
         request,
         "layouts/partials/user_interface.html",
