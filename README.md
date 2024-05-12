@@ -4,7 +4,7 @@
 ## DO RIGHT NOW
 
 - Restrict chat views
-  - Check if the request method is the correct one (GET, PATCH, UPDATE, DELETE)
+  - Check if the request method is the correct one (GET, PATCH, PUT, POST, DELETE)
     if not, raise an error (django error if possible).
 - Rework the chat list to display the chats depending on the date of the last message.
   - Try reworking Chat model.
