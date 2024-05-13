@@ -48,7 +48,7 @@ def get_chats(request):
         # display it as normal chat
         else:
             user_chats.append(chat)
-            
+
     return render(
         request, "layouts/partials/components/chats.html", {"chats": user_chats}
     )
@@ -72,18 +72,22 @@ def get_archived_chats(request):
 
 
 def archive_chat(request, chat_id, archive):
-    # converts the str to boolean
-    archive = True if archive == "True" else False
-    # arhives or unarchives the contact
-    chat = Chat.objects.get(id=chat_id)
-    contact = get_contact_in_chat(chat, request.user)
-    contact.archived = archive
-    contact.save()
-    # returns all the desired chats depending on archive arg value
-    if archive == True:
-        return redirect("get_chats")
+    if request.method == 'PATCH':
+        # converts the str to boolean
+        archive = True if archive == "True" else False
+        # arhives or unarchives the contact
+        chat = Chat.objects.get(id=chat_id)
+        contact = get_contact_in_chat(chat, request.user)
+        contact.archived = archive
+        contact.save()
+        # returns all the desired chats depending on archive arg value
+        if archive == True:
+            return redirect("get_chats")
+        else:
+            return redirect("archived_chats")
     else:
-        return redirect("archived_chats")
+        return HttpResponseNotAllowed(['PATCH'])
+
 
 
 def display_user_ui(request):
@@ -251,39 +255,39 @@ def update_chat_form(request):
 
 
 def get_statuses(request):
-    if request.method == "GET":
-        contacts_statuses = get_contacts_statuses(request.user, False)
-        muted_contacts_statuses = get_contacts_statuses(request.user, True)
+    contacts_statuses = get_contacts_statuses(request.user, False)
+    muted_contacts_statuses = get_contacts_statuses(request.user, True)
+    # Query for statuses uploaded by the user
+    user_statuses = Status.objects.filter(uploaded_by=request.user).order_by(
+        "upload_date"
+    )
 
-        # Query for statuses uploaded by the user
-        user_statuses = Status.objects.filter(uploaded_by=request.user).order_by(
-            "upload_date"
-        )
+    return render(
+        request,
+        "layouts/partials/statuses.html",
+        {
+            "user_statuses": user_statuses,
+            "contacts_with_statuses": contacts_statuses,
+            "muted_contacts_with_statuses": muted_contacts_statuses,
+        },
+    )
 
-        return render(
-            request,
-            "layouts/partials/statuses.html",
-            {
-                "user_statuses": user_statuses,
-                "contacts_with_statuses": contacts_statuses,
-                "muted_contacts_with_statuses": muted_contacts_statuses,
-            },
-        )
-    else:
-        return HttpResponseNotAllowed(["GET"])
 
 
 def mute_contact_statuses(request, contact_id: Union[str, int], mute: bool):
-    try:
-        contact_to_mute = Contact.objects.get(id=contact_id)
-        contact_to_mute.statuses_muted = True if mute == "True" else False
-        contact_to_mute.save()
+    if request.method == 'PATCH':
+        try:
+            contact_to_mute = Contact.objects.get(id=contact_id)
+            contact_to_mute.statuses_muted = True if mute == "True" else False
+            contact_to_mute.save()
 
-    except Contact.DoesNotExist:
-        raise ModelNotFoundException(f"NO CONTACT FOUND WITH SUCH ID: {contact_id}")
+        except Contact.DoesNotExist:
+            raise ModelNotFoundException(f"NO CONTACT FOUND WITH SUCH ID: {contact_id}")
 
-    finally:
-        return redirect("statuses")
+        finally:
+            return redirect("statuses")
+    else:
+        return HttpResponseNotAllowed(['PATCH'])
 
 
 def create_status(request):
