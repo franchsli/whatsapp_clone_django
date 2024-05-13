@@ -5,6 +5,7 @@ from typing import Union, Optional, List
 from .models import User, Chat, Message, Contact, Status
 from phonenumber_field.phonenumber import PhoneNumber
 from .custom_exceptions import *
+from django.core.exceptions import ObjectDoesNotExist
 import base64
 
 

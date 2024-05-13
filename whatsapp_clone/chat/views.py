@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
-from django.db.models import Max
+from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseNotAllowed
 from .models import User, Chat, Contact, Message, Status
 from .forms import ChatForm, ContactForm, MessageForm, StatusForm

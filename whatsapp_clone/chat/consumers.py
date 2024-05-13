@@ -3,6 +3,7 @@ from channels.db import database_sync_to_async
 from .models import User, Chat, Message, Status
 from .tools import *
 from .custom_exceptions import *
+from django.core.exceptions import ObjectDoesNotExist
 from django.utils import timezone
 from typing import Union, Optional
 import json

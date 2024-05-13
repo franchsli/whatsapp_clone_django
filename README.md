@@ -4,6 +4,9 @@
 ## DO RIGHT NOW
 
 - Use ObjectDoesNotExist django excpetion instead of ModelNotFound exception.
+  - Test if ModelNotFound works.
+  - Test if ObjectDoesNotExist works.
+- Implement something to change the 'No Updates' text in the User status display.
 - Rework the chat list to display the chats depending on the date of the last message.
   - Try reworking Chat model.
 - Think if it's possible to implement an Exception in tools.py get_contact_in_chat function.
