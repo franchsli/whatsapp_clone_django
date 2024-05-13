@@ -35,45 +35,40 @@ def chat(request):
 
 # htmx
 def get_chats(request):
-    if request.method == "GET":
-        # chats = request.user.chats.order_by("last_message_date")
-        chats = request.user.chats.all()
-        # chats = request.user.chats.annotate(last_message_date=Max('message__date')).order_by('-last_message_date')
-        user_chats = []
-        for chat in chats:
-            contact = get_contact_in_chat(chat, request.user)
-            if contact:
-                if not contact.archived:
-                    user_chats.append(chat)
-            # if no contact is found it means is an unknow phone
-            # display it as normal chat
-            else:
+    # chats = request.user.chats.order_by("last_message_date")
+    chats = request.user.chats.all()
+    # chats = request.user.chats.annotate(last_message_date=Max('message__date')).order_by('-last_message_date')
+    user_chats = []
+    for chat in chats:
+        contact = get_contact_in_chat(chat, request.user)
+        if contact:
+            if not contact.archived:
                 user_chats.append(chat)
-
-        return render(
-            request, "layouts/partials/components/chats.html", {"chats": user_chats}
-        )
-    else:
-        return HttpResponseNotAllowed(["GET"])
+        # if no contact is found it means is an unknow phone
+        # display it as normal chat
+        else:
+            user_chats.append(chat)
+            
+    return render(
+        request, "layouts/partials/components/chats.html", {"chats": user_chats}
+    )
 
 
 def get_archived_chats(request):
-    if request.method == "GET":
-        chats = request.user.chats.all()
-        user_archived_chats = []
-        for chat in chats:
-            contact = get_contact_in_chat(chat, request.user)
-            if contact:
-                if contact.archived:
-                    user_archived_chats.append(chat)
+    chats = request.user.chats.all()
+    user_archived_chats = []
+    for chat in chats:
+        contact = get_contact_in_chat(chat, request.user)
+        if contact:
+            if contact.archived:
+                user_archived_chats.append(chat)
 
-        return render(
-            request,
-            "layouts/partials/archived_chats.html",
-            {"chats": user_archived_chats},
-        )
-    else:
-        return HttpResponseNotAllowed(["GET"])
+    return render(
+        request,
+        "layouts/partials/archived_chats.html",
+        {"chats": user_archived_chats},
+    )
+
 
 
 def archive_chat(request, chat_id, archive):

@@ -7,6 +7,7 @@
   - Add PUT and PATCH checking in the appropiate views.
   - Test if all the views work as expected.
     if not, raise an error (django error if possible).
+- Use ObjectDoesNotExist django excpetion instead of ModelNotFound exception.
 - Rework the chat list to display the chats depending on the date of the last message.
   - Try reworking Chat model.
 - Think if it's possible to implement an Exception in tools.py get_contact_in_chat function.
