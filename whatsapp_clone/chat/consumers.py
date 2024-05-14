@@ -2,7 +2,6 @@ from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.db import database_sync_to_async
 from .models import User, Chat, Message, Status
 from .tools import *
-from .custom_exceptions import *
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils import timezone
 from typing import Union, Optional
@@ -269,7 +268,7 @@ class StatusConsumer(AsyncWebsocketConsumer):
     @database_sync_to_async
     def delete_status(self, status_id: Union[str, int]) -> None:
         """Deletes the status with the given id if exists,
-        raise an error otherwise.
+        raise an error exception.
 
         Args:
             status_id (Union[str, int]): The id of the status to be deleted.
@@ -278,7 +277,7 @@ class StatusConsumer(AsyncWebsocketConsumer):
             status = Status.objects.get(id=status_id)
             status.delete()
         except Status.DoesNotExist:
-            raise ModelNotFoundException(f"NO STATUS FOUND WITH SUCH ID: {status_id}")
+            raise ObjectDoesNotExist(f"NO STATUS FOUND WITH SUCH ID: {status_id}")
 
     async def disconnect(self, close_code):
         # Called when the socket closes

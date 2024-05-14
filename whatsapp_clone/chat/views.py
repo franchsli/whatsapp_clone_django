@@ -7,7 +7,6 @@ from .models import User, Chat, Contact, Message, Status
 from .forms import ChatForm, ContactForm, MessageForm, StatusForm
 from typing import Union
 from .tools import get_contact_in_chat, get_contacts_statuses
-from .custom_exceptions import *
 
 
 @login_required
@@ -282,7 +281,7 @@ def mute_contact_statuses(request, contact_id: Union[str, int], mute: bool):
             contact_to_mute.save()
 
         except Contact.DoesNotExist:
-            raise ModelNotFoundException(f"NO CONTACT FOUND WITH SUCH ID: {contact_id}")
+            raise ObjectDoesNotExist(f"NO CONTACT FOUND WITH SUCH ID: {contact_id}")
 
         finally:
             return redirect("statuses")

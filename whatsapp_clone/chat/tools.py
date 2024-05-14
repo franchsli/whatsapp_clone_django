@@ -4,7 +4,6 @@ from django.core.files.base import ContentFile
 from typing import Union, Optional, List
 from .models import User, Chat, Message, Contact, Status
 from phonenumber_field.phonenumber import PhoneNumber
-from .custom_exceptions import *
 from django.core.exceptions import ObjectDoesNotExist
 import base64
 
@@ -15,14 +14,14 @@ def get_user_by_id(user_id: Union[str, int]) -> Union[object, Exception]:
     Args:
         user_id (Union[str, int]): A numeric (integer) value that identify the user.
     Raises:
-        ModelNotFoundException: Raised when there's no user with the given id.
+        ObjectDoesNotExist: Raised when there's no user with the given id.
     Returns:
         Union[object, Exception]: The user object in the database or an exception if not found.
     """
     try:
         return User.objects.get(id=user_id)
     except User.DoesNotExist:
-        raise ModelNotFoundException(f"NO USER FOUND WITH SUCH ID: {user_id}")
+        raise ObjectDoesNotExist(f"NO USER FOUND WITH SUCH ID: {user_id}")
 
 
 def get_user_by_phone(phone_number: str) -> Union[object, Exception]:
@@ -31,14 +30,14 @@ def get_user_by_phone(phone_number: str) -> Union[object, Exception]:
     Args:
         phone_number (str): The phone number of the wanted user.
     Raises:
-        ModelNotFoundException: Raised when there's no user with such phone
+        ObjectDoesNotExist: Raised when there's no user with such phone
     Returns:
         Union[object, Exception]: The user object in the database or an exception if not found.
     """
     try:
         return User.objects.get(phone_number=phone_number)
     except User.DoesNotExist:
-        raise ModelNotFoundException(f"NO USER FOUND WITH SUCH PHONE: {phone_number}")
+        raise ObjectDoesNotExist(f"NO USER FOUND WITH SUCH PHONE: {phone_number}")
 
 
 def create_contact(contact_name: str, contact_phone_number: str, creator: User) -> None:
