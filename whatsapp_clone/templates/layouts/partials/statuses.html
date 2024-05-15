@@ -30,7 +30,7 @@
     <div class="d-flex flex-column ms-3 w-100">
       <span class="col-auto fs-6 mt-2">My status</span>
       {% if user_statuses|length >= 1 %}
-        <span class="col-auto fs-6">{{ user_statuses|latest_data:"upload_date"|date }}</span>
+        <span class="col-auto fs-6">{{ user_statuses|latest_data:"upload_date"|timesince }} ago</span>
       {% else %}
         <span class="col-auto fs-6">No updates</span>
       {% endif %}
