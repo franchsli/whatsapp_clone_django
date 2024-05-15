@@ -4,6 +4,8 @@
 ## DO RIGHT NOW
 
 - Implement something to change the 'No Updates' text in the User status display.
+  - If the user has uploaded at least one status, display the hour of the latest status.
+  - Display 'No Updates' otherwise.
 - Rework the chat list to display the chats depending on the date of the last message.
   - Try reworking Chat model.
 - Think if it's possible to implement an Exception in tools.py get_contact_in_chat function.
