@@ -65,6 +65,12 @@ def unread_messages_counter(messages_queryset: QuerySet, user_id: int) -> int:
 
     return unread_counter
 
+@register.filter
+def latest_data(queryset: QuerySet, desired_field_name: str):
+    latest_object = queryset.latest(desired_field_name)
+    return getattr(latest_object, desired_field_name)
+
+
 
 @register.simple_tag
 def exclude_user_tag(user_set: QuerySet, user: User, value: str) -> str:
