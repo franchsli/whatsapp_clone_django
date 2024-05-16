@@ -623,10 +623,12 @@ status_websocket.addEventListener('message', async (event) => {
         status_app = {
             pending_updates : true
         }
+        console.log('RELOADING STATUS VIEW')
         if (!status_modals_showing){
             htmx.ajax('GET', '/statuses', '#chats-and-more')
             .then( () => {
                 status_app.pending_updates = false
+                console.log('RELOADED STATUS VIEW')
             })
         }
             

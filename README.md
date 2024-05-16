@@ -3,7 +3,6 @@
 
 ## DO RIGHT NOW
 
-- Implement something to update the status view after the user uploads a status.
 - Rework the chat list to display the chats depending on the date of the last message.
   - Try reworking Chat model.
 - Think if it's possible to implement an Exception in tools.py get_contact_in_chat function.
