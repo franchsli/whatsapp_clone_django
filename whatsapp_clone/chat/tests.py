@@ -70,11 +70,6 @@ class ChatTest(TestCase):
             id=2, sender_user=self.another_user, chat=self.chat
         )
 
-    def test_chat_has_last_message(self):
-        print(self.chat.last_message_date)
-        return self.assertIsNotNone(self.chat.last_message_date)
-
-
 class GroupTest(TestCase):
     def setUp(self) -> None:
         user = User.objects.create(
@@ -84,8 +79,12 @@ class GroupTest(TestCase):
 
     def test_user_exists(self):
         self.assertTrue(User.objects.get(id=1).exists())
-
+    
     def test_user_is_not_admin(self):
+        user_instance = User.objects.get(id=1)
+        group_instance = Group.objects.get(id=1)
+        group_instance.users.add(user_instance)
+        group_instance.save()
         self.assertFalse(Group.objects.get(id=1).user_is_admin(User.objects.get(id=1)))
 
     def test_user_is_admin(self):

@@ -3,7 +3,6 @@
 
 ## DO RIGHT NOW
 
-- Check user_is_admin() logic.
 - Think if it's possible to implement an Exception in tools.py get_contact_in_chat function.
 - **OPTIMIZE REQUESTS**:
   - Re think if consumers should create contacts or create another consumer for that (i don't think so).....
