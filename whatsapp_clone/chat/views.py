@@ -37,7 +37,8 @@ def chat(request):
 def get_chats(request):
     # returns the user chats ordered by the date of the latest message in the chat.
     chats = request.user.chats.annotate(
-    last_message_date=Max('message__date')).order_by('-last_message_date')
+        last_message_date=Max("message__date")
+    ).order_by("-last_message_date")
     user_chats = []
     for chat in chats:
         contact = get_contact_in_chat(chat, request.user)
@@ -57,7 +58,8 @@ def get_chats(request):
 def get_archived_chats(request):
     # returns the user chats ordered by the date of the latest message in the chat.
     chats = request.user.chats.annotate(
-    last_message_date=Max('message__date')).order_by('-last_message_date')
+        last_message_date=Max("message__date")
+    ).order_by("-last_message_date")
     user_archived_chats = []
     for chat in chats:
         contact = get_contact_in_chat(chat, request.user)
@@ -72,9 +74,8 @@ def get_archived_chats(request):
     )
 
 
-
 def archive_chat(request, chat_id, archive):
-    if request.method == 'PATCH':
+    if request.method == "PATCH":
         # converts the str to boolean
         archive = True if archive == "True" else False
         # arhives or unarchives the contact
@@ -88,8 +89,7 @@ def archive_chat(request, chat_id, archive):
         else:
             return redirect("archived_chats")
     else:
-        return HttpResponseNotAllowed(['PATCH'])
-
+        return HttpResponseNotAllowed(["PATCH"])
 
 
 def display_user_ui(request):
@@ -275,9 +275,8 @@ def get_statuses(request):
     )
 
 
-
 def mute_contact_statuses(request, contact_id: Union[str, int], mute: bool):
-    if request.method == 'PATCH':
+    if request.method == "PATCH":
         try:
             contact_to_mute = Contact.objects.get(id=contact_id)
             contact_to_mute.statuses_muted = True if mute == "True" else False
@@ -289,7 +288,7 @@ def mute_contact_statuses(request, contact_id: Union[str, int], mute: bool):
         finally:
             return redirect("statuses")
     else:
-        return HttpResponseNotAllowed(['PATCH'])
+        return HttpResponseNotAllowed(["PATCH"])
 
 
 def create_status(request):

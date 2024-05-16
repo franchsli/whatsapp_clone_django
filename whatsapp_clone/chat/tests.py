@@ -70,6 +70,7 @@ class ChatTest(TestCase):
             id=2, sender_user=self.another_user, chat=self.chat
         )
 
+
 class GroupTest(TestCase):
     def setUp(self) -> None:
         self.user = User.objects.create(
@@ -79,7 +80,7 @@ class GroupTest(TestCase):
 
     def test_user_exists(self):
         self.assertTrue(User.objects.get(id=1).exists())
-    
+
     def test_user_is_not_admin(self):
         self.group.users.add(self.user)
         self.group.save()
