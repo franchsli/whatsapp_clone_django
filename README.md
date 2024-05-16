@@ -3,7 +3,10 @@
 
 ## DO RIGHT NOW
 
-- Think if it's possible to implement an Exception in tools.py get_contact_in_chat function.
+- Add 3 pills for filtering the chat list:
+  - The first one called 'All' the default one.
+  - The second one called 'Unread' that shows only the unread chats or groups.
+  - The third one called 'Groups' that shows the groups.
 - **OPTIMIZE REQUESTS**:
   - Re think if consumers should create contacts or create another consumer for that (i don't think so).....
 - [Implement tooltips](https://getbootstrap.com/docs/5.3/components/tooltips/)
@@ -21,7 +24,6 @@
   - Or make a way to display a div telling the date if the  next message in the list have more than one day of difference
   or was send the next day (the div should be displayed over the said next message [under the current message.]
   and the div should only be displayed if the current message it's not the last.)
-- Add groups chats (front-end).
 - Redesign the login and register views (CSS).
 - Add chat wallpapers user CSS url for images and a JS color selector for colors.
 - Rework show_dropdown animation.
