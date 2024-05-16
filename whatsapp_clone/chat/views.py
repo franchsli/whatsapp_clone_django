@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Max
 from django.http import HttpResponseNotAllowed
 from .models import User, Chat, Contact, Message, Status
 from .forms import ChatForm, ContactForm, MessageForm, StatusForm
@@ -34,9 +35,9 @@ def chat(request):
 
 # htmx
 def get_chats(request):
-    # chats = request.user.chats.order_by("last_message_date")
-    chats = request.user.chats.all()
-    # chats = request.user.chats.annotate(last_message_date=Max('message__date')).order_by('-last_message_date')
+    # returns the user chats ordered by the date of the latest message in the chat.
+    chats = request.user.chats.annotate(
+    last_message_date=Max('message__date')).order_by('-last_message_date')
     user_chats = []
     for chat in chats:
         contact = get_contact_in_chat(chat, request.user)
@@ -54,7 +55,9 @@ def get_chats(request):
 
 
 def get_archived_chats(request):
-    chats = request.user.chats.all()
+    # returns the user chats ordered by the date of the latest message in the chat.
+    chats = request.user.chats.annotate(
+    last_message_date=Max('message__date')).order_by('-last_message_date')
     user_archived_chats = []
     for chat in chats:
         contact = get_contact_in_chat(chat, request.user)
