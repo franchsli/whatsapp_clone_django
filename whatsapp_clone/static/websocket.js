@@ -2,7 +2,7 @@ import { get, modifyNotification, scroll_to_bottom,
   create_message_html, toggleReadMore, showDropdown,
    run_element_animation, checked, not_empty,
     toggle_element_inner_text, load_emojis, switch_emojis, switch_checkboxes, toggle_element_display, previewImage, update_chat_list,
-    at_least_one_attr } from  './tools.js';
+    at_least_one_attr, exchange_elements_class } from  './tools.js';
 
 const user = document.getElementById('profile-pic')
 const user_id = user.getAttribute('data-user')
@@ -193,6 +193,10 @@ chat_websocket.addEventListener('open', () => {
 
     window.toggle_element_display = function(HTML_element){
         toggle_element_display(HTML_element)
+    }
+
+    window.exchange_elements_class = function(element_a, element_b, class_a, class_b){
+        exchange_elements_class(element_a, element_b, class_a, class_b)
     }
 
 

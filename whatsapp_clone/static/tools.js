@@ -385,10 +385,28 @@ function at_least_one_attr(html_elements, attribute, value){
     return found
 }
 
+/**
+ * Removes the given class from their respective element
+ * and adds the class b to element a and so.
+ * @param {HTMLElement} element_a The element that has the class A.
+ * @param {HTMLElement} element_b The element that has the class B.
+ * @param {String} class_a The class name of the element A.
+ * @param {String} class_b The class name of the element B.
+ */
+function exchange_elements_class(element_a, element_b, class_a, class_b){
+    console.log(element_a)
+    console.log(element_b)
+    element_a.classList.replace(class_a, class_b)
+    element_b.classList.replace(class_b, class_a)
+    console.log('CLASSES HAVE BEEN SWITCH')
+
+}
 
 export {get, post, modifyNotification,
      scroll_to_bottom, create_message_html, 
      toggleReadMore, showDropdown, run_element_animation,
       checked, not_empty, toggle_element_inner_text,
-    load_emojis, switch_emojis, switch_checkboxes, toggle_element_display, previewImage, update_chat_list, at_least_one_attr
+    load_emojis, switch_emojis, switch_checkboxes, 
+    toggle_element_display, previewImage, update_chat_list, at_least_one_attr,
+    exchange_elements_class,
 }
