@@ -74,6 +74,18 @@ def get_archived_chats(request):
     )
 
 
+def get_group_chats(request):
+    # returns the user chats ordered by the date of the latest message in the group.
+    # EDIT THIS
+    groups = request.user.chats.annotate(
+        last_message_date=Max("message__date")
+    ).order_by("-last_message_date")
+
+    return render(
+        request, "layouts/partials/components/chats.html", {"groups": groups}
+    )
+
+
 def archive_chat(request, chat_id, archive):
     if request.method == "PATCH":
         # converts the str to boolean

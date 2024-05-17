@@ -3,10 +3,17 @@
 
 ## DO RIGHT NOW
 
-- Add 3 pills for filtering the chat list:
-  - The first one called 'All' the default one.
-  - The second one called 'Unread' that shows only the unread chats or groups.
-  - The third one called 'Groups' that shows the groups.
+- Rework Chat model in order to act as a Group:
+  - Add all the Group model fields and methods into Chat model.
+  - Give all the added fields a null=True so the Chat acts like a normal Chat by default.
+  - Delete Group model.
+- Add HTMX functionality to the 3 pills for filtering the chat list:
+  - Rework the views logic and so.
+  - The first one called 'All' the default one (get_chats view).
+  - The second one called 'Unread' that shows only the unread chats or groups
+  (get_unread_chats view [create this] uses a query that only returns the chats who last message are unread).
+  - The third one called 'Groups' that shows the groups (get_group_chats view).
+  - Think about adding get_archived_groups view.
 - **OPTIMIZE REQUESTS**:
   - Re think if consumers should create contacts or create another consumer for that (i don't think so).....
 - [Implement tooltips](https://getbootstrap.com/docs/5.3/components/tooltips/)

@@ -2,9 +2,17 @@
 {% load static %}
 
 <div class="my-3 ms-3" id="chats-filters">
-  <button onclick="exchange_elements_class(document.getElementsByClassName('filter-selector-active').item(0), this, 'filter-selector-active', 'filter-selector');" class="filter-selector-active btn rounded-pill fs-6">All</button>
-  <button onclick="exchange_elements_class(document.getElementsByClassName('filter-selector-active').item(0), this, 'filter-selector-active', 'filter-selector');" class="filter-selector btn rounded-pill fs-6">Unread</button>
-  <button onclick="exchange_elements_class(document.getElementsByClassName('filter-selector-active').item(0), this, 'filter-selector-active', 'filter-selector');" class="filter-selector btn rounded-pill fs-6">Groups</button>
+  <button onclick="exchange_elements_class(document.getElementsByClassName('filter-selector-active').item(0),
+   this, 'filter-selector-active', 'filter-selector');" 
+   class="filter-selector-active btn rounded-pill fs-6">All</button>
+
+  <button onclick="exchange_elements_class(document.getElementsByClassName('filter-selector-active').item(0),
+   this, 'filter-selector-active', 'filter-selector');" 
+   class="filter-selector btn rounded-pill fs-6">Unread</button>
+
+  <button onclick="exchange_elements_class(document.getElementsByClassName('filter-selector-active').item(0),
+   this, 'filter-selector-active', 'filter-selector');" 
+   class="filter-selector btn rounded-pill fs-6">Groups</button>
 </div>
 <ul id="chat-list" class="scroll-section list-group list-group-flush overflow-y-scroll" style="max-height: 590px; height: 500px;">
   {% for chat in chats %}
