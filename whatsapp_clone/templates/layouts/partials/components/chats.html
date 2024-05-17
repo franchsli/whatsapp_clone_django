@@ -1,7 +1,11 @@
 {% load filters %}
 {% load static %}
 
-
+<div class="my-3 ms-3">
+  <button class="filter-selector-active btn rounded-pill fs-6">All</button>
+  <button class="filter-selector btn rounded-pill fs-6">Unread</button>
+  <button class="filter-selector btn rounded-pill fs-6">Groups</button>
+</div>
 <ul id="chat-list" class="scroll-section list-group list-group-flush overflow-y-scroll" style="max-height: 590px; height: 500px;">
   {% for chat in chats %}
   <li onclick="summon_chat(this);" oncontextmenu="showDropdown(event, 'chat-dropdown{{chat.id}}')"

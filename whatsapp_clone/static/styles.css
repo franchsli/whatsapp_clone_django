@@ -64,6 +64,20 @@ main,  #base {
   background-color: var(--bs-body-bg);
 }
 
+.filter-selector{
+  background-color: var(--bs-dark-bg-subtle);
+}
+.filter-selector:hover{
+  background-color: var(--bs-secondary-bg);
+}
+
+.filter-selector-active{
+  background-color: var(--bs-success-bg-subtle);
+}
+.filter-selector-active:hover{
+  background-color: var(--bs-success);
+}
+
 @keyframes show_dropdown {
   from {
     opacity: 0;
