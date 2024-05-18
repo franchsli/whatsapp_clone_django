@@ -45,7 +45,7 @@ class Chat(models.Model):
     name = models.CharField(max_length=72, null=True)
 
     def __str__(self) -> str:
-        return self.name if self.name else ''
+        return self.name if self.name else f'Chat object {self.pk}'
 
     def user_is_admin(self, user: User) -> bool:
         """Returns if the provided user is an admin in the group

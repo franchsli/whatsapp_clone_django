@@ -20,7 +20,7 @@ class CustomUserAdmin(UserAdmin):
 
 
 class ChatAdmin(admin.ModelAdmin):
-    pass
+    search_fields = ("name",)
 
 
 class MessageAdmin(admin.ModelAdmin):
