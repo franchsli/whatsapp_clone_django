@@ -1,5 +1,5 @@
 from django.test import TestCase
-from .models import Group, User, Status, Message, Chat
+from .models import User, Status, Message, Chat
 from typing import Optional
 from django.utils import timezone
 from django.core.files.base import ContentFile
@@ -63,12 +63,17 @@ class ChatTest(TestCase):
         )
         self.chat = Chat.objects.create()
         self.chat.users.add(self.user, self.another_user)
+        self.another_chat = Chat.objects.create()
+        self.another_chat.users.add(self.user, self.another_user)
         self.message = Message.objects.create(
             id=1, sender_user=self.user, chat=self.chat
         )
         self.another_message = Message.objects.create(
             id=2, sender_user=self.another_user, chat=self.chat
         )
+
+        self.another_chat.admins.add(self.user)
+        self.another_chat.save()
 
     def test_user_is_not_admin(self):
         self.chat.users.add(self.user)

@@ -57,7 +57,7 @@ class Chat(models.Model):
             bool: True if the User is in the queryset of admins
             False otherwise.
         """
-        return user.managed_groups.exists()
+        return user.managed_groups.filter(id=self.pk).exists()
 
 
 
