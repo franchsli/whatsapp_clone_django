@@ -1,6 +1,21 @@
 {% load filters %}
 {% load static %}
 
+<div class="my-3 ms-3" id="chats-filters">
+  <button onclick="exchange_elements_class(document.getElementsByClassName('filter-selector-active').item(0),
+   this, 'filter-selector-active', 'filter-selector');" 
+   class="filter-selector-active btn rounded-pill fs-6"
+   hx-get="{% url 'get_chats' %}" hx-target="#chats-and-contacts" hx-swap="innerHTML">All</button>
+
+  <button onclick="exchange_elements_class(document.getElementsByClassName('filter-selector-active').item(0),
+   this, 'filter-selector-active', 'filter-selector');" 
+   class="filter-selector btn rounded-pill fs-6">Unread</button>
+
+  <button onclick="exchange_elements_class(document.getElementsByClassName('filter-selector-active').item(0),
+   this, 'filter-selector-active', 'filter-selector');" 
+   class="filter-selector btn rounded-pill fs-6"
+   hx-get="{% url 'groups' %}" hx-target="#chats-and-contacts" hx-swap="innerHTML">Groups</button>
+</div>
 <ul id="chat-list" class="scroll-section list-group list-group-flush overflow-y-scroll" style="max-height: 590px; height: 500px;">
   {% for chat in chats %}
   <li onclick="summon_chat(this);" oncontextmenu="showDropdown(event, 'chat-dropdown{{chat.id}}')"
@@ -13,7 +28,7 @@
     <img class="ms-1 rounded-circle img-fluid" src="{% get_contact_in_chat_tag chat request.user 'photo' %}" alt="" style="max-width: 45px;">
     <div class="d-flex flex-column ms-3 w-100">
       <div class="d-flex justify-content-between">
-        <span class="text-truncate" style="max-width: 210px;">{% get_contact_in_chat_tag chat request.user 'name' %}</span>
+        <span class="text-truncate" style="max-width: 210px;">{{chat.name}}</span>
         {% with last_message_date=chat.message_set.all|last_message:'date' %}
           {% if last_message_date %}
             {% with time_difference=last_message_date|timesince %}

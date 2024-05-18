@@ -54,7 +54,22 @@
   </div>
 </div>
 {% comment "tabs" %}Contacts and chats{% endcomment %}
-<div id="chats-and-contacts" hx-get="{% url 'get_chats' %}" hx-target="this" hx-trigger="load" hx-swap="innerHTML">
+<div id="chats-and-contacts" hx-get="{% url 'get_chats' %}" hx-target="this" hx-trigger="load" hx-swap="beforeend">
+  <div class="my-3 ms-3" id="chats-filters">
+    <button onclick="exchange_elements_class(document.getElementsByClassName('filter-selector-active').item(0),
+     this, 'filter-selector-active', 'filter-selector');" 
+     class="filter-selector-active btn rounded-pill fs-6"
+     hx-get="{% url 'get_chats' %}" hx-target="#chat-list" hx-swap="outerHTML">All</button>
+  
+    <button onclick="exchange_elements_class(document.getElementsByClassName('filter-selector-active').item(0),
+     this, 'filter-selector-active', 'filter-selector');" 
+     class="filter-selector btn rounded-pill fs-6">Unread</button>
+  
+    <button onclick="exchange_elements_class(document.getElementsByClassName('filter-selector-active').item(0),
+     this, 'filter-selector-active', 'filter-selector');" 
+     class="filter-selector btn rounded-pill fs-6"
+     hx-get="{% url 'groups' %}" hx-target="#chat-list" hx-swap="outerHTML">Groups</button>
+  </div>
 </div>
 
 <button id="chats-collapse-toggle" class="collapse-switch btn btn-success position-absolute bottom-0 end-0 me-5 mb-3"

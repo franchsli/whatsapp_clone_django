@@ -12,6 +12,7 @@ urlpatterns = [
         views.archive_chat,
         name="archive_chat",
     ),
+    path("groups/", views.get_group_chats, name="groups"),
     path("display_user_ui/", views.display_user_ui, name="display_user_ui"),
     path("display_chat/<int:pk>", views.display_chat, name="display_chat"),
     path("delete_chat/<int:pk>", views.delete_chat, name="delete_chat"),

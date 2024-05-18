@@ -12,5 +12,20 @@
 </nav>
 
 <div id="archived-chats" class="mt-4">
+    <div class="my-3 ms-3" id="chats-filters">
+        <button onclick="exchange_elements_class(document.getElementsByClassName('filter-selector-active').item(0),
+         this, 'filter-selector-active', 'filter-selector');" 
+         class="filter-selector-active btn rounded-pill fs-6"
+         hx-get="{% url 'archived_chats' %}" hx-target="#chats-and-more">All</button>
+      
+        <button onclick="exchange_elements_class(document.getElementsByClassName('filter-selector-active').item(0),
+         this, 'filter-selector-active', 'filter-selector');" 
+         class="filter-selector btn rounded-pill fs-6">Unread</button>
+      
+        <button onclick="exchange_elements_class(document.getElementsByClassName('filter-selector-active').item(0),
+         this, 'filter-selector-active', 'filter-selector');" 
+         class="filter-selector btn rounded-pill fs-6"
+         hx-get="{% url 'groups' %}" hx-target="#chat-list">Groups</button>
+    </div>
     {% include 'layouts/partials/components/chats.html' %}
 </div>

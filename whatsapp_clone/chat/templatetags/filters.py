@@ -115,7 +115,10 @@ def get_contact_in_chat_tag(
 
     if contact:
         if desired_value == "name":
-            return contact.name
+            if chat.name != '' and chat.name != None:
+                return chat.name
+            else:
+                return contact.name
         elif desired_value == "archived":
             return contact.archived
         elif desired_value == "id":
