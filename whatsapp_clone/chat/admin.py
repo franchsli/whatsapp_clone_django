@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import UserChangeForm
-from .models import User, Chat, Group, Message, Contact, Status
+from .models import User, Chat, Message, Contact, Status
 
 # Register your models here.
 
@@ -23,11 +23,6 @@ class ChatAdmin(admin.ModelAdmin):
     pass
 
 
-class GroupAdmin(admin.ModelAdmin):
-    search_fields = ("name",)
-    list_display = ("name",)
-
-
 class MessageAdmin(admin.ModelAdmin):
     search_fields = ("sender_user", "text")
     list_display = ("sender_user", "text")
@@ -47,7 +42,6 @@ class StatusAdmin(admin.ModelAdmin):
 
 admin.site.register(User, CustomUserAdmin)
 admin.site.register(Chat, ChatAdmin)
-admin.site.register(Group, GroupAdmin)
 admin.site.register(Message, MessageAdmin)
 admin.site.register(Contact, ContactAdmin)
 admin.site.register(Status, StatusAdmin)

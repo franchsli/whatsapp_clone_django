@@ -70,26 +70,15 @@ class ChatTest(TestCase):
             id=2, sender_user=self.another_user, chat=self.chat
         )
 
-
-class GroupTest(TestCase):
-    def setUp(self) -> None:
-        self.user = User.objects.create(
-            id=1, phone_number="3145538787", username="testfranch"
-        )
-        self.group = Group.objects.create(id=1, name="TESTGROUP")
-
-    def test_user_exists(self):
-        self.assertTrue(User.objects.get(id=1).exists())
-
     def test_user_is_not_admin(self):
-        self.group.users.add(self.user)
-        self.group.save()
-        self.assertFalse(self.group.user_is_admin(self.user))
+        self.chat.users.add(self.user)
+        self.chat.save()
+        self.assertFalse(self.chat.user_is_admin(self.user))
 
     def test_user_is_admin(self):
-        self.group.admins.add(self.user)
-        self.group.save()
-        self.assertTrue(self.group.user_is_admin(self.user))
+        self.chat.admins.add(self.user)
+        self.chat.save()
+        self.assertTrue(self.chat.user_is_admin(self.user))
 
 
 class StatusTest(TestCase):

@@ -40,15 +40,12 @@ class Contact(models.Model):
 
 
 class Chat(models.Model):
+    admins = models.ManyToManyField(User, related_name="managed_groups")
     users = models.ManyToManyField(User, related_name="chats")
-
-
-class Group(Chat):
-    admins = models.ManyToManyField(User, related_name="group_chat")
-    name = models.CharField(max_length=72)
+    name = models.CharField(max_length=72, null=True)
 
     def __str__(self) -> str:
-        return self.name
+        return self.name if self.name else ''
 
     def user_is_admin(self, user: User) -> bool:
         """Returns if the provided user is an admin in the group
@@ -60,7 +57,8 @@ class Group(Chat):
             bool: True if the User is in the queryset of admins
             False otherwise.
         """
-        return user.group_chat.exists()
+        return user.managed_groups.exists()
+
 
 
 class Message(models.Model):
