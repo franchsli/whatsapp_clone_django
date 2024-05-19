@@ -124,11 +124,14 @@ def get_contact_in_chat_tag(
         elif desired_value == "id":
             return contact.pk
         elif desired_value == "photo":
-            contact = User.objects.get(phone_number=contact.phone_number)
-            if contact.has_photo:
-                return contact.photo.url
+            if chat.has_photo:
+                return chat.photo.url
             else:
-                return DEFAULT_USER_PHOTO_URL
+                contact = User.objects.get(phone_number=contact.phone_number)
+                if contact.has_photo:
+                    return contact.photo.url
+                else:
+                    return DEFAULT_USER_PHOTO_URL
     else:
         users_model_phone = list(chat.users.values_list("phone_number", flat=True))
         contact_user_model_phone = (

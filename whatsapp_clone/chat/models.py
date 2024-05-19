@@ -60,6 +60,10 @@ class Chat(models.Model):
         """
         return user.managed_groups.filter(id=self.pk).exists()
 
+    @property
+    def has_photo(self):
+        return True if self.photo else False
+
 
 
 class Message(models.Model):
