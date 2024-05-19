@@ -5,12 +5,16 @@
 
 - Implement something to create Group-like Chats.
 - Rework Chat model in order to act as a Group:
-  - Add 'Photo' field to Chat model (fro group functionalities).
+  - Add 'Photo' field to Chat model (for group functionalities).
 - Add HTMX functionality to the 3 pills for filtering the chat list:
   - Rework the views logic and so.
   - The second one called 'Unread' that shows only the unread chats or groups
   (get_unread_chats view [create this] uses a query that only returns the chats who last message are unread).
   - Think about adding get_archived_groups view.
+- Rework the UI:
+  - Rework the Chat form display, replace everything in the user UI (chats or contacts list)
+   excluding the navbar where things like the status view, setting and such are located.
+  - Add a search bar for chats searching.
 - **OPTIMIZE REQUESTS**:
   - Re think if consumers should create contacts or create another consumer for that (i don't think so).....
 - [Implement tooltips](https://getbootstrap.com/docs/5.3/components/tooltips/)
