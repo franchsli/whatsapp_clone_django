@@ -103,6 +103,25 @@ def get_contact_in_chat(chat: Chat, logged_user: User) -> Union[Contact, None]:
         print(
             f"NO CONTACT FOUND WITH SUCH ARGUMENTS:\ncreated_by={logged_user}\nphone_number={other_user.phone_number}"
         )
+    
+def chat_is_unread_by_user(chat: Chat, user: User) -> bool:
+    """Returns if the given user has read 
+    the provided chat or not
+
+    Args:
+        chat (Chat): The Chat model object.
+        user (User): The User that maybe read the chat.
+
+    Returns:
+        bool: True if the chat's latest message
+        isn't read and it wasn't sent by the user,
+        False otherwise.
+    """
+    last_message = chat.message_set.latest("date")
+    if not last_message.read and last_message.sender_user.pk != user.pk:
+        return True
+    else:
+        return False
 
 
 def get_contacts_statuses(user: User, muted: bool) -> dict:

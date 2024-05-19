@@ -7,7 +7,7 @@ from django.http import HttpResponseNotAllowed
 from .models import User, Chat, Contact, Message, Status
 from .forms import ChatForm, ContactForm, MessageForm, StatusForm
 from typing import Union
-from .tools import get_contact_in_chat, get_contacts_statuses
+from .tools import get_contact_in_chat, get_contacts_statuses, chat_is_unread_by_user
 
 
 @login_required
@@ -61,15 +61,13 @@ def get_unread_chats(request):
     ).order_by("-last_message_date")
     user_chats = []
     for chat in chats:
-        last_message = chat.message_set.latest("date")
-        print(last_message.read)
         contact = get_contact_in_chat(chat, request.user)
         if contact:
-            if not contact.archived and last_message.read == False and last_message.sender_user.pk != request.user.id:
+            if not contact.archived and chat_is_unread_by_user(chat, request.user):
                 user_chats.append(chat)
         # if no contact is found it means is an unknow phone
-        # display it as normal chat
-        elif not contact and last_message.read == False and last_message.sender_user.pk != request.user.id:
+        # display it as normal chat only if it's unread.
+        elif not contact and chat_is_unread_by_user(chat, request.user):
             user_chats.append(chat)
 
     return render(

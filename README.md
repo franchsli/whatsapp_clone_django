@@ -3,11 +3,11 @@
 
 ## DO RIGHT NOW
 
+- **FIX** If the chat has no photo, it will look for the first contact in the
+  group that has a profile photo to display it.
 - Add HTMX functionality to the 3 pills for filtering the chat list:
-  - Rework the views logic and so.
-  - The second one called 'Unread' that shows only the unread chats or groups
-  (get_unread_chats view [create this] uses a query that only returns the chats who last message are unread).
-  - Think about adding get_archived_groups view.
+  - Think about adding archived_groups view.
+  - Think about adding archived_unread_chat view.
 - Implement something to create Group-like Chats.
 - Rework the chat_desired_data() function to handle efficiently group-like chats.
   - Do or don't do things if it is not a group-like chat to avoid if-else statements.

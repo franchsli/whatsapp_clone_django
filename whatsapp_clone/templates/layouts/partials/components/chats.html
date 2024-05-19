@@ -5,7 +5,7 @@
   {% for chat in chats %}
   <li onclick="summon_chat(this);" oncontextmenu="showDropdown(event, 'chat-dropdown{{chat.id}}')"
    hx-get="{% url 'display_chat' chat.id %}" hx-trigger="click" 
-   hx-target="#chat-display" id="chat-{{chat.id}}" 
+   hx-target="#chat-display"  hx-swap="innerHTML" id="chat-{{chat.id}}" 
    class="list-group-item p-3  d-flex flex-inline align-items-center chat" 
    role="button" data-chat={{chat.id}} data-contact={% exclude_user_tag chat.users.all request.user 'username' %} 
    data-contact-phone={% exclude_user_tag chat.users.all request.user 'phone_number' %}>
