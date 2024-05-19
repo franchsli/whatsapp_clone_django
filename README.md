@@ -4,8 +4,6 @@
 ## DO RIGHT NOW
 
 - Implement something to create Group-like Chats.
-- Rework Chat model in order to act as a Group:
-  - Add 'Photo' field to Chat model (for group functionalities).
 - Add HTMX functionality to the 3 pills for filtering the chat list:
   - Rework the views logic and so.
   - The second one called 'Unread' that shows only the unread chats or groups

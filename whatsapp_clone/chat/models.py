@@ -43,6 +43,7 @@ class Chat(models.Model):
     admins = models.ManyToManyField(User, related_name="managed_groups")
     users = models.ManyToManyField(User, related_name="chats")
     name = models.CharField(max_length=72, null=True)
+    photo = models.ImageField(blank=True, null=True, upload_to="chats/")
 
     def __str__(self) -> str:
         return self.name if self.name else f'Chat object {self.pk}'
