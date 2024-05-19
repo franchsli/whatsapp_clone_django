@@ -402,11 +402,27 @@ function exchange_elements_class(element_a, element_b, class_a, class_b){
 
 }
 
+/**
+ * Hides or displays a HTML element
+ * @param {HTMLElement} element The element to be manipulated.
+ * @param {String} display_type The desired display type for the element.
+ */
+function switch_element_visibility(element, display_type='block'){
+    console.log(element.style.display)
+    if(element.style.display !== 'none'){
+        element.style.display = 'none'
+    }
+    else{
+        element.style.display = display_type
+    }
+
+}
+
 export {get, post, modifyNotification,
      scroll_to_bottom, create_message_html, 
      toggleReadMore, showDropdown, run_element_animation,
       checked, not_empty, toggle_element_inner_text,
     load_emojis, switch_emojis, switch_checkboxes, 
     toggle_element_display, previewImage, update_chat_list, at_least_one_attr,
-    exchange_elements_class,
+    exchange_elements_class, switch_element_visibility
 }

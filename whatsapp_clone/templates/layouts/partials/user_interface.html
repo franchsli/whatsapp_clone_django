@@ -73,10 +73,10 @@
 </div>
 
 <button id="chats-collapse-toggle" class="collapse-switch btn btn-success position-absolute bottom-0 end-0 me-5 mb-3"
-  title="My chats" hx-get="{% url 'get_chats' %}" hx-target="#chats-and-contacts" hx-swap="innerHTML">
+  title="My chats" hx-get="{% url 'get_chats' %}" hx-target="#chat-list" hx-swap="outerHTML">
   <i class="bi bi-chat-right-dots-fill"></i>
 </button>
 <button class="collapse-switch btn btn-success position-absolute bottom-0 end-0 mb-3" title="Contacts"
-  hx-get="{% url 'get_contacts' %}" hx-target="#chats-and-contacts" hx-swap="innerHTML">
+  hx-get="{% url 'get_contacts' %}" hx-target="#chat-list" hx-swap="innerHTML">
   <i class="bi bi-person-fill"></i>
 </button>

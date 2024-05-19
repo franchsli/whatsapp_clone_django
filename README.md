@@ -3,7 +3,6 @@
 
 ## DO RIGHT NOW
 
-- **FIX** Clicking on 'My Chats' button will remove the filters buttons.
 - Implement something to create Group-like Chats.
 - Rework Chat model in order to act as a Group:
   - Add 'Photo' field to Chat model (fro group functionalities).

@@ -2,7 +2,7 @@ import { get, modifyNotification, scroll_to_bottom,
   create_message_html, toggleReadMore, showDropdown,
    run_element_animation, checked, not_empty,
     toggle_element_inner_text, load_emojis, switch_emojis, switch_checkboxes, toggle_element_display, previewImage, update_chat_list,
-    at_least_one_attr, exchange_elements_class } from  './tools.js';
+    at_least_one_attr, exchange_elements_class, switch_element_visibility } from  './tools.js';
 
 const user = document.getElementById('profile-pic')
 const user_id = user.getAttribute('data-user')
