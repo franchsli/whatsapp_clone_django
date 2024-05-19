@@ -5,8 +5,8 @@
   <div class="d-flex align-items-center ms-3 col-6" role="button">
     {% comment "chat contact info" %}{% endcomment %}
     <img id="contact-picture" class="rounded-circle img-fluid"
-      src="{% get_contact_in_chat_tag chat request.user 'photo' %}" alt="" style="max-width: 50px;">
-    <p class="ms-3 my-auto" id="contact-name">{% get_contact_in_chat_tag chat request.user 'name' %}</p>
+      src="{% chat_desired_data chat request.user 'photo' %}" alt="" style="max-width: 50px;">
+    <p class="ms-3 my-auto" id="contact-name">{% chat_desired_data chat request.user 'name' %}</p>
   </div>
   {% comment "settings or details of contacts" %}{% endcomment %}
   <div class="d-flex align-items-center">

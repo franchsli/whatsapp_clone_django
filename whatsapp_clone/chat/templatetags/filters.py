@@ -98,18 +98,19 @@ def exclude_user_tag(user_set: QuerySet, user: User, value: str) -> str:
 
 
 @register.simple_tag
-def get_contact_in_chat_tag(
+def chat_desired_data(
     chat: Chat, auth_user: User, desired_value: str
 ) -> Union[str, bool, int]:
-    """Returns the contact in the chat desired data.
+    """Returns the chat desired data if exists,
+    returns the contact in the chat desired data otherwise.
 
     Args:
-        chat (QuerySet): The Chat model where the contact is.
+        chat (QuerySet): The Chat model where the Contact is.
         auth_user (User): The authenticated user.
-        desired_value (str): The desired field of the Contact model.
+        desired_value (str): The desired field of the Chat model or the Contact model.
 
     Returns:
-        Union[str, bool, int]: Either a string (name or phone number), or a bool (archived) or a int (id).
+        Union[str, bool, int]: Either a value from Chat model field or Contact model field.
     """
     contact = get_contact_in_chat(chat, auth_user)
 
