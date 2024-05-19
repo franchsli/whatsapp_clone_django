@@ -63,7 +63,8 @@
   
     <button onclick="exchange_elements_class(document.getElementsByClassName('filter-selector-active').item(0),
      this, 'filter-selector-active', 'filter-selector');" 
-     class="filter-selector btn rounded-pill fs-6">Unread</button>
+     class="filter-selector btn rounded-pill fs-6"
+     hx-get="{% url 'unread_chats' %}" hx-target="#chat-list" hx-swap="outerHTML">Unread</button>
   
     <button onclick="exchange_elements_class(document.getElementsByClassName('filter-selector-active').item(0),
      this, 'filter-selector-active', 'filter-selector');" 

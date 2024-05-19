@@ -54,6 +54,28 @@ def get_chats(request):
         request, "layouts/partials/components/chats.html", {"chats": user_chats}
     )
 
+def get_unread_chats(request):
+    # returns the user chats ordered by the date of the latest message in the chat.
+    chats = request.user.chats.annotate(
+        last_message_date=Max("message__date")
+    ).order_by("-last_message_date")
+    user_chats = []
+    for chat in chats:
+        last_message = chat.message_set.latest("date")
+        print(last_message.read)
+        contact = get_contact_in_chat(chat, request.user)
+        if contact:
+            if not contact.archived and last_message.read == False and last_message.sender_user.pk != request.user.id:
+                user_chats.append(chat)
+        # if no contact is found it means is an unknow phone
+        # display it as normal chat
+        elif not contact and last_message.read == False and last_message.sender_user.pk != request.user.id:
+            user_chats.append(chat)
+
+    return render(
+        request, "layouts/partials/components/chats.html", {"chats": user_chats}
+    )
+
 
 def get_archived_chats(request):
     # returns the user chats ordered by the date of the latest message in the chat.

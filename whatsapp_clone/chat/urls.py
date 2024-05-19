@@ -6,6 +6,7 @@ urlpatterns = [
     path("", views.chat, name="chat"),
     # htmx
     path("chats/", views.get_chats, name="get_chats"),
+    path("unread_chats/", views.get_unread_chats, name="unread_chats"),
     path("archived_chats/", views.get_archived_chats, name="archived_chats"),
     path(
         "archive_chat/<int:chat_id>/<str:archive>/",
