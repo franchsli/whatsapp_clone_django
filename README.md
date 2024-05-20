@@ -5,10 +5,9 @@
 
 - Add HTMX functionality to the 3 pills for filtering the chat list:
   - Think about adding archived_groups view.
-  - Think about adding archived_unread_chat view.
 - Implement something to create Group-like Chats.
-  - Do or don't do things if it is not a group-like chat to avoid if-else statements.
-  - You can use things like getattr().
+- Implement something to archive group-like Chats.
+  - Look at chats.html line 63 and exception in chat_desired_data.
 - Rework the UI:
   - Rework the Chat form display, replace everything in the user UI (chats or contacts list)
    excluding the navbar where things like the status view, setting and such are located.

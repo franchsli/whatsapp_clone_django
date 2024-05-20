@@ -93,6 +93,25 @@ def get_archived_chats(request):
         {"chats": user_archived_chats},
     )
 
+def unread_archived_chats(request):
+    # returns the user chats ordered by the date of the latest message in the chat.
+    chats = request.user.chats.annotate(
+        last_message_date=Max("message__date")
+    ).order_by("-last_message_date")
+    user_unread_archived_chats = []
+    for chat in chats:
+        contact = get_contact_in_chat(chat, request.user)
+        if contact:
+            if contact.archived and chat_is_unread_by_user(chat, request.user):
+                user_unread_archived_chats.append(chat)
+
+    return render(
+        request,
+        "layouts/partials/components/chats.html",
+        {"chats": user_unread_archived_chats},
+    )
+    pass
+
 
 def get_group_chats(request):
     # returns the user chats ordered by the date of the latest message in the group.
