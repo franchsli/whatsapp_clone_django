@@ -112,39 +112,44 @@ def chat_desired_data(
     Returns:
         Union[str, bool, int]: Either a value from Chat model field or Contact model field.
     """
-    contact = get_contact_in_chat(chat, auth_user)
-
-    if contact:
-        if desired_value == "name":
-            if chat.name != '' and chat.name != None:
-                return chat.name
-            else:
-                return contact.name
-        elif desired_value == "archived":
-            return contact.archived
-        elif desired_value == "id":
-            return contact.pk
-        elif desired_value == "photo":
+    # check if it's a group-like chat or not
+    if chat.admins.count() > 0:
+        if desired_value == "photo":
             if chat.has_photo:
                 return chat.photo.url
             else:
+                return DEFAULT_USER_PHOTO_URL
+        else:
+            # if the desired value if one of the fields
+            # try to return it
+            try:
+                return getattr(chat, desired_value)
+            except AttributeError:
+                return False
+    
+    else:
+        contact = get_contact_in_chat(chat, auth_user)
+
+        if contact:
+            if desired_value == "id":
+                return contact.pk
+            elif desired_value == "photo":
                 contact = User.objects.get(phone_number=contact.phone_number)
                 if contact.has_photo:
                     return contact.photo.url
                 else:
                     return DEFAULT_USER_PHOTO_URL
-    else:
-        users_model_phone = list(chat.users.values_list("phone_number", flat=True))
-        contact_user_model_phone = (
-            users_model_phone[0]
-            if users_model_phone[0] != auth_user.phone_number
-            else users_model_phone[1]
-        )
-        user = User.objects.get(phone_number=contact_user_model_phone)
-        if desired_value != "photo":
-            return user.phone_number
+            else:
+                return getattr(contact, desired_value)
+        # in case no contact is found,
+        # it means the user is not in the contact list
         else:
-            return user.photo.url if user.has_photo else DEFAULT_USER_PHOTO_URL
+            user = chat.users.exclude(id=auth_user.pk)
+            if desired_value == "photo":
+                return user.photo.url if user.has_photo else DEFAULT_USER_PHOTO_URL
+            else:
+                
+                return user.phone_number
 
 
 @register.simple_tag
