@@ -50,7 +50,6 @@ Also don't forget to change the channel layer to redis.
 - Check and compare all the whatsapp web features with this project features.
 - Review all the code and delete spaguetti code.
 - Implement all of the features at [dj-chat](https://github.com/adilmohak/dj-chat?tab=readme-ov-file#current-features)
-- Reformat HTML code, PLEASE.
 - Delete all console.logs
 
 ## BUGS TO FIX
