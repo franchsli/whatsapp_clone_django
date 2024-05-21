@@ -54,6 +54,7 @@ def get_chats(request):
         request, "layouts/partials/components/chats.html", {"chats": user_chats}
     )
 
+
 def get_unread_chats(request):
     # returns the user chats ordered by the date of the latest message in the chat.
     chats = request.user.chats.annotate(
@@ -93,6 +94,7 @@ def get_archived_chats(request):
         {"chats": user_archived_chats},
     )
 
+
 def unread_archived_chats(request):
     # returns the user chats ordered by the date of the latest message in the chat.
     chats = request.user.chats.annotate(
@@ -116,13 +118,13 @@ def unread_archived_chats(request):
 def get_group_chats(request):
     # returns the user chats ordered by the date of the latest message in the group.
     # EDIT THIS
-    groups = request.user.chats.filter(admins__isnull=False).annotate(
-        last_message_date=Max("message__date")
-    ).order_by("-last_message_date")
-
-    return render(
-        request, "layouts/partials/components/chats.html", {"chats": groups}
+    groups = (
+        request.user.chats.filter(admins__isnull=False)
+        .annotate(last_message_date=Max("message__date"))
+        .order_by("-last_message_date")
     )
+
+    return render(request, "layouts/partials/components/chats.html", {"chats": groups})
 
 
 def archive_chat(request, chat_id, archive):

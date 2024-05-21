@@ -46,7 +46,7 @@ class Chat(models.Model):
     photo = models.ImageField(blank=True, null=True, upload_to="chats/")
 
     def __str__(self) -> str:
-        return self.name if self.name else f'Chat object {self.pk}'
+        return self.name if self.name else f"Chat object {self.pk}"
 
     def user_is_admin(self, user: User) -> bool:
         """Returns if the provided user is an admin in the group
@@ -63,7 +63,6 @@ class Chat(models.Model):
     @property
     def has_photo(self):
         return True if self.photo else False
-
 
 
 class Message(models.Model):

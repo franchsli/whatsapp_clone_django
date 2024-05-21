@@ -103,9 +103,10 @@ def get_contact_in_chat(chat: Chat, logged_user: User) -> Union[Contact, None]:
         print(
             f"NO CONTACT FOUND WITH SUCH ARGUMENTS:\ncreated_by={logged_user}\nphone_number={other_user.phone_number}"
         )
-    
+
+
 def chat_is_unread_by_user(chat: Chat, user: User) -> bool:
-    """Returns if the given user has read 
+    """Returns if the given user has read
     the provided chat or not
 
     Args:
@@ -139,7 +140,10 @@ def get_contacts_statuses(user: User, muted: bool) -> dict:
 
     return contacts_with_statuses
 
-def encoded_image_to_file(image_encoded_data:Union[bytes, str], file_name:str) -> ContentFile:
+
+def encoded_image_to_file(
+    image_encoded_data: Union[bytes, str], file_name: str
+) -> ContentFile:
     """Converts a encoded image data to a ContentFile object.
 
     Args:
@@ -155,6 +159,7 @@ def encoded_image_to_file(image_encoded_data:Union[bytes, str], file_name:str) -
     image_bytes_data = base64.b64decode(image_string_data)
     image_file = ContentFile(image_bytes_data, f"{file_name}.{file_extension}")
     return image_file
+
 
 # CONSTANT VARIABLES
 DEFAULT_USER_PHOTO_URL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNBNdcMDNS2r9df1IWFVc8AY0QNtfNhEJv7fGS5TdhUWrlBqfGu1PCCn9lKpL-FqF9dWc&usqp=CAU"
