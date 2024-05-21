@@ -15,7 +15,7 @@ def exclude_user(value, user):
 
 
 @register.filter
-def to_list(value):
+def to_list(value) -> list:
     """Converts the provided Queryset into a list.
 
     Args:
@@ -25,8 +25,6 @@ def to_list(value):
         _list_: A list made from the queryset data.
     """
     # you CAN ALSO use list comprehension (super effective)
-    # print(value.values_list('sender_user', 'text').order_by('-date'))
-    # list(value.values_list('sender_user', 'text').order_by('-date'))
     return list(value.values_list("id", flat=True).order_by("date"))
 
 
@@ -58,6 +56,16 @@ def last_message(value: QuerySet, data: str) -> str:
 
 @register.filter
 def unread_messages_counter(messages_queryset: QuerySet, user_id: int) -> int:
+    """Returns the number of unread messages in the 
+    queryset by the User with the given id 
+
+    Args:
+        messages_queryset (QuerySet): Where are the messages at.
+        user_id (int): The id of the user that may or may not
+        read the messages.
+    Returns:
+        int: The number of unread messages.
+    """
     unread_counter = 0
     for message in messages_queryset.iterator():
         if not message.read and message.sender_user.id != user_id:
@@ -67,6 +75,17 @@ def unread_messages_counter(messages_queryset: QuerySet, user_id: int) -> int:
 
 @register.filter
 def latest_data(queryset: QuerySet, desired_field_name: str):
+    """Returns the latest deisired field value from
+    the given queryset.
+
+    Args:
+        queryset (QuerySet): The queryset where are all the objects at.
+        desired_field_name (str): The name of the field to be returned,
+        usually a date.
+
+    Returns:
+        _type_: The field value.
+    """
     latest_object = queryset.latest(desired_field_name)
     return getattr(latest_object, desired_field_name)
 

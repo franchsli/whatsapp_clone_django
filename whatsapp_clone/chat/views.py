@@ -4,7 +4,7 @@ from django.utils import timezone
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Max
 from django.http import HttpResponseNotAllowed
-from .models import User, Chat, Contact, Message, Status
+from .models import Chat, Contact, Message, Status
 from .forms import ChatForm, ContactForm, MessageForm, StatusForm
 from typing import Union
 from .tools import get_contact_in_chat, get_contacts_statuses, chat_is_unread_by_user
