@@ -1,8 +1,4 @@
-import { get, modifyNotification, scroll_to_bottom,
-  create_message_html, toggleReadMore, showDropdown,
-   run_element_animation, checked, not_empty,
-    toggle_element_inner_text, load_emojis, switch_emojis, switch_checkboxes, toggle_element_display, previewImage, update_chat_list,
-    at_least_one_attr, exchange_elements_class, switch_element_visibility } from  './tools.js';
+import * as tools from  './tools.js';
 
 const user = document.getElementById('profile-pic')
 const user_id = user.getAttribute('data-user')
@@ -39,7 +35,7 @@ const mutationCallback = function(mutationsList, observer) {
                     const imageInput = document.getElementById('imageInput')
                     const imagePreview = document.getElementById('imagePreview')
                     imageInput.addEventListener('change', () => {
-                        previewImage(imageInput, imagePreview)
+                        tools.previewImage(imageInput, imagePreview)
                     });
 
                     
@@ -47,7 +43,7 @@ const mutationCallback = function(mutationsList, observer) {
                         button.onclick = function() {
                             console.log('SCROLL!!')
                             // delete the message
-                            setTimeout(scroll_to_bottom, 1000)
+                            setTimeout(tools.scroll_to_bottom, 1000)
                             console.log('SCROLLED!!')
                         }})
                     
@@ -78,7 +74,7 @@ const mutationCallback = function(mutationsList, observer) {
                                 imageInput.value = ''
                                 image.remove()
                             }}}
-                        scroll_to_bottom()
+                        tools.scroll_to_bottom()
 
                 }}}}};
 
@@ -104,7 +100,7 @@ window.summon_chat = function(chat){
     localStorage.setItem('chat_id', chat.dataset.chat)
     localStorage.setItem('contact_phone_number', chat.dataset.contactPhone)
     // HTMX REQUEST TO UPDATE THE CHAT LIST
-    update_chat_list()
+    tools.update_chat_list()
 
 }
 
@@ -168,35 +164,35 @@ chat_websocket.addEventListener('open', () => {
     console.log('CONNECTION OPENED WITH CHAT WEBSOCKET')
 
     window.toggleReadMore = function(text_id){
-        toggleReadMore(text_id)
+        tools.toggleReadMore(text_id)
     }
 
     window.showDropdown  = function (event, dropdown_id) {
-        showDropdown(event, dropdown_id)
+        tools.showDropdown(event, dropdown_id)
     }
 
     window.run_element_animation = function(element){
-        run_element_animation(element)
+        tools.run_element_animation(element)
     }
     
     window.switch_emojis = function(button){
-        switch_emojis(button)
+        tools.switch_emojis(button)
     }
 
     window.switch_checkboxes = function(form){
-        switch_checkboxes(form)
+        tools.switch_checkboxes(form)
     }
 
     window.toggle_element_inner_text = function(HTML_element, text_a, text_b){
-        toggle_element_inner_text(HTML_element, text_a, text_b)
+        tools.toggle_element_inner_text(HTML_element, text_a, text_b)
     }
 
     window.toggle_element_display = function(HTML_element){
-        toggle_element_display(HTML_element)
+        tools.toggle_element_display(HTML_element)
     }
 
     window.exchange_elements_class = function(element_a, element_b, class_a, class_b){
-        exchange_elements_class(element_a, element_b, class_a, class_b)
+        tools.exchange_elements_class(element_a, element_b, class_a, class_b)
     }
 
 
@@ -204,7 +200,7 @@ chat_websocket.addEventListener('open', () => {
         event.preventDefault()
 
         console.log('HANDLED')
-        if (!checked(chat_form)){
+        if (!tools.checked(chat_form)){
             error_audio.play()
             const validation_message = document.getElementById('chat-validation-message')
             validation_message.innerText = 'Please select a contact to create chat with'
@@ -216,11 +212,11 @@ chat_websocket.addEventListener('open', () => {
                 // when the selected contact (checkbox) is found
                 if(chat_form.elements[index].checked){
                     const contact_phone_number = chat_form.elements[index].id
-                    const contact_user_object = await get(`/api/users/?phone_number=${contact_phone_number}`)
+                    const contact_user_object = await tools.get(`/api/users/?phone_number=${contact_phone_number}`)
                     const contact_user_id = contact_user_object[0].id
                     // do an API request and check if the user already have a chat with the
                     // said contact (User object id)
-                    const already_created_chats_with_contact = await get(`/api/chats/?user_id=${user_id}&user_id=${contact_user_id}`)
+                    const already_created_chats_with_contact = await tools.get(`/api/chats/?user_id=${user_id}&user_id=${contact_user_id}`)
                     
                     
                     // if the user has already a chat with the contact, display an error
@@ -233,7 +229,7 @@ chat_websocket.addEventListener('open', () => {
                     else {
                         create_instance(chat_form, 'create_chat')
                         const toastNotification = document.getElementById('liveToast')
-                        modifyNotification('Server', 
+                        tools.modifyNotification('Server', 
                         'The chat was created successfully!! Update your chat list by clicking the "chats" button.')
                         const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
                         toastBootstrap.show()
@@ -249,10 +245,10 @@ chat_websocket.addEventListener('open', () => {
         const inputs = contact_form.getElementsByTagName('input')
         // gets the 'list' of Users who have the provided phone_number
         // in the form
-        const users = await get(`/api/users/?phone_number=${inputs[2].value}`)
+        const users = await tools.get(`/api/users/?phone_number=${inputs[2].value}`)
         // gets a list of Contacts created by the User
         // with the provided phone_number
-        const contacts = await get(`/api/contacts/?phone_number=${inputs[2].value}&created_by=${user_id}`)
+        const contacts = await tools.get(`/api/contacts/?phone_number=${inputs[2].value}&created_by=${user_id}`)
         // if no User created has the introduced phone_number
         // notify the user
         if (users.length === 0){
@@ -270,7 +266,7 @@ chat_websocket.addEventListener('open', () => {
         else {
             create_instance(contact_form, 'create_contact')
             const toastNotification = document.getElementById('liveToast')
-            modifyNotification('Server', 
+            tools.modifyNotification('Server', 
             'The contact was created successfully! Update your contacts list by clicking the "contacts" button.')
             const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
             toastBootstrap.show()
@@ -287,7 +283,7 @@ chat_websocket.addEventListener('open', () => {
     }
     // gets the image preview div and updated it over time.
     status_image_input.addEventListener('change', () => {
-        previewImage(status_image_input, stauts_image_preview)
+        tools.previewImage(status_image_input, stauts_image_preview)
     })
 
     // resets the contact form values and validation errors when the modal is closed.
@@ -330,7 +326,7 @@ chat_websocket.addEventListener('open', () => {
 
     status_submit_button.onclick = (event) => {
         event.preventDefault()
-        if (not_empty(status_form)){
+        if (tools.not_empty(status_form)){
             const status_input = document.getElementById('id_text')
             const image_container = document.getElementById('status-imagePreview')
             const image = image_container.firstElementChild
@@ -364,7 +360,7 @@ chat_websocket.addEventListener('open', () => {
         if (event === 'htmx:afterSettle' && data.pathInfo.requestPath.includes('display_chat')){
             const emoji_container = document.getElementById('emojis-container')
             const emoji_class = document.querySelector('.emoji-class-active')
-            load_emojis(emoji_class.dataset.emojiPack, emoji_container)
+            tools.load_emojis(emoji_class.dataset.emojiPack, emoji_container)
             
         }
 
@@ -435,11 +431,11 @@ chat_websocket.addEventListener('message',async (event) => {
         if (user_id === sender_id){
             message_sent_audio.play()
             htmx.ajax('GET', `/display_chat/${localStorage.getItem('chat_id')}`, '#chat-display').then(() => {
-                update_chat_list()
+                tools.update_chat_list()
             })
         }
         else {
-            create_message_html(text, image, user_id === sender_id)
+            tools.create_message_html(text, image, user_id === sender_id)
         }
     
     }
@@ -455,11 +451,11 @@ chat_websocket.addEventListener('message',async (event) => {
         console.warn(message)
         console.log(message)
         // if the chats UI is displayed, reload it
-        update_chat_list()
+        tools.update_chat_list()
 
         if(!sender_is_archived){
             const toastNotification = document.getElementById('liveToast')
-            modifyNotification(sender_username, text)
+            tools.modifyNotification(sender_username, text)
             const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
             toastBootstrap.show()
             notification_audio.play()
@@ -476,7 +472,7 @@ chat_websocket.addEventListener('message',async (event) => {
         * and then decides whether or not to update the UI using
         * a HTMX.ajax request.
         */
-        update_chat_list()
+        tools.update_chat_list()
         if (document.getElementById('contact-name') !== null){
             console.log('CHAT IS DISPLAYED.. TRYING TO RELOAD...')
             if (document.getElementById('contact-name').innerText === sender_username) {
@@ -501,7 +497,7 @@ chat_websocket.addEventListener('message',async (event) => {
         * and then decides whether or not to update the UI using
         * a HTMX.ajax request.
         */
-        update_chat_list()
+        tools.update_chat_list()
         if (document.getElementById('contact-name') !== null){
             console.log('CHAT IS DISPLAYED.. TRYING TO RELOAD...')
             if (document.getElementById('contact-name').innerText === sender_username) {
@@ -584,12 +580,12 @@ status_websocket.addEventListener('message', async (event) => {
         // if the user_id of the user who triggered the message is not the same
         // as the auth user, think displaying a notification.
         if (status_event_data[1] !== user_id){
-            const status_sender_data = await get(`/api/contacts/?phone_number=${status_event_data[2]}&created_by=${user_id}`)
+            const status_sender_data = await tools.get(`/api/contacts/?phone_number=${status_event_data[2]}&created_by=${user_id}`)
             // if the contacts IS NOT muted from statuses
             // display a notification
             if (!status_sender_data[0].statuses_muted){
                 const toastNotification = document.getElementById('liveToast')
-                modifyNotification('Server', `${status_sender_data[0].name} uploaded a status!!!`)
+                tools.modifyNotification('Server', `${status_sender_data[0].name} uploaded a status!!!`)
                 const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
                 toastBootstrap.show()
                 notification_audio.play()
@@ -610,7 +606,7 @@ status_websocket.addEventListener('message', async (event) => {
             }
             //notify the user
             const toastNotification = document.getElementById('liveToast')
-            modifyNotification('Server', 'Status uploaded successfully!')
+            tools.modifyNotification('Server', 'Status uploaded successfully!')
             const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
             toastBootstrap.show()
             notification_audio.play()
@@ -621,7 +617,7 @@ status_websocket.addEventListener('message', async (event) => {
     // if the status UI is already displayed and the user status modal is hidden, reload the view
     // to be able to see the brand new contact status....
     const status_modals = document.querySelectorAll('.status-modal')
-    const status_modals_showing = at_least_one_attr(status_modals, 'status', 'showing')
+    const status_modals_showing = tools.at_least_one_attr(status_modals, 'status', 'showing')
     console.log(status_modals_showing)
     if (document.getElementById('contact-statuses-list') !== null){
         status_app = {

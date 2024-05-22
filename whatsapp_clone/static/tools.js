@@ -351,6 +351,9 @@ function previewImage(image_input=null, image_preview=null) {
     }
 }
 
+/**
+ * Updates the chat list (if displayed)
+ */
 function update_chat_list(){
     if (document.getElementById('chat-list') !== null){
         if (document.getElementById('archived-chats') !== null) {
