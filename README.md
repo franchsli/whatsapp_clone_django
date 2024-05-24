@@ -3,10 +3,12 @@
 
 ## DO RIGHT NOW
 
+- Rework show_dropdown animation.
+- Add more animations.
+- Implement something to archive group-like Chats.
 - Add HTMX functionality to the 3 pills for filtering the chat list:
   - Think about adding archived_groups view.
 - Implement something to create Group-like Chats.
-- Implement something to archive group-like Chats.
   - Look at chats.html line 63 and exception in chat_desired_data.
 - Rework the UI:
   - Rework the Chat form display, replace everything in the user UI (chats or contacts list)
@@ -31,7 +33,6 @@
   and the div should only be displayed if the current message it's not the last.)
 - Redesign the login and register views (CSS).
 - Add chat wallpapers user CSS url for images and a JS color selector for colors.
-- Rework show_dropdown animation.
 - Make the silence contact logic (booleand field [think it bro])
 
 ## Improvements
@@ -62,7 +63,7 @@ Also don't forget to change the channel layer to redis.
     The chat gets displayed but somehow scroll_to_bottom doesn't work as expected.
     There's two approaches:
     - I think is because the images in the chat load with delay:
-      1. All the messages (text) loads
+      1. All the messages (text) load.
       2. scroll_to_botom executes.
       3. The high resolution images load, 'lengthening' the space used by the messages,
        giving the effect that it has not been completely scrolled.
