@@ -4,14 +4,14 @@
 {% if message.sender_user == request.user %}
 <div class="p-2 mw-100" hx-target="this" hx-swap="outerHTML" style="display: grid;">
   {% if message.has_image %}
-  <img class="mw-100 mh-100 mb-3" src="{{message.image.url}}" alt="">
+  <img loading="lazy" class="mw-100 mh-100 mb-3" src="{{message.image.url}}" alt="">
   {% endif %}
   {% only_emoji message.text as only_emojis %}
   {% if only_emojis %}
   <span id="text-{{message.id}}" class="d-flex"
     style="height: auto; max-height: 200px; overflow: hidden; font-size: 30px;">{{message.text}}</span>
   {% else %}
-  <span id="text-{{message.id}}" class="d-flex"
+  <span id="text-{{message.id}}" class="d-flex mw-100"
     style="height: auto; max-height: 200px; overflow: hidden;">{{message.text}}</span>
   {% endif %}
   <div class="message-info text-white-50" style="justify-self: end;">
@@ -46,7 +46,7 @@
 {% else %}
 <div class="p-2" style="display: grid;">
   {% if message.has_image %}
-  <img class="mw-100 mh-100 mb-3" src="{{message.image.url}}" alt="">
+  <img loading="lazy" class="mw-100 mh-100 mb-3" src="{{message.image.url}}" alt="">
   {% endif %}
   {% only_emoji message.text as only_emojis %}
   {% if only_emojis %}

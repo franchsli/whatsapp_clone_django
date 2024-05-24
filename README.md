@@ -3,7 +3,13 @@
 
 ## DO RIGHT NOW
 
-- Rework show_dropdown animation.
+- Rework messages list:
+  - Add the whatsapp date tags in HTML in the normal chat and in the searching message UI.
+  - Or make a way to display a div telling the date if the next message in the list have more than one day of difference
+  or was send the next day (the div should be displayed over the said next message [under the current message.]
+  and the div should only be displayed if the current message it's not the last.)
+- **FIX** Some messages width break the chat container after using 'show more'
+- Make a custom theme (really dark) and use it as a dark mode.
 - Add more animations.
 - Implement something to archive group-like Chats.
 - Add HTMX functionality to the 3 pills for filtering the chat list:
@@ -25,12 +31,6 @@
 - Add status complex status creation (like Whatsapp).
   - Users could select the color of the background for
     statuses.
-- Rework messages list:
-  - Add the whatsapp date tags in HTML in the normal chat and in the searching message UI.
-  - Make it so every chat has days and days (model) has messages....
-  - Or make a way to display a div telling the date if the  next message in the list have more than one day of difference
-  or was send the next day (the div should be displayed over the said next message [under the current message.]
-  and the div should only be displayed if the current message it's not the last.)
 - Redesign the login and register views (CSS).
 - Add chat wallpapers user CSS url for images and a JS color selector for colors.
 - Make the silence contact logic (booleand field [think it bro])

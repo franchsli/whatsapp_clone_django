@@ -109,6 +109,7 @@ function toggleReadMore(text_id) {
         const toggle_button = document.createElement('button')
         toggle_button.innerText = 'Show more'
         toggle_button.classList.add('btn' ,'btn-link')
+        toggle_button.style.justifySelf = "end"
     
         toggle_button.onclick = function(){
             content.style.maxHeight = content.style.maxHeight === '200px' ? 'none' : '200px'
