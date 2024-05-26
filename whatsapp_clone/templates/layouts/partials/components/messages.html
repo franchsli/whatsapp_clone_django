@@ -3,10 +3,28 @@
 <ul class="scroll-section list-unstyled flex-column overflow-y-scroll" id="chat-messages">
   {% for message in messages %}
   <!-- ========== MESSAGE DATE  ========== -->
-    <div class="message-date d-flex justify-content-center rounded-pill bg-body-tertiary"
-    style="width: fit-content; align-self: center;">
-      <span class="p-2">{{message.date|date:"D d M Y"}}</span>
-    </div>
+    {% with message_date=message.date|date:"D d M Y" %}
+      <div class="message-date d-flex justify-content-center rounded-pill bg-body-tertiary"
+      style="width: fit-content; align-self: center;">
+        {% comment "" %}<span class="p-2">{{message_date}}</span>{% endcomment %}
+        
+        {% if message_date %}
+          {% with time_difference=message.date|timesince %}
+              {% if 'day' in time_difference and 'week' not in time_difference %}
+                {# Between 1 day and 1 week ago, display the day name #}
+                <span class="p-2">{{ message.date|date:"l" }}</span>
+              {% elif 'day' in time_difference %}
+                {# More than a week ago, display the whole date #}
+                <span class="p-2">{{ message.date }}</span>
+              {% else %}
+                {# Less than a day ago, display the hour #}
+                <span class="p-2">{{ message.date|date:"h:i A" }}</span>
+              {% endif %}
+          {% endwith %}
+        {% endif %}
+        
+      </div>
+    {% endwith %}
   
   {% if message.sender_user == request.user %}
   <li class="list-unstyled-item me-3 mt-3 rounded message user-message dropdown"

@@ -3,6 +3,7 @@
 
 ## DO RIGHT NOW
 
+- **DO RIGHT NOW** Fix and finish the logic of the message date layers in chat.
 - Rework messages list:
   - Add the whatsapp date tags in HTML in the normal chat and in the searching message UI.
   - Or make a way to display a div telling the date if the next message in the list have more than one day of difference
@@ -21,6 +22,7 @@
    excluding the navbar where things like the status view, setting and such are located.
   - Add a search bar for chats searching.
 - **OPTIMIZE REQUESTS**:
+  - Use more with statements (????)
   - Re think if consumers should create contacts or create another consumer for that (i don't think so).....
 - [Implement tooltips](https://getbootstrap.com/docs/5.3/components/tooltips/)
 - Optimize the images size (whithout decreasing quality if possible).
