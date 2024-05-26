@@ -22,7 +22,9 @@
   - Rework the Chat form display, replace everything in the user UI (chats or contacts list)
    excluding the navbar where things like the status view, setting and such are located.
   - Add a search bar for chats searching.
-- **OPTIMIZE REQUESTS**:
+- **OPTIMIZE**:
+  - display_chat gets slower if the chat has more messages, try to return only
+  the last 20 messages and only request the other ones if the user scrolls up.
   - Use more with statements (????)
   - Re think if consumers should create contacts or create another consumer for that (i don't think so).....
 - [Implement tooltips](https://getbootstrap.com/docs/5.3/components/tooltips/)
