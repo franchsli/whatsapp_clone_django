@@ -3,7 +3,8 @@
 
 ## DO RIGHT NOW
 
-- **DO RIGHT NOW** Fix and finish the logic of the message date layers in chat.
+- **DO RIGHT NOW** Fix and finish the logic of the message date layers in chat:
+  - Implement something to display the layers only if that date it's not displayed already.
 - Rework messages list:
   - Add the whatsapp date tags in HTML in the normal chat and in the searching message UI.
   - Or make a way to display a div telling the date if the next message in the list have more than one day of difference
@@ -61,15 +62,15 @@ Also don't forget to change the channel layer to redis.
 - When a user deletes a chat, the chat will be deleted from all the users in the chat
   - To fix this, you need to implement something similar to archive view logic.
 - Scroll to bottom func doesn't scroll to the botom anymore:
-  - **THIS IS WHAT I THINK IT HAPPENS**:
+  - **THIS IS WHAT HAPPENS**:
     The chat gets displayed but somehow scroll_to_bottom doesn't work as expected.
-    There's two approaches:
-    - I think is because the images in the chat load with delay:
+    - It's because the images in the chat load with delay:
       1. All the messages (text) load.
       2. scroll_to_botom executes.
       3. The high resolution images load, 'lengthening' the space used by the messages,
        giving the effect that it has not been completely scrolled.
-      4. To fix this you can change the image format to an optimized one.
+      4. To fix this you can change the image format to an optimized one or implement
+      loading techniques, right now the messages images have lazy loading.
 
     - I think is because the readmore height isn't kept in count when scrolling.
 - Users can't archive chats who are not with a contact, and they won't if the chat archiving logic stills working like it's right now.
