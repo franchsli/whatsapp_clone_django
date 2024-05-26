@@ -1,6 +1,9 @@
 {% load static %}
 
 <ul class="scroll-section list-unstyled flex-column overflow-y-scroll" id="chat-messages">
+  <script type="text/javascript">
+    clear_messages_dates()
+  </script>
   {% for message in messages %}
   <!-- ========== MESSAGE DATE  ========== -->
     {% with message_date=message.date|date:"D d M Y" %}
@@ -12,9 +15,15 @@
               {% if 'day' in time_difference and 'week' not in time_difference %}
                 {# Between 1 day and 1 week ago, display the day name #}
                 <span class="p-2">{{ message.date|date:"l" }}</span>
+                <script type="text/javascript">
+                  update_messages_dates('{{ message.date|date:"l" }}')
+                </script>
               {% else %}
                 {# More than a week ago, display the whole date #}
                 <span class="p-2">{{ message_date }}</span>
+                <script type="text/javascript">
+                  update_messages_dates('{{ message.date|date:"l" }}')
+                </script>
               {% endif %}
           {% endwith %}
         {% endif %}
