@@ -198,7 +198,10 @@ chat_websocket.addEventListener('open', () => {
     }
 
     window.update_messages_dates = function(date){
-        chat_app.messages_dates.push(date)
+        if (!chat_app.messages_dates.includes(date)){
+            chat_app.messages_dates.push(date)
+        }
+
         console.log(chat_app.messages_dates)
     }
 

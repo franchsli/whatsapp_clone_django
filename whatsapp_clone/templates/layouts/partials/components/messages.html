@@ -22,7 +22,7 @@
                 {# More than a week ago, display the whole date #}
                 <span class="p-2">{{ message_date }}</span>
                 <script type="text/javascript">
-                  update_messages_dates('{{ message.date|date:"l" }}')
+                  update_messages_dates('{{ message_date }}')
                 </script>
               {% endif %}
           {% endwith %}
