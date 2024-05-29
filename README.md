@@ -6,7 +6,8 @@
 - **DO RIGHT NOW** Fix and finish the logic of the message date layers in chat:
   - Implement something to display the layers only if that date it's not displayed already
     use a django filter that alters a global variable in tools.py.
-  - Check why the tags display None...
+  - Check why the tags display None... or implement methods in the Chat model
+  to do the job.
 - Rework messages list:
   - Display 'Yesterday' if the message has more than a day of difference but less than two.
   - Add the whatsapp date tags in HTML in the normal chat and in the searching message UI.

@@ -54,10 +54,11 @@ def last_message(value: QuerySet, data: str) -> str:
     else:
         return messages_data[-1] if len(messages_data) > 0 else ""
 
+
 @register.filter
 def unread_messages_counter(messages_queryset: QuerySet, user_id: int) -> int:
-    """Returns the number of unread messages in the 
-    queryset by the User with the given id 
+    """Returns the number of unread messages in the
+    queryset by the User with the given id
 
     Args:
         messages_queryset (QuerySet): Where are the messages at.
@@ -72,6 +73,7 @@ def unread_messages_counter(messages_queryset: QuerySet, user_id: int) -> int:
             unread_counter += 1
 
     return unread_counter
+
 
 @register.filter
 def latest_data(queryset: QuerySet, desired_field_name: str):
@@ -89,21 +91,25 @@ def latest_data(queryset: QuerySet, desired_field_name: str):
     latest_object = queryset.latest(desired_field_name)
     return getattr(latest_object, desired_field_name)
 
+
 @register.simple_tag
-def update_messages_dates(date:str):
+def update_messages_dates(date: str):
     global messages_dates
     if date not in messages_dates:
         messages_dates.append(date)
 
+
 @register.simple_tag
-def date_already_displayed(date:str) -> bool:
+def date_already_displayed(date: str) -> bool:
     global messages_dates
     return date in messages_dates
+
 
 @register.simple_tag
 def clear_messages_dates():
     global messages_dates
     messages_dates = []
+
 
 @register.simple_tag
 def exclude_user_tag(user_set: QuerySet, user: User, value: str) -> str:
@@ -159,7 +165,7 @@ def chat_desired_data(
                 return getattr(chat, desired_value)
             except AttributeError:
                 return False
-    
+
     else:
         contact = get_contact_in_chat(chat, auth_user)
 
@@ -181,7 +187,7 @@ def chat_desired_data(
             if desired_value == "photo":
                 return user.photo.url if user.has_photo else DEFAULT_USER_PHOTO_URL
             else:
-                
+
                 return user.phone_number
 
 

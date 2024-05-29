@@ -160,6 +160,7 @@ def encoded_image_to_file(
     image_file = ContentFile(image_bytes_data, f"{file_name}.{file_extension}")
     return image_file
 
+
 # GLOBAL VARIABLES IN THE PROJECT
 
 messages_dates = []
