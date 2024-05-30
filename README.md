@@ -3,6 +3,13 @@
 
 ## DO RIGHT NOW
 
+- **OPTIMIZE**:
+  - display_chat gets slower if the chat has more messages, try to return only
+  the last 20 messages and only request the other ones if the user scrolls up.
+  - optimize all the possible code.
+  - Use more with statements (????)
+  - Re think if consumers should create contacts or create another consumer for that (i don't think so).....
+- [Implement tooltips](https://getbootstrap.com/docs/5.3/components/tooltips/)
 - **DO RIGHT NOW** Fix and finish the logic of the message date layers in chat:
   - Implement something to display the layers only if that date it's not displayed already
     use a django filter that alters a global variable in tools.py.
@@ -26,12 +33,6 @@
   - Rework the Chat form display, replace everything in the user UI (chats or contacts list)
    excluding the navbar where things like the status view, setting and such are located.
   - Add a search bar for chats searching.
-- **OPTIMIZE**:
-  - display_chat gets slower if the chat has more messages, try to return only
-  the last 20 messages and only request the other ones if the user scrolls up.
-  - Use more with statements (????)
-  - Re think if consumers should create contacts or create another consumer for that (i don't think so).....
-- [Implement tooltips](https://getbootstrap.com/docs/5.3/components/tooltips/)
 - Optimize the images size (whithout decreasing quality if possible).
 - Add something to delete statuses automatically every 24 hours (cronjobs maybe).
 
