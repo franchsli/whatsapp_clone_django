@@ -99,11 +99,7 @@ window.summon_chat = function(chat){
     localStorage.setItem('receiver_username', chat.dataset.contact)
     localStorage.setItem('chat_id', chat.dataset.chat)
     localStorage.setItem('contact_phone_number', chat.dataset.contactPhone)
-    // UPDATE THE CHAT LIST IF THERE WERE UNREAD MESSAGES
-    const unread_messages_counter = document.getElementById(`${chat.id}unread-counter`)
-    if (unread_messages_counter){
-        tools.update_chat_list()
-    }
+    tools.update_chat_list()
 
 }
 
@@ -196,18 +192,6 @@ chat_websocket.addEventListener('open', () => {
 
     window.exchange_elements_class = function(element_a, element_b, class_a, class_b){
         tools.exchange_elements_class(element_a, element_b, class_a, class_b)
-    }
-
-    window.update_messages_dates = function(date){
-        if (!chat_app.messages_dates.includes(date)){
-            chat_app.messages_dates.push(date)
-        }
-
-        console.log(chat_app.messages_dates)
-    }
-
-    window.clear_messages_dates = function(){
-        chat_app.messages_dates = []
     }
 
 
