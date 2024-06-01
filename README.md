@@ -3,6 +3,20 @@
 
 ## DO RIGHT NOW
 
+- Only call update_chat_list if there are any unread messages and after display_chat
+  request has been completed already.
+- Rework display_chat view and chat logic (I think V2 it's the best).
+  - V1
+    - Get the date of the last read message that the user read.
+    - Get the first 20 messages after that date, mark them as read and display them.
+    - If the user scrolls down, call display_chat again form JS.
+  - V2
+    - If there are unread messages:
+      - Get the date of the last read message that the user read.
+      - Get all the messages after that date, mark them as read and display them.
+    - Otherwise
+      - Get the last 20 messages and display them.
+
 - **OPTIMIZE**:
   - display_chat gets slower if the chat has more messages, try to return only
   the last 20 messages and only request the other ones if the user scrolls up.

@@ -99,7 +99,6 @@ window.summon_chat = function(chat){
     localStorage.setItem('receiver_username', chat.dataset.contact)
     localStorage.setItem('chat_id', chat.dataset.chat)
     localStorage.setItem('contact_phone_number', chat.dataset.contactPhone)
-    tools.update_chat_list()
 
 }
 
@@ -360,6 +359,11 @@ chat_websocket.addEventListener('open', () => {
             const emoji_container = document.getElementById('emojis-container')
             const emoji_class = document.querySelector('.emoji-class-active')
             tools.load_emojis(emoji_class.dataset.emojiPack, emoji_container)
+            // UPDATE THE CHAT LIST IF THERE WERE UNREAD MESSAGES
+            const unread_messages_counter = document.getElementById(`${chat.id}unread-counter`)
+            if (unread_messages_counter){
+                tools.update_chat_list()
+            }
             
         }
 

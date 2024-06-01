@@ -166,7 +166,7 @@ def display_chat(request, pk):
     if request.method == "GET":
         chat = Chat.objects.get(id=pk)
         # retrieves the last 20 messages in the chat
-        chat_messages = chat.message_set.order_by("date")[:20]
+        chat_messages = chat.message_set.order_by("-date")[:20:-1]
         for message in chat_messages:
             if not message.read and message.sender_user.pk != request.user.id:
                 message.read = True
