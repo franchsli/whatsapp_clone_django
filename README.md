@@ -84,11 +84,6 @@ Also don't forget to change the channel layer to redis.
   The only way to archive chats that are not with a Contact its to add the archive field to the Chat model, but that
     would means that the Chat will be archived for all the Users in it.
 
-## NOTES FOR LATER
-
-- If there's something slowing down displaying things like messages in a specific chat
-  it could be iterator() method in display_chat() view for-loop.
-
 **RESOURCES**:
 
 - [Custom theme modes](https://getbootstrap.com/docs/5.3/customize/color-modes/#adding-theme-colors)
