@@ -360,7 +360,7 @@ chat_websocket.addEventListener('open', () => {
             const emoji_class = document.querySelector('.emoji-class-active')
             tools.load_emojis(emoji_class.dataset.emojiPack, emoji_container)
             // UPDATE THE CHAT LIST IF THERE WERE UNREAD MESSAGES
-            const unread_messages_counter = document.getElementById(`${chat.id}unread-counter`)
+            const unread_messages_counter = document.getElementById(`chat-${localStorage.getItem('chat_id')}unread-counter`)
             if (unread_messages_counter){
                 tools.update_chat_list()
             }

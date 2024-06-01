@@ -3,8 +3,9 @@
 
 ## DO RIGHT NOW
 
-- Only call update_chat_list if there are any unread messages and after display_chat
-  request has been completed already.
+- Add onscroll to chat-list and get older messages if the user
+  scrolled to the top or get later messages if the user scrolled to the bottom
+  (rework display_chat before implementing this).
 - Rework display_chat view and chat logic (I think V2 it's the best).
   - V1
     - Get the date of the last read message that the user read.
