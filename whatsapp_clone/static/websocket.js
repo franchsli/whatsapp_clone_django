@@ -18,9 +18,7 @@ const status_image_input = document.getElementById('id_image')
 const notification_audio = new Audio('static/Audio/app/message_received.mp3')
 const message_sent_audio = new Audio('static/Audio/app/message_sent.mp3')
 const error_audio = new Audio('static/Audio/app/error_sound.mp3')
-window.chat_app = {
-    messages_dates: []
-}
+
 // Callback function to execute when mutations are observed
 const mutationCallback = function(mutationsList, observer) {
     for (const mutation of mutationsList) {
@@ -101,8 +99,11 @@ window.summon_chat = function(chat){
     localStorage.setItem('receiver_username', chat.dataset.contact)
     localStorage.setItem('chat_id', chat.dataset.chat)
     localStorage.setItem('contact_phone_number', chat.dataset.contactPhone)
-    // HTMX REQUEST TO UPDATE THE CHAT LIST
-    tools.update_chat_list()
+    // UPDATE THE CHAT LIST IF THERE WERE UNREAD MESSAGES
+    const unread_messages_counter = document.getElementById(`${chat.id}unread-counter`)
+    if (unread_messages_counter){
+        tools.update_chat_list()
+    }
 
 }
 

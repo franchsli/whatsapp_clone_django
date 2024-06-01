@@ -84,6 +84,10 @@ Also don't forget to change the channel layer to redis.
   The only way to archive chats that are not with a Contact its to add the archive field to the Chat model, but that
     would means that the Chat will be archived for all the Users in it.
 
+## NOTES FOR LATER
+
+- If the unread counter badges are acting weird, see update_chat_list() at summon_chat.
+
 **RESOURCES**:
 
 - [Custom theme modes](https://getbootstrap.com/docs/5.3/customize/color-modes/#adding-theme-colors)
