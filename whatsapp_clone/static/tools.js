@@ -438,8 +438,8 @@ function switch_element_visibility(element, display_type='block'){
  * @param {CallableFunction} func A function that uses HTMX 
  * to update the message_list messages
  */
-function load_more_messages(message_list, scrolled_to, func=null){
-    if (scrolled_to.toLowerCase() === 'top' && message_list.scrollTop === 0){
+function load_more_messages(message_list){
+    if (message_list.scrollTop === 0){
         console.log('THE USER IS AT THE TOP.')
         const oldest_message = document.querySelector('.message')
         localStorage.setItem('oldest_message_date', oldest_message.dataset.date)
@@ -448,7 +448,7 @@ function load_more_messages(message_list, scrolled_to, func=null){
         //load_older_messages()
 
     }
-    else if(scrolled_to.toLowerCase() === 'bottom' && message_list.scrollTop === message_list.scrollHeight - message_list.clientHeight){
+    else if(message_list.scrollTop === message_list.scrollHeight - message_list.clientHeight){
         console.log('THE USER IS AT THE BOTTOM.')
         // gets the LAST element with the message class
         const latest_message = message_list.lastElementChild
