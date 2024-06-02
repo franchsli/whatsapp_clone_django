@@ -431,12 +431,8 @@ function switch_element_visibility(element, display_type='block'){
 }
 
 /**
- * Runs the given function when the given
- * html element was scrolled to the desired place (top or bottom)
+ * Decides whether or not to load more messages in the given message list
  * @param {HTMLElement} message_list 
- * @param {String} scrolled_to 'top' or 'bottom'
- * @param {CallableFunction} func A function that uses HTMX 
- * to update the message_list messages
  */
 function load_more_messages(message_list){
     if (message_list.scrollTop === 0){
@@ -446,16 +442,6 @@ function load_more_messages(message_list){
         console.log('THE OLDEST MESSAGE DISLPAYED DATE IS', oldest_message.dataset.date)
         console.log('LOADING PREVIOUS MESSAGES')
         //load_older_messages()
-
-    }
-    else if(message_list.scrollTop === message_list.scrollHeight - message_list.clientHeight){
-        console.log('THE USER IS AT THE BOTTOM.')
-        // gets the LAST element with the message class
-        const latest_message = message_list.lastElementChild
-        localStorage.setItem('latest_message_date', latest_message.dataset.date)
-        console.log('THE LATEST MESSAGE DISLPAYED DATE IS', latest_message.dataset.date)
-        console.log('LOADING LATEST MESSAGES')
-        // load_latest_messages()
 
     }
     
