@@ -366,6 +366,9 @@ function update_chat_list(){
     }
 }
 
+/**
+ * Uses HTMX and loads older messages in the displayed chat.
+ */
 function load_older_messages(){
     if (document.getElementById('chat-messages') !== null){
         htmx.ajax('GET', `/previous_messages/${localStorage.getItem('chat_id')}/${localStorage.getItem('oldest_message_date')}/`,
@@ -441,7 +444,7 @@ function load_more_messages(message_list){
         localStorage.setItem('oldest_message_date', oldest_message.dataset.date)
         console.log('THE OLDEST MESSAGE DISLPAYED DATE IS', oldest_message.dataset.date)
         console.log('LOADING PREVIOUS MESSAGES')
-        //load_older_messages()
+        load_older_messages()
 
     }
     
