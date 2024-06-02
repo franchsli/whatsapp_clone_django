@@ -3,6 +3,8 @@
 
 ## DO RIGHT NOW
 
+- **FIX** Check why get_previous_messages() returns the first 20 messages of the
+chat that matchs the condition [exclude() sentence]
 - Add onscroll to chat-list and get older messages if the user
   scrolled to the top or get later messages if the user scrolled to the bottom
   (rework display_chat before implementing this).
