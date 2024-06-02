@@ -21,8 +21,12 @@
 - **OPTIMIZE**:
   - Rework the way to update the messages list:
     - Make a separate view to update the messages list
-    and only call display_chat when clicking in a chat
-    (this is to avoid loading unnnecesary HTML contents)
+    and only call display_chat when clicking in a chat,
+    this is to avoid loading unnnecesary HTML contents and to avoid things like
+    if a user needs to search a very old message but the contact messages them the entire chat list will be
+    updated again and the user will do request to the server again,
+    in order to reduce the size of the request, only the new messages will be returned and appended to the messages
+    list (if the chat is displayed of course)
   - display_chat gets slower if the chat has more messages, try to return only
   the last 20 messages and only request the other ones if the user scrolls up.
   - optimize all the possible code.

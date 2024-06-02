@@ -366,6 +366,14 @@ function update_chat_list(){
     }
 }
 
+function load_older_messages(){
+    if (document.getElementById('chat-messages') !== null){
+        htmx.ajax('GET', `/previous_messages/${localStorage.getItem('chat_id')}/${localStorage.getItem('oldest_message_date')}/`,
+         {target:'#chat-messages', swap:'afterbegin'})
+        
+    }
+}
+
 /**
  * Returns if at least one HTML
  * element in html_elements have the given
@@ -425,18 +433,29 @@ function switch_element_visibility(element, display_type='block'){
 /**
  * Runs the given function when the given
  * html element was scrolled to the desired place (top or bottom)
- * @param {HTMLElement} html_element 
+ * @param {HTMLElement} message_list 
  * @param {String} scrolled_to 'top' or 'bottom'
  * @param {CallableFunction} func A function that uses HTMX 
- * to update the html_element content
+ * to update the message_list messages
  */
-function load_more_content(html_element, scrolled_to, func=null){
-    if (scrolled_to.toLowerCase() === 'top' && html_element.scrollTop === 0){
+function load_more_messages(message_list, scrolled_to, func=null){
+    if (scrolled_to.toLowerCase() === 'top' && message_list.scrollTop === 0){
         console.log('THE USER IS AT THE TOP.')
+        const oldest_message = document.querySelector('.message')
+        localStorage.setItem('oldest_message_date', oldest_message.dataset.date)
+        console.log('THE OLDEST MESSAGE DISLPAYED DATE IS', oldest_message.dataset.date)
+        console.log('LOADING PREVIOUS MESSAGES')
+        //load_older_messages()
 
     }
-    else if(scrolled_to.toLowerCase() === 'bottom' && html_element.scrollTop === html_element.scrollHeight - html_element.clientHeight){
+    else if(scrolled_to.toLowerCase() === 'bottom' && message_list.scrollTop === message_list.scrollHeight - message_list.clientHeight){
         console.log('THE USER IS AT THE BOTTOM.')
+        // gets the LAST element with the message class
+        const latest_message = message_list.lastElementChild
+        localStorage.setItem('latest_message_date', latest_message.dataset.date)
+        console.log('THE LATEST MESSAGE DISLPAYED DATE IS', latest_message.dataset.date)
+        console.log('LOADING LATEST MESSAGES')
+        // load_latest_messages()
 
     }
     
@@ -448,5 +467,5 @@ export {get, post, modifyNotification,
       checked, not_empty, toggle_element_inner_text,
     load_emojis, switch_emojis, switch_checkboxes, 
     toggle_element_display, previewImage, update_chat_list, at_least_one_attr,
-    exchange_elements_class, switch_element_visibility, load_more_content
+    exchange_elements_class, switch_element_visibility, load_more_messages, load_older_messages
 }

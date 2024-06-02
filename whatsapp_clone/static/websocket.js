@@ -193,8 +193,12 @@ chat_websocket.addEventListener('open', () => {
         tools.exchange_elements_class(element_a, element_b, class_a, class_b)
     }
 
-    window.load_more_content = function(html_element, scrolled_to, func){
-        tools.load_more_content(html_element, scrolled_to, func)
+    window.load_more_messages = function(html_element, scrolled_to, func){
+        tools.load_more_messages(html_element, scrolled_to, func)
+    }
+
+    window.load_older_messages = function(){
+        load_older_messages()
     }
 
 

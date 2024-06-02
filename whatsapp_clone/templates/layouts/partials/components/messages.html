@@ -1,6 +1,6 @@
 {% load static %}
 {% load filters %}
 
-<ul onscroll="load_more_content(this, 'bottom')" class="scroll-section list-unstyled flex-column overflow-y-scroll" id="chat-messages">
+<ul onscroll="load_more_messages(this, 'top')" class="scroll-section list-unstyled flex-column overflow-y-scroll" id="chat-messages">
   {% include "layouts/partials/components/append_messages.html" %}
 </ul>
