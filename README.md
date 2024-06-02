@@ -3,7 +3,6 @@
 
 ## DO RIGHT NOW
 
-- Add a template to return messages only not the messages list.
 - Add onscroll to chat-list and get older messages if the user
   scrolled to the top or get later messages if the user scrolled to the bottom
   (rework display_chat before implementing this).
