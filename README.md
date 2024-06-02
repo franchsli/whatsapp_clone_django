@@ -19,6 +19,10 @@
       - Get the last 20 messages and display them.
 
 - **OPTIMIZE**:
+  - Rework the way to update the messages list:
+    - Make a separate view to update the messages list
+    and only call display_chat when clicking in a chat
+    (this is to avoid loading unnnecesary HTML contents)
   - display_chat gets slower if the chat has more messages, try to return only
   the last 20 messages and only request the other ones if the user scrolls up.
   - optimize all the possible code.
