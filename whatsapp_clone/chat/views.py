@@ -112,7 +112,6 @@ def unread_archived_chats(request):
         "layouts/partials/components/chats.html",
         {"chats": user_unread_archived_chats},
     )
-    pass
 
 
 def get_group_chats(request):
@@ -298,6 +297,23 @@ def delete_message(request, chat_id, message_id):
         )
     else:
         return HttpResponseNotAllowed(["DELETE"])
+
+def get_previous_messages(request, chat_id, datetime):
+    """Returns the messages in the chat with the 
+    given id before the provided datetime
+    """
+    if request.method == "GET":
+        chat = Chat.objects.get(id=chat_id)
+        # gets the most recent 20 messages before the given datetime
+        # in descending order(latest first)
+        chat_messages = chat.message_set.exclude(date__gt=datetime).order_by("-date")[:20]
+        return render(
+            request,
+            "layouts/partials/components/messages.html",
+            {"chat": chat, "messages": chat_messages},
+        )
+    else:
+        return HttpResponseNotAllowed(["GET"])
 
 
 def update_chat_form(request):
