@@ -1,7 +1,7 @@
 {% load static %}
 {% load filters %}
 
-<ul class="scroll-section list-unstyled flex-column overflow-y-scroll" id="chat-messages">
+<ul onscroll="load_more_content(this, 'bottom')" class="scroll-section list-unstyled flex-column overflow-y-scroll" id="chat-messages">
   {% clear_messages_dates %}
   {% for message in messages %}
   <!-- ========== MESSAGE DATE  ========== -->

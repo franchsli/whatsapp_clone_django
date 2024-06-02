@@ -422,11 +422,31 @@ function switch_element_visibility(element, display_type='block'){
 
 }
 
+/**
+ * Runs the given function when the given
+ * html element was scrolled to the desired place (top or bottom)
+ * @param {HTMLElement} html_element 
+ * @param {String} scrolled_to 'top' or 'bottom'
+ * @param {CallableFunction} func A function that uses HTMX 
+ * to update the html_element content
+ */
+function load_more_content(html_element, scrolled_to, func=null){
+    if (scrolled_to.toLowerCase() === 'top' && html_element.scrollTop === 0){
+        console.log('THE USER IS AT THE TOP.')
+
+    }
+    else if(scrolled_to.toLowerCase() === 'bottom' && html_element.scrollTop === html_element.scrollHeight - html_element.clientHeight){
+        console.log('THE USER IS AT THE BOTTOM.')
+
+    }
+    
+}
+
 export {get, post, modifyNotification,
      scroll_to_bottom, create_message_html, 
      toggleReadMore, showDropdown, run_element_animation,
       checked, not_empty, toggle_element_inner_text,
     load_emojis, switch_emojis, switch_checkboxes, 
     toggle_element_display, previewImage, update_chat_list, at_least_one_attr,
-    exchange_elements_class, switch_element_visibility
+    exchange_elements_class, switch_element_visibility, load_more_content
 }
