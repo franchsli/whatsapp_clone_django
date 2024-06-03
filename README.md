@@ -3,11 +3,10 @@
 
 ## DO RIGHT NOW
 
+- Implement something in JS (load_older_messages() func) to scroll to the half of the 'scrollable view'
+  after the messages loaded.
 - **FIX** Check why get_previous_messages() returns the first 20 messages of the
 chat that matchs the condition [exclude() sentence]
-- Add onscroll to chat-list and get older messages if the user
-  scrolled to the top or get later messages if the user scrolled to the bottom
-  (rework display_chat before implementing this).
 - Rework display_chat view and chat logic (I think V2 it's the best).
   - V1
     - Get the date of the last read message that the user read.
