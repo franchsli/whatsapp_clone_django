@@ -4,7 +4,7 @@
 ## DO RIGHT NOW
 
 - Implement something in JS (load_older_messages() func) to scroll to the half of the 'scrollable view'
-  after the messages loaded.
+  after the messages loaded OR rework the JS logic to only scroll when display_chat triggers.
 - **FIX** Check why get_previous_messages() returns the first 20 messages of the
 chat that matchs the condition [exclude() sentence]
 - Rework display_chat view and chat logic (I think V2 it's the best).
@@ -21,15 +21,12 @@ chat that matchs the condition [exclude() sentence]
 
 - **OPTIMIZE**:
   - Rework the way to update the messages list:
-    - Make a separate view to update the messages list
-    and only call display_chat when clicking in a chat,
+    - Only call display_chat when clicking in a chat,
     this is to avoid loading unnnecesary HTML contents and to avoid things like
     if a user needs to search a very old message but the contact messages them the entire chat list will be
     updated again and the user will do request to the server again,
     in order to reduce the size of the request, only the new messages will be returned and appended to the messages
     list (if the chat is displayed of course)
-  - display_chat gets slower if the chat has more messages, try to return only
-  the last 20 messages and only request the other ones if the user scrolls up.
   - optimize all the possible code.
   - Use more with statements (????)
   - Re think if consumers should create contacts or create another consumer for that (i don't think so).....
@@ -92,8 +89,6 @@ Also don't forget to change the channel layer to redis.
 
 ## BUGS TO FIX
 
-- Sometimes, when the user clicks a unread chat the unread messages counter
-  doesn't dissapear.
 - When a user archives a contact, all group-like chats in which the contact is in will be archived as well.
 - When a user deletes a chat, the chat will be deleted from all the users in the chat
   - To fix this, you need to implement something similar to archive view logic.
