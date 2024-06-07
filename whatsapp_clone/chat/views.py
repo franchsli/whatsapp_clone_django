@@ -305,8 +305,9 @@ def get_previous_messages(request, chat_id, datetime):
     if request.method == "GET":
         chat = Chat.objects.get(id=chat_id)
         # gets the most recent 20 messages before the given datetime
-        chat_messages = chat.message_set.exclude(date__gt=datetime).order_by("-date")[:20]
-        print(chat_messages)
+        chat_messages = chat.message_set.exclude(date__gte=datetime).order_by("-date")[:20]
+        print(datetime)
+        #print(chat_messages)
         return render(
             request,
             "layouts/partials/components/append_messages.html",
