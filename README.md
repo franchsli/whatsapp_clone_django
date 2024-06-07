@@ -3,6 +3,8 @@
 
 ## DO RIGHT NOW
 
+- **FIX** check why in the world get_previous_messages()
+seems to work but then returns messages weirdly.
 - **RN** Test if get_previous_messages() works as expected.
 - Implement something in JS (load_older_messages() func) to scroll to the half of the 'scrollable view'
   after the messages loaded OR rework the JS logic to only scroll when display_chat triggers.
