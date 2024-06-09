@@ -305,9 +305,11 @@ def get_previous_messages(request, chat_id, datetime):
     if request.method == "GET":
         chat = Chat.objects.get(id=chat_id)
         # gets the most recent 20 messages before the given datetime
-        chat_messages = chat.message_set.exclude(date__gte=datetime).order_by("date")[::-1][:20]
-        print(datetime)
-        print(timezone.now())
+        chat_messages = chat.message_set.filter(date__lt=datetime).order_by("-date")[:20]
+        chat_messages = chat_messages[::-1]
+        print(chat_messages)
+        #print(datetime)
+        #print(timezone.now())
         #print(chat_messages)
         return render(
             request,
