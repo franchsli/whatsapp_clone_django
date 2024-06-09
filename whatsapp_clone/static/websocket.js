@@ -408,7 +408,7 @@ chat_websocket.addEventListener('open', () => {
             window.previous_scrollable_view = messages.scrollHeight - messages.clientHeight
             console.log('height before', previous_scrollable_view)
         }
-        // scroll to the half of the 'scrollable view' after older messages were loaded
+        // scroll to the previous scroll height before loading older messages
         else if(event === 'htmx:afterSettle' && data.pathInfo.requestPath.includes('previous_messages')){
             const messages = document.getElementById('chat-messages')
             const actual_scrollable_view = messages.scrollHeight - messages.clientHeight
