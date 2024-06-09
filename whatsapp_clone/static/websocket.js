@@ -402,7 +402,13 @@ chat_websocket.addEventListener('open', () => {
             // but this is due to a message edition
             send_message('message_edition', '', '', user_id)
         }
-        
+        // scroll to the half of the 'scrollable view' after older messages were loaded
+        else if(event === 'htmx:afterSettle' && data.pathInfo.requestPath.includes('previous_messages')){
+            const messages = document.getElementById('chat-messages')
+            messages.scroll(0, (messages.scrollHeight - messages.clientHeight)/2)
+            console.log('SCROLLED AFTER OLDER MESSAGES')
+        }
+
 
     }
     htmx.logger()
