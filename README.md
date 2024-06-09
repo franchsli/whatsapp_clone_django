@@ -3,11 +3,8 @@
 
 ## DO RIGHT NOW
 
-- **RN** Test if get_previous_messages() works as expected.
 - Implement something in JS (load_older_messages() func) to scroll to the half of the 'scrollable view'
   after the messages loaded OR rework the JS logic to only scroll when display_chat triggers.
-- **FIX** Check why get_previous_messages() returns the first 20 messages of the
-chat that matchs the condition [exclude() sentence]
 - Rework display_chat view and chat logic (I think V2 it's the best).
   - V1
     - Get the date of the last read message that the user read.

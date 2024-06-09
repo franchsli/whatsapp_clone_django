@@ -402,6 +402,7 @@ chat_websocket.addEventListener('open', () => {
             // but this is due to a message edition
             send_message('message_edition', '', '', user_id)
         }
+        
 
     }
     htmx.logger()
