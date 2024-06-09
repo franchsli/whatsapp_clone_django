@@ -402,11 +402,19 @@ chat_websocket.addEventListener('open', () => {
             // but this is due to a message edition
             send_message('message_edition', '', '', user_id)
         }
+        // sets a global variable with the 'scrollable view' height before loaidng the messages
+        else if(event === 'htmx:beforeRequest' && data.pathInfo.requestPath.includes('previous_messages')){
+            const messages = document.getElementById('chat-messages')
+            window.previous_scrollable_view = messages.scrollHeight - messages.clientHeight
+            console.log('height before', previous_scrollable_view)
+        }
         // scroll to the half of the 'scrollable view' after older messages were loaded
         else if(event === 'htmx:afterSettle' && data.pathInfo.requestPath.includes('previous_messages')){
             const messages = document.getElementById('chat-messages')
-            messages.scroll(0, (messages.scrollHeight - messages.clientHeight)/2)
-            console.log('SCROLLED AFTER OLDER MESSAGES')
+            const actual_scrollable_view = messages.scrollHeight - messages.clientHeight
+            console.log('height after', actual_scrollable_view)
+            messages.scroll(0, actual_scrollable_view - previous_scrollable_view)
+            console.log('SCROLLED AFTER OLDER MESSAGES THE DISTANCE OF', actual_scrollable_view - previous_scrollable_view)
         }
 
 

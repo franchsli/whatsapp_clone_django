@@ -3,8 +3,6 @@
 
 ## DO RIGHT NOW
 
-- Implement something in JS (load_older_messages() func) to scroll to the half of the 'scrollable view'
-  after the messages loaded OR rework the JS logic to only scroll when display_chat triggers.
 - Rework display_chat view and chat logic (I think V2 it's the best).
   - V1
     - Get the date of the last read message that the user read.
