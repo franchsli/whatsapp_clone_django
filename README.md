@@ -3,11 +3,9 @@
 
 ## DO RIGHT NOW
 
-- **DO RIGHT NOW** Fix and finish the logic of the message date layers in chat:
-  - Implement something to display the layers only if that date it's not displayed already
-    use a django filter that alters a global variable in tools.py.
-  - Check why the tags display None... or implement methods in the Chat model
-  to do the job.
+- Make something to delete the LAST date layer when loading older messages:
+  - when older messages are loaded, check if some of the dates are already in other element,
+  if so remove that layer.
 - Rework display_chat view and chat logic.
   - If there are unread messages:
     - Get the date of the last read message that the user read.

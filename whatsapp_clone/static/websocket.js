@@ -204,7 +204,7 @@ chat_websocket.addEventListener('open', () => {
         load_older_messages()
     }
 
-    window.update_messages_dates = function(date){
+    window.add_message_date = function(date){
         if (!chat_app.messages_dates.includes(date)){
             chat_app.messages_dates.push(date)
         }

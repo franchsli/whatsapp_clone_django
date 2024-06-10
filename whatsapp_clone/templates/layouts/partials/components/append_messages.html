@@ -1,10 +1,13 @@
 {% load static %}
 {% load filters %}
 
+<script type="text/javascript">
+  clear_messages_dates();
+</script>
 {% for message in messages %}
 <!-- ========== MESSAGE DATE  ========== -->
   {% with message_date=message.date|date:"D d M Y" %}
-    <div class="message-date d-flex justify-content-center rounded-pill bg-body-tertiary"
+    <div id="message-{{message.id}}-date" class="message-date d-flex justify-content-center rounded-pill bg-body-tertiary"
     style="width: fit-content; align-self: center;">
       
         {% with time_difference=message.date|timesince %}
@@ -18,6 +21,16 @@
         {% endwith %}
       
     </div>
+    <script type="text/javascript">
+      if(date_already_displayed('{{message_date}}')){
+        console.log('DATE IS ALREADY DISPLAYED')
+        const message_date_layer = document.getElementById(`message-{{message.id}}-date`)
+        message_date_layer.remove()
+      }
+      else{
+        add_message_date('{{message_date}}');
+      }
+    </script>
   {% endwith %}
 
 {% if message.sender_user == request.user %}
