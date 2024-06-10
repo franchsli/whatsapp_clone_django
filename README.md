@@ -3,17 +3,17 @@
 
 ## DO RIGHT NOW
 
-- Rework display_chat view and chat logic (I think V2 it's the best).
-  - V1
+- **DO RIGHT NOW** Fix and finish the logic of the message date layers in chat:
+  - Implement something to display the layers only if that date it's not displayed already
+    use a django filter that alters a global variable in tools.py.
+  - Check why the tags display None... or implement methods in the Chat model
+  to do the job.
+- Rework display_chat view and chat logic.
+  - If there are unread messages:
     - Get the date of the last read message that the user read.
-    - Get the first 20 messages after that date, mark them as read and display them.
-    - If the user scrolls down, call display_chat again form JS.
-  - V2
-    - If there are unread messages:
-      - Get the date of the last read message that the user read.
-      - Get all the messages after that date, mark them as read and display them.
-    - Otherwise
-      - Get the last 20 messages and display them.
+    - Get all the messages after that date, mark them as read and display them.
+  - Otherwise
+    - Get the last 20 messages and display them.
 
 - **OPTIMIZE**:
   - Rework the way to update the messages list:
@@ -27,11 +27,6 @@
   - Use more with statements (????)
   - Re think if consumers should create contacts or create another consumer for that (i don't think so).....
 - [Implement tooltips](https://getbootstrap.com/docs/5.3/components/tooltips/)
-- **DO RIGHT NOW** Fix and finish the logic of the message date layers in chat:
-  - Implement something to display the layers only if that date it's not displayed already
-    use a django filter that alters a global variable in tools.py.
-  - Check why the tags display None... or implement methods in the Chat model
-  to do the job.
 - Rework messages list:
   - Display 'Yesterday' if the message has more than a day of difference but less than two.
   - Add the whatsapp date tags in HTML in the normal chat and in the searching message UI.
