@@ -1,27 +1,21 @@
 {% load static %}
 {% load filters %}
 
-{% clear_messages_dates %}
 {% for message in messages %}
 <!-- ========== MESSAGE DATE  ========== -->
   {% with message_date=message.date|date:"D d M Y" %}
-  {% date_already_displayed message.date as date_already_displayed %}
     <div class="message-date d-flex justify-content-center rounded-pill bg-body-tertiary"
     style="width: fit-content; align-self: center;">
       
-      {% if not date_already_displayed %}
         {% with time_difference=message.date|timesince %}
             {% if 'day' in time_difference and 'week' not in time_difference %}
               {# Between 1 day and 1 week ago, display the day name #}
               <span class="p-2">{{ message.date|date:"l" }}</span>
-              {% update_messages_dates message.date %}
             {% else %}
               {# More than a week ago, display the whole date #}
               <span class="p-2">{{ message_date }}</span>
-              {% update_messages_dates message_date %}
             {% endif %}
         {% endwith %}
-      {% endif %}
       
     </div>
   {% endwith %}
