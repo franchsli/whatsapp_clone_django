@@ -24,13 +24,23 @@
     <script type="text/javascript">
       if(date_already_displayed('{{message_date}}')){
         console.log('DATE IS ALREADY DISPLAYED')
-        const message_date_layer = document.getElementById(`message-{{message.id|cut:" "}}-date`)
+        const message_date_layer = document.getElementById(`message-{{message.id}}-date`)
         message_date_layer.remove()
       }
       else{
         add_message_date('{{message_date}}');
-        console.log(document.querySelectorAll('.date-{{message_date|cut:" "}}'))
         // get the list with the same date and delete the last
+        const similar_date_layers = document.querySelectorAll('.date-{{message_date|cut:" "}}')
+        console.log(similar_date_layers)
+        similar_date_layers.forEach(date_layer => {
+          if(date_layer){
+            if(date_layer.id !== 'message-{{message.id}}-date'){
+            date_layer.remove()
+            console.log('ANOTHER LAYER WITH THE SAME DATE WAS FOUND AND REMOVED.')
+            }
+          }
+        })
+        
       }
     </script>
   {% endwith %}

@@ -3,7 +3,8 @@
 
 ## DO RIGHT NOW
 
-- **IMPORTANT** finish logic at line 33 in append_messages.html.
+- **IMPORTANT** check logic at line 33 in append_messages.html and why does it throw
+  errors nad slow down all the message retrieven a bit.
 - Make something to delete the LAST date layer when loading older messages:
   - when older messages are loaded, check if some of the dates are already in other element,
   if so remove that layer.
