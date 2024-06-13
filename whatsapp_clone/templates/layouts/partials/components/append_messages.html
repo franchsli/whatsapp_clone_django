@@ -29,18 +29,6 @@
       }
       else{
         add_message_date('{{message_date}}');
-        // get the list with the same date and delete the last
-        const similar_date_layers = document.querySelectorAll('.date-{{message_date|cut:" "}}')
-        console.log(similar_date_layers)
-        similar_date_layers.forEach(date_layer => {
-          if(date_layer){
-            if(date_layer.id !== 'message-{{message.id}}-date'){
-            date_layer.remove()
-            console.log('ANOTHER LAYER WITH THE SAME DATE WAS FOUND AND REMOVED.')
-            }
-          }
-        })
-        
       }
     </script>
   {% endwith %}
