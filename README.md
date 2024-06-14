@@ -3,11 +3,6 @@
 
 ## DO RIGHT NOW
 
-- Make something to delete the LAST date layer when loading older messages:
-  - when older messages are loaded, check if some of the dates are already in other element,
-  if so remove that layer.
-  - keep in mind that the forloop already knows that there are another similar layers, so
-   rework check if the current logic detects the previous displayed date layers.
 - Rework display_chat view and chat logic.
   - If there are unread messages:
     - Get the date of the last read message that the user read.

@@ -450,7 +450,11 @@ function load_more_messages(message_list){
     
 }
 
-
+/**
+ * Removes all the found HTML elements with the given class
+ * name but the first one
+ * @param {String} class_name 
+ */
 function remove_duplicates(class_name){
     const duplicates = document.querySelectorAll(`.${class_name}`)
     for (let index = 0; index < duplicates.length; index++) {
@@ -469,5 +473,6 @@ export {get, post, modifyNotification,
       checked, not_empty, toggle_element_inner_text,
     load_emojis, switch_emojis, switch_checkboxes, 
     toggle_element_display, previewImage, update_chat_list, at_least_one_attr,
-    exchange_elements_class, switch_element_visibility, load_more_messages, load_older_messages, remove_duplicates
+    exchange_elements_class, switch_element_visibility, load_more_messages, 
+    load_older_messages, remove_duplicates
 }
