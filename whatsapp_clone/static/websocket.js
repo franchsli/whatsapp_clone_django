@@ -217,12 +217,24 @@ chat_websocket.addEventListener('open', () => {
     }
 
     window.date_already_displayed = function(date){
-        if (chat_app.messages_dates.includes(date)){
+        const date_stored = chat_app.messages_dates.includes(date)
+        const similar_layers = document.querySelectorAll(`.date-${date.replaceAll(' ', '')}`)
+        const many_similar_layers = similar_layers.length > 1
+        //console.log(date_stored)
+        console.log(similar_layers)
+        console.log(many_similar_layers)
+        let counter = 0
+        if (many_similar_layers){
             return true
         }
         else {
+            console.log('FALSE')
             return false
         }
+    }
+
+    window.remove_duplicates = function(class_name){
+        tools.remove_duplicates(class_name)
     }
 
 

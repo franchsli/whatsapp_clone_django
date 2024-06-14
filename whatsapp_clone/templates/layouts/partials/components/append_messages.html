@@ -24,8 +24,8 @@
     <script type="text/javascript">
       if(date_already_displayed('{{message_date}}')){
         console.log('DATE IS ALREADY DISPLAYED')
-        const message_date_layer = document.getElementById(`message-{{message.id}}-date`)
-        message_date_layer.remove()
+        console.log('DELETING DUPLICATES..')
+        remove_duplicates(`date-{{message_date|cut:' '}}`)
       }
       else{
         add_message_date('{{message_date}}');
