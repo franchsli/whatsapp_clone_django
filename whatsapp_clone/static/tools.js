@@ -457,7 +457,6 @@ function remove_duplicates(class_name){
         if(index !== 0){
             const element = duplicates[index];
             element.remove()
-            console.log('DUPLICATED ELEMENT REMOVED')
         }
     }
 

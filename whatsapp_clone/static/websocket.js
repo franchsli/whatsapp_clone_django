@@ -18,9 +18,6 @@ const status_image_input = document.getElementById('id_image')
 const notification_audio = new Audio('static/Audio/app/message_received.mp3')
 const message_sent_audio = new Audio('static/Audio/app/message_sent.mp3')
 const error_audio = new Audio('static/Audio/app/error_sound.mp3')
-window.chat_app = {
-    messages_dates : []
-}
 
 // Callback function to execute when mutations are observed
 const mutationCallback = function(mutationsList, observer) {
@@ -204,26 +201,9 @@ chat_websocket.addEventListener('open', () => {
         load_older_messages()
     }
 
-    window.add_message_date = function(date){
-        if (!chat_app.messages_dates.includes(date)){
-            chat_app.messages_dates.push(date)
-        }
-
-        console.log(chat_app.messages_dates)
-    }
-
-    window.clear_messages_dates = function(){
-        chat_app.messages_dates = []
-    }
-
     window.date_already_displayed = function(date){
-        const date_stored = chat_app.messages_dates.includes(date)
         const similar_layers = document.querySelectorAll(`.date-${date.replaceAll(' ', '')}`)
         const many_similar_layers = similar_layers.length > 1
-        //console.log(date_stored)
-        console.log(similar_layers)
-        console.log(many_similar_layers)
-        let counter = 0
         if (many_similar_layers){
             return true
         }
