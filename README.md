@@ -3,12 +3,15 @@
 
 ## DO RIGHT NOW
 
+- **IMPORTANT** TEST ALL THE CASES POSSIBLES IN THE NEW
+  DISPLAY_CHAT LOGIC.
 - Rework display_chat view and chat logic.
-  - If there are unread messages:
-    - Get the date of the last read message that the user read.
+  - If there are unread messages (return all the unread messages):
+    - Get the date of the last message that the user read.
     - Get all the messages after that date, mark them as read and display them.
   - Otherwise
     - Get the last 20 messages and display them.
+  - **NOTE** think of a way to get unread messages excluding the user messages.
 
 - **OPTIMIZE**:
   - Rework the way to update the messages list:
