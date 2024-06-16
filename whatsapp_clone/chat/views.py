@@ -164,7 +164,9 @@ def display_user_ui(request):
 def display_chat(request, pk):
     if request.method == "GET":
         chat = Chat.objects.get(id=pk)
-        unread_messages = chat.message_set.filter(read=False).exclude(sender_user__pk=request.user.id)
+        unread_messages = chat.message_set.filter(read=False).exclude(
+            sender_user__pk=request.user.id
+        )
         if unread_messages.exists():
             # retrieves all the unread messages in the chat
             chat_messages = unread_messages.order_by("date")
@@ -308,14 +310,17 @@ def delete_message(request, chat_id, message_id):
     else:
         return HttpResponseNotAllowed(["DELETE"])
 
+
 def get_previous_messages(request, chat_id, datetime):
-    """Returns the messages in the chat with the 
+    """Returns the messages in the chat with the
     given id before the provided datetime
     """
     if request.method == "GET":
         chat = Chat.objects.get(id=chat_id)
         # gets the most recent 20 messages before the given datetime
-        chat_messages = chat.message_set.filter(date__lt=datetime).order_by("-date")[:20]
+        chat_messages = chat.message_set.filter(date__lt=datetime).order_by("-date")[
+            :20
+        ]
         # sorts them in ascending order (datetime)
         chat_messages = chat_messages[::-1]
         return render(
@@ -325,7 +330,8 @@ def get_previous_messages(request, chat_id, datetime):
         )
     else:
         return HttpResponseNotAllowed(["GET"])
-    
+
+
 def append_message(request, chat_id):
     """Return the latest message in
     the chat with the given id"""
@@ -343,7 +349,6 @@ def append_message(request, chat_id):
         )
     else:
         return HttpResponseNotAllowed(["GET"])
-
 
 
 def update_chat_form(request):
