@@ -13,14 +13,22 @@
     - Get the last 20 messages and display them.
   - **NOTE** think of a way to get unread messages excluding the user messages.
 
-- **OPTIMIZE**:
-  - Rework the way to update the messages list:
+- ***OPTIMIZE***:
+  - Rework the way to update the messages list *(receiver)*:
     - Only call display_chat when clicking in a chat,
     this is to avoid loading unnnecesary HTML contents and to avoid things like
     if a user needs to search a very old message but the contact messages them the entire chat list will be
     updated again and the user will do request to the server again,
     in order to reduce the size of the request, only the new messages will be returned and appended to the messages
     list (if the chat is displayed of course)
+      - If the sender deleted a message get (via websocket)
+      the id of the message and search for it in the displayed messages list (if it's displayed)
+      if the message is found, remove it using element.remove()
+      - If the sender edited a message get (via websocket)
+      the id of the message and search for it in the displayed messages list (if it's displayed)
+      if the message is found, replace all its text and add the 'Edited' thing.
+      *THIS IS FOR REDUCING REQUEST IN HALF*
+
   - optimize all the possible code.
   - Use more with statements (????)
   - Re think if consumers should create contacts or create another consumer for that (i don't think so).....
