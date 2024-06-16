@@ -84,7 +84,7 @@ Also don't forget to change the channel layer to redis.
 - When a user archives a contact, all group-like chats in which the contact is in will be archived as well.
 - When a user deletes a chat, the chat will be deleted from all the users in the chat
   - To fix this, you need to implement something similar to archive view logic.
-- Scroll to bottom func doesn't scroll to the botom anymore:
+- Scroll to bottom func doesn't scroll to the botom anymore when the last messages are images, test why:
   - **THIS IS WHAT HAPPENS**:
     The chat gets displayed but somehow scroll_to_bottom doesn't work as expected.
     - It's because the images in the chat load with delay:
