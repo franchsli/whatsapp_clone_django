@@ -5,11 +5,8 @@
 
 - **IMPORTANT** TEST ALL THE CASES POSSIBLES IN THE NEW
   DISPLAY_CHAT LOGIC.
-- Rework display_chat view and chat logic.
-  - If there are unread messages (return all the unread messages)
-  - Otherwise
-    - Get the last 20 messages and display them.
-  - **NOTE** think of a way to get unread messages excluding the user messages.
+- Fix bugs in reworked chat_display view:
+  - Check the cases were messages are not read or not displayed.
 
 - ***OPTIMIZE***:
   - Rework the way to update the messages list *(receiver)*:
