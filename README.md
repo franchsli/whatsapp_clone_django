@@ -3,7 +3,7 @@
 
 ## DO RIGHT NOW
 
-- **IMPORTANT** TEST ALL THE CASES POSSIBLES IN THE NEW
+- **IMPORTANT** TEST THE BEHAVIOUR IN ALL THE CASES POSSIBLES IN THE NEW
   DISPLAY_CHAT LOGIC.
 - Fix bugs in reworked chat_display view:
   - Check the cases were messages are not read or not displayed.
@@ -22,18 +22,16 @@
       - If the sender edited a message get (via websocket)
       the id of the message and search for it in the displayed messages list (if it's displayed)
       if the message is found, replace all its text and add the 'Edited' thing.
-      *THIS IS FOR REDUCING REQUEST IN HALF*
+      *THIS IS FOR REDUCING REQUEST IN HALF (or so)*
 
   - optimize all the possible code.
   - Use more with statements (????)
   - Re think if consumers should create contacts or create another consumer for that (i don't think so).....
 - [Implement tooltips](https://getbootstrap.com/docs/5.3/components/tooltips/)
+- Make something to prevent notification showing if the notification is from
+  the same contact in the displayed chat (if there is some displayed chat obviously)
 - Rework messages list:
   - Display 'Yesterday' if the message has more than a day of difference but less than two.
-  - Add the whatsapp date tags in HTML in the normal chat and in the searching message UI.
-  - Or make a way to display a div telling the date if the next message in the list have more than one day of difference
-  or was send the next day (the div should be displayed over the said next message [under the current message.]
-  and the div should only be displayed if the current message it's not the last.)
 - **FIX** Some messages width break the chat container after using 'show more'
 - Make a custom theme (really dark) and use it as a dark mode.
 - Add more animations.

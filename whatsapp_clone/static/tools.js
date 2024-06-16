@@ -57,8 +57,14 @@ function create_message_html(text, image_src="undefined", sent_by_auth_user=true
     message_image.src = image_src
     message_image.alt = ''
     // set the style acording to who sent the message
-    if (sent_by_auth_user){new_message.classList.add('list-unstyled-item', 'me-3', 'mt-3', 'rounded', 'message', 'user-message')}
-    else {new_message.classList.add('list-unstyled-item', 'ms-3', 'mt-3', 'rounded', 'message', 'contact-message')}
+    if (sent_by_auth_user){
+        new_message.classList.add('list-unstyled-item', 'me-3',
+             'mt-3', 'rounded', 'message', 'user-message')
+    }
+    else {
+        new_message.classList.add('list-unstyled-item', 'ms-3', 'mt-3',
+             'rounded', 'message', 'contact-message')
+    }
     message_container.classList.add('d-flex', 'flex-column', 'p-2')
     // display the message text
     message_text.innerText = text
