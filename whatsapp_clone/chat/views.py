@@ -332,10 +332,13 @@ def append_message(request, chat_id):
         chat = Chat.objects.get(id=chat_id)
         # gets the latest messaege
         chat_messages = chat.message_set.order_by("-date").first()
+        # storing it into a iterable to avoid errors
+        # in django template for-loop
+        messages_iterable = [chat_messages]
         return render(
             request,
-            "layouts/partials/components/appended_message.html",
-            {"chat": chat, "messages": chat_messages},
+            "layouts/partials/components/append_messages.html",
+            {"chat": chat, "messages": messages_iterable},
         )
     else:
         return HttpResponseNotAllowed(["GET"])
