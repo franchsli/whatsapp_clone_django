@@ -1,0 +1,38 @@
+{% load static %}
+{% load filters %}
+
+
+
+<!-- ========== MESSAGE DATE  ========== -->
+{% with message_date=message.date|date:"D d M Y" %}
+<div id="message-{{message.id}}-date" class="message-date date-{{message_date|cut:' '}} d-flex justify-content-center rounded-pill bg-body-tertiary"
+style="width: fit-content; align-self: center;">
+  
+    {% with time_difference=message.date|timesince %}
+        {% if 'day' in time_difference and 'week' not in time_difference %}
+          {# Between 1 day and 1 week ago, display the day name #}
+          <span class="p-2">{{ message.date|date:"l" }}</span>
+        {% else %}
+          {# More than a week ago, display the whole date #}
+          <span class="p-2">{{ message_date }}</span>
+        {% endif %}
+    {% endwith %}
+  
+</div>
+<script type="text/javascript">
+  if(date_already_displayed('{{message_date}}')){
+    remove_duplicates(`date-{{message_date|cut:' '}}`)
+  }
+</script>
+{% endwith %}
+
+{% if message.sender_user == request.user %}
+<li class="list-unstyled-item me-3 mt-3 rounded message user-message dropdown"
+oncontextmenu="showDropdown(event, 'customDropdown-{{message.id}}')"
+data-date="{{message.date|date:'c'}}">
+{% else %}
+<li class="list-unstyled-item ms-3 mt-3 rounded message contact-message"
+data-date="{{message.date|date:'c'}}">
+{% endif %}
+{% include "layouts/partials/components/message.html" %}
+</li>

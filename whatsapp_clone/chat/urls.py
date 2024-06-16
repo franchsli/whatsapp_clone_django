@@ -34,6 +34,7 @@ urlpatterns = [
         name="delete_message",
     ),
     path("previous_messages/<int:chat_id>/<str:datetime>/", views.get_previous_messages, name="previous_messages"),
+    path("append_message/<int:chat_id>", views.append_message, name="append_message"),
     path("update_chat_form/", views.update_chat_form, name="update_chat_form"),
     path("statuses/", views.get_statuses, name="statuses"),
     path("create_status/", views.create_status, name="create_status"),

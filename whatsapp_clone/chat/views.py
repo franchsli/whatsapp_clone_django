@@ -324,6 +324,22 @@ def get_previous_messages(request, chat_id, datetime):
         )
     else:
         return HttpResponseNotAllowed(["GET"])
+    
+def append_message(request, chat_id):
+    """Return the latest message in
+    the chat with the given id"""
+    if request.method == "GET":
+        chat = Chat.objects.get(id=chat_id)
+        # gets the latest messaege
+        chat_messages = chat.message_set.order_by("-date").first()
+        return render(
+            request,
+            "layouts/partials/components/appended_message.html",
+            {"chat": chat, "messages": chat_messages},
+        )
+    else:
+        return HttpResponseNotAllowed(["GET"])
+
 
 
 def update_chat_form(request):

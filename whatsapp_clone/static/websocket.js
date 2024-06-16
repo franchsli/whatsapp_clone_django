@@ -472,7 +472,7 @@ chat_websocket.addEventListener('message',async (event) => {
         // only render the HTML otherwise
         if (user_id === sender_id){
             message_sent_audio.play()
-            htmx.ajax('GET', `/display_chat/${localStorage.getItem('chat_id')}`, '#chat-display').then(() => {
+            htmx.ajax('GET', `/append_message/${localStorage.getItem('chat_id')}`, {target:'#chat-messages', swap:'beforeend'}).then(() => {
                 tools.update_chat_list()
             })
         }
