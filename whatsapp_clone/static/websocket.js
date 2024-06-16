@@ -474,6 +474,7 @@ chat_websocket.addEventListener('message',async (event) => {
             message_sent_audio.play()
             htmx.ajax('GET', `/append_message/${localStorage.getItem('chat_id')}`, {target:'#chat-messages', swap:'beforeend'}).then(() => {
                 tools.update_chat_list()
+                tools.scroll_to_bottom()
             })
         }
         else {
@@ -521,6 +522,7 @@ chat_websocket.addEventListener('message',async (event) => {
     
                 htmx.ajax('GET', `/display_chat/${localStorage.getItem('chat_id')}`, '#chat-display').then(() => {
                     console.log('MESSAGES RELOADED')
+                    tools.scroll_to_bottom()
                 })
                 
             }
@@ -546,6 +548,7 @@ chat_websocket.addEventListener('message',async (event) => {
     
                 htmx.ajax('GET', `/display_chat/${localStorage.getItem('chat_id')}`, '#chat-display').then(() => {
                     console.log('MESSAGES RELOADED')
+                    tools.scroll_to_bottom()
                 })
                 
             }
