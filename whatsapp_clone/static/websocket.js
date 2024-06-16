@@ -474,7 +474,6 @@ chat_websocket.addEventListener('message',async (event) => {
             message_sent_audio.play()
             htmx.ajax('GET', `/append_message/${localStorage.getItem('chat_id')}`, {target:'#chat-messages', swap:'beforeend'}).then(() => {
                 tools.update_chat_list()
-                tools.scroll_to_bottom()
             })
         }
         else {

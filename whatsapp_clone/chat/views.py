@@ -298,7 +298,8 @@ def delete_message(request, chat_id, message_id):
         message_instance = Message.objects.get(id=message_id)
         message_instance.delete()
         chat = Chat.objects.get(id=chat_id)
-        chat_messages = chat.message_set.all().order_by("date")
+        # retrieves the last 20 messages in the chat
+        chat_messages = chat.message_set.order_by("-date")[:20:-1]
         return render(
             request,
             "layouts/partials/components/messages.html",

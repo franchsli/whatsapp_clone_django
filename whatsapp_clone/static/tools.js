@@ -361,8 +361,10 @@ function update_chat_list(){
     if (document.getElementById('chat-list') !== null){
         if (document.getElementById('archived-chats') !== null) {
             htmx.ajax('GET', '/archived_chats', {target:'#chats-and-more', swap:'innerHTML'})
+            scroll_to_bottom()
         } else {
             htmx.ajax('GET', '/chats', {target:'#chat-list', swap:'outerHTML'})
+            scroll_to_bottom()
         }
         
     }
