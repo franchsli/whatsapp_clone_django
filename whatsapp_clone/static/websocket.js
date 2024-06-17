@@ -5,6 +5,7 @@ const user_id = user.getAttribute('data-user')
 const user_phone_number = user.getAttribute('data-phone')
 const chat_websocket = new WebSocket(`ws://${window.location.host}/`)
 const status_websocket = new WebSocket(`ws://${window.location.host}/status/`)
+const chats_and_more = document.getElementById("chats-and-more")
 const chat_form = document.getElementById("chat-creation-form")
 const chat_modal = document.getElementById('NewChat')
 const chat_display = document.getElementById('chat-display')
@@ -20,7 +21,7 @@ const message_sent_audio = new Audio('static/Audio/app/message_sent.mp3')
 const error_audio = new Audio('static/Audio/app/error_sound.mp3')
 
 // Callback function to execute when mutations are observed
-const mutationCallback = function(mutationsList, observer) {
+const chat_mutation_callback = function(mutationsList, observer) {
     for (const mutation of mutationsList) {
         if (mutation.type === 'childList') {
             // Check if a new element is added
@@ -78,14 +79,26 @@ const mutationCallback = function(mutationsList, observer) {
 
                 }}}}};
 
+const general_mutations_callback = function(mutationsList, observer) {
+    for (const mutation of mutationsList) {
+        console.log('MUTATION OBSERVED IN CHATS AND MORE, TRIGGERING TOOLTIPS...')
+        // trigger all the tooltips in the webpage
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    }
+
+};
+
 // Create a MutationObserver with the callback
-const observer = new MutationObserver(mutationCallback);
+const chat_observer = new MutationObserver(chat_mutation_callback);
+const general_observer = new MutationObserver(general_mutations_callback);
 
 // Configure the observer to watch for changes in the container's children
 const observerConfig = { childList: true };
 
 // Start observing the target container
-observer.observe(chat_display, observerConfig);
+chat_observer.observe(chat_display, observerConfig);
+general_observer.observe(chats_and_more, observerConfig)
 
 /**
  * Tells the websocket to reconnect to the provided chat channel.
@@ -154,10 +167,6 @@ function send_message (message_type, message_text, message_image, message_sender
     }))
 
 }
-
-// trigger all the tooltips in the webpage
-const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 
 chat_websocket.addEventListener('open', () => {
     console.log('CONNECTION OPENED WITH CHAT WEBSOCKET')
