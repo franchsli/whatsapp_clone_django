@@ -27,7 +27,6 @@
   - optimize all the possible code.
   - Use more with statements (????)
   - Re think if consumers should create contacts or create another consumer for that (i don't think so).....
-- [Implement tooltips](https://getbootstrap.com/docs/5.3/components/tooltips/)
 - Make something to prevent notification showing if the notification is from
   the same contact in the displayed chat (if there is some displayed chat obviously)
 - Rework messages list:

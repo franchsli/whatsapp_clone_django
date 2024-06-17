@@ -85,7 +85,6 @@ const general_mutations_callback = function(mutationsList, observer) {
         // has been made
         if (index + 1 === mutationsList.length){
             console.log('LAST MUTATION OBSERVED IN CHATS AND MORE, TRIGGERING TOOLTIPS...')
-            // trigger all the tooltips in the webpage
             const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
             const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
         }
