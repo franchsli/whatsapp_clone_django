@@ -80,11 +80,16 @@ const chat_mutation_callback = function(mutationsList, observer) {
                 }}}}};
 
 const general_mutations_callback = function(mutationsList, observer) {
-    for (const mutation of mutationsList) {
-        console.log('MUTATION OBSERVED IN CHATS AND MORE, TRIGGERING TOOLTIPS...')
-        // trigger all the tooltips in the webpage
-        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    for (let index = 0; index < mutationsList.length; index++) {
+        // only trigger all the tooltips if the last mutation
+        // has been made
+        if (index + 1 === mutationsList.length){
+            console.log('LAST MUTATION OBSERVED IN CHATS AND MORE, TRIGGERING TOOLTIPS...')
+            // trigger all the tooltips in the webpage
+            const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+            const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+        }
+        
     }
 
 };
@@ -168,6 +173,9 @@ function send_message (message_type, message_text, message_image, message_sender
 
 }
 
+// trigger all the tooltips in the webpage
+const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 chat_websocket.addEventListener('open', () => {
     console.log('CONNECTION OPENED WITH CHAT WEBSOCKET')
 
