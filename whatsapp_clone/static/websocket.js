@@ -155,8 +155,9 @@ function send_message (message_type, message_text, message_image, message_sender
 
 }
 
-
-
+// trigger all the tooltips in the webpage
+const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 
 chat_websocket.addEventListener('open', () => {
     console.log('CONNECTION OPENED WITH CHAT WEBSOCKET')
@@ -436,14 +437,6 @@ chat_websocket.addEventListener('open', () => {
 
     }
     htmx.logger()
-    // initialize tooltips
-    // const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-    // const tooltipList = [...tooltipTriggerList].map(tooltipTrigger => {
-    //     new bootstrap.Tooltip(tooltipTrigger);
-    //     console.log("Tooltip initialized for element:", tooltipTrigger);
-    //     return new bootstrap.Tooltip(tooltipTrigger);
-    //   });
-
 
 
 })
