@@ -3,10 +3,12 @@
 
 ## DO RIGHT NOW
 
+- Make something to prevent notification showing if the notification is from
+  the same contact in the displayed chat (if there is some displayed chat obviously)
 - **IMPORTANT** TEST THE BEHAVIOUR IN ALL THE CASES POSSIBLES IN THE NEW
   DISPLAY_CHAT LOGIC.
 - Fix bugs in reworked chat_display view:
-  - Check the cases were messages are not read or not displayed.
+  - Check the cases were messages are not read or not displayed (hint: has to do with views.py line 167).
 
 - ***OPTIMIZE***:
   - Rework the way to update the messages list *(receiver)*:
@@ -24,16 +26,17 @@
       if the message is found, replace all its text and add the 'Edited' thing.
       *THIS IS FOR REDUCING REQUEST IN HALF (or so)*
 
-  - optimize all the possible code.
-  - Use more with statements (????)
-  - Re think if consumers should create contacts or create another consumer for that (i don't think so).....
-- Make something to prevent notification showing if the notification is from
-  the same contact in the displayed chat (if there is some displayed chat obviously)
+## ANOTHER THINGS TO DO
+
+- optimize all the possible code.
+- Use more with statements (????)
+- Re think if consumers should create contacts or create another consumer for that (i don't think so).....
 - Rework messages list:
   - Display 'Yesterday' if the message has more than a day of difference but less than two.
 - **FIX** Some messages width break the chat container after using 'show more'
 - Make a custom theme (really dark) and use it as a dark mode.
 - Add more animations.
+- Add more sounds (if possible).
 - Implement something to archive group-like Chats.
 - Add HTMX functionality to the 3 pills for filtering the chat list:
   - Think about adding archived_groups view.
@@ -44,9 +47,9 @@
    excluding the navbar where things like the status view, setting and such are located.
   - Add a search bar for chats searching.
 - Optimize the images size (whithout decreasing quality if possible).
+- Implement something to show a close look when a image in a chat is clicked (like Whatsapp)
 - Add something to delete statuses automatically every 24 hours (cronjobs maybe).
-
-## ANOTHER THINGS TO DO
+- Rework statuses UI.
 
 - Add status complex status creation (like Whatsapp).
   - Users could select the color of the background for
@@ -54,9 +57,6 @@
 - Redesign the login and register views (CSS).
 - Add chat wallpapers user CSS url for images and a JS color selector for colors.
 - Make the silence contact logic (booleand field [think it bro])
-- Implement something to use display_chat view to update
-  the chat to every user (receivers and sender) if the chat is displayed.
-  check websocket.js tools.create_message_html (line 453 at the date)
 
 ## Improvements
 
