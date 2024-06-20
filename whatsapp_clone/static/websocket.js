@@ -482,8 +482,10 @@ chat_websocket.addEventListener('message',async (event) => {
         if (user_id === sender_id){
             message_sent_audio.play()
         }
+        const sent_by_user = user_id === sender_id
         htmx.ajax('GET', `/append_message/${localStorage.getItem('chat_id')}`, {target:'#chat-messages', swap:'beforeend'}).then(() => {
             tools.update_chat_list()
+            console.log('UPDATED CHAT LIST AFTER APPENDING MESSAGE')
         })
 
     

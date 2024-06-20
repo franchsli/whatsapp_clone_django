@@ -332,16 +332,19 @@ def get_previous_messages(request, chat_id, datetime):
         return HttpResponseNotAllowed(["GET"])
 
 
-def append_message(request, chat_id):
+def append_message(request, chat_id, sent_by_user:str="true"):
     """Return the latest message in
     the chat with the given id"""
     if request.method == "GET":
+        sent_by_user = True if sent_by_user == "true" else False
         chat = Chat.objects.get(id=chat_id)
         # gets the latest messaege
-        chat_messages = chat.message_set.order_by("-date").first()
+        chat_message = chat.message_set.order_by("-date").first()
+        chat_message.read = True if not sent_by_user else False
+        chat_message.save()
         # storing it into a iterable to avoid errors
         # in django template for-loop
-        messages_iterable = [chat_messages]
+        messages_iterable = [chat_message]
         return render(
             request,
             "layouts/partials/components/append_messages.html",
