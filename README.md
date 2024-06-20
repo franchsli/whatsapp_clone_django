@@ -5,6 +5,7 @@
 
 - Make something to prevent notification showing if the notification is from
   the same contact in the displayed chat (if there is some displayed chat obviously)
+- Implement something to update dinamically the unread archived chats counter (the badge).
 - **IMPORTANT** TEST THE BEHAVIOUR IN ALL THE CASES POSSIBLES IN THE NEW
   DISPLAY_CHAT LOGIC.
 - Fix bugs in reworked chat_display view:
@@ -24,11 +25,12 @@
       - If the sender edited a message get (via websocket)
       the id of the message and search for it in the displayed messages list (if it's displayed)
       if the message is found, replace all its text and add the 'Edited' thing.
-      *THIS IS FOR REDUCING REQUEST IN HALF (or so)*
+      *THIS IS FOR REDUCING REQUESTS IN HALF (or so)*
 
 ## ANOTHER THINGS TO DO
 
 - optimize all the possible code.
+- Review all the code and delete spaguetti code.
 - Use more with statements (????)
 - Re think if consumers should create contacts or create another consumer for that (i don't think so).....
 - Rework messages list:
@@ -72,7 +74,6 @@ Also don't forget to change the channel layer to redis.
 
 - Make it responsive (or maybe not).
 - Check and compare all the whatsapp web features with this project features.
-- Review all the code and delete spaguetti code.
 - Implement all of the features at [dj-chat](https://github.com/adilmohak/dj-chat?tab=readme-ov-file#current-features)
 - Delete all console.logs
 
