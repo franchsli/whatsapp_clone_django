@@ -3,8 +3,8 @@
 
 ## DO RIGHT NOW
 
-- Make something to prevent notification showing if the notification is from
-  the same contact in the displayed chat (if there is some displayed chat obviously)
+- Make something to mark as read all the contact new contact messages when the chat is displayed (real-time)
+  or put back display_chat on it (i don't think so).
 - Implement something to update dinamically the unread archived chats counter (the badge).
 - **IMPORTANT** TEST THE BEHAVIOUR IN ALL THE CASES POSSIBLES IN THE NEW
   DISPLAY_CHAT LOGIC.

@@ -499,15 +499,27 @@ chat_websocket.addEventListener('message',async (event) => {
 
         console.warn(message)
         console.log(message)
+
+        const displayed_chat_contact_info = document.getElementById('contact-name')
+        let noti_from_opened_chat = false
+        // if a chat is opened
+        if (displayed_chat_contact_info){
+            console.log('SOME CHAT IS DISPLAYED, CHECKING IF ITS THE SAME FROM THE NOTIFICATION')
+            console.log(noti_from_opened_chat)
+            // Tells whether or not the notification is from the currently opened chat
+            noti_from_opened_chat = displayed_chat_contact_info.dataset.userObjectId === sender_id
+            console.log('VARIABLE CHANGED TO', noti_from_opened_chat)
+        }
         // if the chats UI is displayed, reload it
         tools.update_chat_list()
 
-        if(!sender_is_archived){
+        if(!sender_is_archived && !noti_from_opened_chat){
             const toastNotification = document.getElementById('liveToast')
             tools.modifyNotification(sender_username, text)
             const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
             toastBootstrap.show()
             notification_audio.play()
+
         }
     }
 

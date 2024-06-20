@@ -178,6 +178,9 @@ def chat_desired_data(
                     return contact.photo.url
                 else:
                     return DEFAULT_USER_PHOTO_URL
+            elif desired_value == "user-id":
+                contact_user_object = User.objects.get(phone_number=contact.phone_number)
+                return contact_user_object.pk
             else:
                 return getattr(contact, desired_value)
         # in case no contact is found,
