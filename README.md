@@ -3,9 +3,7 @@
 
 ## DO RIGHT NOW
 
-- Make something to mark as read all the contact new contact messages when the chat is displayed (real-time)
-  or put back display_chat on it (i don't think so) *THIS IS HALF IMPLEMENTED*.
-- Implement something to update dinamically the unread archived chats counter (the badge).
+- Check why a swapError triggers when using append_message.
 - **IMPORTANT** TEST THE BEHAVIOUR IN ALL THE CASES POSSIBLES IN THE NEW
   DISPLAY_CHAT LOGIC.
 - Fix bugs in reworked chat_display view:
