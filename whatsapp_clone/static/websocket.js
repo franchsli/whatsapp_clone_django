@@ -478,7 +478,7 @@ chat_websocket.addEventListener('message',async (event) => {
         image = message_data[2]
         console.log(`IMAGE:${image}`)
         // if the message was sent by the auth user, play a sound and update the chat list
-        // only render the HTML otherwise
+        // only append the message's HTML otherwise
         if (user_id === sender_id){
             message_sent_audio.play()
             htmx.ajax('GET', `/display_chat/${localStorage.getItem('chat_id')}`, '#chat-display').then(() => {
@@ -486,9 +486,9 @@ chat_websocket.addEventListener('message',async (event) => {
             })
         }
         else {
-            console.log('REQUETING TO THE SERVER TO APPEND A MESSAGE...')
+            console.log('REQUESTING TO THE SERVER TO APPEND A MESSAGE...')
             htmx.ajax('GET', `/append_message/${localStorage.getItem('chat_id')}`, {target:'#chat-messages', swap:'beforeend'}).then(() => {
-                tools.update_chat_list()
+                //tools.update_chat_list()
                 console.log('UPDATED CHAT LIST AFTER APPENDING MESSAGE')
             })
         }
