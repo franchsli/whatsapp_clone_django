@@ -215,7 +215,7 @@ chat_websocket.addEventListener('open', () => {
     }
 
     window.load_older_messages = function(){
-        load_older_messages()
+        tools.load_older_messages()
     }
 
     window.date_already_displayed = function(date){
@@ -518,9 +518,6 @@ chat_websocket.addEventListener('message',async (event) => {
             noti_from_opened_chat = displayed_chat_contact_info.dataset.userObjectId === sender_id
             console.log('VARIABLE CHANGED TO', noti_from_opened_chat)
         }
-        // if the chats UI is displayed, reload it
-        tools.update_chat_list()
-
         if(!sender_is_archived && !noti_from_opened_chat){
             const toastNotification = document.getElementById('liveToast')
             tools.modifyNotification(sender_username, text)
@@ -529,6 +526,8 @@ chat_websocket.addEventListener('message',async (event) => {
             notification_audio.play()
 
         }
+        // if the chats UI is displayed, reload it
+        tools.update_chat_list()
     }
 
     else if (event.data.includes('message_deletion')){

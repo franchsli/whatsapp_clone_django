@@ -3,7 +3,9 @@
 
 ## DO RIGHT NOW
 
-- Check why the chat list gets updated after using append_messages
+- Check why the chat list gets updated after using append_messages:
+  **BUG TRIGGER:** Line 530 at websocket.js. The chat list is updated no matter what,
+  this needs to be regulated.
 - **IMPORTANT** TEST THE BEHAVIOUR IN ALL THE CASES POSSIBLES IN THE NEW
   DISPLAY_CHAT LOGIC.
 - Fix bugs in reworked chat_display view:
