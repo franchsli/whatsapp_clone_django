@@ -492,9 +492,6 @@ chat_websocket.addEventListener('message',async (event) => {
                 console.log('UPDATED CHAT LIST AFTER APPENDING MESSAGE')
             })
         }
-
-
-    
     }
 
     else if (event.data.includes('chat_notification')){

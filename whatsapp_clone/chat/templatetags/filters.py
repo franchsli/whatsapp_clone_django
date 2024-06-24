@@ -1,6 +1,6 @@
 from django import template
 from django.db.models import QuerySet
-from chat.models import Contact, User, Chat
+from chat.models import User, Chat
 from chat.tools import DEFAULT_USER_PHOTO_URL, messages_dates, get_contact_in_chat
 from typing import Union
 import re
@@ -179,7 +179,9 @@ def chat_desired_data(
                 else:
                     return DEFAULT_USER_PHOTO_URL
             elif desired_value == "user-id":
-                contact_user_object = User.objects.get(phone_number=contact.phone_number)
+                contact_user_object = User.objects.get(
+                    phone_number=contact.phone_number
+                )
                 return contact_user_object.pk
             else:
                 return getattr(contact, desired_value)

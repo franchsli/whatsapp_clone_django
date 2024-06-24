@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from django.db.models import Count
 from django_filters.rest_framework import DjangoFilterBackend
 from chat.models import Message, Chat, User, Contact, Status

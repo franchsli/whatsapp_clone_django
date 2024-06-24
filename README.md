@@ -4,12 +4,13 @@
 ## DO RIGHT NOW
 
 - Check why the chat list gets updated after using append_messages:
-  **BUG TRIGGER:** Line 530 at websocket.js. The chat list is updated no matter what,
-  this needs to be regulated.
+  **BUG TRIGGER:** Line 527 at websocket.js. The chat list is updated no matter what,
+  this needs to be regulated, test if sender gets "notified" about messages too ()
 - **IMPORTANT** TEST THE BEHAVIOUR IN ALL THE CASES POSSIBLES IN THE NEW
   DISPLAY_CHAT LOGIC.
 - Fix bugs in reworked chat_display view:
   - Check the cases were messages are not read or not displayed (hint: has to do with views.py line 167).
+- Check what apis are still necesary.
 
 - ***OPTIMIZE***:
   - Rework the way to update the messages list *(receiver)*:
