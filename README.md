@@ -6,10 +6,9 @@
 - Check why the chat list gets updated after using append_messages:
   **BUG TRIGGER:** Line 527 at websocket.js. The chat list is updated no matter what,
   this needs to be regulated, test if sender gets "notified" about messages too ()
-- **IMPORTANT** TEST THE BEHAVIOUR IN ALL THE CASES POSSIBLES IN THE NEW
-  DISPLAY_CHAT LOGIC.
 - Fix bugs in reworked chat_display view:
   - Check the cases were messages are not read or not displayed (hint: has to do with views.py line 167).
+  - This happens when messages are not displayed/appended in the view (yes, another bug from the new logic).
 - Check what apis are still necesary.
 
 - ***OPTIMIZE***:
@@ -27,16 +26,19 @@
       the id of the message and search for it in the displayed messages list (if it's displayed)
       if the message is found, replace all its text and add the 'Edited' thing.
       *THIS IS FOR REDUCING REQUESTS IN HALF (or so)*
+      (KEEP IN MIND THAT THIS WILL INCREASE THE CODE COMPLEXITY)
 
 ## ANOTHER THINGS TO DO
 
-- optimize all the possible code.
-- Review all the code and delete spaguetti code.
-- Use more with statements (????)
+- Add user settings to personalize things like notification appareance
+  or even UI theming (the darek and light theme will remain the same,
+  but more themes will be added)
+- Review all the code, optimize it and delete spaguetti code.
+- Use with statements in frecuently used field lookups in the HTML.
 - Re think if consumers should create contacts or create another consumer for that (i don't think so).....
 - Rework messages list:
   - Display 'Yesterday' if the message has more than a day of difference but less than two.
-- **FIX** Some messages width break the chat container after using 'show more'
+- **FIX** Some messages width break the chat container after using 'show more' (I dunno why).
 - Make a custom theme (really dark) and use it as a dark mode.
 - Add more animations.
 - Add more sounds (if possible).
@@ -45,7 +47,7 @@
   - Think about adding archived_groups view.
 - Implement something to create Group-like Chats.
   - Look at chats.html line 63 and exception in chat_desired_data.
-- Rework the UI:
+- Rework the UI (in order to look like actual Whatsapp's UI):
   - Rework the Chat form display, replace everything in the user UI (chats or contacts list)
    excluding the navbar where things like the status view, setting and such are located.
   - Add a search bar for chats searching.
