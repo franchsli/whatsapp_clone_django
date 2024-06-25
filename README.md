@@ -3,13 +3,14 @@
 
 ## DO RIGHT NOW
 
+- Rename the 'notification_audio' to 'message_received_audio' variable in all occurences.
+- Check why audios and other things don't work if the user don't interact with the page first.
 - Check why the chat list gets updated after using append_messages:
   **BUG TRIGGER:** Line 527 at websocket.js. The chat list is updated no matter what,
   this needs to be regulated, test if sender gets "notified" about messages too ()
 - Fix bugs in reworked chat_display view:
   - Check the cases were messages are not read or not displayed (hint: has to do with views.py line 167).
   - This happens when messages are not displayed/appended in the view (yes, another bug from the new logic).
-- Check what apis are still necesary.
 
 - ***OPTIMIZE***:
   - Rework the way to update the messages list *(receiver)*:
@@ -31,10 +32,9 @@
 ## ANOTHER THINGS TO DO
 
 - Add user settings to personalize things like notification appareance
-  or even UI theming (the darek and light theme will remain the same,
-  but more themes will be added)
+  or even UI theming (the dark and light theme will remain the same,
+  but more themes will be added  [don't know when, don't know how])
 - Review all the code, optimize it and delete spaguetti code.
-- Use with statements in frecuently used field lookups in the HTML.
 - Re think if consumers should create contacts or create another consumer for that (i don't think so).....
 - Rework messages list:
   - Display 'Yesterday' if the message has more than a day of difference but less than two.
@@ -62,9 +62,11 @@
 - Redesign the login and register views (CSS).
 - Add chat wallpapers user CSS url for images and a JS color selector for colors.
 - Make the silence contact logic (booleand field [think it bro])
+- Check which apis are still necesary.
 
 ## Improvements
 
+- Use with statements in frecuently used field lookups in the HTML.
 - Implement a dynamic status length:
   - If its a photo 5 secs
   - if its a long text (more than 200 chars) 10 secs

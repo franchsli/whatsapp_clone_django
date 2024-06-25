@@ -19,6 +19,7 @@ const status_image_input = document.getElementById('id_image')
 const notification_audio = new Audio('static/Audio/app/message_received.mp3')
 const message_sent_audio = new Audio('static/Audio/app/message_sent.mp3')
 const error_audio = new Audio('static/Audio/app/error_sound.mp3')
+const status_notification_audio = new Audio('static/Audio/app/new_status.mp3')
 
 // Callback function to execute when mutations are observed
 const chat_mutation_callback = function(mutationsList, observer) {
@@ -655,7 +656,7 @@ status_websocket.addEventListener('message', async (event) => {
                 tools.modifyNotification('Server', `${status_sender_data[0].name} uploaded a status!!!`)
                 const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
                 toastBootstrap.show()
-                notification_audio.play()
+                status_notification_audio.play()
 
             }
         }
