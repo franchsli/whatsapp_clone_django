@@ -3,7 +3,6 @@
 
 ## DO RIGHT NOW
 
-- Rename the 'notification_audio' to 'message_received_audio' variable in all occurences.
 - Check why audios and other things don't work if the user don't interact with the page first.
 - Check why the chat list gets updated after using append_messages:
   **BUG TRIGGER:** Line 527 at websocket.js. The chat list is updated no matter what,

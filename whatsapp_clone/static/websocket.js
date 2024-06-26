@@ -16,7 +16,8 @@ const status_modal = document.getElementById('CreateStatusModal')
 const status_submit_button = document.getElementById('status-submit')
 const stauts_image_preview = document.getElementById('status-imagePreview')
 const status_image_input = document.getElementById('id_image')
-const notification_audio = new Audio('static/Audio/app/message_received.mp3')
+const notification_audio = new Audio('notification.mp3')
+const message_received_audio = new Audio('static/Audio/app/message_received.mp3')
 const message_sent_audio = new Audio('static/Audio/app/message_sent.mp3')
 const error_audio = new Audio('static/Audio/app/error_sound.mp3')
 const status_notification_audio = new Audio('static/Audio/app/new_status.mp3')
@@ -521,7 +522,7 @@ chat_websocket.addEventListener('message',async (event) => {
             tools.modifyNotification(sender_username, text)
             const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
             toastBootstrap.show()
-            notification_audio.play()
+            message_received_audio.play()
 
         }
         // if the chats UI is displayed, reload it
