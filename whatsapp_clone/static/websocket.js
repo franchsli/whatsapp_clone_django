@@ -16,7 +16,7 @@ const status_modal = document.getElementById('CreateStatusModal')
 const status_submit_button = document.getElementById('status-submit')
 const stauts_image_preview = document.getElementById('status-imagePreview')
 const status_image_input = document.getElementById('id_image')
-const notification_audio = new Audio('notification.mp3')
+const notification_audio = new Audio('static/Audio/app/notification.mp3')
 const message_received_audio = new Audio('static/Audio/app/message_received.mp3')
 const message_sent_audio = new Audio('static/Audio/app/message_sent.mp3')
 const error_audio = new Audio('static/Audio/app/error_sound.mp3')
@@ -44,10 +44,8 @@ const chat_mutation_callback = function(mutationsList, observer) {
                     
                     delete_message_option_buttons.forEach( button => {
                         button.onclick = function() {
-                            console.log('SCROLL!!')
                             // delete the message
                             setTimeout(tools.scroll_to_bottom, 1000)
-                            console.log('SCROLLED!!')
                         }})
                     
                     
@@ -86,7 +84,6 @@ const general_mutations_callback = function(mutationsList, observer) {
         // only trigger all the tooltips if the last mutation
         // has been made
         if (index + 1 === mutationsList.length){
-            console.log('LAST MUTATION OBSERVED IN CHATS AND MORE, TRIGGERING TOOLTIPS...')
             const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
             const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
         }
@@ -131,13 +128,11 @@ window.summon_chat = function(chat){
  */
 function create_instance(form, instance_type){
     const form_elements = form.elements
-    console.log(form_elements)
     if (instance_type === 'create_chat'){
         for (let index = 0; index < form_elements.length; index++) {
             let element = form_elements[index];
     
             if (element.checked){
-                console.log(`This element: ${element} is checked with id: ${element.id} and name ${element.dataset.contactName}`)
                 chat_websocket.send(JSON.stringify({
                     'type': instance_type,
                     'contact_name': element.dataset.contactName,
@@ -227,7 +222,6 @@ chat_websocket.addEventListener('open', () => {
             return true
         }
         else {
-            console.log('FALSE')
             return false
         }
     }
@@ -240,7 +234,6 @@ chat_websocket.addEventListener('open', () => {
     chat_form.onsubmit = async (event) => {
         event.preventDefault()
 
-        console.log('HANDLED')
         if (!tools.checked(chat_form)){
             error_audio.play()
             const validation_message = document.getElementById('chat-validation-message')
@@ -355,7 +348,6 @@ chat_websocket.addEventListener('open', () => {
         const validation_message = document.getElementById('status-validation-message')
         const image_container = document.getElementById('status-imagePreview')
         const image = image_container.firstElementChild
-        console.log('STATUS INPUTS',inputs)
         inputs[2].value = ''
         inputs[3].value = ''
         if (image){
@@ -441,15 +433,12 @@ chat_websocket.addEventListener('open', () => {
         else if(event === 'htmx:beforeRequest' && data.pathInfo.requestPath.includes('previous_messages')){
             const messages = document.getElementById('chat-messages')
             window.previous_scrollable_view = messages.scrollHeight - messages.clientHeight
-            console.log('height before', previous_scrollable_view)
         }
         // scroll to the previous scroll height before loading older messages
         else if(event === 'htmx:afterSettle' && data.pathInfo.requestPath.includes('previous_messages')){
             const messages = document.getElementById('chat-messages')
             const actual_scrollable_view = messages.scrollHeight - messages.clientHeight
-            console.log('height after', actual_scrollable_view)
             messages.scroll(0, actual_scrollable_view - previous_scrollable_view)
-            console.log('SCROLLED AFTER OLDER MESSAGES THE DISTANCE OF', actual_scrollable_view - previous_scrollable_view)
         }
 
 
@@ -460,7 +449,6 @@ chat_websocket.addEventListener('open', () => {
 })
 
 chat_websocket.addEventListener('message',async (event) => {
-    console.log('message from server', event.data , 'type:', event.type)
     let message
     let sender_id
     let message_data
@@ -468,17 +456,12 @@ chat_websocket.addEventListener('message',async (event) => {
     let image
     let sender_username
     let sender_is_archived
-    console.log(event.data.includes('chat_message'))
-    console.log(event.data.includes('chat_notification'))
-    console.log(event.data.includes('message_deletion'))
-    console.log(event.data.includes('message_edition'))
     if (event.data.includes('chat_message')){
         message = event.data.replace('chat_message', '')
         message_data = message.split('-')
         sender_id = message_data[0]
         text = message_data[1]
         image = message_data[2]
-        console.log(`IMAGE:${image}`)
         // if the message was sent by the auth user, play a sound and update the chat list
         // only append the message's HTML otherwise
         if (user_id === sender_id){
@@ -491,7 +474,6 @@ chat_websocket.addEventListener('message',async (event) => {
             console.log('REQUESTING TO THE SERVER TO APPEND A MESSAGE...')
             htmx.ajax('GET', `/append_message/${localStorage.getItem('chat_id')}`, {target:'#chat-messages', swap:'beforeend'}).then(() => {
                 //tools.update_chat_list()
-                console.log('UPDATED CHAT LIST AFTER APPENDING MESSAGE')
             })
         }
     }
@@ -504,18 +486,12 @@ chat_websocket.addEventListener('message',async (event) => {
         sender_username = message[2]
         sender_is_archived = message[3] === 'True' ? true : false
 
-        console.warn(message)
-        console.log(message)
-
         const displayed_chat_contact_info = document.getElementById('contact-name')
         let noti_from_opened_chat = false
         // if a chat is opened
         if (displayed_chat_contact_info){
-            console.log('SOME CHAT IS DISPLAYED, CHECKING IF ITS THE SAME FROM THE NOTIFICATION')
-            console.log(noti_from_opened_chat)
             // Tells whether or not the notification is from the currently opened chat
             noti_from_opened_chat = displayed_chat_contact_info.dataset.userObjectId === sender_id
-            console.log('VARIABLE CHANGED TO', noti_from_opened_chat)
         }
         if(!sender_is_archived && !noti_from_opened_chat){
             const toastNotification = document.getElementById('liveToast')
@@ -541,11 +517,9 @@ chat_websocket.addEventListener('message',async (event) => {
         */
         tools.update_chat_list()
         if (document.getElementById('contact-name') !== null){
-            console.log('CHAT IS DISPLAYED.. TRYING TO RELOAD...')
             if (document.getElementById('contact-name').innerText === sender_username) {
     
                 htmx.ajax('GET', `/display_chat/${localStorage.getItem('chat_id')}`, '#chat-display').then(() => {
-                    console.log('MESSAGES RELOADED')
                     tools.scroll_to_bottom()
                 })
                 
@@ -567,11 +541,9 @@ chat_websocket.addEventListener('message',async (event) => {
         */
         tools.update_chat_list()
         if (document.getElementById('contact-name') !== null){
-            console.log('CHAT IS DISPLAYED.. TRYING TO RELOAD...')
             if (document.getElementById('contact-name').innerText === sender_username) {
     
                 htmx.ajax('GET', `/display_chat/${localStorage.getItem('chat_id')}`, '#chat-display').then(() => {
-                    console.log('MESSAGES RELOADED')
                     tools.scroll_to_bottom()
                 })
                 
@@ -602,9 +574,6 @@ status_websocket.addEventListener('open', () => {
             'user_id': button.dataset.creator,
             'status_id': button.dataset.status
         }))
-        console.log('FRONT-END SENT:')
-        console.log(`user:${button.dataset.creator}\nstatus:${button.dataset.status}`)
-        console.log('NEXT STATUS')
         if (carousel_instance !== null){
             carousel_instance.next()
         }
@@ -616,12 +585,10 @@ status_websocket.addEventListener('open', () => {
         interval: 5000,
         touch: false
         })
-        console.log('INITIALIZED CAROUSEL')
     }
 
     window.show_modal = function(modal){
         modal.setAttribute('status', 'showing')
-        console.log('CHANGED TO SHOWING')
     }
     window.hide_modal = function(modal){
         modal.setAttribute('status', 'hidden')
@@ -632,19 +599,14 @@ status_websocket.addEventListener('open', () => {
                 status_app.pending_updates = false
             })
         }
-        console.log('CHANGED TO HIDDEN')
     }
 
 
 })
 
 status_websocket.addEventListener('message', async (event) => {
-    console.log('STATUS MESSAGE')
-    console.log(event.data , 'type:', event.type)
     let status_event_data = event.data.replace('status_notification-','')
     status_event_data = status_event_data.split('-')
-    console.log('SPLITTED')
-    console.log(status_event_data)
     if (status_event_data.includes('CREATE')){
         // if the user_id of the user who triggered the message is not the same
         // as the auth user, think displaying a notification.
@@ -687,17 +649,14 @@ status_websocket.addEventListener('message', async (event) => {
     // to be able to see the brand new contact status....
     const status_modals = document.querySelectorAll('.status-modal')
     const status_modals_showing = tools.at_least_one_attr(status_modals, 'status', 'showing')
-    console.log(status_modals_showing)
     if (document.getElementById('contact-statuses-list') !== null){
         status_app = {
             pending_updates : true
         }
-        console.log('RELOADING STATUS VIEW')
         if (!status_modals_showing){
             htmx.ajax('GET', '/statuses', '#chats-and-more')
             .then( () => {
                 status_app.pending_updates = false
-                console.log('RELOADED STATUS VIEW')
             })
         }
             

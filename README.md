@@ -3,9 +3,8 @@
 
 ## DO RIGHT NOW
 
-- Check why audios and other things don't work if the user don't interact with the page first.
 - Check why the chat list gets updated after using append_messages:
-  **BUG TRIGGER:** Line 527 at websocket.js. The chat list is updated no matter what,
+  **BUG TRIGGER:** Line 529 at websocket.js. The chat list is updated no matter what,
   this needs to be regulated, test if sender gets "notified" about messages too ()
 - Fix bugs in reworked chat_display view:
   - Check the cases were messages are not read or not displayed (hint: has to do with views.py line 167).
@@ -14,11 +13,7 @@
 - ***OPTIMIZE***:
   - Rework the way to update the messages list *(receiver)*:
     - Only call display_chat when clicking in a chat,
-    this is to avoid loading unnnecesary HTML contents and to avoid things like
-    if a user needs to search a very old message but the contact messages them the entire chat list will be
-    updated again and the user will do request to the server again,
-    in order to reduce the size of the request, only the new messages will be returned and appended to the messages
-    list (if the chat is displayed of course)
+    this is to avoid loading unnnecesary HTML contents.
       - If the sender deleted a message get (via websocket)
       the id of the message and search for it in the displayed messages list (if it's displayed)
       if the message is found, remove it using element.remove()
@@ -30,9 +25,6 @@
 
 ## ANOTHER THINGS TO DO
 
-- Add user settings to personalize things like notification appareance
-  or even UI theming (the dark and light theme will remain the same,
-  but more themes will be added  [don't know when, don't know how])
 - Review all the code, optimize it and delete spaguetti code.
 - Re think if consumers should create contacts or create another consumer for that (i don't think so).....
 - Rework messages list:
@@ -54,12 +46,14 @@
 - Implement something to show a close look when a image in a chat is clicked (like Whatsapp)
 - Add something to delete statuses automatically every 24 hours (cronjobs maybe).
 - Rework statuses UI.
-
 - Add status complex status creation (like Whatsapp).
   - Users could select the color of the background for
     statuses.
 - Redesign the login and register views (CSS).
 - Add chat wallpapers user CSS url for images and a JS color selector for colors.
+- Add user settings to personalize things like notification appareance
+  or even UI theming (the dark and light theme will remain the same,
+  but more themes will be added  [don't know when, don't know how])
 - Make the silence contact logic (booleand field [think it bro])
 - Check which apis are still necesary.
 
