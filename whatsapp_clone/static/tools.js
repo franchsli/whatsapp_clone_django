@@ -34,7 +34,6 @@ function scroll_to_bottom(){
     const messages = document.getElementById('chat-messages')
     if (messages){
         messages.scroll(0, messages.scrollHeight - messages.clientHeight)
-        console.log('SCROLLED')
     }
 }
 
@@ -223,9 +222,6 @@ function not_empty(form){
 function display_button_inner_text(button, input){
     const previous_value = input.value
     input.value = `${previous_value}${button.innerText}`
-    console.log('RAN')
-    console.log(previous_value)
-    console.log(input.value)
 }
 
 /**
@@ -257,7 +253,6 @@ function load_emojis(emoji_list_name, parent_element){
             }
             parent_element.appendChild(new_button)
             //const pattern = /^[A-Za-z0-9]+$/;
-            //console.log(pattern.test(new_button.innerHTML))
     }
     })
     .catch((error) => {console.log(error.message)})
@@ -403,7 +398,6 @@ function at_least_one_attr(html_elements, attribute, value){
         const element = html_elements[index];
         if (element.getAttribute(attribute) === value){
             found = true
-            console.log(element)
             break
         }
     }
@@ -419,11 +413,8 @@ function at_least_one_attr(html_elements, attribute, value){
  * @param {String} class_b The class name of the element B.
  */
 function exchange_elements_class(element_a, element_b, class_a, class_b){
-    console.log(element_a)
-    console.log(element_b)
     element_a.classList.replace(class_a, class_b)
     element_b.classList.replace(class_b, class_a)
-    console.log('CLASSES HAVE BEEN SWITCH')
 
 }
 
@@ -433,7 +424,6 @@ function exchange_elements_class(element_a, element_b, class_a, class_b){
  * @param {String} display_type The desired display type for the element.
  */
 function switch_element_visibility(element, display_type='block'){
-    console.log(element.style.display)
     if(element.style.display !== 'none'){
         element.style.display = 'none'
     }
@@ -449,11 +439,8 @@ function switch_element_visibility(element, display_type='block'){
  */
 function load_more_messages(message_list){
     if (message_list.scrollTop === 0){
-        console.log('THE USER IS AT THE TOP.')
         const oldest_message = document.querySelector('.message')
         localStorage.setItem('oldest_message_date', oldest_message.dataset.date)
-        console.log('THE OLDEST MESSAGE DISLPAYED DATE IS', oldest_message.dataset.date)
-        console.log('LOADING PREVIOUS MESSAGES')
         load_older_messages()
 
     }

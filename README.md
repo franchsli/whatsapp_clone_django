@@ -73,7 +73,6 @@ Also don't forget to change the channel layer to redis.
 - Make it responsive (or maybe not).
 - Check and compare all the whatsapp web features with this project features.
 - Implement all of the features at [dj-chat](https://github.com/adilmohak/dj-chat?tab=readme-ov-file#current-features)
-- Delete all console.logs
 
 ## BUGS TO FIX
 

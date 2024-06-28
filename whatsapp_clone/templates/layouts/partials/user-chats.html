@@ -27,7 +27,6 @@
             mutations.forEach(function (mutation) {
               if (mutation.type === "childList") {
                 // Form elements have changed
-                console.log('APPLIED')
                 switch_checkboxes(myForm)
               }
             });
