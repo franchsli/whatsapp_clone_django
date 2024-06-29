@@ -476,7 +476,9 @@ chat_websocket.addEventListener('message',async (event) => {
         }
         else {
             console.log('REQUESTING TO THE SERVER TO APPEND A MESSAGE...')
-            htmx.ajax('GET', `/append_message/${localStorage.getItem('chat_id')}`, {target:'#chat-messages', swap:'beforeend'})
+            // timeout to make sure the new message is already stored in the database before requesting it
+            setTimeout(htmx.ajax, 500, 'GET', `/append_message/${localStorage.getItem('chat_id')}`, {target:'#chat-messages', swap:'beforeend'})
+            //htmx.ajax('GET', `/append_message/${localStorage.getItem('chat_id')}`, {target:'#chat-messages', swap:'beforeend'})
         }
     }
 

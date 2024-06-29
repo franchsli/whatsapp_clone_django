@@ -3,9 +3,8 @@
 
 ## DO RIGHT NOW
 
-- Check why the chat list gets updated after using append_messages:
-  **BUG TRIGGER:** Line 505 at websocket.js. The chat list is updated no matter what,
-  this needs to be regulated, test if sender gets "notified" about messages too ()
+- Check why sometimes the message still unread even after appending it.
+  **BUG TRIGGER:** I think that sometimes a conflict with the consumer occurs, idk. (check it)
 - Fix bugs in reworked chat_display view:
   - Check the cases were messages are not read or not displayed (hint: has to do with views.py line 167).
   - This happens when messages are not displayed/appended in the view (yes, another bug from the new logic).
