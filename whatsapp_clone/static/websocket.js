@@ -230,6 +230,10 @@ chat_websocket.addEventListener('open', () => {
         tools.remove_duplicates(class_name)
     }
 
+    window.change_element_color = function(desired_color, target_element_id){
+        tools.change_element_color(desired_color, target_element_id)
+    }
+
 
     chat_form.onsubmit = async (event) => {
         event.preventDefault()
@@ -473,7 +477,7 @@ chat_websocket.addEventListener('message',async (event) => {
         else {
             console.log('REQUESTING TO THE SERVER TO APPEND A MESSAGE...')
             htmx.ajax('GET', `/append_message/${localStorage.getItem('chat_id')}`, {target:'#chat-messages', swap:'beforeend'}).then(() => {
-                //tools.update_chat_list()
+                tools.update_chat_list()
             })
         }
     }
@@ -502,7 +506,7 @@ chat_websocket.addEventListener('message',async (event) => {
 
         }
         // if the chats UI is displayed, reload it
-        tools.update_chat_list()
+        //tools.update_chat_list()
     }
 
     else if (event.data.includes('message_deletion')){

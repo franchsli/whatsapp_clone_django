@@ -464,6 +464,17 @@ function remove_duplicates(class_name){
     
 }
 
+/**
+ * Changes the color of the found element with the given ID with the desired one.
+ * @param {String} desired_color The new color for the target element.
+ * @param {String} target_element_id The ID of the target element.
+ */
+function change_element_color(desired_color, target_element_id){
+    const target_element_HTML = document.getElementById(target_element_id)
+    target_element_HTML.style.color = desired_color
+  
+}
+
 export {get, post, modifyNotification,
      scroll_to_bottom, create_message_html, 
      toggleReadMore, showDropdown, run_element_animation,
@@ -471,5 +482,5 @@ export {get, post, modifyNotification,
     load_emojis, switch_emojis, switch_checkboxes, 
     toggle_element_display, previewImage, update_chat_list, at_least_one_attr,
     exchange_elements_class, switch_element_visibility, load_more_messages, 
-    load_older_messages, remove_duplicates
+    load_older_messages, remove_duplicates, change_element_color
 }

@@ -4,7 +4,7 @@
 ## DO RIGHT NOW
 
 - Check why the chat list gets updated after using append_messages:
-  **BUG TRIGGER:** Line 529 at websocket.js. The chat list is updated no matter what,
+  **BUG TRIGGER:** Line 505 at websocket.js. The chat list is updated no matter what,
   this needs to be regulated, test if sender gets "notified" about messages too ()
 - Fix bugs in reworked chat_display view:
   - Check the cases were messages are not read or not displayed (hint: has to do with views.py line 167).
@@ -50,7 +50,10 @@
   - Users could select the color of the background for
     statuses.
 - Redesign the login and register views (CSS).
-- Add chat wallpapers user CSS url for images and a JS color selector for colors.
+- Add chat wallpapers user CSS url for images and a JS color selector for colors. [USE THIS](https://getbootstrap.com/docs/5.3/forms/form-control#color)
+  - EVERY TIME YOU IMPLEMENT A COLOR PICKER YOU SHOULD ADD A ONINPUT THEN A FUNCTION
+  THAT CHANGES THE COLOR OF THE FOUND ELEMENT WITH THE GIVEN ID WITH THE INPUT COLOR, LIKE THIS:
+    onclick="change_color(this, target_element)"
 - Add user settings to personalize things like notification appareance
   or even UI theming (the dark and light theme will remain the same,
   but more themes will be added  [don't know when, don't know how])
