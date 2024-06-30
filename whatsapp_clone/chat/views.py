@@ -341,7 +341,6 @@ def append_message(request, chat_id):
         chat_message = chat.message_set.order_by("-date").first()
         chat_message.read = True
         chat_message.save()
-        print(f'IS CHAT MESSAGE READ?{chat_message.read}')
         # storing it into a iterable to avoid errors
         # in django template for-loop
         messages_iterable = [chat_message]

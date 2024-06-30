@@ -477,8 +477,9 @@ chat_websocket.addEventListener('message',async (event) => {
         else {
             console.log('REQUESTING TO THE SERVER TO APPEND A MESSAGE...')
             // timeout to make sure the new message is already stored in the database before requesting it
-            setTimeout(htmx.ajax, 500, 'GET', `/append_message/${localStorage.getItem('chat_id')}`, {target:'#chat-messages', swap:'beforeend'})
-            //htmx.ajax('GET', `/append_message/${localStorage.getItem('chat_id')}`, {target:'#chat-messages', swap:'beforeend'})
+            htmx.ajax('GET', `/append_message/${localStorage.getItem('chat_id')}`, {target:'#chat-messages', swap:'beforeend'}).then( () => {
+                tools.update_chat_list()
+            })   
         }
     }
 
@@ -503,10 +504,9 @@ chat_websocket.addEventListener('message',async (event) => {
             const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
             toastBootstrap.show()
             message_received_audio.play()
+            tools.update_chat_list()
 
         }
-        // if the chats UI is displayed, reload it
-        tools.update_chat_list()
     }
 
     else if (event.data.includes('message_deletion')){
