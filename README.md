@@ -3,10 +3,6 @@
 
 ## DO RIGHT NOW
 
-- Fix bugs in reworked chat_display view:
-  - Check the cases were messages are not read or not displayed (hint: has to do with views.py line 167).
-  - This happens when messages are not displayed/appended in the view (yes, another bug from the new logic).
-
 - ***OPTIMIZE***:
   - Rework the way to update the messages list *(receiver)*:
     - Only call display_chat when clicking in a chat,
@@ -76,8 +72,6 @@ Also don't forget to change the channel layer to redis.
 
 ## BUGS TO FIX
 
-- Sometimes the messages won't be appended, the number of succesful appended
-messages varies randomly and don't know why.
 - When a user archives a contact, all group-like chats in which the contact is in will be archived as well.
 - When a user deletes a chat, the chat will be deleted from all the users in the chat
   - To fix this, you need to implement something similar to archive view logic.
