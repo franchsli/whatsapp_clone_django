@@ -3,29 +3,24 @@
 
 ## DO RIGHT NOW
 
-- ***OPTIMIZE***:
-  - Rework the way to update the messages list *(receiver)*:
-    - Only call display_chat when clicking in a chat,
-    this is to avoid loading unnnecesary HTML contents.
-      - If the sender deleted a message get (via websocket)
-      the id of the message and search for it in the displayed messages list (if it's displayed)
-      if the message is found, remove it using element.remove()
-      - If the sender edited a message get (via websocket)
-      the id of the message and search for it in the displayed messages list (if it's displayed)
-      if the message is found, replace all its text and add the 'Edited' thing.
-      *THIS IS FOR REDUCING REQUESTS IN HALF (or so)*
-      (KEEP IN MIND THAT THIS WILL INCREASE THE CODE COMPLEXITY)
-
-## ANOTHER THINGS TO DO
-
-- Review all the code, optimize it and delete spaguetti code.
-- Re think if consumers should create contacts or create another consumer for that (i don't think so).....
 - Rework messages list:
   - Display 'Yesterday' if the message has more than a day of difference but less than two.
 - **FIX** Some messages width break the chat container after using 'show more' (I dunno why).
 - Make a custom theme (really dark) and use it as a dark mode.
 - Add more animations.
 - Add more sounds (if possible).
+- Implement something to show a close look when a image in a chat is clicked (like Whatsapp)
+
+## ANOTHER THINGS TO DO
+
+- Redesign the login and register views (CSS).
+- Add chat wallpapers user CSS url for images and a JS color selector for colors. [USE THIS](https://getbootstrap.com/docs/5.3/forms/form-control#color)
+  - EVERY TIME YOU IMPLEMENT A COLOR PICKER YOU SHOULD ADD A ONINPUT THEN A FUNCTION
+  THAT CHANGES THE COLOR OF THE FOUND ELEMENT WITH THE GIVEN ID WITH THE INPUT COLOR, LIKE THIS:
+    onclick="change_color(this, target_element)"
+- Add user settings to personalize things like notification appareance
+  or even UI theming (the dark and light theme will remain the same,
+  but more themes will be added  [don't know when, don't know how])
 - Implement something to archive group-like Chats.
 - Add HTMX functionality to the 3 pills for filtering the chat list:
   - Think about adding archived_groups view.
@@ -35,21 +30,13 @@
   - Rework the Chat form display, replace everything in the user UI (chats or contacts list)
    excluding the navbar where things like the status view, setting and such are located.
   - Add a search bar for chats searching.
-- Optimize the images size (whithout decreasing quality if possible).
-- Implement something to show a close look when a image in a chat is clicked (like Whatsapp)
+- Re think if consumers should create contacts or create another consumer for that (i don't think so).....
 - Add something to delete statuses automatically every 24 hours (cronjobs maybe).
 - Rework statuses UI.
 - Add status complex status creation (like Whatsapp).
   - Users could select the color of the background for
     statuses.
-- Redesign the login and register views (CSS).
-- Add chat wallpapers user CSS url for images and a JS color selector for colors. [USE THIS](https://getbootstrap.com/docs/5.3/forms/form-control#color)
-  - EVERY TIME YOU IMPLEMENT A COLOR PICKER YOU SHOULD ADD A ONINPUT THEN A FUNCTION
-  THAT CHANGES THE COLOR OF THE FOUND ELEMENT WITH THE GIVEN ID WITH THE INPUT COLOR, LIKE THIS:
-    onclick="change_color(this, target_element)"
-- Add user settings to personalize things like notification appareance
-  or even UI theming (the dark and light theme will remain the same,
-  but more themes will be added  [don't know when, don't know how])
+- Review all the code, optimize it and delete spaguetti code.
 - Make the silence contact logic (booleand field [think it bro])
 - Check which apis are still necesary.
 
