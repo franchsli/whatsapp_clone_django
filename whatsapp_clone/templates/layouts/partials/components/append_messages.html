@@ -15,7 +15,7 @@
                 {# Between 1 day and 1 week ago, display the day name #}
                 <span onclick="console.log('{{time_difference}}')" class="p-2">{{ message.date|date:"l" }}</span>
               {% endif %}
-            {% elif 'day' not in time_difference and 'week' not in time_difference and 'month' not in time_difference and 'year' not in time_difference %}
+            {% elif 'day' not in time_difference and 'w' not in time_difference and 'm' not in time_difference and 'y' not in time_difference %}
               <span onclick="console.log('{{time_difference}}')" class="p-2">Today</span>
             {% else %}
               {# More than a week ago, display the whole date #}

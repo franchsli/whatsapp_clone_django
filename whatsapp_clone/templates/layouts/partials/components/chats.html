@@ -20,7 +20,7 @@
                 {% if 'day' in time_difference and 'week' not in time_difference %}
                   {# Between 1 day and 1 week ago, display the day name #}
                   <span class="last-chat-message-date">{{ last_message_date|date:"l" }}</span>
-                {% elif 'day' in time_difference %}
+                {% elif 'week' in time_difference %}
                   {# More than a week ago, display the whole date #}
                   <span class="last-chat-message-date">{{ last_message_date|date:"F j, Y" }}</span>
                 {% else %}

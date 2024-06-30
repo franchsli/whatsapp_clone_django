@@ -91,6 +91,18 @@ def latest_data(queryset: QuerySet, desired_field_name: str):
     latest_object = queryset.latest(desired_field_name)
     return getattr(latest_object, desired_field_name)
 
+@register.filter
+def simplified_time_difference(time_difference: str):
+    if 'day' in time_difference and len(time_difference) == 6:
+        if time_difference == '1 day':
+            return 'Just yesterday'
+        else:
+            return 'Less than a week ago.'
+    elif 'hour' in time_difference and len(time_difference) == 7:
+        return 'Less than a day ago.'
+    else:
+        return 'More than a week ago.'
+
 
 @register.simple_tag
 def update_messages_dates(date: str):
