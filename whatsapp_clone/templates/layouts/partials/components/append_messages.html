@@ -9,11 +9,17 @@
       
         {% with time_difference=message.date|timesince %}
             {% if 'day' in time_difference and 'week' not in time_difference %}
-              {# Between 1 day and 1 week ago, display the day name #}
-              <span class="p-2">{{ message.date|date:"l" }}</span>
+              {% if time_difference == "1 day" %}
+                <span onclick="console.log('{{time_difference}}')" class="p-2">Yesterday</span>
+              {% else %}
+                {# Between 1 day and 1 week ago, display the day name #}
+                <span onclick="console.log('{{time_difference}}')" class="p-2">{{ message.date|date:"l" }}</span>
+              {% endif %}
+            {% elif 'day' not in time_difference and 'week' not in time_difference and 'month' not in time_difference and 'year' not in time_difference %}
+              <span onclick="console.log('{{time_difference}}')" class="p-2">Today</span>
             {% else %}
               {# More than a week ago, display the whole date #}
-              <span class="p-2">{{ message_date }}</span>
+              <span onclick="console.log('{{time_difference}}')" class="p-2">{{ message_date }}</span>
             {% endif %}
         {% endwith %}
       
