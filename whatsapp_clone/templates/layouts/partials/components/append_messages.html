@@ -10,15 +10,15 @@
         {% with time_difference=message.date|timesince %}
           {% with simplified_difference=time_difference|simplified_time_difference %}
               {% if simplified_difference == "Less than a day ago." %}
-                <span onclick="console.log('{{time_difference}}', '{{simplified_difference}}')" class="p-2">Today</span>
+                <span class="p-2">Today</span>
               {% elif simplified_difference == "Just yesterday." %}
-                <span onclick="console.log('{{time_difference}}', '{{simplified_difference}}')" class="p-2">Yesterday</span>
+                <span class="p-2">Yesterday</span>
               {% elif simplified_difference == "Less than a week ago." %}
                 {# Between 1 day and 1 week ago, display the day name #}
-                <span onclick="console.log('{{time_difference}}', '{{simplified_difference}}')" class="p-2">{{ message.date|date:"l" }}</span>
+                <span class="p-2">{{ message.date|date:"l" }}</span>
               {% else %}
                 {# More than a week ago, display the whole date #}
-                <span onclick="console.log('{{time_difference}}', '{{simplified_difference}}')" class="p-2">{{ message_date }}</span>
+                <span class="p-2">{{ message_date }}</span>
               {% endif %}
           {% endwith %}
         {% endwith %}
