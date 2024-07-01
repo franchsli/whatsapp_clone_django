@@ -111,19 +111,23 @@ function switch_collapse(){
  * @param {String} text_id The id of the HTML element that contains the text.
  */
 function toggleReadMore(text_id) {
-    const content = document.getElementById(`text-${text_id}`)
-    if (content.clientHeight === 200 ){
+    const content_html = document.getElementById(`text-${text_id}`)
+    const content = content_html.innerText
+    if (content.length > 200){
         const toggle_button = document.createElement('button')
         toggle_button.innerText = 'Show more'
         toggle_button.classList.add('btn' ,'btn-link')
         toggle_button.style.justifySelf = "end"
     
         toggle_button.onclick = function(){
-            content.style.maxHeight = content.style.maxHeight === '200px' ? 'none' : '200px'
-            content.style.overflow = content.style.overflow === 'hidden' ? 'visible' : 'hidden'
-            toggle_button.textContent = content.style.maxHeight === '200px' ? 'Show more' : 'Show less'
+            content_html.style.maxHeight = content_html.style.maxHeight === '200px' ? 'none' : '200px'
+            content_html.style.overflow = content_html.style.overflow === 'hidden' ? 'visible' : 'hidden'
+            toggle_button.textContent = content_html.style.maxHeight === '200px' ? 'Show more' : 'Show less'
         }
-        content.insertAdjacentElement('afterend', toggle_button)
+        content_html.insertAdjacentElement('afterend', toggle_button)
+    }
+    content_html.onclick = () => {
+        console.log(content)
     }
 
 }
