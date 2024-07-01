@@ -103,7 +103,7 @@ def simplified_time_difference(time_difference: str) -> str:
         str: A summarized version of the time difference, 
         from 'Less than a day ago.' to 'More than a week ago.'.
     """
-    if 'day' not in time_difference:
+    if 'day' not in time_difference[2:5]:
         if 'week' in time_difference:
             return 'More than a week ago.'
         elif 'hour' in time_difference or 'minute' in time_difference:
