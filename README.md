@@ -3,7 +3,6 @@
 
 ## DO RIGHT NOW
 
-- Document simplified_time_difference function at filters.py.
 - **FIX** Some messages width break the chat container after using 'show more' (I dunno why).
 - Make a custom theme (really dark) and use it as a dark mode.
 - Add more animations.
