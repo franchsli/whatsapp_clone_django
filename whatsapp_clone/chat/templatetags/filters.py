@@ -93,16 +93,39 @@ def latest_data(queryset: QuerySet, desired_field_name: str):
 
 @register.filter
 def simplified_time_difference(time_difference: str):
-    if 'day' in time_difference and len(time_difference) == 6:
-        if time_difference == '1 day':
-            return 'Just yesterday'
+    if 'day' not in time_difference:
+        if 'week' in time_difference:
+            return 'More than a week ago.'
+        elif 'hour' in time_difference or 'minute' in time_difference:
+            return 'Less than a day ago.'
+    else:
+        if 'day' in time_difference and 'days' not in time_difference:
+            return 'Just yesterday.'
         else:
             return 'Less than a week ago.'
-    elif 'hour' in time_difference and len(time_difference) == 7:
+
+
+    """ 
+    if '1 day' in time_difference:
+        print('1 day' in time_difference)
+        return 'Just yesterday.'
+    elif 'day' not in time_difference and 'hour' in time_difference:
         return 'Less than a day ago.'
+    elif 'day' in time_difference and 'week' not in time_difference:
+        return 'Less than a week ago.'
     else:
         return 'More than a week ago.'
-
+        
+        if 'day' in time_difference and len(time_difference) == 6:
+            if time_difference == '1 day':
+                return 'Just yesterday.'
+            else:
+                return 'Less than a week ago.'
+        elif 'hour' in time_difference and 'day' not in time_difference:
+            return 'Less than a day ago.'
+        else:
+            return 'More than a week ago.'
+    """
 
 @register.simple_tag
 def update_messages_dates(date: str):

@@ -8,19 +8,19 @@
     style="width: fit-content; align-self: center;">
       
         {% with time_difference=message.date|timesince %}
-            {% if 'day' in time_difference and 'week' not in time_difference %}
-              {% if time_difference == "1 day" %}
-                <span onclick="console.log('{{time_difference}}')" class="p-2">Yesterday</span>
-              {% else %}
+          {% with simplified_difference=time_difference|simplified_time_difference %}
+              {% if simplified_difference == "Less than a day ago." %}
+                <span onclick="console.log('{{time_difference}}', '{{simplified_difference}}')" class="p-2">Today</span>
+              {% elif simplified_difference == "Just yesterday." %}
+                <span onclick="console.log('{{time_difference}}', '{{simplified_difference}}')" class="p-2">Yesterday</span>
+              {% elif simplified_difference == "Less than a week ago." %}
                 {# Between 1 day and 1 week ago, display the day name #}
-                <span onclick="console.log('{{time_difference}}')" class="p-2">{{ message.date|date:"l" }}</span>
+                <span onclick="console.log('{{time_difference}}', '{{simplified_difference}}')" class="p-2">{{ message.date|date:"l" }}</span>
+              {% else %}
+                {# More than a week ago, display the whole date #}
+                <span onclick="console.log('{{time_difference}}', '{{simplified_difference}}')" class="p-2">{{ message_date }}</span>
               {% endif %}
-            {% elif 'day' not in time_difference and 'w' not in time_difference and 'm' not in time_difference and 'y' not in time_difference %}
-              <span onclick="console.log('{{time_difference}}')" class="p-2">Today</span>
-            {% else %}
-              {# More than a week ago, display the whole date #}
-              <span onclick="console.log('{{time_difference}}')" class="p-2">{{ message_date }}</span>
-            {% endif %}
+          {% endwith %}
         {% endwith %}
       
     </div>
