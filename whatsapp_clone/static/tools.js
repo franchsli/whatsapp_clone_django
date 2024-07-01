@@ -113,7 +113,7 @@ function switch_collapse(){
 function toggleReadMore(text_id) {
     const content_html = document.getElementById(`text-${text_id}`)
     const content = content_html.innerText
-    if (content.length > 200){
+    if (content_html.clientHeight === 200){
         const toggle_button = document.createElement('button')
         toggle_button.innerText = 'Show more'
         toggle_button.classList.add('btn' ,'btn-link')
@@ -121,7 +121,7 @@ function toggleReadMore(text_id) {
     
         toggle_button.onclick = function(){
             content_html.style.maxHeight = content_html.style.maxHeight === '200px' ? 'none' : '200px'
-            content_html.style.overflow = content_html.style.overflow === 'hidden' ? 'visible' : 'hidden'
+            //content_html.style.overflow = content_html.style.overflow === 'hidden' ? 'visible' : 'hidden'
             toggle_button.textContent = content_html.style.maxHeight === '200px' ? 'Show more' : 'Show less'
         }
         content_html.insertAdjacentElement('afterend', toggle_button)
