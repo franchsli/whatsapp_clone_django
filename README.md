@@ -4,6 +4,7 @@
 ## DO RIGHT NOW
 
 - Make a custom theme (really dark) and use it as a dark mode.
+  - Customize normal css and custom one.
 - Add more animations.
 - Add more sounds (if possible).
 - Implement something to show a close look when a image in a chat is clicked (like Whatsapp)
