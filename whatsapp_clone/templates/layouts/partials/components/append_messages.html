@@ -4,7 +4,7 @@
 {% for message in messages %}
 <!-- ========== MESSAGE DATE  ========== -->
   {% with message_date=message.date|date:"D d M Y" %}
-    <div id="message-{{message.id}}-date" class="message-date date-{{message_date|cut:' '}} d-flex justify-content-center rounded-pill bg-body-tertiary"
+    <div id="message-{{message.id}}-date" class="message-date date-{{message_date|cut:' '}} d-flex justify-content-center rounded-pill"
     style="width: fit-content; align-self: center;">
       
         {% with time_difference=message.date|timesince %}
