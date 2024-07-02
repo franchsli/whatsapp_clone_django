@@ -54,7 +54,7 @@
           {% if not last_message_was_read and chat.message_set.all|last_message:'sender_user' != request.user.id %}
             {% with unread_messages_counter=chat.message_set.all|unread_messages_counter:request.user.id %}
               {% if unread_messages_counter > 0 %}
-                <span class="badge bg-success rounded-pill" id="chat-{{chat.id}}unread-counter">{{ chat.message_set.all|unread_messages_counter:request.user.id }}</span>
+                <span class="badge rounded-pill" id="chat-{{chat.id}}unread-counter">{{ chat.message_set.all|unread_messages_counter:request.user.id }}</span>
               {% endif %}
             {% endwith %}
           {% endif %}

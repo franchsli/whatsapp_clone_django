@@ -52,7 +52,7 @@
   </div>
   <div>
     {% comment "num of archived chats that have unread messages" %}{% endcomment %}
-    <span class="badge bg-success">1</span>
+    <span class="badge">1</span>
   </div>
 </div>
 {% comment "tabs" %}Contacts and chats{% endcomment %}
@@ -75,11 +75,11 @@
   </div>
 </div>
 
-<button id="chats-collapse-toggle" class="collapse-switch btn btn-success position-absolute bottom-0 end-0 me-5 mb-3"
+<button id="chats-collapse-toggle" class="collapse-switch btn themed-button position-absolute bottom-0 end-0 me-5 mb-3"
 data-bs-toggle="tooltip" data-bs-title="My chats" hx-get="{% url 'get_chats' %}" hx-target="#chat-list" hx-swap="outerHTML">
   <i class="bi bi-chat-right-dots-fill"></i>
 </button>
-<button class="collapse-switch btn btn-success position-absolute bottom-0 end-0 mb-3" data-bs-toggle="tooltip" data-bs-title="Contacts"
+<button class="collapse-switch btn themed-button position-absolute bottom-0 end-0 mb-3" data-bs-toggle="tooltip" data-bs-title="Contacts"
   hx-get="{% url 'get_contacts' %}" hx-target="#chat-list" hx-swap="innerHTML">
   <i class="bi bi-person-fill"></i>
 </button>

@@ -72,7 +72,7 @@ main,  #base {
 }
 
 .filter-selector-active{
-  background-color: var(--bs-success-bg-subtle);
+  background-color: var(--bs-themed-success-rgb);
 }
 .filter-selector-active:hover{
   background-color: var(--bs-success);

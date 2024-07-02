@@ -4,6 +4,8 @@
     --bs-body-bg: #{$black};
     --bs-body-bg-rgb: #{to-rgb($black)};
     --bs-tertiary-bg: var(--bs-tertiary-bg);
+    --bs-themed-success-rgb: rgb(26, 161, 121);
+    --bs-themed-success-darker-rgb: var(--bs-success-bg-subtle);
     
     span, button, a, h1, form, label {
         color: white;
@@ -15,5 +17,8 @@
     .dropdown-menu {
         background-color: var(--bs-body-color);
         color: var(--bs-body-color);
+    }
+    .badge, .themed-button {
+        background-color: var(--bs-themed-success-rgb);
     }
   }
