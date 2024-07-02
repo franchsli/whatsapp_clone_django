@@ -35,7 +35,7 @@
       <div class="d-flex justify-content-between">
         {% with last_message_was_read=chat.message_set.all|last_message:'read' %}
           {% if chat.message_set.all|last_message:'sender_user' == request.user.id %}
-            <span class="last-chat-message text-truncate text-white-50">
+            <span class="last-chat-message text-truncate text-secondary-emphasis">
               {% if last_message_was_read %}
                 <i class="bi bi-check2-all text-info"></i>
               {% else %}
@@ -44,9 +44,9 @@
               {{chat.message_set.all|last_message:'text'}}</span>
           {% else %}
             {% if last_message_was_read %}
-              <span class="last-chat-message text-truncate text-white-50">{{chat.message_set.all|last_message:'text'}}</span>
+              <span class="last-chat-message text-truncate text-secondary-emphasis">{{chat.message_set.all|last_message:'text'}}</span>
             {% else %}
-              <span class="last-chat-message text-truncate text-white">{{chat.message_set.all|last_message:'text'}}</span>
+              <span class="last-chat-message text-truncate text-light-emphasis">{{chat.message_set.all|last_message:'text'}}</span>
             {% endif %}
           {% endif %}
         
