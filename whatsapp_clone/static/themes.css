@@ -18,7 +18,13 @@
         background-color: var(--bs-body-color);
         color: var(--bs-body-color);
     }
-    .badge, .themed-button {
+    .dropdown-menu li:hover{
         background-color: var(--bs-themed-success-rgb);
+    }
+    .badge, .themed-button{
+        background-color: var(--bs-themed-success-rgb);
+    }
+    .themed-text{
+        color: var(--bs-themed-success-rgb);
     }
   }
