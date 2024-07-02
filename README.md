@@ -56,8 +56,10 @@ Also don't forget to change the channel layer to redis.
 
 ## BUGS TO FIX
 
-- **FIX** Some messages width break the chat container after using 'show more'.
+- Some messages width break the chat container after using 'show more'.
   - This happens only when the text has a long chain of chars without a single space.
+    **POSSIBLE FIX** Only if the text is long enough
+    get a list of 'words 'in the text if the word is too long use the logic mentioned above.
 - When a user archives a contact, all group-like chats in which the contact is in will be archived as well.
 - When a user deletes a chat, the chat will be deleted from all the users in the chat
   - To fix this, you need to implement something similar to archive view logic.
