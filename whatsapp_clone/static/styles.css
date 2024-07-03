@@ -46,7 +46,7 @@ main,  #base {
 }
 
 .chat:hover, .contact:hover, .chat:hover button, .contact:hover button{
-  background-color: var(--bs-tertiary-bg);
+  background-color: var(--bs-secondary-bg);
 }
 
 .action:hover{
@@ -69,7 +69,6 @@ main,  #base {
 }
 .filter-selector:hover{
   background-color: var(--bs-secondary-bg);
-  color: white;
 }
 
 .filter-selector-active{
