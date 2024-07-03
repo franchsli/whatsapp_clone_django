@@ -34,6 +34,7 @@
     statuses.
 - Review all the code, optimize it and delete spaguetti code.
 - Make the silence contact logic (booleand field [think it bro])
+- Check for duplicated CSS.
 - Check which apis are still necesary.
 
 ## Improvements
