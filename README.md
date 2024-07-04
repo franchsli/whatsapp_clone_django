@@ -3,13 +3,9 @@
 
 ## DO RIGHT NOW
 
-- **FIX RQ** Scroll to bottom doesn't even run anymore.
 - Add more animations.
 - Add more sounds (if possible).
 - Implement something to show a close look when a image in a chat is clicked (like Whatsapp)
-
-## ANOTHER THINGS TO DO
-
 - Redesign the login and register views (CSS).
 - Add chat wallpapers user CSS url for images and a JS color selector for colors. [USE THIS](https://getbootstrap.com/docs/5.3/forms/form-control#color)
   - EVERY TIME YOU IMPLEMENT A COLOR PICKER YOU SHOULD ADD A ONINPUT THEN A FUNCTION
@@ -18,6 +14,10 @@
 - Add user settings to personalize things like notification appareance
   or even UI theming (the dark and light theme will remain the same,
   but more themes will be added  [don't know when, don't know how])
+- Give actual functionality to the settings button.
+
+## ANOTHER THINGS TO DO
+
 - Implement something to archive group-like Chats.
 - Add HTMX functionality to the 3 pills for filtering the chat list:
   - Think about adding archived_groups view.
@@ -33,8 +33,8 @@
 - Add status complex status creation (like Whatsapp).
   - Users could select the color of the background for
     statuses.
-- Review all the code, optimize it and delete spaguetti code.
 - Make the silence contact logic (booleand field [think it bro])
+- Review all the code, optimize it and delete spaguetti code.
 - Check for duplicated CSS.
 - Check which apis are still necesary.
 
@@ -64,6 +64,9 @@ Also don't forget to change the channel layer to redis.
 - When a user archives a contact, all group-like chats in which the contact is in will be archived as well.
 - When a user deletes a chat, the chat will be deleted from all the users in the chat
   - To fix this, you need to implement something similar to archive view logic.
+  - Or you could add a 'list' of the users that archived the chat:
+    - Evertytime a user archive the chat his user object will be added to the 'list'.
+    - To check if a user archived it his user will be searched in the 'list'.
 - Scroll to bottom func doesn't scroll to the botom anymore when the last messages are images, test why:
   - **THIS IS WHAT HAPPENS**:
     The chat gets displayed but somehow scroll_to_bottom doesn't work as expected.
