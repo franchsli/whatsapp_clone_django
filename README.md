@@ -3,6 +3,7 @@
 
 ## DO RIGHT NOW
 
+- **FIX RQ** Scroll to bottom doesn't even run anymore.
 - Add more animations.
 - Add more sounds (if possible).
 - Implement something to show a close look when a image in a chat is clicked (like Whatsapp)

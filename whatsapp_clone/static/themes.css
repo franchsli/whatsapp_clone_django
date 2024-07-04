@@ -22,6 +22,11 @@
     .dropdown-menu li:hover{
         background-color: var(--bs-themed-success-rgb);
     }
+    .btn:hover {
+        color: white;
+        background-color: var(--bs-secondary-bg);
+        border-color: var(--bs-btn-hover-border-color);
+    }
     .filter-selector:hover{
         background-color: var(--bs-secondary-bg);
         color: white;
@@ -62,6 +67,10 @@
     .filter-selector:hover{
         background-color: var(--bs-tertiary-color);
         color: black;
+    }
+    .btn:hover {
+        color: black;
+        background-color: var(--bs-tertiary-color);
     }
     .badge, .themed-button{
         background-color: var(--bs-themed-success-rgb);
