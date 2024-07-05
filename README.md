@@ -5,8 +5,8 @@
 
 - Add more animations.
 - Add more sounds (if possible).
-- Implement something to show a close look when a image in a chat is clicked (like Whatsapp)
 - Redesign the login and register views (CSS).
+- Implement something to show a close look when a image in a chat is clicked (like Whatsapp)
 - Add chat wallpapers user CSS url for images and a JS color selector for colors. [USE THIS](https://getbootstrap.com/docs/5.3/forms/form-control#color)
   - EVERY TIME YOU IMPLEMENT A COLOR PICKER YOU SHOULD ADD A ONINPUT THEN A FUNCTION
   THAT CHANGES THE COLOR OF THE FOUND ELEMENT WITH THE GIVEN ID WITH THE INPUT COLOR, LIKE THIS:
@@ -18,15 +18,13 @@
 
 ## ANOTHER THINGS TO DO
 
+- Rework the UI (in order to look like actual Whatsapp's UI):
+  - Add a search bar for chats searching.
+- Implement something to create Group-like Chats.
+  - Look at chats.html line 63 and exception in chat_desired_data.
 - Implement something to archive group-like Chats.
 - Add HTMX functionality to the 3 pills for filtering the chat list:
   - Think about adding archived_groups view.
-- Implement something to create Group-like Chats.
-  - Look at chats.html line 63 and exception in chat_desired_data.
-- Rework the UI (in order to look like actual Whatsapp's UI):
-  - Rework the Chat form display, replace everything in the user UI (chats or contacts list)
-   excluding the navbar where things like the status view, setting and such are located.
-  - Add a search bar for chats searching.
 - Re think if consumers should create contacts or create another consumer for that (i don't think so).....
 - Add something to delete statuses automatically every 24 hours (cronjobs maybe).
 - Rework statuses UI.

@@ -22,7 +22,7 @@
     .dropdown-menu li:hover{
         background-color: var(--bs-themed-success-rgb);
     }
-    .btn:hover {
+    .btn:hover, .btn.show{
         color: white;
         background-color: var(--bs-secondary-bg);
         border-color: var(--bs-btn-hover-border-color);
@@ -68,7 +68,7 @@
         background-color: var(--bs-tertiary-color);
         color: black;
     }
-    .btn:hover {
+    .btn:hover, .btn.show {
         color: black;
         background-color: var(--bs-tertiary-color);
     }
