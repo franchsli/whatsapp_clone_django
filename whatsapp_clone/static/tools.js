@@ -238,7 +238,9 @@ function display_button_inner_text(button, input){
 function load_emojis(emoji_list_name, parent_element){
     const input = document.getElementById('new-message')
     const emoji_category_header = document.createElement('span')
-    emoji_category_header.classList.add('dropdown-item')
+    emoji_category_header.classList.add('p-3')
+    emoji_category_header.style.display = "block"
+    emoji_category_header.style.width = "100%"
     emoji_category_header.innerText = emoji_list_name.split('-').join(' ')
     parent_element.appendChild(emoji_category_header)
 

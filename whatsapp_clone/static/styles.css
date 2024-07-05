@@ -67,9 +67,6 @@ main,  #base {
 .filter-selector{
   background-color: var(--bs-dark-bg-subtle);
 }
-.filter-selector:hover{
-  background-color: var(--bs-secondary-bg);
-}
 
 .filter-selector-active{
   background-color: var(--bs-themed-success-rgb);
