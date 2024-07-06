@@ -3,6 +3,9 @@
 
 ## DO RIGHT NOW
 
+- Rework the UI (in order to look like actual Whatsapp's UI):
+  - Rework chat search bar (CSS) and add functionality to it.
+  - **IMPORTANT** Change the CSS of the font color in the search bars (you can't see it in dark mode).
 - Add more animations.
 - Add more sounds (if possible).
 - Redesign the login and register views (CSS).
@@ -18,8 +21,6 @@
 
 ## ANOTHER THINGS TO DO
 
-- Rework the UI (in order to look like actual Whatsapp's UI):
-  - Add a search bar for chats searching.
 - Implement something to create Group-like Chats.
   - Look at chats.html line 63 and exception in chat_desired_data.
 - Implement something to archive group-like Chats.

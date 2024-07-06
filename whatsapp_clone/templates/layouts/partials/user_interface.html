@@ -43,20 +43,14 @@
     </div>
   </nav>
 </nav>
-{% comment "archived chats" %}{% endcomment %}
-<div role="button" type="button" class="btn border d-flex align-items-center justify-content-between p-3"
-  hx-get="{% url 'archived_chats' %}" hx-trigger="click" hx-target="#chats-and-more">
-  <div>
-    <span><i class="bi bi-archive"></i></span>
-    <span class="ms-3">Archived</span>
-  </div>
-  <div>
-    {% comment "num of archived chats that have unread messages" %}{% endcomment %}
-    <span class="badge">1</span>
-  </div>
-</div>
 {% comment "tabs" %}Contacts and chats{% endcomment %}
 <div id="chats-and-contacts" hx-get="{% url 'get_chats' %}" hx-target="this" hx-trigger="load" hx-swap="beforeend">
+  {% comment "chat search" %}Contacts and chats{% endcomment %}
+  <form class="d-flex me-3" role="search">
+    <input class="form-control me-2" type="search" placeholder="Search message..." aria-label="Search" 
+    _="on keyup show <li/> in #chat-messages when it's innerHTML contains my value">
+    <button class="btn btn-outline-success" type="submit"><i class="bi bi-search"></i></button>
+  </form>
   <div class="my-3 ms-3" id="chats-filters">
     <button onclick="exchange_elements_class(document.getElementsByClassName('filter-selector-active').item(0),
      this, 'filter-selector-active', 'filter-selector');" 
@@ -72,6 +66,18 @@
      this, 'filter-selector-active', 'filter-selector');" 
      class="filter-selector btn rounded-pill fs-6"
      hx-get="{% url 'groups' %}" hx-target="#chat-list" hx-swap="outerHTML">Groups</button>
+  </div>
+  {% comment "archived chats" %}{% endcomment %}
+  <div role="button" type="button" class="btn border d-flex align-items-center justify-content-between p-3"
+    hx-get="{% url 'archived_chats' %}" hx-trigger="click" hx-target="#chats-and-more">
+    <div>
+      <span><i class="bi bi-archive"></i></span>
+      <span class="ms-3">Archived</span>
+    </div>
+    <div>
+      {% comment "num of archived chats that have unread messages" %}{% endcomment %}
+      <span class="badge">1</span>
+    </div>
   </div>
 </div>
 
