@@ -40,6 +40,9 @@
     .themed-text{
         color: var(--bs-themed-success-rgb);
     }
+    .form-control{
+        color: white;
+    }
 }
 
 [data-bs-theme="light"] {

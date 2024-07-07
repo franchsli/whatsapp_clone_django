@@ -47,8 +47,8 @@
 <div id="chats-and-contacts" hx-get="{% url 'get_chats' %}" hx-target="this" hx-trigger="load" hx-swap="beforeend">
   {% comment "chat search" %}Contacts and chats{% endcomment %}
   <form class="d-flex me-3" role="search">
-    <input class="form-control me-2" type="search" placeholder="Search message..." aria-label="Search" 
-    _="on keyup show <li/> in #chat-messages when it's innerHTML contains my value">
+    <input id="chat-search" class="form-control me-2" type="search" placeholder="Search chat..." aria-label="Search" 
+    _="on keyup show <li/> in #chat-list when it's innerText contains my value then log <li/>">
     <button class="btn btn-outline-success" type="submit"><i class="bi bi-search"></i></button>
   </form>
   <div class="my-3 ms-3" id="chats-filters">

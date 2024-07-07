@@ -13,7 +13,7 @@
     <img class="ms-1 rounded-circle img-fluid" src="{% chat_desired_data chat request.user 'photo' %}" alt="" style="max-width: 45px;">
     <div class="d-flex flex-column ms-3 w-100">
       <div class="d-flex justify-content-between">
-        <span class="text-truncate" style="max-width: 210px;">{% chat_desired_data chat request.user 'name' %}</span>
+        <span class="chat-name text-truncate" style="max-width: 210px;">{% chat_desired_data chat request.user 'name' %}</span>
         {% with last_message_date=chat.message_set.all|last_message:'date' %}
           {% if last_message_date %}
             {% with time_difference=last_message_date|timesince %}
