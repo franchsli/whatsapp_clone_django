@@ -43,6 +43,9 @@
     .form-control{
         color: white;
     }
+    .toast {
+        --bs-toast-color: white;
+    }
 }
 
 [data-bs-theme="light"] {

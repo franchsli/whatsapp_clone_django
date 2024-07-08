@@ -6,6 +6,8 @@
 - Rework the UI (in order to look like actual Whatsapp's UI):
   - Rework chat search bar (CSS) and add functionality to it.
   - Recolor the text of 'select archive' in file form.
+- Check the all the element styles in both dark and light mode
+  to detect 'visibility conflicts'.
 - Add more animations.
 - Add more sounds (if possible).
 - Redesign the login and register views (CSS).
