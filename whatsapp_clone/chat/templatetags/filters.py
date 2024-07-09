@@ -40,6 +40,7 @@ def last_message(value: QuerySet, data: str) -> str:
         str: The last message in the messages queryset if not empty, returns an empty string otherwise.
     """
     messages_data = list(value.values_list(data, flat=True).order_by("date"))
+    print(messages_data)
 
     if data == "text":
         if len(messages_data) > 0 and len(messages_data[-1]) > 0:
@@ -53,6 +54,12 @@ def last_message(value: QuerySet, data: str) -> str:
             return ""
     else:
         return messages_data[-1] if len(messages_data) > 0 else ""
+
+@register.filter
+def last_message_is_read(messages: QuerySet, user_id: Union[str, int]) -> bool:
+    last_message = messages.latest("date")
+    return last_message.read
+
 
 
 @register.filter

@@ -46,6 +46,12 @@
     .toast {
         --bs-toast-color: white;
     }
+    .last-chat-message-date, .last-chat-message {
+        color: var(--bs-tertiary-color);
+    }
+    .last-chat-message-unread, .last-chat-message-unread-date {
+        color: white;
+    }
 }
 
 [data-bs-theme="light"] {
@@ -83,5 +89,8 @@
     }
     .themed-text{
         color: var(--bs-themed-success-rgb);
+    }
+    .last-chat-message-date, .last-chat-message {
+        color: var(--bs-tertiary-color);
     }
 }
