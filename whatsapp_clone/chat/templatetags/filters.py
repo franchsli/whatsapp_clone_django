@@ -29,31 +29,25 @@ def to_list(value) -> list:
 
 
 @register.filter
-def last_message(value: QuerySet, data: str) -> str:
-    """Returns the latest message desired data in the provided value (messages Queryset).
+def last_message(messages: QuerySet, data: str) -> str:
+    """Returns the latest message desired data in the provided messages Queryset.
 
     Args:
-        value (Queryset): A queryset containing messages objects.
+        messages (Queryset): A queryset containing messages objects.
         data (str): The desired data of the latest message object.
 
     Returns:
         str: The last message in the messages queryset if not empty, returns an empty string otherwise.
     """
-    messages_data = list(value.values_list(data, flat=True).order_by("date"))
-    print(messages_data)
-
-    if data == "text":
-        if len(messages_data) > 0 and len(messages_data[-1]) > 0:
-            return messages_data[-1]
-        # if the last message text is an empty string,
-        # it means the last message is a Photo.
-        elif len(messages_data) > 0 and len(messages_data[-1]) == 0:
+    latest_message = messages.latest("date")
+    # if the message's text is required but it's empty
+    # it means the contact sent a Photo
+    if data == "text" and len(latest_message.text) == 0:
             return "Photo 📷"
-
-        else:
-            return ""
     else:
-        return messages_data[-1] if len(messages_data) > 0 else ""
+        print(data, getattr(latest_message, data))
+        return getattr(latest_message, data)
+
 
 @register.filter
 def last_message_is_read(messages: QuerySet, user_id: Union[str, int]) -> bool:
