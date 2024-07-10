@@ -14,55 +14,57 @@
     <div class="d-flex flex-column ms-3 w-100">
       <div class="d-flex justify-content-between">
         <span class="chat-name text-truncate" style="max-width: 210px;">{% chat_desired_data chat request.user 'name' %}</span>
-        {% with last_message_was_read=chat.message_set.all|last_message_is_read:request.user.id %}
-          {% with last_message_date=chat.message_set.all|last_message:'date' %}
-            {% if last_message_date %}
-              {% with time_difference=last_message_date|timesince %}
-                  {% if last_message_was_read or chat.message_set.all|last_message:'sender_user' == request.user %}
-                    <span class="last-chat-message-date">
-                  {% else %} 
-                    <span class="last-chat-message-unread-date">
-                  {% endif %}
-                  {% if 'day' in time_difference and 'week' not in time_difference %}
-                    {# Between 1 day and 1 week ago, display the day name #}
-                    {{ last_message_date|date:"l" }}</span>
-                  {% elif 'week' in time_difference %}
-                    {# More than a week ago, display the whole date #}
-                    {{ last_message_date|date:"F j, Y" }}</span>
-                  {% else %}
-                    {# Less than a day ago, display the hour #}
-                    {{ last_message_date|date:"h:i A" }}</span>
-                  {% endif %}
+        {% with chat_messages=chat.message_set.all %}
+          {% with last_message_was_read=chat_messages|last_message:'read' %}
+            {% with last_message_date=chat_messages|last_message:'date' %}
+              {% if last_message_date %}
+                {% with time_difference=last_message_date|timesince %}
+                    {% if last_message_was_read or chat_messages|last_message:'sender_user' == request.user %}
+                      <span class="last-chat-message-date">
+                    {% else %} 
+                      <span class="last-chat-message-unread-date">
+                    {% endif %}
+                    {% if 'day' in time_difference and 'week' not in time_difference %}
+                      {# Between 1 day and 1 week ago, display the day name #}
+                      {{ last_message_date|date:"l" }}</span>
+                    {% elif 'week' in time_difference %}
+                      {# More than a week ago, display the whole date #}
+                      {{ last_message_date|date:"F j, Y" }}</span>
+                    {% else %}
+                      {# Less than a day ago, display the hour #}
+                      {{ last_message_date|date:"h:i A" }}</span>
+                    {% endif %}
+                {% endwith %}
+              {% endif %}
+            {% endwith %}
+        </div>
+        {% comment "last message in the chat" %}{% endcomment %}
+        <div class="d-flex justify-content-between">
+            {% if chat_messages|last_message:'sender_user' == request.user %}
+              <span class="last-chat-message text-truncate">
+                {% if last_message_was_read %}
+                  <i class="bi bi-check2-all text-info"></i>
+                {% else %}
+                  <i class="bi bi-check2-all"></i>
+                {% endif %}
+                {{chat_messages|last_message:'text'}}</span>
+            {% else %}
+              {% if last_message_was_read %}
+                <span class="last-chat-message text-truncate">{{chat_messages|last_message:'text'}}</span>
+              {% else %}
+                <span class="last-chat-message-unread text-truncate">{{chat_messages|last_message:'text'}}</span>
+              {% endif %}
+            {% endif %}
+          
+          <!-- ========== ESPACE TO PUT THE NUMBERS OF UNREAD MESSAGES ========== -->
+            {% if not last_message_was_read and chat_messages|last_message:'sender_user' != request.user %}
+              {% with unread_messages_counter=chat_messages|unread_messages_counter:request.user.id %}
+                {% if unread_messages_counter > 0 %}
+                  <span class="badge rounded-pill" id="chat-{{chat.id}}unread-counter">{{ chat_messages|unread_messages_counter:request.user.id }}</span>
+                {% endif %}
               {% endwith %}
             {% endif %}
           {% endwith %}
-      </div>
-      {% comment "last message in the chat" %}{% endcomment %}
-      <div class="d-flex justify-content-between">
-          {% if chat.message_set.all|last_message:'sender_user' == request.user %}
-            <span class="last-chat-message text-truncate">
-              {% if last_message_was_read %}
-                <i class="bi bi-check2-all text-info"></i>
-              {% else %}
-                <i class="bi bi-check2-all"></i>
-              {% endif %}
-              {{chat.message_set.all|last_message:'text'}}</span>
-          {% else %}
-            {% if last_message_was_read %}
-              <span class="last-chat-message text-truncate">{{chat.message_set.all|last_message:'text'}}</span>
-            {% else %}
-              <span class="last-chat-message-unread text-truncate">{{chat.message_set.all|last_message:'text'}}</span>
-            {% endif %}
-          {% endif %}
-        
-        <!-- ========== ESPACE TO PUT THE NUMBERS OF UNREAD MESSAGES ========== -->
-          {% if not last_message_was_read and chat.message_set.all|last_message:'sender_user' != request.user %}
-            {% with unread_messages_counter=chat.message_set.all|unread_messages_counter:request.user.id %}
-              {% if unread_messages_counter > 0 %}
-                <span class="badge rounded-pill" id="chat-{{chat.id}}unread-counter">{{ chat.message_set.all|unread_messages_counter:request.user.id }}</span>
-              {% endif %}
-            {% endwith %}
-          {% endif %}
         {% endwith %}
         <ul id="chat-dropdown{{chat.id}}" class="dropdown-menu animated-dropdown">
           <li onclick="event.stopPropagation();">

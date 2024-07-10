@@ -3,7 +3,6 @@
 
 ## DO RIGHT NOW
 
-- Use with statement in chats.html to store chat.message_set.all in a variable.
 - Rework the UI (in order to look like actual Whatsapp's UI):
   - Rework chat search bar (CSS) and add functionality to it.
   - Recolor the text of 'select archive' in file form.

@@ -45,14 +45,7 @@ def last_message(messages: QuerySet, data: str) -> str:
     if data == "text" and len(latest_message.text) == 0:
             return "Photo 📷"
     else:
-        print(data, getattr(latest_message, data))
         return getattr(latest_message, data)
-
-
-@register.filter
-def last_message_is_read(messages: QuerySet, user_id: Union[str, int]) -> bool:
-    last_message = messages.latest("date")
-    return last_message.read
 
 
 
