@@ -110,24 +110,24 @@ def simplified_time_difference(time_difference: str) -> str:
 
 
 @register.simple_tag
-def exclude_user_tag(user_set: QuerySet, user: User, value: str) -> str:
+def exclude_user_tag(user_set: QuerySet, user: User, desired_field: str) -> str:
     """Removes the given user object from the provided user_set.
 
     Args:
         user_set (Queryset): An user object queryset.
         user (User): The user that will be removed.
-        value (str): The desired field of the user object.
+        desired_field (str): The desired field of the user object.
 
     Returns:
         str: The user left after excluding the given user.
     """
     user_list = user_set.exclude(id=user.id)
-    users_values = list(user_list.values_list(value, flat=True))
+    users_values = list(user_list.values_list(desired_field, flat=True))
 
     if len(users_values) < 2:
         return (
             users_values[0]
-            if value != "phone_number"
+            if desired_field != "phone_number"
             else f"{users_values[0].country_code}{users_values[0].national_number}"
         )
     else:
@@ -190,7 +190,6 @@ def chat_desired_data(
             if desired_value == "photo":
                 return user.photo.url if user.has_photo else DEFAULT_USER_PHOTO_URL
             else:
-
                 return user.phone_number
 
 

@@ -160,6 +160,7 @@ def encoded_image_to_file(
     image_file = ContentFile(image_bytes_data, f"{file_name}.{file_extension}")
     return image_file
 
+
 # CONSTANT VARIABLES
 DEFAULT_USER_PHOTO_URL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNBNdcMDNS2r9df1IWFVc8AY0QNtfNhEJv7fGS5TdhUWrlBqfGu1PCCn9lKpL-FqF9dWc&usqp=CAU"
 

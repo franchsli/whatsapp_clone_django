@@ -3,6 +3,8 @@
 
 ## DO RIGHT NOW
 
+- Implement something in JS to filter the desired target
+  depending in the input of a form (search bar).
 - Rework the UI (in order to look like actual Whatsapp's UI):
   - Rework chat search bar (CSS) and add functionality to it.
   - Recolor the text of 'select archive' in file form.
