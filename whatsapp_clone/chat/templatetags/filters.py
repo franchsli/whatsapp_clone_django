@@ -1,7 +1,7 @@
 from django import template
 from django.db.models import QuerySet
 from chat.models import User, Chat
-from chat.tools import DEFAULT_USER_PHOTO_URL, messages_dates, get_contact_in_chat
+from chat.tools import DEFAULT_USER_PHOTO_URL, get_contact_in_chat
 from typing import Union
 import re
 
@@ -107,24 +107,6 @@ def simplified_time_difference(time_difference: str) -> str:
             return 'Just yesterday.'
         else:
             return 'Less than a week ago.'
-
-@register.simple_tag
-def update_messages_dates(date: str):
-    global messages_dates
-    if date not in messages_dates:
-        messages_dates.append(date)
-
-
-@register.simple_tag
-def date_already_displayed(date: str) -> bool:
-    global messages_dates
-    return date in messages_dates
-
-
-@register.simple_tag
-def clear_messages_dates():
-    global messages_dates
-    messages_dates = []
 
 
 @register.simple_tag
