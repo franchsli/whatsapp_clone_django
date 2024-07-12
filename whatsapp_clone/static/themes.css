@@ -52,6 +52,10 @@
     .last-chat-message-unread, .last-chat-message-unread-date {
         color: white;
     }
+    .form-check-input:checked {
+        background-color: var(--bs-themed-success-rgb);
+        border-color: var(--bs-themed-success-rgb);
+    }
 }
 
 [data-bs-theme="light"] {
@@ -92,5 +96,9 @@
     }
     .last-chat-message-date, .last-chat-message {
         color: var(--bs-tertiary-color);
+    }
+    .form-check-input:checked {
+        background-color: var(--bs-themed-success-rgb);
+        border-color: var(--bs-themed-success-rgb);
     }
 }

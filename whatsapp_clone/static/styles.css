@@ -12,7 +12,7 @@ main,  #base {
 #chat-messages {
   display: flex;
   flex: 1;
-  max-height: 570px;
+  max-height: 610px;
   margin: 0;
   background-color: var(--bs-body-bg);
 }
