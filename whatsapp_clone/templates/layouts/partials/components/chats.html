@@ -22,7 +22,7 @@
                     {% if last_message_was_read or chat_messages|last_message:'sender_user' == request.user %}
                       <span class="last-chat-message-date">
                     {% else %} 
-                      <span class="last-chat-message-unread-date">
+                      <span class="themed-text">
                     {% endif %}
                     {% if 'day' in time_difference and 'week' not in time_difference %}
                       {# Between 1 day and 1 week ago, display the day name #}

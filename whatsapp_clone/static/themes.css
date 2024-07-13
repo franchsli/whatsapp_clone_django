@@ -49,7 +49,7 @@
     .last-chat-message-date, .last-chat-message {
         color: var(--bs-tertiary-color);
     }
-    .last-chat-message-unread, .last-chat-message-unread-date {
+    .last-chat-message-unread {
         color: white;
     }
     .form-check-input:checked {

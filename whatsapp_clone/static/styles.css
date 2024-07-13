@@ -56,9 +56,6 @@ main,  #base {
 .delete-action:hover{
   background-color: var(--bs-danger);
 }
-.edit-action:hover{
-  background-color: var(--bs-primary);
-}
 
 .dropdown-toggle{
   background-color: var(--bs-body-bg);
