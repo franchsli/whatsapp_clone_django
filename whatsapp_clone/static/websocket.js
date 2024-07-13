@@ -234,6 +234,10 @@ chat_websocket.addEventListener('open', () => {
         tools.change_element_color(desired_color, target_element_id)
     }
 
+    window.filter_by_value = function(value, element_list){
+        tools.filter_by_value(value, element_list)
+    }
+
 
     chat_form.onsubmit = async (event) => {
         event.preventDefault()

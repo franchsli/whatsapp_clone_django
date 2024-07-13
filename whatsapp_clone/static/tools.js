@@ -482,6 +482,28 @@ function change_element_color(desired_color, target_element_id){
   
 }
 
+/**
+ * Hides all the list items in the given list
+ * that don't contain the given value.
+ * @param {String} value 
+ * @param {HTMLUListElement | HTMLOListElement} element_list 
+ */
+function filter_by_value(value, element_list){
+    console.log(value)
+    console.log(element_list)
+    for (let index = 0; index < element_list.length; index++){
+        const element = element_list[index]
+        // this does not run, idk why.
+        console.log(element)
+        console.log(element.textContent)
+        if(element.textContent.contains(value)){
+            console.log(element)
+            element.style.display = "block"
+            element.style.display = "none"
+        }
+    }
+}
+
 export {get, post, modifyNotification,
      scroll_to_bottom, create_message_html, 
      toggleReadMore, showDropdown, run_element_animation,
@@ -489,5 +511,5 @@ export {get, post, modifyNotification,
     load_emojis, switch_emojis, switch_checkboxes, 
     toggle_element_display, previewImage, update_chat_list, at_least_one_attr,
     exchange_elements_class, switch_element_visibility, load_more_messages, 
-    load_older_messages, remove_duplicates, change_element_color
+    load_older_messages, remove_duplicates, change_element_color, filter_by_value
 }

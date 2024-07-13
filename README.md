@@ -3,8 +3,11 @@
 
 ## DO RIGHT NOW
 
+- In order to fix the "on keyup show" problem, implement a function
+  that assings that (setAttribute) when the list is loaded in the DOM.
 - Implement something in JS to filter the desired target
-  depending in the input of a form (search bar).
+  depending in the input of a form (search bar)
+  **fix it, doesn't work**.
 - Rework the UI (in order to look like actual Whatsapp's UI):
   - Rework chat search bar (CSS) and add functionality to it.
   - Recolor the text of 'select archive' in file form.
@@ -16,7 +19,7 @@
 - Implement something to show a close look when a image in a chat is clicked
   (like Whatsapp)-
 - Add chat wallpapers user CSS url for images and a JS color selector for colors.
-  - [USE THIS](https://getbootstrap.com/docs/5.3/forms/form-control#color)
+  - [USE THIS](https://getbootstrap.com/docs/5.3/forms/form-control#color).
   - EVERY TIME YOU IMPLEMENT A COLOR PICKER YOU SHOULD ADD A ONINPUT THEN A FUNCTION
   THAT CHANGES THE COLOR OF THE FOUND ELEMENT WITH THE GIVEN ID WITH THE INPUT COLOR,
   LIKE THIS:
