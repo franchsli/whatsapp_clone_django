@@ -259,7 +259,6 @@ function load_emojis(emoji_list_name, parent_element){
                 display_button_inner_text(new_button, input)
             }
             parent_element.appendChild(new_button)
-            //const pattern = /^[A-Za-z0-9]+$/;
     }
     })
     .catch((error) => {console.log(error.message)})
@@ -357,7 +356,6 @@ function previewImage(image_input=null, image_preview=null) {
 
             image_preview.appendChild(preview);
         };
-
         reader.readAsDataURL(file);
     }
 }
@@ -449,9 +447,7 @@ function load_more_messages(message_list){
         const oldest_message = document.querySelector('.message')
         localStorage.setItem('oldest_message_date', oldest_message.dataset.date)
         load_older_messages()
-
     }
-    
 }
 
 /**
@@ -467,8 +463,6 @@ function remove_duplicates(class_name){
             element.remove()
         }
     }
-
-    
 }
 
 /**
@@ -505,11 +499,12 @@ function filter_by_value(value, element_list){
 }
 
 export {get, post, modifyNotification,
-     scroll_to_bottom, create_message_html, 
-     toggleReadMore, showDropdown, run_element_animation,
-      checked, not_empty, toggle_element_inner_text,
-    load_emojis, switch_emojis, switch_checkboxes, 
-    toggle_element_display, previewImage, update_chat_list, at_least_one_attr,
+    scroll_to_bottom, create_message_html, toggleReadMore, 
+    showDropdown, run_element_animation, checked, 
+    not_empty, toggle_element_inner_text, load_emojis, 
+    switch_emojis, switch_checkboxes, toggle_element_display, 
+    previewImage, update_chat_list, at_least_one_attr, 
     exchange_elements_class, switch_element_visibility, load_more_messages, 
-    load_older_messages, remove_duplicates, change_element_color, filter_by_value
+    load_older_messages, remove_duplicates, change_element_color, 
+    filter_by_value
 }

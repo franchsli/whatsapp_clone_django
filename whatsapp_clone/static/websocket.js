@@ -29,9 +29,8 @@ const chat_mutation_callback = function(mutationsList, observer) {
             // Check if a new element is added
             const addedNodes = mutation.addedNodes;
             for (const addedNode of addedNodes) {
+                // Check if it's a footer element node
                 if (addedNode.nodeType === 1 && addedNode.tagName === 'FOOTER'){ 
-                    // Check if it's an footer element node
-                    // Execute your code when a new element is created
                     window.new_message_input = document.getElementById('new-message')
                     window.new_message_button = document.getElementById('send-message-button')
                     window.delete_message_option_buttons = document.querySelectorAll('.delete-message')
@@ -44,7 +43,7 @@ const chat_mutation_callback = function(mutationsList, observer) {
                     
                     delete_message_option_buttons.forEach( button => {
                         button.onclick = function() {
-                            // delete the message
+                            // scroll to bottom after deleting the message
                             setTimeout(tools.scroll_to_bottom, 1000)
                         }})
                     
@@ -59,8 +58,7 @@ const chat_mutation_callback = function(mutationsList, observer) {
                             if (imageInput.value != ''){
                                 imageInput.value = ''
                                 image.remove()
-                            }
-                            
+                            }      
                         }})
                     
                 
@@ -452,8 +450,6 @@ chat_websocket.addEventListener('open', () => {
 
     }
     htmx.logger()
-
-
 })
 
 chat_websocket.addEventListener('message',async (event) => {
@@ -591,7 +587,6 @@ status_websocket.addEventListener('open', () => {
     }
     window.init_status_carousel = function(status_carousel){
         carousel = status_carousel
-
         carousel_instance = new bootstrap.Carousel(carousel, {
         interval: 5000,
         touch: false
