@@ -46,7 +46,7 @@
 {% comment "tabs" %}Contacts and chats{% endcomment %}
 <div id="chats-and-contacts" hx-get="{% url 'get_chats' %}" hx-target="this" hx-trigger="load" hx-swap="beforeend">
   {% comment "chat search" %}Contacts and chats{% endcomment %}
-  <form class="d-flex me-3" role="search">
+  <form class="d-flex m-3" role="search">
     <input id="chat-search" class="form-control me-2" type="search" placeholder="Search chat..." aria-label="Search" 
     oninput="filter_by_value(this.value, document.getElementById('chat-list'));" </input>
     <button class="btn themed-button" type="submit"><i class="bi bi-search"></i></button>

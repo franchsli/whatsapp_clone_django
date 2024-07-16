@@ -7,7 +7,7 @@
   that assings that (setAttribute) when the list is loaded in the DOM.
 - Implement something in JS to filter the desired target
   depending in the input of a form (search bar)
-  **fix it, doesn't work**.
+  **fix it, doesn't work use element_list.children to make it work**.
 - Rework the UI (in order to look like actual Whatsapp's UI):
   - Rework chat search bar (CSS) and add functionality to it.
   - Recolor the text of 'select archive' in file form.
@@ -29,6 +29,9 @@
 
 ## ANOTHER THINGS TO DO
 
+- Remove or fix that annoying 'margin' that makes the entire
+  website scrollable.
+  - Check archived chats view, there isn't that weird 'margin'.
 - Implement something to create Group-like Chats.
   - Look at chats.html line 63 and exception in chat_desired_data.
 - Implement something to archive group-like Chats.
@@ -50,11 +53,11 @@
 
 - Use with statements in frecuently used field lookups in the HTML.
 - Implement a dynamic status length:
-  - If its a photo 5 secs
-  - if its a long text (more than 200 chars) 10 secs
+  - If its a photo 5 secs.
+  - if its a long text (more than 200 chars) 10 secs.
   - if its a video, the length of the video.
   - Or if its not a video, 5 secs and users should be able to pause the event
-    (like whatsapp)
+    (like whatsapp).
 
 **IMPLEMENT**
 READ THE CHATGPT Django Channels Websocket chat for IMPORTANT improvement.
@@ -70,7 +73,7 @@ Also don't forget to change the channel layer to redis.
 - Some messages width break the chat container after using 'show more'.
   - This happens only when the text has a long chain of chars without a single space.
     **POSSIBLE FIX** Only if the text is long enough get a list of 'words'
-    in the text if the word is too long use the logic mentioned above.
+    in the text if the word is too long add espaces every x number of characters.
 - When a user archives a contact, all group-like chats in which the contact is in
   will be archived as well.
 - When a user deletes a chat, the chat will be deleted from all the users in the chat

@@ -122,7 +122,6 @@ function toggleReadMore(text_id) {
     
         toggle_button.onclick = function(){
             content_html.style.maxHeight = content_html.style.maxHeight === '200px' ? 'none' : '200px'
-            //content_html.style.overflow = content_html.style.overflow === 'hidden' ? 'visible' : 'hidden'
             toggle_button.textContent = content_html.style.maxHeight === '200px' ? 'Show more' : 'Show less'
         }
         content_html.insertAdjacentElement('afterend', toggle_button)
@@ -485,9 +484,12 @@ function change_element_color(desired_color, target_element_id){
 function filter_by_value(value, element_list){
     console.log(value)
     console.log(element_list)
+    // use children
+    console.log(element_list.children)
     for (let index = 0; index < element_list.length; index++){
         const element = element_list[index]
-        // this does not run, idk why.
+        // this does not run because element_list IS NOT
+        // AN ITERABLE, USE element_list.children
         console.log(element)
         console.log(element.textContent)
         if(element.textContent.contains(value)){
