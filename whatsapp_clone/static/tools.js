@@ -482,19 +482,11 @@ function change_element_color(desired_color, target_element_id){
  * @param {HTMLUListElement | HTMLOListElement} element_list 
  */
 function filter_by_value(value, element_list){
-    console.log(value)
-    console.log(element_list)
-    // use children
-    console.log(element_list.children)
-    for (let index = 0; index < element_list.length; index++){
-        const element = element_list[index]
-        // this does not run because element_list IS NOT
-        // AN ITERABLE, USE element_list.children
-        console.log(element)
-        console.log(element.textContent)
-        if(element.textContent.contains(value)){
-            console.log(element)
-            element.style.display = "block"
+    const list_items = element_list.children
+    for (let index = 0; index < list_items.length; index++){
+        const element = list_items[index]
+        const chat_name = element.querySelector('.chat-name').textContent
+        if(!chat_name.toLowerCase().includes(value.toLowerCase())){
             element.style.display = "none"
         }
     }

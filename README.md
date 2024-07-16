@@ -3,11 +3,11 @@
 
 ## DO RIGHT NOW
 
-- In order to fix the "on keyup show" problem, implement a function
-  that assings that (setAttribute) when the list is loaded in the DOM.
-- Implement something in JS to filter the desired target
-  depending in the input of a form (search bar)
-  **fix it, doesn't work use element_list.children to make it work**.
+- Add an else statement in filter_by_value().
+  - Checks if the element has 'd-flex' in its classList.
+  - If its not, add it, do nothing otherwise.
+- Remove the d-flex class from chats (list items) classList
+  - You can remove it using the already fixed function.
 - Rework the UI (in order to look like actual Whatsapp's UI):
   - Rework chat search bar (CSS) and add functionality to it.
   - Recolor the text of 'select archive' in file form.
@@ -21,7 +21,7 @@
   - EVERY TIME YOU IMPLEMENT A COLOR PICKER YOU SHOULD ADD A ONINPUT THEN A FUNCTION
   THAT CHANGES THE COLOR OF THE FOUND ELEMENT WITH THE GIVEN ID WITH THE INPUT COLOR,
   LIKE THIS:
-    onclick="change_color(this, target_element)"
+    onclick="change_element_color(this.style.color, target_element_id)"
 - Add user settings to personalize things like notification appareance
   or even UI theming (the dark and light theme will remain the same,
   but more themes will be added  [don't know when, don't know how])
