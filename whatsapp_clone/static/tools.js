@@ -487,7 +487,13 @@ function filter_by_value(value, element_list){
         const element = list_items[index]
         const chat_name = element.querySelector('.chat-name').textContent
         if(!chat_name.toLowerCase().includes(value.toLowerCase())){
+            element.classList.remove('d-flex')
             element.style.display = "none"
+        }
+        else {
+            if(!element.classList.contains('d-flex')){
+                element.classList.add('d-flex')
+            }
         }
     }
 }

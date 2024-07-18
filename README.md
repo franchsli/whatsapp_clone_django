@@ -3,11 +3,6 @@
 
 ## DO RIGHT NOW
 
-- Add an else statement in filter_by_value().
-  - Checks if the element has 'd-flex' in its classList.
-  - If its not, add it, do nothing otherwise.
-- Remove the d-flex class from chats (list items) classList
-  - You can remove it using the already fixed function.
 - Rework the UI (in order to look like actual Whatsapp's UI):
   - Rework chat search bar (CSS) and add functionality to it.
   - Recolor the text of 'select archive' in file form.
