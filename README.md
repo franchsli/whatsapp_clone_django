@@ -3,6 +3,7 @@
 
 ## DO RIGHT NOW
 
+- Write some comments in filter_by_value() at tools.js
 - Rework the UI (in order to look like actual Whatsapp's UI):
   - Rework chat search bar (CSS) and add functionality to it.
   - Recolor the text of 'select archive' in file form.
