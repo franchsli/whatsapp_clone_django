@@ -478,14 +478,15 @@ function change_element_color(desired_color, target_element_id){
 /**
  * Hides all the list items in the given list
  * that don't contain the given value.
- * @param {String} value 
- * @param {HTMLUListElement | HTMLOListElement} element_list 
+ * @param {String} value Value to search for in the
+ * list items.
+ * @param {HTMLUListElement | HTMLOListElement} element_list
  */
 function filter_by_value(value, element_list){
     let list_items = element_list.children
+    // determines what will be filtered
+    // either contacts or chats
     let filter_by = 'chat' 
-    console.log(element_list)
-    console.log(list_items)
     if (list_items[0].id === "contact-list"){
         list_items = list_items[0].children
         filter_by = 'contact'
@@ -493,8 +494,7 @@ function filter_by_value(value, element_list){
     for (let index = 0; index < list_items.length; index++){
         const element = list_items[index]
         if(element){
-            const chat_name = element.querySelector(filter_by === "chat" ? ".chat-name" : ".contact-name" ).textContent
-     
+            const chat_name = element.querySelector(filter_by === "chat" ? ".chat-name" : ".contact-name").textContent
             if(!chat_name.toLowerCase().includes(value.toLowerCase())){
                 element.classList.remove('d-flex')
                 element.style.display = "none"
