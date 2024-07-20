@@ -162,3 +162,9 @@ main,  #base {
   color: var(--bs-success);
 
 }
+
+.centered{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -7,7 +7,7 @@
   - Recolor the text of 'select archive' in file form.
 - Add more animations.
 - Add more sounds (if possible).
-- Redesign the login and register views (CSS).
+- Redesign the register views (CSS).
 - Implement something to show a close look when a image in a chat is clicked
   (like Whatsapp).
 - Add chat wallpapers user CSS url for images and a JS color selector for colors.
@@ -101,6 +101,7 @@ Also don't forget to change the channel layer to redis.
 **RESOURCES**:
 
 - [Custom theme modes](https://getbootstrap.com/docs/5.3/customize/color-modes/#adding-theme-colors)
+- [Interface icons](https://www.flaticon.com/uicons/interface-icons)
 - [Outer queryset](https://docs.djangoproject.com/en/5.0/ref/models/expressions/#referencing-columns-from-the-outer-queryset)
 - [db queries with Q](https://docs.djangoproject.com/en/5.0/topics/db/queries/#complex-lookups-with-q-objects)
 - [queryset operators](https://docs.djangoproject.com/en/5.0/ref/models/querysets/#operators-that-return-new-querysets)

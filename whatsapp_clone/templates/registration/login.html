@@ -1,6 +1,7 @@
 {% extends "layouts/base.html" %}
 {% load crispy_forms_tags %}
 {% block title %}Log in{% endblock title %}
+{% load static %}
 
 {% block content %}
 
@@ -8,8 +9,12 @@
   {% csrf_token %}
     <div class="card" style="width: 30rem;">
         <div class="card-body">
-          <h5 class="card-title">Log in</h5>
-          <h6 class="card-subtitle mb-2 text-body-secondary">Enter your credentials</h6>
+          <h3 class="card-title centered">Log in</h3>
+          <div class="centered">
+            <img src="{% static "images/app/login-concept-illustration.png" %}" 
+            alt="Error, no image found." style="max-width: 200px;">
+          </div>
+          <h6 class="centered card-subtitle mb-2 text-body-secondary">Enter your credentials</h6>
           {{ form | crispy }}
           <button class="btn btn-primary float-end" type="submit">Log in</button>
           <a href="{% url 'register' %}" class="btn btn-secondary">Register</a>
