@@ -116,3 +116,4 @@ Also don't forget to change the channel layer to redis.
 - [Languages Documentation](https://devdocs.io/)
 - [The Stocks V3 CSS RESORUCES](https://v3.thestocks.im/)
 - [More CSS RESOURCES](https://thestocks.im/?ref=buffer-resources)
+- [Colors gradients](https://cssgradient.io/gradient-backgrounds/)

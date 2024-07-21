@@ -8,7 +8,7 @@
     --bs-themed-success-darker-rgb: var(--bs-success-bg-subtle);
     --bs-heading-color: white;
     
-    span, button, a, h1, p, form, label {
+    span, button, a, h1, h2, h3, h4, h5, h6 p, form, label {
         color: white;
     }
 
