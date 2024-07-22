@@ -10,6 +10,9 @@
 - Redesign the register views (CSS).
 - Implement something to show a close look when a image in a chat is clicked
   (like Whatsapp).
+- Add status complex status creation (like Whatsapp).
+  - Users could select the color of the background for
+    statuses.
 - Add chat wallpapers user CSS url for images and a JS color selector for colors.
   - [USE THIS](https://getbootstrap.com/docs/5.3/forms/form-control#color).
   - EVERY TIME YOU IMPLEMENT A COLOR PICKER YOU SHOULD ADD A ONINPUT THEN A FUNCTION
@@ -26,6 +29,7 @@
 - Remove or fix that annoying 'margin' that makes the entire
   website scrollable.
   - Check archived chats view, there isn't that weird 'margin'.
+  - Check difference between archived chats view and chats view.
 - Implement something to create Group-like Chats.
   - Look at chats.html line 63 and exception in chat_desired_data.
 - Implement something to archive group-like Chats.
@@ -35,9 +39,6 @@
   (i don't think so).....
 - Add something to delete statuses automatically every 24 hours (cronjobs maybe).
 - Rework statuses UI.
-- Add status complex status creation (like Whatsapp).
-  - Users could select the color of the background for
-    statuses.
 - Make the silence contact logic (booleand field [think it bro])
 - Review all the code, optimize it and delete spaguetti code.
 - Check for duplicated CSS.
