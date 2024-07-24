@@ -403,7 +403,6 @@ def create_status(request):
         # gets the text and the image for the status creation
         text = request.POST.get("text")
         image = request.FILES.get("image")
-        print(f"TEXT:{text}\nIMAGE:{image}")
         # new status creation
         if image or text:
             new_status = Status.objects.create(

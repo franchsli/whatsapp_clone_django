@@ -3,11 +3,16 @@
 
 ## DO RIGHT NOW
 
+- Check if user register form can show image's previews and
+  upload them correctly.
+  - If not check register.js
 - Rework the UI (in order to look like actual Whatsapp's UI):
   - Recolor the text of 'select archive' in file form.
+  - Think about changing the UI layout.
 - Add more animations.
 - Add more sounds (if possible).
 - Redesign the register views (CSS).
+  - Organize the fields: use two columns for that
 - Implement something to show a close look when a image in a chat is clicked
   (like Whatsapp).
 - Add status complex status creation (like Whatsapp).
