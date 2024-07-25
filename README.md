@@ -3,9 +3,9 @@
 
 ## DO RIGHT NOW
 
-- Check if user register form can show image's previews and
-  upload them correctly.
-  - If not check register.js
+- ***FIX** User register form doesn't upload profile photo correctly.
+  - Check register.js.
+  - Check the register view.
 - Rework the UI (in order to look like actual Whatsapp's UI):
   - Recolor the text of 'select archive' in file form.
   - Think about changing the UI layout.
