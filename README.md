@@ -4,6 +4,7 @@
 ## DO RIGHT NOW
 
 - ***FIX** User register form doesn't upload profile photo correctly.
+  - Check why Users can upload images in status form but not in register form.
   - Check register.js.
   - Check the register view.
 - Rework the UI (in order to look like actual Whatsapp's UI):

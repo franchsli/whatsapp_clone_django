@@ -8,9 +8,13 @@ from django.http import HttpResponse
 def register(request):
     data = {"form": CustomUserCreationForm()}
     if request.method == "POST":
-        new_user_form = CustomUserCreationForm(data=request.POST)
+        new_user_form = CustomUserCreationForm(request.POST, request.FILES)
         if new_user_form.is_valid():
-            new_user = new_user_form.save()
+            new_user: CustomUserCreationForm = new_user_form.save()
+            print(new_user.photo)
+            #print(request.FILES.get("image"))
+            print(new_user_form.instance.photo)
+            
             login(request, new_user)
             return redirect("chat")
         else:
