@@ -3,17 +3,10 @@
 
 ## DO RIGHT NOW
 
-- ***FIX** User register form doesn't upload profile photo correctly.
-  - Check why Users can upload images in status form but not in register form.
-  - Check register.js.
-  - Check the register view.
-- Rework the UI (in order to look like actual Whatsapp's UI):
-  - Recolor the text of 'select archive' in file form.
-  - Think about changing the UI layout.
-- Add more animations.
-- Add more sounds (if possible).
 - Redesign the register views (CSS).
   - Organize the fields: use two columns for that
+- Add more animations.
+- Add more sounds (if possible).
 - Implement something to show a close look when a image in a chat is clicked
   (like Whatsapp).
 - Add status complex status creation (like Whatsapp).
@@ -36,6 +29,9 @@
   website scrollable.
   - Check archived chats view, there isn't that weird 'margin'.
   - Check difference between archived chats view and chats view.
+- Rework the UI (in order to look like actual Whatsapp's UI):
+  - Recolor the text of 'select archive' in file form.
+  - Think about changing the UI layout.
 - Implement something to create Group-like Chats.
   - Look at chats.html line 63 and exception in chat_desired_data.
 - Implement something to archive group-like Chats.

@@ -10,11 +10,7 @@ def register(request):
     if request.method == "POST":
         new_user_form = CustomUserCreationForm(request.POST, request.FILES)
         if new_user_form.is_valid():
-            new_user: CustomUserCreationForm = new_user_form.save()
-            print(new_user.photo)
-            #print(request.FILES.get("image"))
-            print(new_user_form.instance.photo)
-            
+            new_user = new_user_form.save()
             login(request, new_user)
             return redirect("chat")
         else:
