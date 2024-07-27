@@ -5,7 +5,7 @@
   <div class="d-flex align-items-center ms-3 col-6" role="button">
     {% comment "chat contact info" %}{% endcomment %}
     <img id="contact-picture" class="rounded-circle img-fluid"
-      src="{% chat_desired_data chat request.user 'photo' %}" alt="" style="max-width: 50px;">
+      src="{% chat_desired_data chat request.user 'photo' %}" alt="">
     <p class="ms-3 my-auto" id="contact-name" data-user-object-id="{% chat_desired_data chat request.user 'user-id' %}">{% chat_desired_data chat request.user 'name' %}</p>
   </div>
   {% comment "settings or details of contacts" %}{% endcomment %}

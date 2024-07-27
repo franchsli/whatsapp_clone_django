@@ -28,6 +28,11 @@ main,  #base {
 
 }
 
+#contact-picture {
+  height: 50px;
+  width: 50px;
+}
+
 .last-chat-message{
   max-width: 260px;
 }
