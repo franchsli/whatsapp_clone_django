@@ -28,10 +28,6 @@
 
 ## ANOTHER THINGS TO DO
 
-- Remove or fix that annoying 'margin' that makes the entire
-  website scrollable.
-  - Check archived chats view, there isn't that weird 'margin'.
-  - Check difference between archived chats view and chats view.
 - Rework the UI (in order to look like actual Whatsapp's UI):
   - Recolor the text of 'select archive' in file form.
   - Think about changing the UI layout.
