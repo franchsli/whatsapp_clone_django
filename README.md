@@ -4,7 +4,9 @@
 ## DO RIGHT NOW
 
 - Redesign the register views (CSS).
-  - Organize the fields: use two columns for that
+  - Organize the fields: use two columns for that:
+    - [Rendering fields manually.](https://docs.djangoproject.com/en/5.0/topics/forms/#rendering-fields-manually)
+    - [Use Crispy forms fieldset.](https://www.youtube.com/watch?v=nBmFlZTh1ww)
 - Add more animations.
 - Add more sounds (if possible).
 - Implement something to show a close look when a image in a chat is clicked
@@ -12,16 +14,17 @@
 - Add status complex status creation (like Whatsapp).
   - Users could select the color of the background for
     statuses.
+    - [Usefil library for that](https://github.com/fabiocaccamo/django-colorfield)
 - Add chat wallpapers user CSS url for images and a JS color selector for colors.
   - [USE THIS](https://getbootstrap.com/docs/5.3/forms/form-control#color).
   - EVERY TIME YOU IMPLEMENT A COLOR PICKER YOU SHOULD ADD A ONINPUT THEN A FUNCTION
   THAT CHANGES THE COLOR OF THE FOUND ELEMENT WITH THE GIVEN ID WITH THE INPUT COLOR,
   LIKE THIS:
     onclick="change_element_color(this.style.color, target_element_id)"
+- Give actual functionality to the settings button.
 - Add user settings to personalize things like notification appareance
   or even UI theming (the dark and light theme will remain the same,
   but more themes will be added  [don't know when, don't know how])
-- Give actual functionality to the settings button.
 
 ## ANOTHER THINGS TO DO
 
