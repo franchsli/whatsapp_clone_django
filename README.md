@@ -3,7 +3,7 @@
 
 ## DO RIGHT NOW
 
-- Finish space_text() code (read the comments).
+- Document and test space_text() code (Because I have no internet while writting this).
 - Redesign the register views (CSS).
   - Organize the fields: use two columns for that:
     - [Rendering fields manually.](https://docs.djangoproject.com/en/5.0/topics/forms/#rendering-fields-manually)

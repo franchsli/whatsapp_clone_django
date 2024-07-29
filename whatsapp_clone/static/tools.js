@@ -510,20 +510,38 @@ function filter_by_value(value, element_list){
 
 /**
  * 
+ * @param {String} word 
+ * @param {Number} length 
+ * @returns {Array}
+ */
+function split_word(word, length){
+    const original_len = word.length
+    let words = []
+    let counter = 0
+    while (original_len !== words.join('').length && counter < original_len){
+        words.push(word.slice(counter, length + counter - 1))
+        counter += length
+    }
+    return words
+}
+
+
+/**
+ * 
  * @param {String} text_id 
+ * @returns {String}
  */
 function space_text(text_id){
     const text_container = document.getElementById(`text-${text_id}`)
     let container_text = text_container.textContent
     const words = container_text.split(' ')
-    let final_text = ''
-    for (let index = 0; index < words.length; index++) {
+    for (let index = 0; index < words.length; index++){
         const word = words[index];
         // If a word in the text has more 42 chars
         if (word.length > 42){
-            // split the words into different words
-            // until each one have less than 42 words
-            words[index] = word.slice(0, 41)
+            // split the word into different words
+            // until each one have less than 42 chars
+            words[index] = split_word(word, 42).join(' ')
         }
     }
     // returns a text with trailing spaces
@@ -539,5 +557,5 @@ export {get, post, modifyNotification,
     previewImage, update_chat_list, at_least_one_attr, 
     exchange_elements_class, switch_element_visibility, load_more_messages, 
     load_older_messages, remove_duplicates, change_element_color, 
-    filter_by_value, space_text
+    filter_by_value, space_text, split_word
 }
