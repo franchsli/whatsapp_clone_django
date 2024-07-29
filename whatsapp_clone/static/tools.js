@@ -508,6 +508,29 @@ function filter_by_value(value, element_list){
     }
 }
 
+/**
+ * 
+ * @param {String} text_id 
+ */
+function space_text(text_id){
+    const text_container = document.getElementById(`text-${text_id}`)
+    let container_text = text_container.textContent
+    const words = container_text.split(' ')
+    let final_text = ''
+    for (let index = 0; index < words.length; index++) {
+        const word = words[index];
+        // If a word in the text has more 42 chars
+        if (word.length > 42){
+            // split the words into different words
+            // until each one have less than 42 words
+            words[index] = word.slice(0, 41)
+        }
+    }
+    // returns a text with trailing spaces
+    // in every word to display it properly
+    return words.join(' ')
+}
+
 export {get, post, modifyNotification,
     scroll_to_bottom, create_message_html, toggleReadMore, 
     showDropdown, run_element_animation, checked, 
@@ -516,5 +539,5 @@ export {get, post, modifyNotification,
     previewImage, update_chat_list, at_least_one_attr, 
     exchange_elements_class, switch_element_visibility, load_more_messages, 
     load_older_messages, remove_duplicates, change_element_color, 
-    filter_by_value
+    filter_by_value, space_text
 }
