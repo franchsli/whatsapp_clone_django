@@ -515,10 +515,12 @@ function filter_by_value(value, element_list){
  * @returns {Array}
  */
 function split_word(word, length){
+    console.log('STARTING SPLITTING')
     const original_len = word.length
     let words = []
     let counter = 0
     while (original_len !== words.join('').length && counter < original_len){
+        console.log('SPITTING WORD...')
         words.push(word.slice(counter, length + counter - 1))
         counter += length
     }
@@ -536,6 +538,7 @@ function space_text(text_id){
     let container_text = text_container.textContent
     const words = container_text.split(' ')
     for (let index = 0; index < words.length; index++){
+        console.log('SPACED TEXT FOR LOOP')
         const word = words[index];
         // If a word in the text has more 42 chars
         if (word.length > 42){
@@ -546,6 +549,7 @@ function space_text(text_id){
     }
     // returns a text with trailing spaces
     // in every word to display it properly
+    console.log('TEXT WAS SPACED')
     return words.join(' ')
 }
 

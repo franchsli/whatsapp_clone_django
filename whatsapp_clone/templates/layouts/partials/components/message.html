@@ -32,6 +32,7 @@
 
   
   <script type="text/javascript">
+    space_text('{{message.id}}')
     toggleReadMore('{{message.id}}')
   </script>
   <ul id="customDropdown-{{message.id}}" class="dropdown-menu animated-dropdown">
@@ -65,6 +66,7 @@
       <span class="chat-message-date">{{ message.date|date:"h:i A" }}</span>
   </div>
   <script type="text/javascript">
+    space_text('{{message.id}}')
     toggleReadMore('{{message.id}}')
   </script>
 </div>

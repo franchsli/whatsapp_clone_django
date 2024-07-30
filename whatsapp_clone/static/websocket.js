@@ -236,6 +236,10 @@ chat_websocket.addEventListener('open', () => {
         tools.filter_by_value(value, element_list)
     }
 
+    window.space_text = function(text_id){
+        tools.space_text(text_id)
+    }
+
 
     chat_form.onsubmit = async (event) => {
         event.preventDefault()
