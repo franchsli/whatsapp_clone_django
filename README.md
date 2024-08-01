@@ -44,6 +44,7 @@
 - Make the silence contact logic (booleand field [think it bro])
 - Review all the code, optimize it and delete spaguetti code.
 - Check for duplicated CSS.
+- Make messages wider to increase max char per word back to 42.
 - Check which apis are still necesary.
 
 ## Improvements

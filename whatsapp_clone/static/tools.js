@@ -536,22 +536,22 @@ function split_word(word, length){
  */
 function space_text(text_id){
     const text_container = document.getElementById(`text-${text_id}`)
-    let container_text = text_container.textContent
+    const container_text = text_container.textContent
     const words = container_text.split(' ')
     for (let index = 0; index < words.length; index++){
         console.log('SPACED TEXT FOR LOOP')
         const word = words[index];
-        // If a word in the text has more 42 chars
-        if (word.length > 42){
+        // If a word in the text has more 40 chars
+        if (word.length > 40){
             // split the word into different words
-            // until each one have less than 42 chars
-            words[index] = split_word(word, 42).join(' ')
+            // until each one have less than 40 chars
+            words[index] = split_word(word, 40).join(' ')
         }
     }
     // returns a text with trailing spaces
     // in every word to display it properly
-    console.log('TEXT WAS SPACED')
-    return words.join(' ')
+    text_container.textContent = words.join(' ')
+    console.log('TEXT WAS SPACED:', container_text !== text_container.textContent)
 }
 
 export {get, post, modifyNotification,
