@@ -509,10 +509,11 @@ function filter_by_value(value, element_list){
 }
 
 /**
- * 
- * @param {String} word 
- * @param {Number} length 
- * @returns {Array}
+ * Splits a word into a list of sub-words which contains
+ * the number of characters in the word divided into equal parts
+ * @param {String} word The word to be splited.
+ * @param {Number} length The number of characters each sub-word sould have.
+ * @returns {Array} A list containing all the sub-words from word.
  */
 function split_word(word, length){
     console.log('STARTING SPLITTING')
@@ -529,9 +530,9 @@ function split_word(word, length){
 
 
 /**
- * 
- * @param {String} text_id 
- * @returns {String}
+ * Adds spaces in every word inside a text if the word it's too long.
+ * @param {String} text_id The id of the HTML element that contains the text.
+ * @returns {String} The spaced text.
  */
 function space_text(text_id){
     const text_container = document.getElementById(`text-${text_id}`)

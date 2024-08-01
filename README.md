@@ -3,7 +3,7 @@
 
 ## DO RIGHT NOW
 
-- Document and fix space_text() code (Because I sometimes the textContent will not be splitted properly...).
+- Fix space_text() code (Because I sometimes the textContent will not be splitted properly...).
 - Redesign the register views (CSS).
   - Organize the fields: use two columns for that:
     - [Rendering fields manually.](https://docs.djangoproject.com/en/5.0/topics/forms/#rendering-fields-manually)
