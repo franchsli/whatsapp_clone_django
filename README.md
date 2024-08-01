@@ -3,7 +3,7 @@
 
 ## DO RIGHT NOW
 
-- Fix space_text() code (Because I sometimes the textContent will not be splitted properly...).
+- Justify message's text.
 - Redesign the register views (CSS).
   - Organize the fields: use two columns for that:
     - [Rendering fields manually.](https://docs.djangoproject.com/en/5.0/topics/forms/#rendering-fields-manually)
@@ -44,7 +44,6 @@
 - Make the silence contact logic (booleand field [think it bro])
 - Review all the code, optimize it and delete spaguetti code.
 - Check for duplicated CSS.
-- Make messages wider to increase max char per word back to 42.
 - Check which apis are still necesary.
 
 ## Improvements

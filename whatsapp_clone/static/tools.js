@@ -541,11 +541,11 @@ function space_text(text_id){
     for (let index = 0; index < words.length; index++){
         console.log('SPACED TEXT FOR LOOP')
         const word = words[index];
-        // If a word in the text has more 40 chars
-        if (word.length > 40){
+        // If a word in the text has more than 33 chars
+        if (word.length > 33){
             // split the word into different words
-            // until each one have less than 40 chars
-            words[index] = split_word(word, 40).join(' ')
+            // until each one have less than 33 chars
+            words[index] = split_word(word, 33).join('-')
         }
     }
     // returns a text with trailing spaces
