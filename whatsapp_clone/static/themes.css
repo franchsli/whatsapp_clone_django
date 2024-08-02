@@ -7,6 +7,8 @@
     --bs-themed-success-rgb: rgb(26, 161, 121);
     --bs-themed-success-darker-rgb: var(--bs-success-bg-subtle);
     --bs-heading-color: white;
+    --bs-modal-bg: var(--bs-dark-bg-subtle);
+    --bs-body-bg-rgb: var(--bs-dark-bg-subtle);
     
     span, button, a, h1, h2, h3, h4, h5, h6, p, form, label {
         color: white;
@@ -43,8 +45,9 @@
     .form-control{
         color: white;
     }
-    .toast {
+    .toast, .modal-content {
         --bs-toast-color: white;
+        background-color: var(--bs-dark-bg-subtle);
     }
     .last-chat-message-date, .last-chat-message {
         color: var(--bs-tertiary-color);

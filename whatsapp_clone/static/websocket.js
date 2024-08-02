@@ -313,8 +313,8 @@ chat_websocket.addEventListener('open', () => {
             tools.modifyNotification('Server', 
             'The contact was created successfully! Update your contacts list by clicking the "contacts" button.')
             const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
+            notification_audio.play()            
             toastBootstrap.show()
-            notification_audio.play()
             // clears phonenumber and contact name fields.
             inputs[1].value = ''
             inputs[2].value = ''
@@ -508,8 +508,8 @@ chat_websocket.addEventListener('message',async (event) => {
             const toastNotification = document.getElementById('liveToast')
             tools.modifyNotification(sender_username, text)
             const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
-            toastBootstrap.show()
             message_received_audio.play()
+            toastBootstrap.show()
             tools.update_chat_list()
 
         }
@@ -627,8 +627,8 @@ status_websocket.addEventListener('message', async (event) => {
                 const toastNotification = document.getElementById('liveToast')
                 tools.modifyNotification('Server', `${status_sender_data[0].name} uploaded a status!!!`)
                 const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
+                status_notification_audio.play()                
                 toastBootstrap.show()
-                status_notification_audio.play()
 
             }
         }
@@ -648,9 +648,8 @@ status_websocket.addEventListener('message', async (event) => {
             const toastNotification = document.getElementById('liveToast')
             tools.modifyNotification('Server', 'Status uploaded successfully!')
             const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
-            toastBootstrap.show()
             notification_audio.play()
-
+            toastBootstrap.show()
         }
 
     }
