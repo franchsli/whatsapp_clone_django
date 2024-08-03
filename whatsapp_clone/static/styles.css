@@ -90,7 +90,7 @@ main,  #base {
   };
 }
 
-@keyframes show_list {
+@keyframes show_me {
   /**
   Cool animation for showing
   lists and it's elements
@@ -105,10 +105,9 @@ main,  #base {
 }
 
 .animated-list{
-  animation-name: show_list;
+  animation-name: show_me;
   animation-duration: 1s;
   animation-play-state: paused;
-
 }
 
 .animated-dropdown {

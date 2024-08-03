@@ -3,11 +3,12 @@
 
 ## DO RIGHT NOW
 
+- Add animations:
+  - To modals (use show-me animation).
 - Redesign the register views (CSS).
   - Organize the fields: use two columns for that:
     - [Rendering fields manually.](https://docs.djangoproject.com/en/5.0/topics/forms/#rendering-fields-manually)
     - [Use Crispy forms fieldset.](https://www.youtube.com/watch?v=nBmFlZTh1ww)
-- Add more animations.
 - Implement something to show a close look when a image in a chat is clicked
   (like Whatsapp).
 - Add status complex status creation (like Whatsapp).
