@@ -46,6 +46,8 @@
 
 ## Improvements
 
+- Make it so if a chat is clicked but is already displayed the request won't be sent
+  to the server.
 - Use with statements in frecuently used field lookups in the HTML.
 - Implement a dynamic status length:
   - If its a photo 5 secs.
@@ -97,6 +99,7 @@ Also don't forget to change the channel layer to redis.
 
 **RESOURCES**:
 
+- [HTMX Swap Animations](https://htmx.org/examples/animations/)
 - [Custom theme modes](https://getbootstrap.com/docs/5.3/customize/color-modes/#adding-theme-colors)
 - [Interface icons](https://www.flaticon.com/uicons/interface-icons)
 - [Outer queryset](https://docs.djangoproject.com/en/5.0/ref/models/expressions/#referencing-columns-from-the-outer-queryset)
