@@ -8,7 +8,6 @@
     - [Rendering fields manually.](https://docs.djangoproject.com/en/5.0/topics/forms/#rendering-fields-manually)
     - [Use Crispy forms fieldset.](https://www.youtube.com/watch?v=nBmFlZTh1ww)
 - Add more animations.
-- Add more sounds (if possible).
 - Implement something to show a close look when a image in a chat is clicked
   (like Whatsapp).
 - Add status complex status creation (like Whatsapp).
@@ -40,9 +39,9 @@
   (i don't think so).....
 - Add something to delete statuses automatically every 24 hours (cronjobs maybe).
 - Rework statuses UI.
+- Add more sounds (if possible).
 - Make the silence contact logic (booleand field [think it bro])
 - Review all the code, optimize it and delete spaguetti code.
-- Check for duplicated CSS.
 - Check which apis are still necesary.
 
 ## Improvements
@@ -66,10 +65,6 @@ Also don't forget to change the channel layer to redis.
 
 ## BUGS TO FIX
 
-- Some messages width break the chat container after using 'show more'.
-  - This happens only when the text has a long chain of chars without a single space.
-    **POSSIBLE FIX** Only if the text is long enough get a list of 'words'
-    in the text if the word is too long add espaces every x number of characters.
 - When a user archives a contact, all group-like chats in which the contact is in
   will be archived as well.
 - When a user deletes a chat, the chat will be deleted from all the users in the chat
