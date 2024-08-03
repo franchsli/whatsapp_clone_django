@@ -1,8 +1,9 @@
 [data-bs-theme="dark"] {
+    --primary-color: black;
     --bs-body-color: var(--bs-dark-bg-subtle);
     --bs-body-color-rgb: #{to-rgb($black)};
-    --bs-body-bg: #{$black};
-    --bs-body-bg-rgb: #{to-rgb($black)};
+    --bs-body-bg: var(--primary-color)
+    --bs-body-bg-rgb: #{to-rgb(--primary-color)};
     --bs-tertiary-bg: var(--bs-tertiary-bg);
     --bs-themed-success-rgb: rgb(26, 161, 121);
     --bs-themed-success-darker-rgb: var(--bs-success-bg-subtle);

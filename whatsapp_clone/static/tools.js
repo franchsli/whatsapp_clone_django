@@ -126,10 +126,6 @@ function toggleReadMore(text_id) {
         }
         content_html.insertAdjacentElement('afterend', toggle_button)
     }
-    content_html.onclick = () => {
-        console.log(content)
-    }
-
 }
 
 /**
@@ -516,12 +512,10 @@ function filter_by_value(value, element_list){
  * @returns {Array} A list containing all the sub-words from word.
  */
 function split_word(word, length){
-    console.log('STARTING SPLITTING')
     const original_len = word.length
     let words = []
     let counter = 0
     while (original_len !== words.join('').length && counter < original_len){
-        console.log('SPITTING WORD...')
         words.push(word.slice(counter, length + counter - 1))
         counter += length
     }
@@ -539,7 +533,6 @@ function space_text(text_id){
     const container_text = text_container.textContent
     const words = container_text.split(' ')
     for (let index = 0; index < words.length; index++){
-        console.log('SPACED TEXT FOR LOOP')
         const word = words[index];
         // If a word in the text has more than 33 chars
         if (word.length > 33){
@@ -551,7 +544,6 @@ function space_text(text_id){
     // returns a text with trailing spaces
     // in every word to display it properly
     text_container.textContent = words.join(' ')
-    console.log('TEXT WAS SPACED:', container_text !== text_container.textContent)
 }
 
 export {get, post, modifyNotification,
