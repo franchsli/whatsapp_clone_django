@@ -27,18 +27,18 @@
     <button id="create-chat" class="action me-3 btn" type="button" data-bs-toggle="modal"
       data-bs-target="#NewChat"><span><i class="bi bi-chat-left-dots" data-bs-toggle="tooltip" data-bs-title="Add chat"></i></span></button>
     <button id="view-status" class="action me-3 btn" hx-get="{% url 'statuses' %}"
-      hx-target="#chats-and-more"><span><i class="bi bi-plus-circle-dotted" data-bs-toggle="tooltip" data-bs-title="Statuses"></i></span></button>
+      hx-target="#chats-and-more"><span><i class="bi bi-patch-plus" data-bs-toggle="tooltip" data-bs-title="Statuses"></i></span></button>
     <div class="dropdown">
       <button id="settings" class="action me-3 btn" data-bs-toggle="dropdown"
         onclick="run_element_animation(this.nextElementSibling)"><span><i
             class="bi bi-three-dots-vertical" data-bs-toggle="tooltip" data-bs-title="Settings"></i></span></button>
       <ul class="dropdown-menu animated-dropdown">
-        <li><button class="dropdown-item">New group</button></li>
-        <li><button class="dropdown-item">New community</button></li>
-        <li><button class="dropdown-item">Starred messages</button></li>
-        <li><button class="dropdown-item">Select chats</button></li>
-        <li><button class="dropdown-item">Settings</button></li>
-        <li><a class="dropdown-item" href="{% url 'exit' %}">Log out</a></li>
+        <li><button class="dropdown-item">New group <i class="bi bi-plus-circle"></i></button></li>
+        <li><button class="dropdown-item">New community <i class="bi bi-house-add"></i></button></li>
+        <li><button class="dropdown-item">Starred messages <i class="bi bi-bookmark-star"></i></button></li>
+        <li><button class="dropdown-item">Select chats <i class="bi bi-person-circle"></i></button></li>
+        <li><button class="dropdown-item">Settings <i class="bi bi-person-gear"></i></button></li>
+        <li><a class="dropdown-item" href="{% url 'exit' %}">Log out <i class="bi bi-escape"></i></a></li>
       </ul>
     </div>
   </nav>
