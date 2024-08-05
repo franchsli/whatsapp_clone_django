@@ -32,11 +32,11 @@
   {% endwith %}
 
 {% if message.sender_user == request.user %}
-<li class="list-unstyled-item me-3 mt-3 rounded message user-message dropdown"
+<li class="list-unstyled-item me-3 mt-3 rounded message user-message dropdown blur-out"
   oncontextmenu="showDropdown(event, 'customDropdown-{{message.id}}')"
   data-date="{{message.date|date:'c'}}">
 {% else %}
-<li class="list-unstyled-item ms-3 mt-3 rounded message contact-message"
+<li class="list-unstyled-item ms-3 mt-3 rounded message contact-message blur-out"
 data-date="{{message.date|date:'c'}}">
 {% endif %}
   {% include "layouts/partials/components/message.html" %}
