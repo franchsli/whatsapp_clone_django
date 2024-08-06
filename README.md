@@ -5,7 +5,6 @@
 
 - Add animations to:
   - Going to statuses, archived chats, chats and contacts views and also using chats filters.
-  - Forms errors (use not_empty for this)
 - Redesign the register views (CSS).
   - Organize the fields: use two columns for that:
     - [Rendering fields manually.](https://docs.djangoproject.com/en/5.0/topics/forms/#rendering-fields-manually)
@@ -69,6 +68,7 @@ Also don't forget to change the channel layer to redis.
 
 ## BUGS TO FIX
 
+- The status form notification will show up even if the form was not submitted or it is empty.
 - When a user archives a contact, all group-like chats in which the contact is in
   will be archived as well.
 - When a user deletes a chat, the chat will be deleted from all the users in the chat

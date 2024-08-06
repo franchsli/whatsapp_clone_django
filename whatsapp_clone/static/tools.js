@@ -106,6 +106,9 @@ function showDropdown(event, dropdown_id) {
 function run_element_animation(element){
     try {
         element.style.animationPlayState = 'running';
+        element.addEventListener('animationend', () => {
+            element.style.animationPlayState = 'paused';
+        })
     } catch (error) {
         console.log(`This does not have an animation:\n${element}`)
     }
@@ -150,9 +153,12 @@ function checked(form){
  */
 function not_empty(form){
     for (let index = 0; index < form.elements.length; index++) {
-        let element = form.elements[index];
+        const element = form.elements[index];
         if (element.value.trim() != '' && element.type !== 'hidden'){
             return true}
+        else{
+            run_element_animation(element)
+        }
     }
     return false
 }

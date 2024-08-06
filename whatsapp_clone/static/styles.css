@@ -224,7 +224,7 @@ main,  #base {
   100%{filter:blur(12px);opacity:0}
 }
 
-.shake-horizontal{
+.shake-horizontal, input, textarea{
   animation:shake-horizontal 0.8s linear both;
   animation-play-state: paused;
 } 
