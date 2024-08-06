@@ -37,47 +37,6 @@ function scroll_to_bottom(){
     }
 }
 
-
-/**
- * Creates all the HTML code for a message and adds it to the current opened chat.
- * @param {*} text The text of the message.
- * @param {String} image_src The path of the image.
- * @param {Boolean} sent_by_auth_user True if the one who sent the message is the actual authenticated user, False otherwise.
- */
-function create_message_html(text, image_src="undefined", sent_by_auth_user=true){
-    const messages = document.getElementById('chat-messages')
-    const message_container = document.createElement('div')
-    const new_message = document.createElement('li')
-    const message_text = document.createElement('span')
-    const message_image = document.createElement('img')
-
-    // display the message image
-    message_image.classList.add('mw-100', 'mh-100')
-    message_image.src = image_src
-    message_image.alt = ''
-    // set the style acording to who sent the message
-    if (sent_by_auth_user){
-        new_message.classList.add('list-unstyled-item', 'me-3',
-             'mt-3', 'rounded', 'message', 'user-message')
-    }
-    else {
-        new_message.classList.add('list-unstyled-item', 'ms-3', 'mt-3',
-             'rounded', 'message', 'contact-message')
-    }
-    message_container.classList.add('d-flex', 'flex-column', 'p-2')
-    // display the message text
-    message_text.innerText = text
-
-    message_container.appendChild(message_image)
-    message_container.appendChild(message_text)
-    new_message.appendChild(message_container)
-    messages.appendChild(new_message)
-    scroll_to_bottom()
-
-}
-
-
-
 /**
  * Manipulates the notification toast in the HTML
  * @param {String} contact_name The name of the contact who sent the message.
@@ -92,27 +51,12 @@ function modifyNotification(contact_name, message){
 
 }
 
-
-/**
- * Unshowns all the actual showing collapses in the HTML.
- */
-function switch_collapse(){
-    const collapse_parts = document.querySelectorAll('.collapse')
-    collapse_parts.forEach(collapse => {
-        if (collapse.classList.contains('show')){
-            collapse.classList.remove('show')
-        }
-        
-    });
-}
-
 /**
  * Adds a button that show more or less of the specified text content.
  * @param {String} text_id The id of the HTML element that contains the text.
  */
 function toggleReadMore(text_id) {
     const content_html = document.getElementById(`text-${text_id}`)
-    const content = content_html.innerText
     if (content_html.clientHeight === 200){
         const toggle_button = document.createElement('button')
         toggle_button.innerText = 'Show more'
@@ -211,7 +155,6 @@ function not_empty(form){
             return true}
     }
     return false
-
 }
 
 /**
@@ -254,7 +197,7 @@ function load_emojis(emoji_list_name, parent_element){
                 display_button_inner_text(new_button, input)
             }
             parent_element.appendChild(new_button)
-    }
+        }
     })
     .catch((error) => {console.log(error.message)})
 }
@@ -467,8 +410,9 @@ function remove_duplicates(class_name){
  */
 function change_element_color(desired_color, target_element_id){
     const target_element_HTML = document.getElementById(target_element_id)
-    target_element_HTML.style.color = desired_color
-  
+    if (target_element_HTML){
+        target_element_HTML.style.color = desired_color
+    }
 }
 
 /**
@@ -547,7 +491,7 @@ function space_text(text_id){
 }
 
 export {get, post, modifyNotification,
-    scroll_to_bottom, create_message_html, toggleReadMore, 
+    scroll_to_bottom, toggleReadMore, 
     showDropdown, run_element_animation, checked, 
     not_empty, toggle_element_inner_text, load_emojis, 
     switch_emojis, switch_checkboxes, toggle_element_display, 

@@ -5,6 +5,7 @@
 
 - Add animations to:
   - Going to statuses, archived chats, chats and contacts views and also using chats filters.
+  - Forms errors (use not_empty for this)
 - Redesign the register views (CSS).
   - Organize the fields: use two columns for that:
     - [Rendering fields manually.](https://docs.djangoproject.com/en/5.0/topics/forms/#rendering-fields-manually)
