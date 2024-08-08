@@ -3,6 +3,12 @@
 
 ## DO RIGHT NOW
 
+- The status form notification will show up even if the form was not submitted or it is empty.
+  In order to fix this and prevent future bugs, the following things need to be done:
+  - **FIX**: Add more functionality to not_empty():
+    - Add an optional parameter to exclude all the inputs with the excluded type
+    (or all the inputs that have the excluded parameter)
+  - **FIX 2**: Make a fully_filled() that returns true only if all the inputs are filled.
 - Add animations to:
   - Going to statuses, archived chats, chats and contacts views and also using chats filters.
 - Redesign the register views (CSS).
@@ -68,7 +74,6 @@ Also don't forget to change the channel layer to redis.
 
 ## BUGS TO FIX
 
-- The status form notification will show up even if the form was not submitted or it is empty.
 - When a user archives a contact, all group-like chats in which the contact is in
   will be archived as well.
 - When a user deletes a chat, the chat will be deleted from all the users in the chat

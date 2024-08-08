@@ -369,6 +369,7 @@ chat_websocket.addEventListener('open', () => {
 
     status_submit_button.onclick = (event) => {
         event.preventDefault()
+        console.log(tools.not_empty(status_form))
         if (tools.not_empty(status_form)){
             const status_input = document.getElementById('id_text')
             const image_container = document.getElementById('status-imagePreview')

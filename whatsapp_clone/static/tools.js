@@ -155,7 +155,9 @@ function not_empty(form){
     for (let index = 0; index < form.elements.length; index++) {
         const element = form.elements[index];
         if (element.value.trim() != '' && element.type !== 'hidden'){
-            return true}
+            console.log('THIS ELEMENT IS NOT EMPTY', element)
+            return true
+        }
         else{
             run_element_animation(element)
         }
