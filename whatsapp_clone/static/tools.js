@@ -382,7 +382,6 @@ function switch_element_visibility(element, display_type='block'){
     else{
         element.style.display = display_type
     }
-
 }
 
 /**
@@ -497,6 +496,21 @@ function space_text(text_id){
     // returns a text with trailing spaces
     // in every word to display it properly
     text_container.textContent = words.join(' ')
+}
+
+/**
+ * Returns true only if only all the inputs in the given form are filled.
+ * @param {HTMLFormElement} form 
+ */
+function fully_filled(form){
+    const inputs = form.elements
+    for (let index = 0; index < inputs.length; index++) {
+        const element = inputs[index];
+        if (element.value.trim() === ''){
+            return false
+        }
+    }
+    return true;
 }
 
 export {get, post, modifyNotification,
