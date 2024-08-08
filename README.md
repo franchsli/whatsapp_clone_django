@@ -5,9 +5,6 @@
 
 - The status form notification will show up even if the form was not submitted or it is empty.
   In order to fix this and prevent future bugs, the following things need to be done:
-  - **FIX**: Add more functionality to not_empty():
-    - Add an optional parameter to exclude all the inputs with the excluded type
-    (or all the inputs that have the excluded parameter)
   - **FIX 2**: Make a fully_filled() that returns true only if all the inputs are filled.
 - Add animations to:
   - Going to statuses, archived chats, chats and contacts views and also using chats filters.

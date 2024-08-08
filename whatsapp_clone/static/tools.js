@@ -149,13 +149,14 @@ function checked(form){
 /**
  * Returns true if any input in the provided form is not empty, false otherwise.
  * @param {HTMLFormElement} form 
+ * @param {String} excluded_type The type of input that will be excluded from the
+ * verification
  * @returns {Boolean}
  */
-function not_empty(form){
+function not_empty(form, excluded_type='color'){
     for (let index = 0; index < form.elements.length; index++) {
         const element = form.elements[index];
-        if (element.value.trim() != '' && element.type !== 'hidden'){
-            console.log('THIS ELEMENT IS NOT EMPTY', element)
+        if (element.value.trim() != '' && element.type !== 'hidden' && element.type !== excluded_type){
             return true
         }
         else{
