@@ -3,12 +3,6 @@
 
 ## DO RIGHT NOW
 
-- Form empty error animations only play once:
-  - **FIX**:
-    - Change the CSS to animate a single class
-    - And modify run_element_animation():
-      - Take the 'animation_class_name' parameter
-      and toggle it in the element to run the animation.
 - Add animations to:
   - Going to statuses, archived chats, chats and contacts views and also using chats filters.
 - Redesign the register views (CSS).

@@ -224,9 +224,9 @@ main,  #base {
   100%{filter:blur(12px);opacity:0}
 }
 
-.shake-horizontal, input, textarea{
+.shake-horizontal{
   animation:shake-horizontal 0.8s linear both;
-  animation-play-state: paused;
+  animation-play-state: running;
 } 
 @keyframes shake-horizontal{
   0%,100%{transform:translateX(0)}

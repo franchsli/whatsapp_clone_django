@@ -100,17 +100,29 @@ function showDropdown(event, dropdown_id) {
 }
 
 /**
- * Runs the animation in a HTMLelement if and only if it has one.
- * @param {HTMLElement} element 
+ * Runs the animation of the provided class
+ *  in a HTMLelement, if no class name is provided, 
+ * the element animation will run.
+ * @param {HTMLElement} element
+ * @param {String} animation_class_name
  */
-function run_element_animation(element){
+function run_element_animation(element, animation_class_name=''){
     try {
-        element.style.animationPlayState = 'running';
-        element.addEventListener('animationend', () => {
-            element.style.animationPlayState = 'paused';
-        })
+        if (animation_class_name === ''){
+            element.style.animationPlayState = 'running';
+            element.addEventListener('animationend', () => {
+                element.style.animationPlayState = 'paused';
+            })
+        }
+        else{
+            element.classList.add(animation_class_name)
+            element.addEventListener('animationend', () => {
+                element.classList.remove(animation_class_name)
+            })
+        }
+
     } catch (error) {
-        console.log(`This does not have an animation:\n${element}`)
+        console.log(`This element does not have an animation:\n${element}`)
     }
     
 }
@@ -160,7 +172,7 @@ function not_empty(form, excluded_type='color'){
             return true
         }
         else{
-            run_element_animation(element)
+            run_element_animation(element, 'shake-horizontal')
         }
     }
     return false
