@@ -40,7 +40,7 @@ function scroll_to_bottom(){
 /**
  * Manipulates the notification toast in the HTML
  * @param {String} contact_name The name of the contact who sent the message.
- * @param {*} message The text of the message that was sent.
+ * @param {String} message The text of the message that was sent.
  */
 function modifyNotification(contact_name, message){
     const toastNotification = document.getElementById('liveToast')
@@ -500,7 +500,8 @@ function space_text(text_id){
 
 /**
  * Returns true only if only all the inputs in the given form are filled.
- * @param {HTMLFormElement} form 
+ * @param {HTMLFormElement} form
+ * @return {Boolean}
  */
 function fully_filled(form){
     const inputs = form.elements
