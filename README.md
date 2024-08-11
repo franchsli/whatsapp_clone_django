@@ -7,8 +7,9 @@
   - Going to statuses, archived chats, chats and contacts views and also using chats filters.
 - Redesign the register views (CSS).
   - Organize the fields: use two columns for that:
-    - [Rendering fields manually.](https://docs.djangoproject.com/en/5.0/topics/forms/#rendering-fields-manually)
     - [Use Crispy forms fieldset.](https://www.youtube.com/watch?v=nBmFlZTh1ww)
+    - [Crispy forms fieldset docs.](https://django-crispy-forms.readthedocs.io/en/latest/layouts.html)
+    - [Crispy form fieldset example (2014)](https://www.dreamsolution.nl/2014-09-21-django-crispy-forms.html)
 - Implement something to show a close look when a image in a chat is clicked
   (like Whatsapp).
 - Add status complex status creation (like Whatsapp).
