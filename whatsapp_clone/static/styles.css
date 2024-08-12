@@ -200,19 +200,6 @@ main,  #base {
   600ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from-right;
 }
 
-.slide-response {
-  view-transition-name: slide-response;
-}
-
-::view-transition-old(slide-response) {
-  animation: 180ms cubic-bezier(0.4, 0, 1, 1) both fade-out,
-  600ms cubic-bezier(0.4, 0, 0.2, 1) both slide-to-left;
-}
-::view-transition-new(slide-response) {
-  animation: 420ms cubic-bezier(0, 0, 0.2, 1) 90ms both fade-in,
-  600ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from-right;
-}
-
 .modal-content, .scale-up-center{
   animation:scale-up-center 0.4s; 
 } 

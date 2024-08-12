@@ -3,8 +3,9 @@
 
 ## DO RIGHT NOW
 
-- Add animations to:
-  - Going to statuses, archived chats, chats and contacts views and also using chats filters.
+- Create fake data with Faker to test average project speed.
+  - [Faker docs](https://pypi.org/project/Faker/).
+- Create the 'Starred Messages' logic.
 - Redesign the register views (CSS).
   - Organize the fields: use two columns for that:
     - [Use Crispy forms fieldset.](https://www.youtube.com/watch?v=nBmFlZTh1ww)
