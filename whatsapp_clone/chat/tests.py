@@ -4,6 +4,7 @@ from typing import Optional
 from django.utils import timezone
 from django.core.files.base import ContentFile
 from .tools import ENCODED_IMAGE
+from faker import Faker
 import base64
 
 
@@ -11,7 +12,7 @@ import base64
 class UserTest(TestCase):
     def setUp(self) -> None:
         self.user = User.objects.create(
-            id=1, phone_number="3145538787", username="testfranch"
+            id=1, phone_number="3145538787", username=Faker().name()
         )
 
     def test_user_has_not_photo(self):
@@ -31,7 +32,7 @@ class UserTest(TestCase):
 class MessageTest(TestCase):
     def setUp(self) -> None:
         self.user = User.objects.create(
-            id=1, phone_number="3145538787", username="testfranch"
+            id=1, phone_number="3145538787", username=Faker().name()
         )
         self.chat = Chat.objects.create()
         self.chat.users.add(self.user)
@@ -56,10 +57,10 @@ class MessageTest(TestCase):
 class ChatTest(TestCase):
     def setUp(self) -> None:
         self.user = User.objects.create(
-            id=1, phone_number="3145538787", username="testfranch"
+            id=1, phone_number="3145538787", username=Faker().name()
         )
         self.another_user = User.objects.create(
-            id=2, phone_number="3105538780", username="testcontact"
+            id=2, phone_number="3105538780", username=Faker().name()
         )
         self.chat = Chat.objects.create()
         self.chat.users.add(self.user, self.another_user)
@@ -71,7 +72,6 @@ class ChatTest(TestCase):
         self.another_message = Message.objects.create(
             id=2, sender_user=self.another_user, chat=self.chat
         )
-
         self.another_chat.admins.add(self.user)
         self.another_chat.save()
 
@@ -116,7 +116,7 @@ class StatusTest(TestCase):
 
     def setUp(self) -> None:
         self.user = User.objects.create(
-            id=1, phone_number="3145538787", username="testfranch"
+            id=1, phone_number="3145538787", username=Faker().name()
         )
         self.status = Status.objects.create(id=1, uploaded_by=self.user)
 
@@ -131,7 +131,7 @@ class StatusTest(TestCase):
         self.assertFalse(Status.objects.filter(id=2).exists())
 
     def test_text_only_status_created(self):
-        self.create_status(2, self.user, "HOLA MI GENTEEEEE")
+        self.create_status(2, self.user, Faker().text())
         self.assertTrue(Status.objects.filter(id=2).exists())
 
     def test_image_only_status_created(self):
@@ -139,7 +139,7 @@ class StatusTest(TestCase):
         self.assertTrue(Status.objects.filter(id=3).exists())
 
     def test_status_text_only(self):
-        self.create_status(4, self.user, "ADIOS MI GENTEEEEE")
+        self.create_status(4, self.user, Faker().text())
         status_instance = Status.objects.get(id=4)
         self.assertTrue(status_instance.has_text and status_instance.has_image == False)
 
@@ -149,6 +149,6 @@ class StatusTest(TestCase):
         self.assertTrue(status_instance.has_image and status_instance.has_text == False)
 
     def test_full_status(self):
-        self.create_status(6, self.user, "TEST", ENCODED_IMAGE)
+        self.create_status(6, self.user, Faker().text(), ENCODED_IMAGE)
         status_instance = Status.objects.get(id=6)
         self.assertTrue(status_instance.has_image and status_instance.has_text)
