@@ -11,8 +11,12 @@ import base64
 # Create your tests here.
 class UserTest(TestCase):
     def setUp(self) -> None:
+        # Fake data variables:
+        self.fake = Faker()
+        self.fake_name = self.fake.name()
+        self.fake_text = self.fake.text()
         self.user = User.objects.create(
-            id=1, phone_number="3145538787", username=Faker().name()
+            id=1, phone_number="3145538787", username=self.fake_name
         )
 
     def test_user_has_not_photo(self):
@@ -31,8 +35,13 @@ class UserTest(TestCase):
 
 class MessageTest(TestCase):
     def setUp(self) -> None:
+        # Fake data variables:
+        self.fake = Faker()
+        self.fake_name = self.fake.name()
+        self.fake_text = self.fake.text()
+
         self.user = User.objects.create(
-            id=1, phone_number="3145538787", username=Faker().name()
+            id=1, phone_number="3145538787", username=self.fake_name
         )
         self.chat = Chat.objects.create()
         self.chat.users.add(self.user)
@@ -56,11 +65,16 @@ class MessageTest(TestCase):
 
 class ChatTest(TestCase):
     def setUp(self) -> None:
+        # Fake data variables:
+        self.fake = Faker()
+        self.fake_name = self.fake.name()
+        self.fake_text = self.fake.text()
+
         self.user = User.objects.create(
-            id=1, phone_number="3145538787", username=Faker().name()
+            id=1, phone_number="3145538787", username=self.fake_name
         )
         self.another_user = User.objects.create(
-            id=2, phone_number="3105538780", username=Faker().name()
+            id=2, phone_number="3105538780", username=self.fake_name
         )
         self.chat = Chat.objects.create()
         self.chat.users.add(self.user, self.another_user)
@@ -115,8 +129,13 @@ class StatusTest(TestCase):
                 new_status.save()
 
     def setUp(self) -> None:
+        # Fake data variables:
+        self.fake = Faker()
+        self.fake_name = self.fake.name()
+        self.fake_text = self.fake.text()
+        
         self.user = User.objects.create(
-            id=1, phone_number="3145538787", username=Faker().name()
+            id=1, phone_number="3145538787", username=self.fake_name
         )
         self.status = Status.objects.create(id=1, uploaded_by=self.user)
 
@@ -131,7 +150,7 @@ class StatusTest(TestCase):
         self.assertFalse(Status.objects.filter(id=2).exists())
 
     def test_text_only_status_created(self):
-        self.create_status(2, self.user, Faker().text())
+        self.create_status(2, self.user, self.fake_text)
         self.assertTrue(Status.objects.filter(id=2).exists())
 
     def test_image_only_status_created(self):
@@ -139,7 +158,7 @@ class StatusTest(TestCase):
         self.assertTrue(Status.objects.filter(id=3).exists())
 
     def test_status_text_only(self):
-        self.create_status(4, self.user, Faker().text())
+        self.create_status(4, self.user, self.fake_text)
         status_instance = Status.objects.get(id=4)
         self.assertTrue(status_instance.has_text and status_instance.has_image == False)
 
@@ -149,6 +168,6 @@ class StatusTest(TestCase):
         self.assertTrue(status_instance.has_image and status_instance.has_text == False)
 
     def test_full_status(self):
-        self.create_status(6, self.user, Faker().text(), ENCODED_IMAGE)
+        self.create_status(6, self.user, self.fake_text, ENCODED_IMAGE)
         status_instance = Status.objects.get(id=6)
         self.assertTrue(status_instance.has_image and status_instance.has_text)
