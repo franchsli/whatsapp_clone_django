@@ -355,7 +355,7 @@ def append_message(request, chat_id):
 def starred_messages(request):
     chats_list = list(request.user.chats.values_list("id", flat=True))
     messages = Message.objects.filter(chat__in=chats_list, starred_by__id=request.user.id)
-    return HttpResponse(f'THESE ARE THE STARRED MESSAGES, {messages}')
+    return render(request, "layouts/partials/starred_messages.html", {"messages":messages})
 
 
 def update_chat_form(request):
