@@ -39,6 +39,7 @@ urlpatterns = [
         name="previous_messages",
     ),
     path("append_message/<int:chat_id>/", views.append_message, name="append_message"),
+    path("starred_messages/", views.starred_messages, name="starred_messages"),
     path("update_chat_form/", views.update_chat_form, name="update_chat_form"),
     path("statuses/", views.get_statuses, name="statuses"),
     path("create_status/", views.create_status, name="create_status"),

@@ -73,7 +73,7 @@ class Message(models.Model):
     edited = models.BooleanField(blank=False, null=False, default=False)
     read = models.BooleanField(blank=False, null=False, default=False)
     chat = models.ForeignKey(Chat, on_delete=models.CASCADE)
-    starred = models.BooleanField(default=False, blank=False, null=False)
+    starred_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name="starred_messages", null=True)
 
     def __str__(self) -> str:
         return self.text

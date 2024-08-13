@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Max
-from django.http import HttpResponseNotAllowed
+from django.http import HttpResponseNotAllowed, HttpResponse
 from .models import Chat, Contact, Message, Status
 from .forms import ChatForm, ContactForm, MessageForm, StatusForm
 from typing import Union
@@ -351,6 +351,11 @@ def append_message(request, chat_id):
         )
     else:
         return HttpResponseNotAllowed(["GET"])
+
+def starred_messages(request):
+    chats = request.user.chats
+    messages = Message.objects.filter(chat__in=chats, starred_by__id=request.user.id)
+    return HttpResponse(f'THESE ARE THE STARRED MESSAGES')
 
 
 def update_chat_form(request):
