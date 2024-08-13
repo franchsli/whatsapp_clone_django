@@ -1,0 +1,17 @@
+{% load static %}
+{% load filters %}
+
+<nav class="d-flex align-items-center justify-content-between">
+    <div class="row d-flex align-items-center p-3">
+        <button class="arrow action btn col-auto ms-2" hx-get="{% url 'display_user_ui' %}" 
+                hx-target="#chats-and-more">
+                <i class="bi bi-arrow-left"></i></button>
+        <span class="col-auto fs-5">Starred messages</span>
+    </div>
+</nav>
+
+<div id="starred-messages" class="mt-4">
+    <ul id="starred-messages-list" class="scroll-section list-group list-group-flush overflow-y-scroll" style="max-height: 590px; height: 500px;">
+        {% include 'layouts/partials/components/append_messages.html' %}    
+    </ul>
+</div>
