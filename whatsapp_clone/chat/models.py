@@ -81,6 +81,9 @@ class Message(models.Model):
     @property
     def has_image(self):
         return True if self.image else False
+    
+    def starred_by_user(self, user:User) -> bool:
+        return True if self.pk in user.starred_messages.values_list("id", flat=True) else False
 
 
 class Status(models.Model):
