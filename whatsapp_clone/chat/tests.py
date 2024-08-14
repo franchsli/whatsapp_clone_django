@@ -39,6 +39,12 @@ class MessageTest(TestCase):
         self.message = Message.objects.create(
             id=1, sender_user=self.user, chat=self.chat
         )
+        self.another_chat = Chat.objects.create()
+        self.another_chat.users.add(self.user)
+        self.message = Message.objects.create(
+            id=2, sender_user=self.user, chat=self.another_chat
+        )
+        self.chat_list = list(self.user.chats.values_list("id", flat=True))
 
     def test_message_has_not_image(self):
         self.assertFalse(self.message.has_image)
@@ -52,7 +58,13 @@ class MessageTest(TestCase):
         self.message.image = image_file
         self.message.save()
         self.assertTrue(self.message.has_image)
+    
+    def test_message_is_starred(self):
+        self.user.starred_messages.add(self.message)
+        self.assertTrue(Message.objects.filter(chat__in=self.chat_list, starred_by__id=self.user.pk).exists())
 
+    def test_message_is_not_starred(self):
+        self.assertFalse(Message.objects.filter(chat__in=self.chat_list, starred_by__id=self.user.pk).exists())
 
 class ChatTest(TestCase):
     def setUp(self) -> None:
