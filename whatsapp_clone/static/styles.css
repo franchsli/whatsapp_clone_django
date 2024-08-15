@@ -200,16 +200,6 @@ main,  #base {
   600ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from-right;
 }
 
-.modal-content, .scale-up-center{
-  animation:scale-up-center 0.4s; 
-} 
-.rotate-center, #view-status.htmx-request, #theme-toggler:active{
-  animation:rotate-center 0.1s
-} 
-
-.slide-left, .arrow.htmx-request{
-  animation:slide-left 0.4s linear both
-}
 @keyframes slide-left{
   0%{transform:translateX(0)}
   100%{transform:translateX(-100px)}
@@ -224,19 +214,6 @@ main,  #base {
   100%{transform:scale(1)} 
 }
 
-.blur-out{
-  animation:blur-out 0.4s linear both;
-  animation-play-state: paused;
-} 
-@keyframes blur-out{
-  0%{filter:blur(.01px);}
-  100%{filter:blur(12px);opacity:0}
-}
-
-.shake-horizontal{
-  animation:shake-horizontal 0.8s linear both;
-  animation-play-state: running;
-} 
 @keyframes shake-horizontal{
   0%,100%{transform:translateX(0)}
   10%,30%,50%,70%{transform:translateX(-10px)}
@@ -244,3 +221,28 @@ main,  #base {
   80%{transform:translateX(8px)}
   90%{transform:translateX(-8px)}
 }
+
+@keyframes vanish{
+  0%{opacity: 1;}
+  100%{opacity:0;}
+}
+
+.modal-content, .scale-up-center{
+  animation:scale-up-center 0.4s; 
+} 
+.rotate-center, #view-status.htmx-request, #theme-toggler:active{
+  animation:rotate-center 0.1s
+}
+.slide-left, .arrow.htmx-request{
+  animation:slide-left 0.4s linear both
+}
+
+.shake-horizontal{
+  animation:shake-horizontal 0.8s linear both;
+  animation-play-state: running;
+}
+
+.vanish{
+  animation:vanish 2s linear both;
+  animation-play-state: paused;
+} 
