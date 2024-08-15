@@ -15,6 +15,10 @@
     style="height: auto; width: auto; max-height: 200px; overflow: hidden; max-width: 300px;">{{message.text}}</span>
   {% endif %}
   <div class="message-info text-white-50" style="justify-self: end;">
+    <!-- ========== Show if the message is starred by the user or not ========== -->
+     {% if message.starred_by.pk == request.user.id %}
+      <span class="chat-message-starred"><i class="bi bi-star-fill"></i></span>
+     {% endif %}
     <!-- ========== Say if the message was edited or not ========== -->
     {% if message.edited %}
       <span class="chat-message-edited">Edited</span>
@@ -58,6 +62,10 @@
     style="height: auto; max-height: 200px; overflow: hidden;">{{message.text}}</span>
   {% endif %}
   <div class="message-info text-white-50" style="justify-self: end;">
+      <!-- ========== Show if the message is starred by the user or not ========== -->
+      {% if message.starred_by.pk == request.user.id %}
+      <span class="chat-message-starred"><i class="bi bi-star-fill"></i></span>
+      {% endif %}
       <!-- ========== Say if the message was edited or not ========== -->
       {% if message.edited %}
         <span class="chat-message-edited">Edited</span>

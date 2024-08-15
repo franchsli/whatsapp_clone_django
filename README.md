@@ -3,7 +3,6 @@
 
 ## DO RIGHT NOW
 
-- Add the star icon to starred messages in the chat.
 - Create fake data with Faker to test average project speed.
   - [Faker docs](https://pypi.org/project/Faker/).
 - Redesign the register views (CSS).
