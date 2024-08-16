@@ -1,6 +1,6 @@
 from django import template
 from django.db.models import QuerySet
-from chat.models import User, Chat
+from chat.models import User, Chat, Message
 from chat.tools import DEFAULT_USER_PHOTO_URL, get_contact_in_chat
 from typing import Union
 import re
@@ -39,13 +39,16 @@ def last_message(messages: QuerySet, data: str) -> str:
     Returns:
         str: The last message in the messages queryset if not empty, returns an empty string otherwise.
     """
-    latest_message = messages.latest("date")
-    # if the message's text is required but it's empty
-    # it means the contact sent a Photo
-    if data == "text" and len(latest_message.text) == 0:
-            return "Photo 📷"
-    else:
-        return getattr(latest_message, data)
+    try:
+        latest_message = messages.latest("date")
+        # if the message's text is required but it's empty
+        # it means the contact sent a Photo
+        if data == "text" and len(latest_message.text) == 0:
+                return "Photo 📷"
+        else:
+            return getattr(latest_message, data)
+    except Message.DoesNotExist:
+        return ''
 
 
 

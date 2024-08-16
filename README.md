@@ -3,8 +3,6 @@
 
 ## DO RIGHT NOW
 
-- Create fake data with Faker to test average project speed.
-  - [Faker docs](https://pypi.org/project/Faker/).
 - Redesign the register views (CSS).
   - Organize the fields: use two columns for that:
     - [Use Crispy forms fieldset.](https://www.youtube.com/watch?v=nBmFlZTh1ww)
@@ -99,8 +97,13 @@ Also don't forget to change the channel layer to redis.
 
 - If the unread counter badges are acting weird, see update_chat_list() at summon_chat.
 
+## SPEED TESTS RESULTS
+
+1. [16/08/2024] (RETRIEVE 1003 CHATS): 42.74s.
+
 **RESOURCES**:
 
+- [Faker docs](https://pypi.org/project/Faker/).
 - [HTMX Swap Animations](https://htmx.org/examples/animations/)
 - [Custom theme modes](https://getbootstrap.com/docs/5.3/customize/color-modes/#adding-theme-colors)
 - [Interface icons](https://www.flaticon.com/uicons/interface-icons)
