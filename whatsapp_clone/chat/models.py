@@ -73,7 +73,9 @@ class Message(models.Model):
     edited = models.BooleanField(blank=False, null=False, default=False)
     read = models.BooleanField(blank=False, null=False, default=False)
     chat = models.ForeignKey(Chat, on_delete=models.CASCADE)
-    starred_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name="starred_messages", null=True)
+    starred_by = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="starred_messages", null=True
+    )
 
     def __str__(self) -> str:
         return self.text
@@ -81,9 +83,13 @@ class Message(models.Model):
     @property
     def has_image(self):
         return True if self.image else False
-    
-    def starred_by_user(self, user:User) -> bool:
-        return True if self.pk in user.starred_messages.values_list("id", flat=True) else False
+
+    def starred_by_user(self, user: User) -> bool:
+        return (
+            True
+            if self.pk in user.starred_messages.values_list("id", flat=True)
+            else False
+        )
 
 
 class Status(models.Model):

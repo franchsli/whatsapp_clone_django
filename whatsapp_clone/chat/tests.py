@@ -44,6 +44,7 @@ class MessageTest(TestCase):
         self.another_message = Message.objects.create(
             id=2, sender_user=self.user, chat=self.another_chat
         )
+
     def test_message_has_not_image(self):
         self.assertFalse(self.message.has_image)
 
@@ -56,13 +57,14 @@ class MessageTest(TestCase):
         self.message.image = image_file
         self.message.save()
         self.assertTrue(self.message.has_image)
-    
+
     def test_message_is_starred(self):
         self.user.starred_messages.add(self.message)
         self.assertTrue(self.message.starred_by_user(self.user))
 
     def test_message_is_not_starred(self):
         self.assertFalse(self.another_message.starred_by_user(self.user))
+
 
 class ChatTest(TestCase):
     def setUp(self) -> None:
