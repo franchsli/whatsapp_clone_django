@@ -310,6 +310,12 @@ def delete_message(request, chat_id, message_id):
     else:
         return HttpResponseNotAllowed(["DELETE"])
 
+def star_message(request, message_id):
+    if request.method == 'PATCH':
+        pass
+    else:
+        return HttpResponseNotAllowed(["PATCH"])
+
 
 def get_previous_messages(request, chat_id, datetime):
     """Returns the messages in the chat with the

@@ -3,6 +3,7 @@
 
 ## DO RIGHT NOW
 
+- Implement messages starring.
 - Redesign the register views (CSS).
   - Organize the fields: use two columns for that:
     - [Use Crispy forms fieldset.](https://www.youtube.com/watch?v=nBmFlZTh1ww)
