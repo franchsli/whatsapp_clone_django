@@ -321,6 +321,17 @@ def star_message(request, pk):
     else:
         return HttpResponseNotAllowed(["PATCH"])
 
+def unstar_message(request, pk):
+    if request.method == 'PATCH':
+        message = Message.objects.get(id=pk)
+        user = User.objects.get(id=request.user.id)
+        user.starred_messages.remove(message)
+        return render(
+            request, "layouts/partials/components/message.html", {"message": message}
+        )
+    else:
+        return HttpResponseNotAllowed(["PATCH"])
+
 
 def get_previous_messages(request, chat_id, datetime):
     """Returns the messages in the chat with the

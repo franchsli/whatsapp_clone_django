@@ -34,6 +34,7 @@ urlpatterns = [
         name="delete_message",
     ),
     path("star_message/<int:pk>", views.star_message, name="star_message"),
+    path("unstar_message/<int:pk>", views.unstar_message, name="unstar_message"),
     path(
         "previous_messages/<int:chat_id>/<str:datetime>/",
         views.get_previous_messages,

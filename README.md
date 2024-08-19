@@ -3,7 +3,10 @@
 
 ## DO RIGHT NOW
 
-- Implement messages starring.
+- Check why unstarring a message will not update it automatically
+  but starring it does.
+- Implement starring contact messages (dropdown).
+- Search for bugs like if the user and the contact star the same message.
 - Redesign the register views (CSS).
   - Organize the fields: use two columns for that:
     - [Use Crispy forms fieldset.](https://www.youtube.com/watch?v=nBmFlZTh1ww)
