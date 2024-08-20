@@ -40,18 +40,18 @@
     toggleReadMore('{{message.id}}')
   </script>
   <ul id="customDropdown-{{message.id}}" class="dropdown-menu animated-dropdown">
-    <li><span class="dropdown-item edit-action" hx-get="{% url 'edit_message' message.id %}"><i
+    <li><span role="button" class="dropdown-item edit-action" hx-get="{% url 'edit_message' message.id %}"><i
           class="bi bi-pencil-square"></i> Edit message</span></li>
     {% if message.starred_by.pk != request.user.id %}
-      <li><span class="dropdown-item edit-action" hx-patch="{% url 'star_message' message.id %}"
+      <li><span role="button" class="dropdown-item edit-action" hx-patch="{% url 'star_message' message.id %}"
             hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'><i
             class="bi bi-star-fill"></i> Star message</span></li>
     {% else %}
-      <li><span class="dropdown-item edit-action" hx-patch="{% url 'unstar_message' message.id %}"
+      <li><span role="button" class="dropdown-item edit-action" hx-patch="{% url 'unstar_message' message.id %}"
         hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'><i
         class="bi bi-star-fill"></i> Unstar message</span></li>
     {% endif %}
-    <li><span class="dropdown-item delete-action delete-message"
+    <li><span role="button" class="dropdown-item delete-action delete-message"
         hx-delete="{% url 'delete_message' message.chat.id message.id %}" hx-target="#chat-messages" hx-swap="outerHTML"
         hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'><i class="bi bi-trash-fill"></i> Delete</span></li>
   </ul>
@@ -86,5 +86,16 @@
     space_text('{{message.id}}')
     toggleReadMore('{{message.id}}')
   </script>
+  <ul id="customDropdown-{{message.id}}" class="dropdown-menu animated-dropdown">
+    {% if message.starred_by.pk != request.user.id %}
+      <li><span role="button" class="dropdown-item edit-action" hx-patch="{% url 'star_message' message.id %}"
+            hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'><i
+            class="bi bi-star-fill"></i> Star message</span></li>
+    {% else %}
+      <li><span role="button" class="dropdown-item edit-action" hx-patch="{% url 'unstar_message' message.id %}"
+        hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'><i
+        class="bi bi-star-fill"></i> Unstar message</span></li>
+    {% endif %}
+  </ul>
 </div>
 {% endif %}
