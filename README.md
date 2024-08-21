@@ -3,9 +3,9 @@
 
 ## DO RIGHT NOW
 
+- **FIX** Due to manytoone relationship, ONLY ONE USER can star a message.
 - Check why unstarring a message will not update it automatically, starring a contact's message neither
   but starring it does.
-- Search for bugs like if the user and the contact star the same message.
 - Redesign the register views (CSS).
   - Organize the fields: use two columns for that:
     - [Use Crispy forms fieldset.](https://www.youtube.com/watch?v=nBmFlZTh1ww)
@@ -16,7 +16,7 @@
 - Add status complex status creation (like Whatsapp).
   - Users could select the color of the background for
     statuses.
-    - [Usefil library for that](https://github.com/fabiocaccamo/django-colorfield)
+    - [Useful library for that](https://github.com/fabiocaccamo/django-colorfield)
 - Add chat wallpapers user CSS url for images and a JS color selector for colors.
   - [USE THIS](https://getbootstrap.com/docs/5.3/forms/form-control#color).
   - EVERY TIME YOU IMPLEMENT A COLOR PICKER YOU SHOULD ADD A ONINPUT THEN A FUNCTION
@@ -106,6 +106,8 @@ Also don't forget to change the channel layer to redis.
 
 **RESOURCES**:
 
+- [Django static files compressor docs](https://django-compressor.readthedocs.io/en/latest/quickstart.html)
+- [Usage of Django static files compressor](https://django-compressor.readthedocs.io/en/latest/usage.html)
 - [Faker docs](https://pypi.org/project/Faker/).
 - [HTMX Swap Animations](https://htmx.org/examples/animations/)
 - [Custom theme modes](https://getbootstrap.com/docs/5.3/customize/color-modes/#adding-theme-colors)
