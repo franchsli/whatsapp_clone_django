@@ -3,7 +3,6 @@
 
 ## DO RIGHT NOW
 
-- **FIX** Due to manytoone relationship, ONLY ONE USER can star a message.
 - Check why unstarring a message will not update it automatically, starring a contact's message neither
   but starring it does.
 - Redesign the register views (CSS).
