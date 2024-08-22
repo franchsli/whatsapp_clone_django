@@ -16,7 +16,7 @@
   {% endif %}
   <div class="message-info text-white-50" style="justify-self: end;">
     <!-- ========== Show if the message is starred by the user or not ========== -->
-     {% if message.starred_by.pk == request.user.id %}
+     {% if message.id in request.user.starred_messages.all %}
       <span class="chat-message-starred"><i class="bi bi-star-fill"></i></span>
      {% endif %}
     <!-- ========== Say if the message was edited or not ========== -->
@@ -72,7 +72,7 @@
   {% endif %}
   <div class="message-info text-white-50" style="justify-self: end;">
       <!-- ========== Show if the message is starred by the user or not ========== -->
-      {% if message.starred_by.pk == request.user.id %}
+      {% if message.id in request.user.starred_messages.all %}
       <span class="chat-message-starred"><i class="bi bi-star-fill"></i></span>
       {% endif %}
       <!-- ========== Say if the message was edited or not ========== -->

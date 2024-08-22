@@ -3,6 +3,8 @@
 
 ## DO RIGHT NOW
 
+- **FIX** Star icon is not shown.
+  - Modify the condition in the HTML template.
 - Check why unstarring a message will not update it automatically, starring a contact's message neither
   but starring it does.
 - Redesign the register views (CSS).
