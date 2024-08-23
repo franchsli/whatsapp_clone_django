@@ -112,6 +112,10 @@ def simplified_time_difference(time_difference: str) -> str:
             return 'Less than a week ago.'
 
 
+@register.filter
+def starred_by_user_filter(message:Message, user:User) -> bool:
+    return message.starred_by_user(user)
+
 @register.simple_tag
 def exclude_user_tag(user_set: QuerySet, user: User, desired_field: str) -> str:
     """Removes the given user object from the provided user_set.
