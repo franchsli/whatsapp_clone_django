@@ -4,7 +4,7 @@
 {% if message.sender_user == request.user %}
 <div class="p-2 mw-100" hx-target="this" hx-swap="outerHTML" style="display: grid;">
   {% if message.has_image %}
-  <img loading="lazy" class="mw-100 mh-100 mb-3" src="{{message.image.url}}" alt="">
+  <img loading="lazy" class="mw-100 mh-100 mb-3" src="{{message.image.url}}" alt="Message image couldn't load">
   {% endif %}
   {% only_emoji message.text as only_emojis %}
   {% if only_emojis %}
@@ -60,7 +60,7 @@
 {% else %}
 <div class="p-2" style="display: grid;">
   {% if message.has_image %}
-  <img loading="lazy" class="mw-100 mh-100 mb-3" src="{{message.image.url}}" alt="">
+  <img loading="lazy" class="mw-100 mh-100 mb-3" src="{{message.image.url}}" alt="Message image couldn't load.">
   {% endif %}
   {% only_emoji message.text as only_emojis %}
   {% if only_emojis %}

@@ -3,7 +3,7 @@
 <li class="list-group-item p-3  d-flex flex-inline align-items-center contact" role="button" data-contact={{contact.id}}
   hx-target="this" hx-swap="outerHTML">
   {% comment "contact profile photo" %}{% endcomment %}
-  <img class="ms-1 rounded-circle img-fluid" src="{% get_contact_photo contact.phone_number %}" alt=""
+  <img class="ms-1 rounded-circle img-fluid" src="{% get_contact_photo contact.phone_number %}" alt="Contact photo couldn't load."
     style="max-width: 45px;">
   <div class="d-flex flex-column ms-3 w-100">
     <div class="d-flex justify-content-between">

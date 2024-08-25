@@ -8,7 +8,7 @@
     <li class="list-group-item p-3  d-flex flex-inline align-items-center contact" role="button"
         data-status={{status.id}}>
         {% comment "status profile photo" %}{% endcomment %}
-        <img class="ms-1 rounded-circle img-fluid" src="{% get_contact_photo contact.phone_number %}" alt=""
+        <img class="ms-1 rounded-circle img-fluid" src="{% get_contact_photo contact.phone_number %}" alt="Contact photo couldn't load."
             style="max-width: 45px;" type="button" data-bs-toggle="modal"
             data-bs-target="#status-modal{{ contact.id }}">
         <div class="d-flex flex-column ms-3 w-100">
@@ -58,12 +58,12 @@
                                 <div class="carousel-item" data-bs-interval="10000">
                                     {% endif %}
                                     {% if status.has_image and status.has_text is True %}
-                                    <img src="{{status.image.url}}" class="d-block w-100" alt="">
+                                    <img src="{{status.image.url}}" class="d-block w-100" alt="Status image couldn't load">
                                     <div class="carousel-status d-none d-md-flex">
                                         <p>{{status.text}}</p>
                                     </div>
                                     {% elif status.has_image %}
-                                    <img src="{{status.image.url}}" class="d-block w-100" alt="">
+                                    <img src="{{status.image.url}}" class="d-block w-100" alt="Status image couldn't load">
                                     {% else %}
                                     <div class="text-status d-none d-md-flex">
                                         <p>{{status.text}}</p>

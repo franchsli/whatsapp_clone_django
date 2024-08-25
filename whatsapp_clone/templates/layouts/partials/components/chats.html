@@ -10,7 +10,7 @@
    role="button" data-chat={{chat.id}} data-contact={% exclude_user_tag chat.users.all request.user 'username' %} 
    data-contact-phone={% exclude_user_tag chat.users.all request.user 'phone_number' %}>
     {% comment "contact profile photo" %}{% endcomment %}
-    <img class="ms-1 rounded-circle img-fluid" src="{% chat_desired_data chat request.user 'photo' %}" alt="" style="max-width: 45px;">
+    <img class="ms-1 rounded-circle img-fluid" src="{% chat_desired_data chat request.user 'photo' %}" alt="Contact photo couldn't load" style="max-width: 45px;">
     <div class="d-flex flex-column ms-3 w-100">
       <div class="d-flex justify-content-between">
         <span class="chat-name text-truncate" style="max-width: 210px;">{% chat_desired_data chat request.user 'name' %}</span>
