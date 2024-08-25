@@ -44,12 +44,11 @@ def last_message(messages: QuerySet, data: str) -> str:
         # if the message's text is required but it's empty
         # it means the contact sent a Photo
         if data == "text" and len(latest_message.text) == 0:
-                return "Photo 📷"
+            return "Photo 📷"
         else:
             return getattr(latest_message, data)
     except Message.DoesNotExist:
-        return ''
-
+        return ""
 
 
 @register.filter
@@ -88,6 +87,7 @@ def latest_data(queryset: QuerySet, desired_field_name: str):
     latest_object = queryset.latest(desired_field_name)
     return getattr(latest_object, desired_field_name)
 
+
 @register.filter
 def simplified_time_difference(time_difference: str) -> str:
     """Returns a summary of the provided time difference.
@@ -97,24 +97,25 @@ def simplified_time_difference(time_difference: str) -> str:
         how much the difference is e.g. 1 hour, 5 minutes.
 
     Returns:
-        str: A summarized version of the time difference, 
+        str: A summarized version of the time difference,
         from 'Less than a day ago.' to 'More than a week ago.'.
     """
-    if 'day' not in time_difference[2:5]:
-        if 'week' in time_difference:
-            return 'More than a week ago.'
-        elif 'hour' in time_difference or 'minute' in time_difference:
-            return 'Less than a day ago.'
+    if "day" not in time_difference[2:5]:
+        if "week" in time_difference:
+            return "More than a week ago."
+        elif "hour" in time_difference or "minute" in time_difference:
+            return "Less than a day ago."
     else:
-        if 'day' in time_difference and 'days' not in time_difference:
-            return 'Just yesterday.'
+        if "day" in time_difference and "days" not in time_difference:
+            return "Just yesterday."
         else:
-            return 'Less than a week ago.'
+            return "Less than a week ago."
 
 
 @register.filter
-def starred_by_user_filter(message:Message, user:User) -> bool:
+def starred_by_user_filter(message: Message, user: User) -> bool:
     return message.starred_by_user(user)
+
 
 @register.simple_tag
 def exclude_user_tag(user_set: QuerySet, user: User, desired_field: str) -> str:

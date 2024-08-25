@@ -3,8 +3,7 @@
 
 ## DO RIGHT NOW
 
-- Check why unstarring a message will not update it automatically, starring a contact's message neither
-  but starring it does.
+- Check why unstarring or starring a contact's message will not update it automatically.
 - Redesign the register views (CSS).
   - Organize the fields: use two columns for that:
     - [Use Crispy forms fieldset.](https://www.youtube.com/watch?v=nBmFlZTh1ww)
@@ -22,7 +21,6 @@
   THAT CHANGES THE COLOR OF THE FOUND ELEMENT WITH THE GIVEN ID WITH THE INPUT COLOR,
   LIKE THIS:
     onclick="change_element_color(this.style.color, target_element_id)"
-- Give actual functionality to the settings button.
 - Add user settings to personalize things like notification appareance
   or even UI theming (the dark and light theme will remain the same,
   but more themes will be added  [don't know when, don't know how])

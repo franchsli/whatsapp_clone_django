@@ -310,8 +310,9 @@ def delete_message(request, chat_id, message_id):
     else:
         return HttpResponseNotAllowed(["DELETE"])
 
+
 def star_message(request, pk):
-    if request.method == 'PATCH':
+    if request.method == "PATCH":
         message = Message.objects.get(id=pk)
         user = User.objects.get(id=request.user.id)
         user.starred_messages.add(message)
@@ -321,8 +322,9 @@ def star_message(request, pk):
     else:
         return HttpResponseNotAllowed(["PATCH"])
 
+
 def unstar_message(request, pk):
-    if request.method == 'PATCH':
+    if request.method == "PATCH":
         message = Message.objects.get(id=pk)
         user = User.objects.get(id=request.user.id)
         user.starred_messages.remove(message)
