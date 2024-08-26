@@ -58,7 +58,7 @@
 
 </div>
 {% else %}
-<div class="p-2" style="display: grid;">
+<div class="p-2" style="display: grid;" hx-target="this" hx-swap="outerHTML">
   {% if message.has_image %}
   <img loading="lazy" class="mw-100 mh-100 mb-3" src="{{message.image.url}}" alt="Message image couldn't load.">
   {% endif %}

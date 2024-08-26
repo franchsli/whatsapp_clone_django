@@ -3,7 +3,6 @@
 
 ## DO RIGHT NOW
 
-- Check why unstarring or starring a contact's message will not update it automatically.
 - Redesign the register views (CSS).
   - Organize the fields: use two columns for that:
     - [Use Crispy forms fieldset.](https://www.youtube.com/watch?v=nBmFlZTh1ww)
