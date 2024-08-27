@@ -4,7 +4,7 @@ from django.utils import timezone
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Max
 from django.http import HttpResponseNotAllowed
-from .models import Chat, Contact, Message, Status, User
+from .models import Chat, Contact, Message, Status
 from .forms import ChatForm, ContactForm, MessageForm, StatusForm
 from typing import Union
 from .tools import get_contact_in_chat, get_contacts_statuses, chat_is_unread_by_user
@@ -314,8 +314,7 @@ def delete_message(request, chat_id, message_id):
 def star_message(request, pk):
     if request.method == "PATCH":
         message = Message.objects.get(id=pk)
-        user = User.objects.get(id=request.user.id)
-        user.starred_messages.add(message)
+        request.user.starred_messages.add(message)
         return render(
             request, "layouts/partials/components/message.html", {"message": message}
         )
@@ -326,8 +325,7 @@ def star_message(request, pk):
 def unstar_message(request, pk):
     if request.method == "PATCH":
         message = Message.objects.get(id=pk)
-        user = User.objects.get(id=request.user.id)
-        user.starred_messages.remove(message)
+        request.user.starred_messages.remove(message)
         return render(
             request, "layouts/partials/components/message.html", {"message": message}
         )
