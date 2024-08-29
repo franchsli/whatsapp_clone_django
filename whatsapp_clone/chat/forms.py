@@ -19,7 +19,10 @@ class ContactForm(ModelForm):
 class MessageForm(ModelForm):
     class Meta:
         model = Message
-        exclude = ('read', 'starred_by',)
+        exclude = (
+            "read",
+            "starred_by",
+        )
 
         widgets = {
             "sender_user": HiddenInput(),

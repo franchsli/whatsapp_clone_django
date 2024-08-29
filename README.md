@@ -8,6 +8,7 @@
     - [Use Crispy forms fieldset.](https://www.youtube.com/watch?v=nBmFlZTh1ww)
     - [Crispy forms fieldset docs.](https://django-crispy-forms.readthedocs.io/en/latest/layouts.html)
     - [Crispy form fieldset example (2014)](https://www.dreamsolution.nl/2014-09-21-django-crispy-forms.html)
+    - Try to use the Layout as the fields.
 - Implement something to show a close look when a image in a chat is clicked
   (like Whatsapp).
 - Add status complex status creation (like Whatsapp).
