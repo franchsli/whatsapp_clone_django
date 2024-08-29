@@ -3,12 +3,6 @@
 
 ## DO RIGHT NOW
 
-- Redesign the register views (CSS).
-  - Organize the fields: use two columns for that:
-    - [Use Crispy forms fieldset.](https://www.youtube.com/watch?v=nBmFlZTh1ww)
-    - [Crispy forms fieldset docs.](https://django-crispy-forms.readthedocs.io/en/latest/layouts.html)
-    - [Crispy form fieldset example (2014)](https://www.dreamsolution.nl/2014-09-21-django-crispy-forms.html)
-    - Try to use the Layout as the fields.
 - Implement something to show a close look when a image in a chat is clicked
   (like Whatsapp).
 - Add status complex status creation (like Whatsapp).
@@ -112,7 +106,6 @@ Also don't forget to change the channel layer to redis.
 - [Outer queryset](https://docs.djangoproject.com/en/5.0/ref/models/expressions/#referencing-columns-from-the-outer-queryset)
 - [db queries with Q](https://docs.djangoproject.com/en/5.0/topics/db/queries/#complex-lookups-with-q-objects)
 - [queryset operators](https://docs.djangoproject.com/en/5.0/ref/models/querysets/#operators-that-return-new-querysets)
-- [Status with text and images.](https://getbootstrap.com/docs/5.3/components/carousel/#captions)
 - Read non-standar htmx events  for messages [hx-trigger](https://htmx.org/attributes/hx-trigger/)
 - [Closed tags checker](https://www.aliciaramirez.com/closing-tags-checker/)
 - [Queryset lists](https://docs.djangoproject.com/en/5.0/ref/models/querysets/#values-list)
