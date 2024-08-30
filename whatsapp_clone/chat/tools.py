@@ -64,7 +64,7 @@ def get_user_contacts(user_id: Union[str, int], desired_value: str) -> List[Cont
         List[Contact]: The list of the contacts values.
     """
     user_instance = User.objects.get(id=user_id)
-    return list(user_instance.contact_set.values_list(desired_value, flat=True))
+    return list(user_instance.contacts.values_list(desired_value, flat=True))
 
 
 def contact_from_user(user: User, contact_phone_number: str) -> Union[Contact, None]:
@@ -77,7 +77,7 @@ def contact_from_user(user: User, contact_phone_number: str) -> Union[Contact, N
     Returns:
         Union[Contact, None]: The found Contact or None if no Contact is found.
     """
-    return user.contact_set.filter(phone_number=contact_phone_number).first()
+    return user.contacts.filter(phone_number=contact_phone_number).first()
 
 
 def get_contact_in_chat(chat: Chat, logged_user: User) -> Union[Contact, None]:
@@ -126,7 +126,7 @@ def chat_is_unread_by_user(chat: Chat, user: User) -> bool:
 
 
 def get_contacts_statuses(user: User, muted: bool) -> dict:
-    contacts = user.contact_set.filter(statuses_muted=muted)
+    contacts = user.contacts.filter(statuses_muted=muted)
     # Query for statuses uploaded by the user or the user's contacts
     contact_phone_numbers = contacts.values_list("phone_number", flat=True)
     statuses_with_contacts = Status.objects.filter(

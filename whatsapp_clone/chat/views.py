@@ -18,7 +18,15 @@ def chat(request):
     status_form = StatusForm(
         initial={"uploaded_by": request.user, "upload_date": timezone.now}
     )
-    contacts = request.user.contact_set.all().order_by("name")
+    contacts = request.user.contacts.all().order_by("name")
+    archived_unread_chats_num = 0
+    for chat in chats:
+        if (
+            get_contact_in_chat(chat, request.user).archived
+            and not chat.last_message.read
+            and chat.last_message.sender_user != request.user
+        ):
+            archived_unread_chats_num += 1
 
     return render(
         request,
@@ -29,6 +37,7 @@ def chat(request):
             "contacts": contacts,
             "contact_form": contact_form,
             "status_form": status_form,
+            "archived_unread_chats_num": archived_unread_chats_num,
         },
     )
 
@@ -49,7 +58,6 @@ def get_chats(request):
         # display it as normal chat
         else:
             user_chats.append(chat)
-
     return render(
         request, "layouts/partials/components/chats.html", {"chats": user_chats}
     )
@@ -147,7 +155,7 @@ def archive_chat(request, chat_id, archive):
 def display_user_ui(request):
     if request.method == "GET":
         chats = request.user.chats.all()
-        contacts = request.user.contact_set.all().order_by("name")
+        contacts = request.user.contacts.all().order_by("name")
 
         return render(
             request,
@@ -205,7 +213,7 @@ def delete_chat(request, pk):
 
 def get_contacts(request):
     if request.method == "GET":
-        contacts = request.user.contact_set.all()
+        contacts = request.user.contacts.all()
         return render(
             request, "layouts/partials/components/contacts.html", {"contacts": contacts}
         )
@@ -251,7 +259,7 @@ def delete_contact(request, pk):
     if request.method == "DELETE":
         contact = Contact.objects.get(id=pk)
         contact.delete()
-        contacts = request.user.contact_set.all()
+        contacts = request.user.contacts.all()
         return render(
             request, "layouts/partials/components/contacts.html", {"contacts": contacts}
         )
@@ -387,7 +395,7 @@ def starred_messages(request):
 
 def update_chat_form(request):
     if request.method == "GET":
-        contacts = request.user.contact_set.all()
+        contacts = request.user.contacts.all()
         return render(
             request, "layouts/partials/chat_form_elements.html", {"contacts": contacts}
         )

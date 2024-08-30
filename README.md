@@ -61,6 +61,8 @@ Also don't forget to change the channel layer to redis.
 
 ## BUGS TO FIX
 
+- When the user goes to archived chats view and then returns back, the unread archived
+  chats badge is reseted.
 - When a user archives a contact, all group-like chats in which the contact is in
   will be archived as well.
 - When a user deletes a chat, the chat will be deleted from all the users in the chat

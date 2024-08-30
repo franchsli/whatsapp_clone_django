@@ -23,7 +23,7 @@ class Contact(models.Model):
     phone_number = PhoneNumberField()
     statuses_muted = models.BooleanField(default=False)
     archived = models.BooleanField(default=False)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name="contacts")
 
     def __str__(self) -> str:
         return self.name
@@ -63,6 +63,10 @@ class Chat(models.Model):
     @property
     def has_photo(self):
         return True if self.photo else False
+    
+    @property
+    def last_message(self):
+        return self.message_set.latest("date")
 
 
 class Message(models.Model):

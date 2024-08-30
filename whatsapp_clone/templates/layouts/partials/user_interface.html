@@ -76,8 +76,10 @@
       <span class="ms-3">Archived</span>
     </div>
     <div>
-      {% comment "num of archived chats that have unread messages" %}{% endcomment %}
-      <span class="badge">1</span>
+      <!-- ========== num of archived chats that have unread messages ========== -->
+      {% if archived_unread_chats_num >= 1 %}
+        <span class="badge">{{ archived_unread_chats_num }}</span>
+      {% endif %}
     </div>
   </div>
 </div>
