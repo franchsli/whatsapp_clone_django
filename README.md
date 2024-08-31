@@ -3,6 +3,7 @@
 
 ## DO RIGHT NOW
 
+- Check why websocket.js 453 doesn't work.
 - Implement something to show a close look when a image in a chat is clicked
   (like Whatsapp).
 - Add status complex status creation (like Whatsapp).

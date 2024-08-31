@@ -1,7 +1,7 @@
 {% load static %}
 {% load filters %}
 
-<nav class="navbar justify-content-between">
+<nav class="navbar justify-content-between" id="displayed-chat-info" data-displayed-chat="{{chat.id}}">
   <div class="d-flex align-items-center ms-3 col-6" role="button">
     {% comment "chat contact info" %}{% endcomment %}
     <img id="contact-picture" class="rounded-circle img-fluid"

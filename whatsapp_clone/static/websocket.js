@@ -116,8 +116,6 @@ window.summon_chat = function(chat){
 
 }
 
-
-
 /**
  * Sends a message to the websocket for creating the desired instance using the given form data.
  * @param {HTMLFormElement} form The HTML form element that contains all the inputs data to be set to the websocket.
@@ -451,8 +449,20 @@ chat_websocket.addEventListener('open', () => {
             const actual_scrollable_view = messages.scrollHeight - messages.clientHeight
             messages.scroll(0, actual_scrollable_view - previous_scrollable_view)
         }
+        // cancel the request if the requested chats is already displayed.
+        else if(event === 'htmx:beforeRequest' && data.pathInfo.requestPath.includes('display_chat')){
+            const displayed_chat =  document.getElementById('displayed-chat-info')
+            if(displayed_chat){
+                const url_params = data.pathInfo.requestPath.split('/')
+                const chat_id = displayed_chat.dataset.displayedChat
 
+                if(chat_id === url_params[url_params.length - 1]){
+                    console.log('CHAT ALREADY DISPLAYED, ABORTING THE REQUEST....')
+                    htmx.trigger(`#${elt.id}`, 'htmx:abort')
+                }
+            }
 
+        }
     }
     htmx.logger()
 })
