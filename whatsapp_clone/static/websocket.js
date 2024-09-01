@@ -451,17 +451,18 @@ chat_websocket.addEventListener('open', () => {
         }
         // cancel the request if the requested chats is already displayed.
         else if(event === 'htmx:beforeRequest' && data.pathInfo.requestPath.includes('display_chat')){
+            console.log('Logger called:', event, data);
             const displayed_chat =  document.getElementById('displayed-chat-info')
             if(displayed_chat){
                 const url_params = data.pathInfo.requestPath.split('/')
                 const chat_id = displayed_chat.dataset.displayedChat
-
+                // if the id of the displayed chat is the same as requested chat id
+                // abort the request
                 if(chat_id === url_params[url_params.length - 1]){
-                    console.log('CHAT ALREADY DISPLAYED, ABORTING THE REQUEST....')
-                    htmx.trigger(`#${elt.id}`, 'htmx:abort')
+                    data.xhr.abort()
+                    htmx.trigger(elt, 'htmx:abort')
                 }
             }
-
         }
     }
     htmx.logger()

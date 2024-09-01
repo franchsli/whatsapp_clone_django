@@ -70,7 +70,7 @@
   </div>
   {% comment "archived chats" %}{% endcomment %}
   <div role="button" type="button" class="btn border d-flex align-items-center justify-content-between p-3"
-    hx-get="{% url 'archived_chats' %}" hx-trigger="click" hx-target="#chats-and-more" hx-swap="innerHTML">
+    hx-get="{% url 'archived_chats' %}" hx-target="#chats-and-more" hx-swap="innerHTML">
     <div>
       <span><i class="bi bi-archive"></i></span>
       <span class="ms-3">Archived</span>

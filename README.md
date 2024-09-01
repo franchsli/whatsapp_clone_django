@@ -3,7 +3,7 @@
 
 ## DO RIGHT NOW
 
-- Check why websocket.js 453 doesn't work.
+- Check why websocket.js 462-463 doesn't abort the request.
 - Implement something to show a close look when a image in a chat is clicked
   (like Whatsapp).
 - Add status complex status creation (like Whatsapp).
@@ -41,9 +41,9 @@
 
 ## Improvements
 
+- Use with statements in frecuently used field lookups in the HTML.
 - Make it so if a chat is clicked but is already displayed the request won't be sent
   to the server.
-- Use with statements in frecuently used field lookups in the HTML.
 - Implement a dynamic status length:
   - If its a photo 5 secs.
   - if its a long text (more than 200 chars) 10 secs.
