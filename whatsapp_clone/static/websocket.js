@@ -394,7 +394,7 @@ chat_websocket.addEventListener('open', () => {
     /**
      * handle different htmx events and what to do after they're executed.
      * @param {HTMLElement} elt 
-     * @param {Event} event 
+     * @param {String} event 
      * @param {Object} data 
      */
     htmx.logger = async function(elt, event, data) {
@@ -449,26 +449,27 @@ chat_websocket.addEventListener('open', () => {
             const actual_scrollable_view = messages.scrollHeight - messages.clientHeight
             messages.scroll(0, actual_scrollable_view - previous_scrollable_view)
         }
+    }
+    htmx.logger()
+    htmx.on('htmx:beforeRequest', (event) => {
+        console.log(event)
         // cancel the request if the requested chats is already displayed.
-        else if(event === 'htmx:beforeRequest' && data.pathInfo.requestPath.includes('display_chat')){
-            console.log('Logger called:', event, data);
+        if(event.detail.pathInfo.requestPath.includes('display_chat')){
             const displayed_chat =  document.getElementById('displayed-chat-info')
             if(displayed_chat){
-                const url_params = data.pathInfo.requestPath.split('/')
+                const url_params = event.detail.pathInfo.requestPath.split('/')
                 const chat_id = displayed_chat.dataset.displayedChat
                 // if the id of the displayed chat is the same as requested chat id
                 // abort the request
                 if(chat_id === url_params[url_params.length - 1]){
-                    data.xhr.abort()
-                    htmx.trigger(elt, 'htmx:abort')
+                    event.preventDefault()
                 }
             }
         }
-    }
-    htmx.logger()
+    })
 })
 
-chat_websocket.addEventListener('message',async (event) => {
+chat_websocket.addEventListener('message', async (event) => {
     let message
     let sender_id
     let message_data

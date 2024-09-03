@@ -3,7 +3,8 @@
 
 ## DO RIGHT NOW
 
-- Check why websocket.js 462-463 doesn't abort the request.
+- Move all the if statements to actual event listeners.
+- Remake htmx.logger to be only a debugging tool.
 - Implement something to show a close look when a image in a chat is clicked
   (like Whatsapp).
 - Add status complex status creation (like Whatsapp).
