@@ -398,31 +398,29 @@ chat_websocket.addEventListener('open', () => {
      * @param {Object} data 
      */
     htmx.logger = async function(elt, event, data) {
-        // loads the default emojis
-        if (event === 'htmx:afterSettle' && data.pathInfo.requestPath.includes('display_chat')){
-            const emoji_container = document.getElementById('emojis-container')
-            const emoji_class = document.querySelector('.emoji-class-active')
-            tools.load_emojis(emoji_class.dataset.emojiPack, emoji_container)
-            // UPDATE THE CHAT LIST IF THERE WERE UNREAD MESSAGES
-            const unread_messages_counter = document.getElementById(`chat-${localStorage.getItem('chat_id')}unread-counter`)
-            if (unread_messages_counter){
-                tools.update_chat_list()
-            }
-            
+        // debugging :)
+    }
+    htmx.logger()
+    htmx.on('htmx:beforeRequest', (event) => {
+        // sets a global variable with the 'scrollable view' height before loaidng the messages
+        if(event.detail.pathInfo.requestPath.includes('previous_messages')){
+            const messages = document.getElementById('chat-messages')
+            window.previous_scrollable_view = messages.scrollHeight - messages.clientHeight
         }
-
-        else if (event === 'htmx:afterSettle' && data.pathInfo.requestPath === '/statuses/'){
-            // logic there
-            window.user_statuses_caller = document.querySelector('#user-status-caller')
-            window.user_status_modal = document.querySelector(`#user-status-modal${user_id}`)
-            window.contacts_status_modals = document.querySelectorAll('.contact-status-modal')
-            window.status_deletion_buttons = document.querySelectorAll('.status-deletion')
-            window.contacts_with_statuses_caller = document.querySelectorAll('.contact-status-caller')
-            window.carousel = null
-            window.carousel_instance = null
+    })
+    htmx.on('htmx:afterSettle', (event) => {
+        // scroll to the previous scroll height before loading older messages
+        if(event.detail.pathInfo.requestPath.includes('previous_messages')){
+            const messages = document.getElementById('chat-messages')
+            const actual_scrollable_view = messages.scrollHeight - messages.clientHeight
+            messages.scroll(0, actual_scrollable_view - previous_scrollable_view)
         }
-
-        else if(event === 'htmx:afterSettle' && data.pathInfo.requestPath.includes('delete_message')){
+        else if(event.detail.pathInfo.requestPath.includes('edit_message')){
+            // same logic as real-time message deletion
+            // but this is due to a message edition
+            send_message('message_edition', '', '', user_id)
+        }
+        else if(event.detail.pathInfo.requestPath.includes('delete_message')){
             /**
              * send a message to the chat websocket to tell the receiver
              * that the chat list needs to be updated due to a message deletion,
@@ -432,27 +430,28 @@ chat_websocket.addEventListener('open', () => {
              */
             send_message('message_deletion', '', '', user_id)
         }
-
-        else if(event === 'htmx:afterSettle' && data.pathInfo.requestPath.includes('edit_message')){
-            // same logic as real-time message deletion
-            // but this is due to a message edition
-            send_message('message_edition', '', '', user_id)
+        else if (event.detail.pathInfo.requestPath === '/statuses/'){
+            window.user_statuses_caller = document.querySelector('#user-status-caller')
+            window.user_status_modal = document.querySelector(`#user-status-modal${user_id}`)
+            window.contacts_status_modals = document.querySelectorAll('.contact-status-modal')
+            window.status_deletion_buttons = document.querySelectorAll('.status-deletion')
+            window.contacts_with_statuses_caller = document.querySelectorAll('.contact-status-caller')
+            window.carousel = null
+            window.carousel_instance = null
         }
-        // sets a global variable with the 'scrollable view' height before loaidng the messages
-        else if(event === 'htmx:beforeRequest' && data.pathInfo.requestPath.includes('previous_messages')){
-            const messages = document.getElementById('chat-messages')
-            window.previous_scrollable_view = messages.scrollHeight - messages.clientHeight
+        // loads the default emojis
+        if (event.detail.pathInfo.requestPath.includes('display_chat')){
+            const emoji_container = document.getElementById('emojis-container')
+            const emoji_class = document.querySelector('.emoji-class-active')
+            tools.load_emojis(emoji_class.dataset.emojiPack, emoji_container)
+            // UPDATE THE CHAT LIST IF THERE WERE UNREAD MESSAGES
+            const unread_messages_counter = document.getElementById(`chat-${localStorage.getItem('chat_id')}unread-counter`)
+            if (unread_messages_counter){
+                tools.update_chat_list()
+            }
         }
-        // scroll to the previous scroll height before loading older messages
-        else if(event === 'htmx:afterSettle' && data.pathInfo.requestPath.includes('previous_messages')){
-            const messages = document.getElementById('chat-messages')
-            const actual_scrollable_view = messages.scrollHeight - messages.clientHeight
-            messages.scroll(0, actual_scrollable_view - previous_scrollable_view)
-        }
-    }
-    htmx.logger()
+    })
     htmx.on('htmx:beforeRequest', (event) => {
-        console.log(event)
         // cancel the request if the requested chats is already displayed.
         if(event.detail.pathInfo.requestPath.includes('display_chat')){
             const displayed_chat =  document.getElementById('displayed-chat-info')
