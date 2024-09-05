@@ -4,8 +4,6 @@
 ## DO RIGHT NOW
 
 - **BUG** Messages html aren't being diplayed.
-- Move all the if statements to actual event listeners.
-- Remake htmx.logger to be only a debugging tool.
 - Implement something to show a close look when a image in a chat is clicked
   (like Whatsapp).
 - Add status complex status creation (like Whatsapp).

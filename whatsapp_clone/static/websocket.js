@@ -392,13 +392,22 @@ chat_websocket.addEventListener('open', () => {
     }
 
     /**
-     * handle different htmx events and what to do after they're executed.
+     * Log htmx events in a comprehensive way.
      * @param {HTMLElement} elt 
      * @param {String} event 
      * @param {Object} data 
      */
     htmx.logger = async function(elt, event, data) {
         // debugging :)
+        console.log('EVENT CALLED:', event)
+        console.log('ELEMENT THAT ISSUED THE REQUEST:', elt)
+        if(data){
+            if(data.pathInfo){
+                console.log('REQUEST PATH:', data.pathInfo.requestPath)
+                console.log('RESPONSE PATH:', data.pathInfo.responsePath)
+                console.log('THIS REQUEST WAS SUCCESSFUL?:', data.successful)
+            }
+        }
     }
     htmx.logger()
     htmx.on('htmx:beforeRequest', (event) => {
