@@ -21,6 +21,7 @@ const message_received_audio = new Audio('static/Audio/app/message_received.mp3'
 const message_sent_audio = new Audio('static/Audio/app/message_sent.mp3')
 const error_audio = new Audio('static/Audio/app/error_sound.mp3')
 const status_notification_audio = new Audio('static/Audio/app/new_status.mp3')
+const debugging_mode = false
 
 // Callback function to execute when mutations are observed
 const chat_mutation_callback = function(mutationsList, observer) {
@@ -170,6 +171,7 @@ const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]
 const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 chat_websocket.addEventListener('open', () => {
     console.log('CONNECTION OPENED WITH CHAT WEBSOCKET')
+    window.new_message = false
 
     window.toggleReadMore = function(text_id){
         tools.toggleReadMore(text_id)
@@ -399,13 +401,15 @@ chat_websocket.addEventListener('open', () => {
      */
     htmx.logger = async function(elt, event, data) {
         // debugging :)
-        console.log('EVENT CALLED:', event)
-        console.log('ELEMENT THAT ISSUED THE REQUEST:', elt)
-        if(data){
-            if(data.pathInfo){
-                console.log('REQUEST PATH:', data.pathInfo.requestPath)
-                console.log('RESPONSE PATH:', data.pathInfo.responsePath)
-                console.log('THIS REQUEST WAS SUCCESSFUL?:', data.successful)
+        if (debugging_mode){
+            console.log('EVENT CALLED:', event)
+            console.log('ELEMENT THAT ISSUED THE REQUEST:', elt)
+            if(data){
+                if(data.pathInfo){
+                    console.log('REQUEST PATH:', data.pathInfo.requestPath)
+                    console.log('RESPONSE PATH:', data.pathInfo.responsePath)
+                    console.log('THIS REQUEST WAS SUCCESSFUL?:', data.successful)
+                }
             }
         }
     }
@@ -462,7 +466,7 @@ chat_websocket.addEventListener('open', () => {
     })
     htmx.on('htmx:beforeRequest', (event) => {
         // cancel the request if the requested chats is already displayed.
-        if(event.detail.pathInfo.requestPath.includes('display_chat')){
+        if(event.detail.pathInfo.requestPath.includes('display_chat') && !new_message){
             const displayed_chat =  document.getElementById('displayed-chat-info')
             if(displayed_chat){
                 const url_params = event.detail.pathInfo.requestPath.split('/')
@@ -495,8 +499,10 @@ chat_websocket.addEventListener('message', async (event) => {
         // only append the message's HTML otherwise
         if (user_id === sender_id){
             message_sent_audio.play()
+            new_message = true
             htmx.ajax('GET', `/display_chat/${localStorage.getItem('chat_id')}`, '#chat-display').then(() => {
                 tools.update_chat_list()
+                window.new_message = false
             })
         }
         else {
