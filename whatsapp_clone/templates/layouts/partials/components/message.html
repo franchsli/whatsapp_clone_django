@@ -1,6 +1,7 @@
 {% load static %}
 {% load filters %}
 
+{% with starred_by_user=message|starred_by_user_filter:request.user %}
 {% if message.sender_user == request.user %}
 <div class="p-2 mw-100" hx-target="this" hx-swap="outerHTML" style="display: grid;">
   {% if message.has_image %}
@@ -16,7 +17,7 @@
   {% endif %}
   <div class="message-info text-white-50" style="justify-self: end;">
     <!-- ========== Show if the message is starred by the user or not ========== -->
-     {% if message|starred_by_user_filter:request.user %}
+     {% if starred_by_user %}
       <span class="chat-message-starred"><i class="bi bi-star-fill"></i></span>
      {% endif %}
     <!-- ========== Say if the message was edited or not ========== -->
@@ -31,7 +32,6 @@
     {% else %}
       <i class="bi bi-check2-all"></i>
     {% endif %}
-    
   </div>
 
   
@@ -42,7 +42,7 @@
   <ul id="customDropdown-{{message.id}}" class="dropdown-menu animated-dropdown">
     <li><span role="button" class="dropdown-item edit-action" hx-get="{% url 'edit_message' message.id %}"><i
           class="bi bi-pencil-square"></i> Edit message</span></li>
-    {% if not message|starred_by_user_filter:request.user %}
+    {% if not starred_by_user %}
       <li><span role="button" class="dropdown-item edit-action" hx-patch="{% url 'star_message' message.id %}"
             hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'><i
             class="bi bi-star-fill"></i> Star message</span></li>
@@ -72,7 +72,7 @@
   {% endif %}
   <div class="message-info text-white-50" style="justify-self: end;">
       <!-- ========== Show if the message is starred by the user or not ========== -->
-      {% if message|starred_by_user_filter:request.user %}
+      {% if starred_by_user %}
       <span class="chat-message-starred"><i class="bi bi-star-fill"></i></span>
       {% endif %}
       <!-- ========== Say if the message was edited or not ========== -->
@@ -87,7 +87,7 @@
     toggleReadMore('{{message.id}}')
   </script>
   <ul id="customDropdown-{{message.id}}" class="dropdown-menu animated-dropdown">
-    {% if not message|starred_by_user_filter:request.user %}
+    {% if not starred_by_user %}
       <li><span role="button" class="dropdown-item edit-action" hx-patch="{% url 'star_message' message.id %}"
             hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'><i
             class="bi bi-star-fill"></i> Star message</span></li>
@@ -99,3 +99,4 @@
   </ul>
 </div>
 {% endif %}
+{% endwith %}

@@ -29,24 +29,17 @@ def to_list(value) -> list:
 
 
 @register.filter
-def last_message(messages: QuerySet, data: str) -> str:
-    """Returns the latest message desired data in the provided messages Queryset.
+def last_message(messages: QuerySet) -> Message:
+    """Returns the latest Message object in a Queryset.
 
     Args:
-        messages (Queryset): A queryset containing messages objects.
-        data (str): The desired data of the latest message object.
+        messages (QuerySet)
 
     Returns:
-        str: The last message in the messages queryset if not empty, returns an empty string otherwise.
+        Message
     """
     try:
-        latest_message = messages.latest("date")
-        # if the message's text is required but it's empty
-        # it means the contact sent a Photo
-        if data == "text" and len(latest_message.text) == 0:
-            return "Photo 📷"
-        else:
-            return getattr(latest_message, data)
+        return messages.latest("date")
     except Message.DoesNotExist:
         return ""
 
