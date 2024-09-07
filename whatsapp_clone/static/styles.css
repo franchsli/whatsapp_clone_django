@@ -21,6 +21,13 @@ main,  #base {
   max-width: 50%;
   display: flex;
 }
+.message-text{
+  height: auto; 
+  width: auto; 
+  max-height: 200px; 
+  overflow: hidden;
+  max-width: 300px;
+}
 
 .contact-message {
   background-color: var(--bs-primary-bg-subtle);
