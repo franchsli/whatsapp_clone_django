@@ -49,7 +49,7 @@ main,  #base {
   color: var(--bs-danger);
 }
 
-.chat:hover, .contact:hover, .chat:hover button, .contact:hover button{
+.chat:hover, .contact:hover, .chat:hover button, .contact:hover button, .list-group-item:hover{
   background-color: var(--bs-secondary-bg);
 }
 
