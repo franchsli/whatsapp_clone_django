@@ -258,3 +258,7 @@ main,  #base {
   animation:vanish 2s linear both;
   animation-play-state: paused;
 } 
+
+.important-icon{
+  font-size: 20px;
+}
