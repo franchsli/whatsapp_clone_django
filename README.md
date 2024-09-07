@@ -3,6 +3,7 @@
 
 ## DO RIGHT NOW
 
+- Check why hyperscript doesn't work in user_settings.html
 - Implement something to show a close look when a image in a chat is clicked
   (like Whatsapp).
 - Add status complex status creation (like Whatsapp).

@@ -12,12 +12,25 @@
 <div>
     <form class="d-flex m-3" role="search">
         <input id="settings-search" class="form-control mx-2" 
-        type="search" placeholder="Search settings..." aria-label="Search" </input>
+        type="search" placeholder="Search settings..." aria-label="Search" 
+        _="on keyup 
+        log 'Keyup event triggered'
+        log `Current value: ${my.value}`
+        get #settings-list
+        log `Settings list: ${it}`
+        get <li/> in it
+        log `List items: ${it}`
+        log `${it.innerText}`
+        log `${my.value in it.innerText}`
+        show it if its innerText contains my value
+        hide it if its innerText does not contain my value
+        log 'Finished processing'">
+        </input>
         <button class="btn themed-button" type="submit"><i class="bi bi-search"></i></button>
     </form>
     <ul id="settings-list" class="scroll-section list-group list-group-flush overflow-y-scroll" 
     style="max-height: 615px;">
-        <li class="list-group-item p-3 d-flex flex-inline align-items-center" role="button">
+        <li class="list-group-item p-3 d-flex flex-inline align-items-center" role="button" style="border: none;">
                 {% if request.user.has_photo %}
                 <img class="rounded-circle img-fluid"  src="{{ request.user.photo.url }}" alt="Profile photo couldn't load." 
                 style="max-width: 82px;">
@@ -25,7 +38,7 @@
                 <img class="rounded-circle img-fluid"  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNBNdcMDNS2r9df1IWFVc8AY0QNtfNhEJv7fGS5TdhUWrlBqfGu1PCCn9lKpL-FqF9dWc&usqp=CAU"
                  alt="Default photo couldnt' load." style="max-width: 82px;">
                 {% endif %}
-                <span class="ms-2 d-flex flex-column">
+                <span class="ms-3 d-flex flex-column">
                         <span>{{ request.user.username }}</span>
                         <!-- ========== User info ========== -->
                         <span>No info.</span>
