@@ -1,0 +1,39 @@
+{% load static %}
+{% load filters %}
+<nav class="d-flex align-items-center justify-content-between">
+    <div class="row d-flex align-items-center p-3">
+        <button class="arrow action btn col-auto ms-2" hx-get="{% url 'display_user_ui' %}" 
+                hx-target="#chats-and-more">
+                <i class="bi bi-arrow-left"></i></button>
+        <span class="col-auto fs-5">Settings</span>
+    </div>
+</nav>
+
+<div>
+    <form class="d-flex m-3" role="search">
+        <input id="settings-search" class="form-control mx-2" 
+        type="search" placeholder="Search settings..." aria-label="Search" </input>
+        <button class="btn themed-button" type="submit"><i class="bi bi-search"></i></button>
+    </form>
+    <ul id="settings-list" class="scroll-section list-group list-group-flush overflow-y-scroll" 
+    style="max-height: 590px; height: 500px;">
+        <li class="list-group-item p-3  d-flex flex-inline align-items-center">
+            <button class="btn p-3">
+                <i class="bi bi-person-circle me-2"></i><p>Account</p></button></li>
+        <li class="list-group-item p-3  d-flex flex-inline align-items-center">
+            <button class="btn p-3">
+                <i class="bi bi-lock-fill me-2"></i><p>Privacy</p></button></li>
+        <li class="list-group-item p-3  d-flex flex-inline align-items-center">
+            <button class="btn p-3">
+                <i class="bi bi-chat-left-text-fill me-2"></i><p>Chats</p></button></li>
+        <li class="list-group-item p-3  d-flex flex-inline align-items-center">
+            <button class="btn p-3">
+                <i class="bi bi-bell-fill me-2"></i><p>Notifications</p></button></li>
+        <li class="list-group-item p-3  d-flex flex-inline align-items-center">
+            <button class="btn p-3">
+                <i class="bi bi-question-circle-fill me-2"></i><p>Help</p></button></li>
+        <li class="list-group-item p-3  d-flex flex-inline align-items-center">
+            <button class="btn p-3">
+                <i class="bi bi-escape me-2"></i><p>Log out</p></button></li>
+    </ul>
+</div>

@@ -50,4 +50,5 @@ urlpatterns = [
         views.mute_contact_statuses,
         name="mute_contact_statuses",
     ),
+    path("user_settings/", views.user_settings, name="user_settings"),
 ]

@@ -462,3 +462,6 @@ def create_status(request):
         return redirect("statuses")
     else:
         return HttpResponseNotAllowed(["POST"])
+
+def user_settings(request):
+    return render(request, "layouts/partials/user_settings.html", {})
