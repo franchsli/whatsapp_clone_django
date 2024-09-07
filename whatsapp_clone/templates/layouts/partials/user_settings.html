@@ -16,18 +16,32 @@
         <button class="btn themed-button" type="submit"><i class="bi bi-search"></i></button>
     </form>
     <ul id="settings-list" class="scroll-section list-group list-group-flush overflow-y-scroll" 
-    style="max-height: 590px; height: 500px;">
+    style="max-height: 615px;">
         <li class="list-group-item p-3 d-flex flex-inline align-items-center" role="button">
+                {% if request.user.has_photo %}
+                <img class="rounded-circle img-fluid"  src="{{ request.user.photo.url }}" alt="Profile photo couldn't load." 
+                style="max-width: 82px;">
+                {% else %}
+                <img class="rounded-circle img-fluid"  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNBNdcMDNS2r9df1IWFVc8AY0QNtfNhEJv7fGS5TdhUWrlBqfGu1PCCn9lKpL-FqF9dWc&usqp=CAU"
+                 alt="Default photo couldnt' load." style="max-width: 82px;">
+                {% endif %}
+                <span class="ms-2 d-flex flex-column">
+                        <span>{{ request.user.username }}</span>
+                        <!-- ========== User info ========== -->
+                        <span>No info.</span>
+                </span>
+        </li>
+        <li class="list-group-item p-4 d-flex flex-inline align-items-center" role="button">
                 <span class="me-3"><i class="bi bi-person-circle"></i></span><span> Account</span></li>
-        <li class="list-group-item p-3 d-flex flex-inline align-items-center" role="button">
+        <li class="list-group-item p-4 d-flex flex-inline align-items-center" role="button">
                 <span class="me-3"><i class="bi bi-lock-fill"></i></span><span> Privacy</span></li>
-        <li class="list-group-item p-3 d-flex flex-inline align-items-center" role="button">
+        <li class="list-group-item p-4 d-flex flex-inline align-items-center" role="button">
                 <span class="me-3"><i class="bi bi-chat-left-text-fill"></i></span><span> Chats</span></li>
-        <li class="list-group-item p-3 d-flex flex-inline align-items-center" role="button">
+        <li class="list-group-item p-4 d-flex flex-inline align-items-center" role="button">
                 <span class="me-3"><i class="bi bi-bell-fill"></i></span><span> Notifications</span></li>
-        <li class="list-group-item p-3 d-flex flex-inline align-items-center" role="button">
+        <li class="list-group-item p-4 d-flex flex-inline align-items-center" role="button">
                 <span class="me-3"><i class="bi bi-question-circle-fill"></i></span><span> Help</span></li>
-        <li class="list-group-item p-3 d-flex flex-inline align-items-center" role="button">
+        <li class="list-group-item p-4 d-flex flex-inline align-items-center" role="button">
                 <span class="me-3"><i class="bi bi-escape"></i></span><span> Log out</span></li>
     </ul>
 </div>
