@@ -55,7 +55,12 @@ main,  #base {
   font-size: 14px; 
   color: var(--bs-danger);
 }
-
+.exit-btn{
+  color: var(--bs-danger);
+}
+.setting-icon{
+  font-size: 25px;
+}
 .chat:hover, .contact:hover, .chat:hover button, .contact:hover button, .list-group-item:hover{
   background-color: var(--bs-secondary-bg);
 }
