@@ -3,7 +3,8 @@
 
 ## DO RIGHT NOW
 
-- Check why hyperscript doesn't work in user_settings.html
+- Replace the little hyperscript with filter_by_value.
+- Refactor filter_by_value.
 - Implement something to show a close look when a image in a chat is clicked
   (like Whatsapp).
 - Add status complex status creation (like Whatsapp).

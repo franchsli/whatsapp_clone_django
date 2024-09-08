@@ -445,17 +445,29 @@ function change_element_color(desired_color, target_element_id){
 function filter_by_value(value, element_list){
     let list_items = element_list.children
     // determines what will be filtered
-    // either contacts or chats
-    let filter_by = 'chat' 
+    // either contacts, chats or settings
+    // this needs refactoring and comments
+    let filter_by = '.chat-name' 
     if (list_items[0].id === "contact-list"){
         list_items = list_items[0].children
-        filter_by = 'contact'
+        filter_by = '.contact-name'
+    }
+    else{
+        filter_by = ''
     }
     for (let index = 0; index < list_items.length; index++){
         const element = list_items[index]
         if(element){
-            const chat_name = element.querySelector(filter_by === "chat" ? ".chat-name" : ".contact-name").textContent
-            if(!chat_name.toLowerCase().includes(value.toLowerCase())){
+            let element_name
+            console.log(element)
+            if (filter_by !== ''){
+                element_name = element.querySelector(filter_by).textContent
+            }
+            else {
+                element_name = element.textContent
+            }
+            console.log(element_name)
+            if(!element_name.toLowerCase().includes(value.toLowerCase())){
                 element.classList.remove('d-flex')
                 element.style.display = "none"
             }

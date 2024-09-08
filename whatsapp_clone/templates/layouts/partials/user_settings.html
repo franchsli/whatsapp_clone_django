@@ -13,24 +13,13 @@
     <form class="d-flex m-3" role="search">
         <input id="settings-search" class="form-control mx-2" 
         type="search" placeholder="Search settings..." aria-label="Search" 
-        _="on keyup 
-        log 'Keyup event triggered'
-        log `Current value: ${my.value}`
-        get #settings-list
-        log `Settings list: ${it}`
-        get <li/> in it
-        log `List items: ${it}`
-        log `${it.innerText}`
-        log `${my.value in it.innerText}`
-        show it if its innerText contains my value
-        hide it if its innerText does not contain my value
-        log 'Finished processing'">
+        oninput="filter_by_value(this.value, document.getElementById('settings-list'));">
         </input>
         <button class="btn themed-button" type="submit"><i class="bi bi-search"></i></button>
     </form>
     <ul id="settings-list" class="scroll-section list-group list-group-flush overflow-y-scroll" 
     style="max-height: 615px;">
-        <li class="list-group-item p-3 d-flex flex-inline align-items-center" role="button" style="border: none;">
+        <li class="list-group-item p-3 d-flex flex-inline align-items-center setting" role="button" style="border: none;">
                 {% if request.user.has_photo %}
                 <img class="rounded-circle img-fluid"  src="{{ request.user.photo.url }}" alt="Profile photo couldn't load." 
                 style="max-width: 82px;">
@@ -44,17 +33,17 @@
                         <span>No info.</span>
                 </span>
         </li>
-        <li class="list-group-item p-4 d-flex flex-inline align-items-center" role="button">
+        <li class="list-group-item p-4 d-flex flex-inline align-items-center setting" role="button">
                 <span class="me-3"><i class="bi bi-person-circle important-icon"></i></span><span> Account</span></li>
-        <li class="list-group-item p-4 d-flex flex-inline align-items-center" role="button">
+        <li class="list-group-item p-4 d-flex flex-inline align-items-center setting" role="button">
                 <span class="me-3"><i class="bi bi-lock-fill important-icon"></i></span><span> Privacy</span></li>
-        <li class="list-group-item p-4 d-flex flex-inline align-items-center" role="button">
+        <li class="list-group-item p-4 d-flex flex-inline align-items-center setting" role="button">
                 <span class="me-3"><i class="bi bi-chat-left-text-fill important-icon"></i></span><span> Chats</span></li>
-        <li class="list-group-item p-4 d-flex flex-inline align-items-center" role="button">
+        <li class="list-group-item p-4 d-flex flex-inline align-items-center setting" role="button">
                 <span class="me-3"><i class="bi bi-bell-fill important-icon"></i></span><span> Notifications</span></li>
-        <li class="list-group-item p-4 d-flex flex-inline align-items-center" role="button">
+        <li class="list-group-item p-4 d-flex flex-inline align-items-center setting" role="button">
                 <span class="me-3"><i class="bi bi-question-circle-fill important-icon"></i></span><span> Help</span></li>
-        <li class="list-group-item p-4 d-flex flex-inline align-items-center" role="button">
+        <li class="list-group-item p-4 d-flex flex-inline align-items-center setting" role="button">
                 <span class="me-3"><i class="bi bi-escape important-icon"></i></span><span> Log out</span></li>
     </ul>
 </div>
