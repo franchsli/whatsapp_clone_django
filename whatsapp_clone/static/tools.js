@@ -446,7 +446,6 @@ function filter_by_value(value, element_list){
     let list_items = element_list.children
     // determines what will be filtered
     // either contacts, chats or settings
-    // this needs refactoring and comments
     let filter_by = '.chat-name' 
     if (list_items[0].id === "contact-list"){
         list_items = list_items[0].children
@@ -459,18 +458,18 @@ function filter_by_value(value, element_list){
         const element = list_items[index]
         if(element){
             let element_name
-            console.log(element)
             if (filter_by !== ''){
                 element_name = element.querySelector(filter_by).textContent
             }
             else {
                 element_name = element.textContent
             }
-            console.log(element_name)
+            // if it doesn't contain the value, make it invisible
             if(!element_name.toLowerCase().includes(value.toLowerCase())){
                 element.classList.remove('d-flex')
                 element.style.display = "none"
             }
+            // make visible the invisible objects otherwise
             else {
                 if(!element.classList.contains('d-flex')){
                     element.classList.add('d-flex')
