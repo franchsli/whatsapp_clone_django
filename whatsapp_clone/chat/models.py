@@ -7,6 +7,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 # Create your models here.
 class User(AbstractUser, UserManager):
     # custom fields
+    about = models.CharField(blank=True, null=False, default="Hey, I love this app 😍", max_length=150)
     phone_number = PhoneNumberField(unique=True)
     photo = models.ImageField(blank=True, null=True, upload_to="user/")
 
