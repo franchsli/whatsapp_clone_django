@@ -3,6 +3,7 @@
 
 ## DO RIGHT NOW
 
+- Finish user_info.html.
 - Replace the little hyperscript with filter_by_value.
 - Implement something to show a close look when a image in a chat is clicked
   (like Whatsapp).

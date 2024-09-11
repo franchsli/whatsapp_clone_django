@@ -1,0 +1,19 @@
+{% load static %}
+{% load filters %}
+{% load crispy_forms_tags %}
+
+<nav class="d-flex align-items-center justify-content-between">
+    <div class="row d-flex align-items-center p-3">
+        <button class="arrow action btn col-auto ms-2" hx-get="{% url 'user_settings' %}" 
+                hx-target="#chats-and-more">
+                <i class="bi bi-arrow-left"></i></button>
+        <span class="col-auto fs-5">User info</span>
+    </div>
+</nav>
+
+<form hx-post="{% url 'user_info' %}" hx-target="#chats-and-more" 
+    hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+    {{ user_form | crispy }}
+    <button id="submit-user-form" class="btn" type="submit">Submit</button>
+    <button class="btn" hx-get="{% url 'user_info' %}">Cancel</button>
+</form>

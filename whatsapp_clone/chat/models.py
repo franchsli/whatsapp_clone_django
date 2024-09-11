@@ -13,6 +13,8 @@ class User(AbstractUser, UserManager):
 
     USERNAME_FIELD = "username"
     EMAIL_FIELD = "email"
+    FIRST_NAME_FIELD = "first_name"
+    LAST_NAME_FIELD = "last_name"
 
     @property
     def has_photo(self):

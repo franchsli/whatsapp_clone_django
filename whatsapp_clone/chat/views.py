@@ -4,8 +4,8 @@ from django.utils import timezone
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Max
 from django.http import HttpResponseNotAllowed
-from .models import Chat, Contact, Message, Status
-from .forms import ChatForm, ContactForm, MessageForm, StatusForm
+from .models import User, Chat, Contact, Message, Status
+from .forms import UserForm, ChatForm, ContactForm, MessageForm, StatusForm
 from typing import Union
 from .tools import get_contact_in_chat, get_contacts_statuses, chat_is_unread_by_user
 
@@ -465,3 +465,32 @@ def create_status(request):
 
 def user_settings(request):
     return render(request, "layouts/partials/user_settings.html", {})
+
+
+def user_info(request):
+    if request.method == "GET":
+        return render(request, "layouts/partials/user_info.html", {})
+
+    else:
+        return HttpResponseNotAllowed(["GET", "POST"])
+
+
+def edit_user_info(request):
+    if request.method == "GET":
+        user_instance = User.objects.get(id=request.user.id)
+        user_form = UserForm(instance=user_instance)
+        return render(
+            request,
+            "layouts/partials/components/user_form.html",
+            {
+                "user_form": user_form,
+            },
+        )
+    if request.method == "POST":
+        user_instance = User.objects.get(id=request.user.id)
+        user_form = UserForm(request.POST, instance=user_instance)
+        if user_form.is_valid():
+            user_form.save()
+        return redirect("user_info")
+    else:
+        return HttpResponseNotAllowed(["GET", "POST"])

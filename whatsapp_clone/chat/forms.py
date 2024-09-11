@@ -1,6 +1,11 @@
-from .models import Chat, Contact, Message, Status
+from .models import Chat, Contact, Message, Status, User
 from django.forms import ModelForm, HiddenInput, Textarea
 
+
+class UserForm(ModelForm):
+    class Meta:
+        model = User
+        fields = ("first_name", "last_name", "username", "photo", "about")
 
 class ChatForm(ModelForm):
     class Meta:
