@@ -58,10 +58,13 @@ main,  #base {
 .exit-btn{
   color: var(--bs-danger);
 }
+.exit-btn:hover{
+  background-color: var(--bs-danger);
+}
 .setting-icon{
   font-size: 25px;
 }
-.chat:hover, .contact:hover, .chat:hover button, .contact:hover button, .list-group-item:hover{
+.chat:hover, .contact:hover, .chat:hover button, .contact:hover button, .setting:hover{
   background-color: var(--bs-secondary-bg);
 }
 

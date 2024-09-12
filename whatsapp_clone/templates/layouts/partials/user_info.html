@@ -6,39 +6,30 @@
         <button class="arrow action btn col-auto ms-2" hx-get="{% url 'user_settings' %}" 
                 hx-target="#chats-and-more">
                 <i class="bi bi-arrow-left"></i></button>
-        <span class="col-auto fs-5">User info</span>
+        <span class="col-auto fs-5">Profile</span>
     </div>
 </nav>
 
 <div>
     <ul id="user-info" class="scroll-section list-group list-group-flush overflow-y-scroll" 
     style="max-height: 615px;">
-        <li class="list-group-item p-3 d-flex flex-inline align-items-center setting" role="button" style="border: none;">
+        <li class="list-group-item p-3 d-flex flex-inline align-items-center mx-auto mb-3" style="border: none;">
                 {% if request.user.has_photo %}
                 <img class="rounded-circle img-fluid"  src="{{ request.user.photo.url }}" alt="Profile photo couldn't load." 
-                style="max-width: 82px;">
+                style="max-width: 200px; max-height: 200px; width: 200px; height: 200px;">
                 {% else %}
                 <img class="rounded-circle img-fluid"  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNBNdcMDNS2r9df1IWFVc8AY0QNtfNhEJv7fGS5TdhUWrlBqfGu1PCCn9lKpL-FqF9dWc&usqp=CAU"
-                 alt="Default photo couldnt' load." style="max-width: 82px;">
+                 alt="Default photo couldn't load." style="max-width: 200px; max-height: 200px; width: 200px; height: 200px;">
                 {% endif %}
+        </li>
+        <li class="list-group-item p-1 d-flex flex-inline align-items-center" style="border: none;">
                 <span class="ms-3 d-flex flex-column">
+                        <span class="themed-text">Your username</span>
                         <span>{{ request.user.username }}</span>
-                        <!-- ========== User info ========== -->
+                        <span class="themed-text">Your about</span>
                         <span>{{ request.user.about }}</span>
                 </span>
         </li>
-        <li class="list-group-item p-4 d-flex flex-inline align-items-center setting" role="button">
-                <span class="me-3"><i class="bi bi-person-circle important-icon"></i></span><span> Account</span></li>
-        <li class="list-group-item p-4 d-flex flex-inline align-items-center setting" role="button">
-                <span class="me-3"><i class="bi bi-lock-fill important-icon"></i></span><span> Privacy</span></li>
-        <li class="list-group-item p-4 d-flex flex-inline align-items-center setting" role="button">
-                <span class="me-3"><i class="bi bi-chat-left-text-fill important-icon"></i></span><span> Chats</span></li>
-        <li class="list-group-item p-4 d-flex flex-inline align-items-center setting" role="button">
-                <span class="me-3"><i class="bi bi-bell-fill important-icon"></i></span><span> Notifications</span></li>
-        <li class="list-group-item p-4 d-flex flex-inline align-items-center setting" role="button">
-                <span class="me-3"><i class="bi bi-question-circle-fill important-icon"></i></span><span> Help</span></li>
-        <li class="list-group-item p-4 d-flex flex-inline align-items-center setting" role="button">
-                <span class="me-3"><i class="bi bi-escape important-icon"></i></span><span> Log out</span></li>
     </ul>
     <button class="btn m-3 d-flex themed-button" hx-get="{% url 'edit_user_info' %}" hx-target="#chats-and-more">Edit</button>
 </div>

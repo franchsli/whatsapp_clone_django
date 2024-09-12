@@ -35,16 +35,12 @@
                 </span>
         </li>
         <li class="list-group-item p-4 d-flex flex-inline align-items-center setting" role="button">
-                <span class="me-3"><i class="bi bi-person-circle important-icon"></i></span><span> Account</span></li>
-        <li class="list-group-item p-4 d-flex flex-inline align-items-center setting" role="button">
                 <span class="me-3"><i class="bi bi-lock-fill important-icon"></i></span><span> Privacy</span></li>
         <li class="list-group-item p-4 d-flex flex-inline align-items-center setting" role="button">
                 <span class="me-3"><i class="bi bi-chat-left-text-fill important-icon"></i></span><span> Chats</span></li>
         <li class="list-group-item p-4 d-flex flex-inline align-items-center setting" role="button">
                 <span class="me-3"><i class="bi bi-bell-fill important-icon"></i></span><span> Notifications</span></li>
         <li class="list-group-item p-4 d-flex flex-inline align-items-center setting" role="button">
-                <span class="me-3"><i class="bi bi-question-circle-fill important-icon"></i></span><span> Help</span></li>
-        <li class="list-group-item p-4 d-flex flex-inline align-items-center setting" role="button">
-                <span class="me-3"><i class="bi bi-escape important-icon"></i></span><span> Log out</span></li>
+                <span class="me-3"><i class="bi bi-escape important-icon"></i><a style="text-decoration: none;" href="{% url 'exit' %}"> Log out</a></span></li>
     </ul>
 </div>
