@@ -34,7 +34,6 @@
   (i don't think so).....
 - Add something to delete statuses automatically every 24 hours (cronjobs maybe).
 - Rework statuses UI.
-- Add more sounds (if possible).
 - Make the silence contact logic (booleand field [think it bro])
 - Review all the code, optimize it and delete spaguetti code.
 - Check which apis are still necesary.
