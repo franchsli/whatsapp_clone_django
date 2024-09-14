@@ -5,7 +5,7 @@ from . import views
 urlpatterns = [
     path("", views.chat, name="chat"),
     # htmx
-    path("chats/", views.get_chats, name="get_chats"),
+    path("chats/", views.chats, name="chats"),
     path("unread_chats/", views.get_unread_chats, name="unread_chats"),
     path("archived_chats/", views.get_archived_chats, name="archived_chats"),
     path(
@@ -53,4 +53,5 @@ urlpatterns = [
     path("user_settings/", views.user_settings, name="user_settings"),
     path("user_info/", views.user_info, name="user_info"),
     path("edit_user_info/", views.edit_user_info, name="edit_user_info"),
+    path("chats_selection/", views.chats_selection, name="chats_selection")
 ]

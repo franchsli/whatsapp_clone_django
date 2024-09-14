@@ -43,7 +43,7 @@ def chat(request):
 
 
 # htmx
-def get_chats(request):
+def chats(request):
     # returns the user chats ordered by the date of the latest message in the chat.
     chats = request.user.chats.annotate(
         last_message_date=Max("message__date")
@@ -145,7 +145,7 @@ def archive_chat(request, chat_id, archive):
         contact.save()
         # returns all the desired chats depending on archive arg value
         if archive == True:
-            return redirect("get_chats")
+            return redirect("chats")
         else:
             return redirect("archived_chats")
     else:
@@ -486,7 +486,7 @@ def edit_user_info(request):
                 "user_form": user_form,
             },
         )
-    if request.method == "POST":
+    elif request.method == "POST":
         user_instance = User.objects.get(id=request.user.id)
         user_form = UserForm(request.POST, instance=user_instance)
         if user_form.is_valid():
@@ -494,3 +494,9 @@ def edit_user_info(request):
         return redirect("user_info")
     else:
         return HttpResponseNotAllowed(["GET", "POST"])
+
+def chats_selection(request):
+    if request.method == "GET":
+        return render(request, "layouts/partials/components/chats_selection.html", {})
+    else:
+        return HttpResponseNotAllowed(["GET"])

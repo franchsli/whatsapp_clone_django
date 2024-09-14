@@ -1,21 +1,21 @@
 {% load filters %}
 {% load static %}
 
-<ul id="chat-list" class="scroll-section list-group list-group-flush overflow-y-scroll" style="max-height: 590px; height: 500px;">
-  {% for chat in chats %}
-  <li oncontextmenu="showDropdown(event, 'chat-dropdown{{chat.id}}')"
-   id="chat-{{chat.id}}" 
-   class="list-group-item p-3 d-flex flex-inline align-items-center chat" 
-   role="button" data-chat={{chat.id}} data-contact={% exclude_user_tag chat.users.all request.user 'username' %} 
-   data-contact-phone={% exclude_user_tag chat.users.all request.user 'phone_number' %}>
-   <form>
-    <input type="checkbox" class="form-check-input" id="{{ chat.id }}">
-    <label class="form-check-label ms-3" for={{ chat.id }}>{{contact.name}}</label>
+<form hx-target="this">
+  <ul id="chat-list" class="scroll-section list-group list-group-flush overflow-y-scroll" style="max-height: 590px; height: 500px;">
+      {% for chat in request.user.chats.all %}
+      <li id="chat-{{chat.id}}" 
+      class="list-group-item p-3 d-flex flex-inline align-items-center chat" 
+      role="button" data-chat={{chat.id}} data-contact={% exclude_user_tag chat.users.all request.user 'username' %} 
+      data-contact-phone={% exclude_user_tag chat.users.all request.user 'phone_number' %}>
+        <input type="checkbox" class="form-check-input" id="{{ chat.id }}">
+        <img class="ms-1 rounded-circle img-fluid" src="{% chat_desired_data chat request.user 'photo' %}" alt="Contact photo couldn't load" style="max-width: 45px;">
+        <label class="form-check-label ms-3" for={{ chat.id }}>{% exclude_user_tag chat.users.all request.user 'username' %} </label>
+      </li>
+      {% empty %}
+      <h1 class="text-white-50">No chats <i class="bi bi-emoji-frown"></i></h1>
+    {% endfor %}
     <button type="submit" class="btn themed-button float-end mt-3">Delete chats</button>
-    <button type="button" class="btn btn-secondary float-end mt-3 me-3">Close</button>
-   </form>
-  </li>
-  {% empty %}
-  <h1 class="text-white-50">No chats <i class="bi bi-emoji-frown"></i></h1>
-  {% endfor %}
-</ul>
+    <button type="button" class="btn btn-secondary float-end mt-3 me-3" hx-get="{% url 'chats' %}" hx-swap="outerHTML">Cancel</button>
+  </ul>
+</form>
