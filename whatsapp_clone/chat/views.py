@@ -163,6 +163,7 @@ def display_user_ui(request):
             {
                 "chats": chats,
                 "contacts": contacts,
+                "archived_unread_chats_num": 0,
             },
         )
     else:

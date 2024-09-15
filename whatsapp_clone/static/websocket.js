@@ -21,7 +21,7 @@ const message_received_audio = new Audio('static/Audio/app/message_received.mp3'
 const message_sent_audio = new Audio('static/Audio/app/message_sent.mp3')
 const error_audio = new Audio('static/Audio/app/error_sound.mp3')
 const status_notification_audio = new Audio('static/Audio/app/new_status.mp3')
-const debugging_mode = false
+const debugging_mode = true
 
 // Callback function to execute when mutations are observed
 const chat_mutation_callback = function(mutationsList, observer) {
