@@ -3,8 +3,7 @@
 
 ## DO RIGHT NOW
 
-- Finish the multiple chats delection logic.
-- Replace the little hyperscript with filter_by_value.
+- Finish the multiple chats deletion logic.
 - Implement something to show a close look when a image in a chat is clicked
   (like Whatsapp).
 - Add status complex status creation (like Whatsapp).
@@ -25,7 +24,6 @@
 
 - Rework the UI (in order to look like actual Whatsapp's UI):
   - Recolor the text of 'select archive' in file form.
-  - Think about changing the UI layout.
 - Implement something to create Group-like Chats.
   - Look at chats.html line 63 and exception in chat_desired_data.
 - Implement something to archive group-like Chats.
@@ -37,7 +35,6 @@
 - Rework statuses UI.
 - Make the silence contact logic (booleand field [think it bro])
 - Review all the code, optimize it and delete spaguetti code.
-- Check which apis are still necesary.
 
 ## Improvements
 
@@ -53,7 +50,6 @@ READ THE CHATGPT Django Channels Websocket chat for IMPORTANT improvement.
 Also don't forget to change the channel layer to redis.
 
 - Make it responsive (or maybe not).
-- Check and compare all the whatsapp web features with this project features.
 - Implement all of the features at
   [dj-chat](https://github.com/adilmohak/dj-chat?tab=readme-ov-file#current-features)
 

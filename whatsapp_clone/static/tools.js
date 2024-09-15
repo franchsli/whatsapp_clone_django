@@ -457,15 +457,15 @@ function filter_by_value(value, element_list){
     for (let index = 0; index < list_items.length; index++){
         const element = list_items[index]
         if(element){
-            let element_name
+            let element_text
             if (filter_by !== ''){
-                element_name = element.querySelector(filter_by).textContent
+                element_text = element.querySelector(filter_by).textContent
             }
             else {
-                element_name = element.textContent
+                element_text = element.textContent
             }
             // if it doesn't contain the value, make it invisible
-            if(!element_name.toLowerCase().includes(value.toLowerCase())){
+            if(!element_text.toLowerCase().includes(value.toLowerCase())){
                 element.classList.remove('d-flex')
                 element.style.display = "none"
             }
