@@ -4,9 +4,8 @@
 ## DO RIGHT NOW
 
 - Rework chat archiving logic:
-  - Move 'archived' field from Contact to Chat.
-  - Make that field a ManytoMany.
   - To check if a User has archived the Chat, use inverse relationship access.
+  - Delete archived field from Contact model.
 - Finish the multiple chats deletion logic.
 - Implement something to show a close look when a image in a chat is clicked
   (like Whatsapp).
