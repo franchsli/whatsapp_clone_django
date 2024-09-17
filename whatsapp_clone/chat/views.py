@@ -50,13 +50,7 @@ def chats(request):
     ).order_by("-last_message_date")
     user_chats = []
     for chat in chats:
-        contact = get_contact_in_chat(chat, request.user)
-        if contact:
-            if not contact.archived:
-                user_chats.append(chat)
-        # if no contact is found it means is an unknow phone
-        # display it as normal chat
-        else:
+        if not request.user.archived_chats.filter(id=chat.id).exists():
             user_chats.append(chat)
     return render(
         request, "layouts/partials/components/chats.html", {"chats": user_chats}

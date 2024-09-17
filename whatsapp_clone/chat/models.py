@@ -25,7 +25,6 @@ class Contact(models.Model):
     name = models.CharField(max_length=36, blank=False, null=False)
     phone_number = PhoneNumberField()
     statuses_muted = models.BooleanField(default=False)
-    archived = models.BooleanField(default=False)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name="contacts")
 
     def __str__(self) -> str:

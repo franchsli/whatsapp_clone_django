@@ -5,7 +5,7 @@
 
 - Rework chat archiving logic:
   - To check if a User has archived the Chat, use inverse relationship access.
-  - Delete archived field from Contact model.
+  - Look which views need to be reworked due to this change.
 - Finish the multiple chats deletion logic.
 - Implement something to show a close look when a image in a chat is clicked
   (like Whatsapp).
