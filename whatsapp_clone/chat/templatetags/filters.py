@@ -109,6 +109,10 @@ def simplified_time_difference(time_difference: str) -> str:
 def starred_by_user_filter(message: Message, user: User) -> bool:
     return message.starred_by_user(user)
 
+@register.filter
+def archived_by_user_filter(chat: Chat, user:User) -> bool:
+    return chat.archived_by_user(user)
+
 
 @register.simple_tag
 def exclude_user_tag(user_set: QuerySet, user: User, desired_field: str) -> str:
@@ -182,6 +186,8 @@ def chat_desired_data(
                     phone_number=contact.phone_number
                 )
                 return contact_user_object.pk
+            elif desired_value == "archived":
+                pass
             else:
                 return getattr(contact, desired_value)
         # in case no contact is found,

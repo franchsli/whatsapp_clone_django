@@ -20,11 +20,10 @@ def chat(request):
     )
     contacts = request.user.contacts.all().order_by("name")
     archived_unread_chats_num = 0
-    for chat in chats:
+    for chat in request.user.archived_chats.all():
         if (
-            get_contact_in_chat(chat, request.user).archived
-            and not chat.last_message.read
-            and chat.last_message.sender_user != request.user
+            not chat.last_message.read
+            and chat.last_message.sender_user.id != request.user.id
         ):
             archived_unread_chats_num += 1
 

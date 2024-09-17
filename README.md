@@ -5,7 +5,8 @@
 
 - Rework chat archiving logic:
   - To check if a User has archived the Chat, use inverse relationship access.
-  - Look which views need to be reworked due to this change.
+  - Look which views and filters need to be reworked due to this change.
+  - Rework chat_desired_data tag.
 - Finish the multiple chats deletion logic.
 - Implement something to show a close look when a image in a chat is clicked
   (like Whatsapp).

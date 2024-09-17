@@ -62,6 +62,17 @@ class Chat(models.Model):
             False otherwise.
         """
         return user.managed_groups.filter(id=self.pk).exists()
+    
+    def archived_by_user(self, user:User) -> bool:
+        """Returns if the provided User archived this Chat.
+
+        Args:
+            user (User): User model object.
+
+        Returns:
+            bool: True or Flase.
+        """
+        return user.archived_chats.filter(id=self.pk).exists()
 
     @property
     def has_photo(self):
