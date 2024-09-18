@@ -127,13 +127,13 @@ def archive_chat(request, chat_id, archive):
     if request.method == "PATCH":
         # converts the str to boolean
         archive = True if archive == "True" else False
-        # arhives or unarchives the Chat
         chat = Chat.objects.get(id=chat_id)
-        request.user.archived_chats.add(chat)
         # returns all the desired chats depending on archive arg value
         if archive == True:
+            request.user.archived_chats.add(chat)
             return redirect("chats")
         else:
+            request.user.archived_chats.remove(chat)
             return redirect("archived_chats")
     else:
         return HttpResponseNotAllowed(["PATCH"])
