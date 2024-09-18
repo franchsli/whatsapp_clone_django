@@ -3,6 +3,7 @@
 
 ## DO RIGHT NOW
 
+- Check which bugs still happening.
 - Rework chat archiving logic:
   - To check if a User has archived the Chat, use inverse relationship access.
   - Look which views and filters need to be reworked due to this change.
@@ -59,8 +60,6 @@ Also don't forget to change the channel layer to redis.
 
 ## BUGS TO FIX
 
-- When the user goes to archived chats view and then returns back, the unread archived
-  chats badge is reseted.
 - When a user archives a contact, all group-like chats in which the contact is in
   will be archived as well.
 - When a user deletes a chat, the chat will be deleted from all the users in the chat

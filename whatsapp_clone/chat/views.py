@@ -84,10 +84,8 @@ def get_archived_chats(request):
     ).order_by("-last_message_date")
     user_archived_chats = []
     for chat in chats:
-        contact = get_contact_in_chat(chat, request.user)
-        if contact:
-            if contact.archived:
-                user_archived_chats.append(chat)
+        if request.user.archived_chats.filter(id=chat.id).exists():
+            user_archived_chats.append(chat)
 
     return render(
         request,
@@ -103,10 +101,8 @@ def unread_archived_chats(request):
     ).order_by("-last_message_date")
     user_unread_archived_chats = []
     for chat in chats:
-        contact = get_contact_in_chat(chat, request.user)
-        if contact:
-            if contact.archived and chat_is_unread_by_user(chat, request.user):
-                user_unread_archived_chats.append(chat)
+        if request.user.archived_chats.filter(id=chat.id).exists() and chat_is_unread_by_user(chat, request.user):
+            user_unread_archived_chats.append(chat)
 
     return render(
         request,
@@ -131,11 +127,9 @@ def archive_chat(request, chat_id, archive):
     if request.method == "PATCH":
         # converts the str to boolean
         archive = True if archive == "True" else False
-        # arhives or unarchives the contact
+        # arhives or unarchives the Chat
         chat = Chat.objects.get(id=chat_id)
-        contact = get_contact_in_chat(chat, request.user)
-        contact.archived = archive
-        contact.save()
+        request.user.archived_chats.add(chat)
         # returns all the desired chats depending on archive arg value
         if archive == True:
             return redirect("chats")
@@ -147,16 +141,22 @@ def archive_chat(request, chat_id, archive):
 
 def display_user_ui(request):
     if request.method == "GET":
-        chats = request.user.chats.all()
-        contacts = request.user.contacts.all().order_by("name")
+
+        archived_unread_chats_num = 0
+        for chat in request.user.archived_chats.all():
+            if (
+                not chat.last_message.read
+                and chat.last_message.sender_user.id != request.user.id
+            ):
+                archived_unread_chats_num += 1
 
         return render(
             request,
             "layouts/partials/user_interface.html",
             {
-                "chats": chats,
-                "contacts": contacts,
-                "archived_unread_chats_num": 0,
+                "chats": request.user.chats.all(),
+                "contacts": request.user.contacts.all().order_by("name"),
+                "archived_unread_chats_num": archived_unread_chats_num,
             },
         )
     else:
