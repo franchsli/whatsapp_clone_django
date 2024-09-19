@@ -60,8 +60,6 @@ Also don't forget to change the channel layer to redis.
 
 ## BUGS TO FIX
 
-- When a user archives a contact, all group-like chats in which the contact is in
-  will be archived as well.
 - When a user deletes a chat, the chat will be deleted from all the users in the chat
   - To fix this, you need to implement something similar to archive view logic.
   - Or you could add a 'list' of the users that archived the chat:

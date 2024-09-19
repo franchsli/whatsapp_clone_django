@@ -63,15 +63,10 @@ def get_unread_chats(request):
     ).order_by("-last_message_date")
     user_chats = []
     for chat in chats:
-        contact = get_contact_in_chat(chat, request.user)
-        if contact:
-            if not contact.archived and chat_is_unread_by_user(chat, request.user):
+        if not chat.archived_by_user(request.user):
+            if not chat.last_message.read and chat.last_message.sender_user.id != request.user.id:
                 user_chats.append(chat)
-        # if no contact is found it means is an unknow phone
-        # display it as normal chat only if it's unread.
-        elif not contact and chat_is_unread_by_user(chat, request.user):
-            user_chats.append(chat)
-
+            
     return render(
         request, "layouts/partials/components/chats.html", {"chats": user_chats}
     )
@@ -101,8 +96,9 @@ def unread_archived_chats(request):
     ).order_by("-last_message_date")
     user_unread_archived_chats = []
     for chat in chats:
-        if request.user.archived_chats.filter(id=chat.id).exists() and chat_is_unread_by_user(chat, request.user):
-            user_unread_archived_chats.append(chat)
+        if chat.archived_by_user(request.user):
+            if not chat.last_message.read and chat.last_message.sender_user.id != request.user.id:
+                user_unread_archived_chats.append(chat)
 
     return render(
         request,
