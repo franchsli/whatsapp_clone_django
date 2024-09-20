@@ -7,7 +7,7 @@ from django.http import HttpResponseNotAllowed
 from .models import User, Chat, Contact, Message, Status
 from .forms import UserForm, ChatForm, ContactForm, MessageForm, StatusForm
 from typing import Union
-from .tools import get_contact_in_chat, get_contacts_statuses, chat_is_unread_by_user
+from .tools import get_contacts_statuses, chat_is_unread_by_user
 
 
 @login_required
@@ -64,8 +64,8 @@ def get_unread_chats(request):
     user_chats = []
     for chat in chats:
         if not chat.archived_by_user(request.user):
-            if not chat.last_message.read and chat.last_message.sender_user.id != request.user.id:
-                user_chats.append(chat)
+            if chat_is_unread_by_user(chat, request.user):
+                user_chats.append(chat) 
             
     return render(
         request, "layouts/partials/components/chats.html", {"chats": user_chats}
@@ -79,7 +79,7 @@ def get_archived_chats(request):
     ).order_by("-last_message_date")
     user_archived_chats = []
     for chat in chats:
-        if request.user.archived_chats.filter(id=chat.id).exists():
+        if chat.archived_by_user(request.user):
             user_archived_chats.append(chat)
 
     return render(
@@ -97,7 +97,7 @@ def unread_archived_chats(request):
     user_unread_archived_chats = []
     for chat in chats:
         if chat.archived_by_user(request.user):
-            if not chat.last_message.read and chat.last_message.sender_user.id != request.user.id:
+            if chat_is_unread_by_user(chat, request.user):
                 user_unread_archived_chats.append(chat)
 
     return render(
