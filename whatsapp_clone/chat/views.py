@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.core.exceptions import ObjectDoesNotExist
-from django.db.models import Max, Q
+from django.db.models import Max
 from django.http import HttpResponseNotAllowed
 from .models import User, Chat, Contact, Message, Status
 from .forms import UserForm, ChatForm, ContactForm, MessageForm, StatusForm
@@ -192,15 +192,12 @@ def display_chat(request, pk):
 
 
 def delete_chat(request, pk):
-    if request.method == "DELETE":
+    if request.method == "PATCH":
         chat = Chat.objects.get(id=pk)
-        chat.delete()
-        chats = request.user.chats.all()
-        return render(
-            request, "layouts/partials/components/chats.html", {"chats": chats}
-        )
+        request.user.deleted_chats.add(chat)
+        return redirect("chats")
     else:
-        return HttpResponseNotAllowed(["DELETE"])
+        return HttpResponseNotAllowed(["PATCH"])
 
 
 def get_contacts(request):

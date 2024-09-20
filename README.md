@@ -3,6 +3,9 @@
 
 ## DO RIGHT NOW
 
+- (Chat Form) If a User deleted a chat, and want to create 'the same chat' again,
+  remove the chat from the deleted chats list from the said User.
+- Rework chat form to only check for Chats and not groups when checking if a Chat is already created.
 - Check which bugs still happening.
 - Rework chat archiving logic:
   - To check if a User has archived the Chat, use inverse relationship access.
@@ -57,6 +60,7 @@ Also don't forget to change the channel layer to redis.
 - Make it responsive (or maybe not).
 - Implement all of the features at
   [dj-chat](https://github.com/adilmohak/dj-chat?tab=readme-ov-file#current-features)
+- Implement something to delete a Chat if all the Users in the Chat deleted it.
 
 ## BUGS TO FIX
 

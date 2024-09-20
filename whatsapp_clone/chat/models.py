@@ -42,9 +42,9 @@ class Contact(models.Model):
 
 
 class Chat(models.Model):
-    admins = models.ManyToManyField(User, related_name="managed_groups")
+    admins = models.ManyToManyField(User, related_name="managed_groups", blank=True)
     users = models.ManyToManyField(User, related_name="chats")
-    name = models.CharField(max_length=72, null=True)
+    name = models.CharField(max_length=72, null=True, blank=True)
     photo = models.ImageField(blank=True, null=True, upload_to="chats/")
     archived_by = models.ManyToManyField(User, related_name="archived_chats", blank=True)
     deleted_by = models.ManyToManyField(User, related_name="deleted_chats", blank=True)
