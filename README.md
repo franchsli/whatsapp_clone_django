@@ -62,9 +62,10 @@ Also don't forget to change the channel layer to redis.
 
 - When a user deletes a chat, the chat will be deleted from all the users in the chat
   - To fix this, you need to implement something similar to archive view logic.
-  - Or you could add a 'list' of the users that archived the chat:
-    - Evertytime a user archive the chat his user object will be added to the 'list'.
-    - To check if a user archived it his user will be searched in the 'list'.
+- Users can't send messages to groups:
+  - The message will be created but it's sending issues an error.
+  - To **fix** this the Chat Consumer logic for sending messages needs to be reworked,
+    using a for loop to iterate over the user's numbers in the Chat and send the notification to each one.
 - Scroll to bottom func doesn't scroll to the botom anymore when the last messages
   are images, test why:
   - **THIS IS WHAT I THINK THAT HAPPENS**:
@@ -78,11 +79,6 @@ Also don't forget to change the channel layer to redis.
       loading techniques, right now the messages images have lazy loading.
 
     - I think is because the readmore height isn't kept in count when scrolling.
-- Users can't archive chats who are not with a contact, and they won't if the chat
-  archiving logic stills working like it's right now.
-  The only way to archive chats that are not with a Contact its to add the archive
-  field to the Chat model, but that would means that the Chat will be archived for
-  all the Users in it.
 
 ## NOTES FOR LATER
 
