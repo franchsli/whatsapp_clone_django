@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.core.exceptions import ObjectDoesNotExist
-from django.db.models import Max
+from django.db.models import Max, Q
 from django.http import HttpResponseNotAllowed
 from .models import User, Chat, Contact, Message, Status
 from .forms import UserForm, ChatForm, ContactForm, MessageForm, StatusForm
@@ -12,7 +12,6 @@ from .tools import get_contacts_statuses, chat_is_unread_by_user
 
 @login_required
 def chat(request):
-    chats = request.user.chats.all()
     chat_form = ChatForm(initial={"users": request.user})
     contact_form = ContactForm(initial={"created_by": request.user})
     status_form = StatusForm(
@@ -24,6 +23,7 @@ def chat(request):
         if (
             not chat.last_message.read
             and chat.last_message.sender_user.id != request.user.id
+            and not chat.deleted_by_user(request.user)
         ):
             archived_unread_chats_num += 1
 
@@ -31,7 +31,6 @@ def chat(request):
         request,
         "index.html",
         {
-            "chats": chats,
             "chat_form": chat_form,
             "contacts": contacts,
             "contact_form": contact_form,
@@ -49,7 +48,7 @@ def chats(request):
     ).order_by("-last_message_date")
     user_chats = []
     for chat in chats:
-        if not request.user.archived_chats.filter(id=chat.id).exists():
+        if not chat.archived_by_user(request.user) or chat.deleted_by_user(request.user):
             user_chats.append(chat)
     return render(
         request, "layouts/partials/components/chats.html", {"chats": user_chats}
@@ -63,7 +62,7 @@ def get_unread_chats(request):
     ).order_by("-last_message_date")
     user_chats = []
     for chat in chats:
-        if not chat.archived_by_user(request.user):
+        if not chat.archived_by_user(request.user) or chat.deleted_by_user(request.user):
             if chat_is_unread_by_user(chat, request.user):
                 user_chats.append(chat) 
             
@@ -79,7 +78,7 @@ def get_archived_chats(request):
     ).order_by("-last_message_date")
     user_archived_chats = []
     for chat in chats:
-        if chat.archived_by_user(request.user):
+        if chat.archived_by_user(request.user) and not chat.deleted_by_user(request.user):
             user_archived_chats.append(chat)
 
     return render(
@@ -96,7 +95,7 @@ def unread_archived_chats(request):
     ).order_by("-last_message_date")
     user_unread_archived_chats = []
     for chat in chats:
-        if chat.archived_by_user(request.user):
+        if chat.archived_by_user(request.user) and not chat.deleted_by_user(request.user):
             if chat_is_unread_by_user(chat, request.user):
                 user_unread_archived_chats.append(chat)
 
@@ -115,8 +114,12 @@ def get_group_chats(request):
         .annotate(last_message_date=Max("message__date"))
         .order_by("-last_message_date")
     )
+    chat_groups = []
+    for group in groups:
+        if not group.deleted_by_user(request.user):
+            chat_groups.append(group)
 
-    return render(request, "layouts/partials/components/chats.html", {"chats": groups})
+    return render(request, "layouts/partials/components/chats.html", {"chats": chat_groups})
 
 
 def archive_chat(request, chat_id, archive):
@@ -137,7 +140,6 @@ def archive_chat(request, chat_id, archive):
 
 def display_user_ui(request):
     if request.method == "GET":
-
         archived_unread_chats_num = 0
         for chat in request.user.archived_chats.all():
             if (
