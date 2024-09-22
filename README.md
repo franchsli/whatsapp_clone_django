@@ -3,9 +3,12 @@
 
 ## DO RIGHT NOW
 
+- Rework ChatConsumer because Contact object does not have 'archived' field anymore.
+- Check if all the views return the desired data (chats related views.)
 - (Chat Form) If a User deleted a chat, and want to create 'the same chat' again,
   remove the chat from the deleted chats list from the said User.
 - Rework chat form to only check for Chats and not groups when checking if a Chat is already created.
+  - Rework the API or implement complex logic before the use of the said API.
 - Check which bugs still happening.
 - Rework chat archiving logic:
   - To check if a User has archived the Chat, use inverse relationship access.
@@ -64,8 +67,6 @@ Also don't forget to change the channel layer to redis.
 
 ## BUGS TO FIX
 
-- When a user deletes a chat, the chat will be deleted from all the users in the chat
-  - To fix this, you need to implement something similar to archive view logic.
 - Users can't send messages to groups:
   - The message will be created but it's sending issues an error.
   - To **fix** this the Chat Consumer logic for sending messages needs to be reworked,

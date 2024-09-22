@@ -48,8 +48,9 @@ def chats(request):
     ).order_by("-last_message_date")
     user_chats = []
     for chat in chats:
-        if not chat.archived_by_user(request.user) or chat.deleted_by_user(request.user):
-            user_chats.append(chat)
+        if not chat.archived_by_user(request.user):
+            if not chat.deleted_by_user(request.user):
+                user_chats.append(chat)
     return render(
         request, "layouts/partials/components/chats.html", {"chats": user_chats}
     )
