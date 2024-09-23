@@ -97,7 +97,20 @@ class ChatTest(TestCase):
         self.chat.admins.add(self.user)
         self.chat.save()
         self.assertTrue(self.chat.user_is_admin(self.user))
+    
+    def test_archived_by_user(self):
+        self.user.archived_chats.add(self.chat)
+        self.assertTrue(self.chat.archived_by_user(self.user))
 
+    def test_not_archived_by_user(self):
+        self.assertFalse(self.another_chat.archived_by_user(self.user))
+
+    def test_deleted_by_user(self):
+        self.user.deleted_chats.add(self.chat)
+        self.assertTrue(self.chat.deleted_by_user(self.user))
+
+    def test_not_deleted_by_user(self):
+        self.assertFalse(self.another_chat.deleted_by_user(self.user))
 
 class StatusTest(TestCase):
     def create_status(
