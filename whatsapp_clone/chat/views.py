@@ -63,7 +63,7 @@ def get_unread_chats(request):
     ).order_by("-last_message_date")
     user_chats = []
     for chat in chats:
-        if not chat.archived_by_user(request.user) or chat.deleted_by_user(request.user):
+        if not chat.archived_by_user(request.user) and not chat.deleted_by_user(request.user):
             if chat_is_unread_by_user(chat, request.user):
                 user_chats.append(chat) 
             
