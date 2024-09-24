@@ -2,7 +2,7 @@ from django import template
 from django.db.models import QuerySet
 from chat.models import User, Chat, Message
 from chat.tools import DEFAULT_USER_PHOTO_URL, get_contact_in_chat, object_photo
-from typing import Union
+from typing import Union, List
 import re
 
 register = template.Library()
@@ -109,13 +109,16 @@ def simplified_time_difference(time_difference: str) -> str:
 def starred_by_user_filter(message: Message, user: User) -> bool:
     return message.starred_by_user(user)
 
+
 @register.filter
-def archived_by_user_filter(chat: Chat, user:User) -> bool:
+def archived_by_user_filter(chat: Chat, user: User) -> bool:
     return chat.archived_by_user(user)
 
 
 @register.simple_tag
-def exclude_user_tag(user_set: QuerySet, user: User, desired_field: str) -> str:
+def exclude_user_tag(
+    user_set: QuerySet, user: User, desired_field: str
+) -> Union[str, List[str]]:
     """Removes the given user object from the provided user_set.
 
     Args:
@@ -136,7 +139,16 @@ def exclude_user_tag(user_set: QuerySet, user: User, desired_field: str) -> str:
             else f"{users_values[0].country_code}{users_values[0].national_number}"
         )
     else:
-        return users_values
+        return list(
+            map(
+                lambda user_phone: (
+                    f"{user_phone.country_code}{user_phone.national_number}"
+                    if type(user_phone) != str
+                    else None
+                ),
+                users_values,
+            )
+        )
 
 
 @register.simple_tag

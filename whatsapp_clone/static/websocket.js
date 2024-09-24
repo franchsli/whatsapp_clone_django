@@ -21,7 +21,7 @@ const message_received_audio = new Audio('static/Audio/app/message_received.mp3'
 const message_sent_audio = new Audio('static/Audio/app/message_sent.mp3')
 const error_audio = new Audio('static/Audio/app/error_sound.mp3')
 const status_notification_audio = new Audio('static/Audio/app/new_status.mp3')
-const debugging_mode = true
+const debugging_mode = false
 
 // Callback function to execute when mutations are observed
 const chat_mutation_callback = function(mutationsList, observer) {
@@ -114,6 +114,7 @@ window.summon_chat = function(chat){
     localStorage.setItem('receiver_username', chat.dataset.contact)
     localStorage.setItem('chat_id', chat.dataset.chat)
     localStorage.setItem('contact_phone_number', chat.dataset.contactPhone)
+    localStorage.setItem('chat_members_phones', chat.dataset.chatMembersPhones)
 
 }
 
@@ -161,7 +162,8 @@ function send_message (message_type, message_text, message_image, message_sender
         'receiver_username': localStorage.getItem('receiver_username'),
         'sender_user_id': message_sender_id,
         'chat_id': localStorage.getItem('chat_id'),
-        'contact_phone_number': localStorage.getItem('contact_phone_number')
+        'contact_phone_number': localStorage.getItem('contact_phone_number'),
+        'chat_members_phones': localStorage.getItem('chat_members_phones')
     }))
 
 }

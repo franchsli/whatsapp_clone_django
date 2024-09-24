@@ -3,7 +3,6 @@
 
 ## DO RIGHT NOW
 
-- Rework ChatConsumer because Contact object does not have 'archived' field anymore.
 - Check if all the views return the desired data (chats related views.)
 - (Chat Form) If a User deleted a chat, and want to create 'the same chat' again,
   remove the chat from the deleted chats list from the said User.

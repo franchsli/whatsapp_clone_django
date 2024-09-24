@@ -40,8 +40,11 @@ class ChatConsumer(AsyncWebsocketConsumer):
                     "text": f"{text_data_json['sender_user_id']}-{text_data_json['message']}-{text_data_json['image']}",
                 },
             )
+            #ITERATE HERE TO GROUP LOGIC
             self.receiver = text_data_json["contact_phone_number"].replace("+", "")
             print(f"user_group_{self.receiver}")
+            print(f"Phone number: {text_data_json['contact_phone_number']}")
+            print(type(text_data_json['contact_phone_number']))
 
             await self.create_message(
                 text_data_json["sender_user_id"],
