@@ -18,10 +18,7 @@ def get_user_by_id(user_id: Union[str, int]) -> Union[object, Exception]:
     Returns:
         Union[object, Exception]: The user object in the database or an exception if not found.
     """
-    try:
-        return User.objects.get(id=user_id)
-    except User.DoesNotExist:
-        raise ObjectDoesNotExist(f"NO USER FOUND WITH SUCH ID: {user_id}")
+    return get_object_by_id(User, user_id)
 
 
 def get_user_by_phone(phone_number: str) -> Union[object, Exception]:
@@ -153,6 +150,13 @@ def object_photo(object:Union[User, Chat]) -> str:
         the default photo url.
     """
     return object.photo.url if object.has_photo else DEFAULT_USER_PHOTO_URL
+
+def get_object_by_id(object_class:object, id:Union[str, int]) -> Union[object, Exception]:
+    try:
+        return object_class.objects.get(id=id)
+    except object_class.DoesNotExist:
+        raise ObjectDoesNotExist(f'NO {type(object_class).__name__} WITH SUCH ID')
+
     
 
 

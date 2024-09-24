@@ -488,7 +488,7 @@ chat_websocket.addEventListener('message', async (event) => {
     let text
     let image
     let sender_username
-    let sender_is_archived
+    let chat_is_archived
     if (event.data.includes('chat_message')){
         message = event.data.replace('chat_message', '')
         message_data = message.split('-')
@@ -522,7 +522,7 @@ chat_websocket.addEventListener('message', async (event) => {
         sender_id = message[0]
         text = message[1]
         sender_username = message[2]
-        sender_is_archived = message[3] === 'True' ? true : false
+        chat_is_archived = message[3] === 'True' ? true : false
 
         const displayed_chat_contact_info = document.getElementById('contact-name')
         let noti_from_opened_chat = false
@@ -531,7 +531,7 @@ chat_websocket.addEventListener('message', async (event) => {
             // Tells whether or not the notification is from the currently opened chat
             noti_from_opened_chat = displayed_chat_contact_info.dataset.userObjectId === sender_id
         }
-        if(!sender_is_archived && !noti_from_opened_chat){
+        if(!chat_is_archived && !noti_from_opened_chat){
             const toastNotification = document.getElementById('liveToast')
             tools.modifyNotification(sender_username, text)
             const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
