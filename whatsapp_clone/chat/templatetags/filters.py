@@ -1,7 +1,7 @@
 from django import template
 from django.db.models import QuerySet
 from chat.models import User, Chat, Message
-from chat.tools import DEFAULT_USER_PHOTO_URL, get_contact_in_chat
+from chat.tools import DEFAULT_USER_PHOTO_URL, get_contact_in_chat, object_photo
 from typing import Union
 import re
 
@@ -157,10 +157,7 @@ def chat_desired_data(
     # check if it's a group-like chat or not
     if chat.admins.count() > 0:
         if desired_value == "photo":
-            if chat.has_photo:
-                return chat.photo.url
-            else:
-                return DEFAULT_USER_PHOTO_URL
+            return object_photo(chat)
         else:
             # if the desired value if one of the fields
             # try to return it
@@ -168,34 +165,30 @@ def chat_desired_data(
                 return getattr(chat, desired_value)
             except AttributeError:
                 return False
-
     else:
         contact = get_contact_in_chat(chat, auth_user)
-
         if contact:
-            if desired_value == "id":
-                return contact.pk
-            elif desired_value == "photo":
+            if desired_value == "photo":
                 contact = User.objects.get(phone_number=contact.phone_number)
-                if contact.has_photo:
-                    return contact.photo.url
-                else:
-                    return DEFAULT_USER_PHOTO_URL
+                return object_photo(contact)
             elif desired_value == "user-id":
                 contact_user_object = User.objects.get(
                     phone_number=contact.phone_number
                 )
                 return contact_user_object.pk
-            elif desired_value == "archived":
-                pass
             else:
-                return getattr(contact, desired_value)
+                # if the desired value if one of the fields
+                # try to return it
+                try:
+                    return getattr(contact, desired_value)
+                except AttributeError:
+                    return False
         # in case no contact is found,
         # it means the user is not in the contact list
         else:
             user = chat.users.exclude(id=auth_user.pk)
             if desired_value == "photo":
-                return user.photo.url if user.has_photo else DEFAULT_USER_PHOTO_URL
+                return object_photo(user)
             else:
                 return user.phone_number
 

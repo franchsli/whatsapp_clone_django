@@ -141,6 +141,21 @@ def get_contacts_statuses(user: User, muted: bool) -> dict:
     return contacts_with_statuses
 
 
+def object_photo(object:Union[User, Chat]) -> str:
+    """Returns the object photo field url if exists,
+    returns a default photo url otherwise.
+
+    Args:
+        object (Union[User, Chat]): Either a User or a Chat.
+
+    Returns:
+        str: The url of the photo in the object (if found) or
+        the default photo url.
+    """
+    return object.photo.url if object.has_photo else DEFAULT_USER_PHOTO_URL
+    
+
+
 def encoded_image_to_file(
     image_encoded_data: Union[bytes, str], file_name: str
 ) -> ContentFile:
