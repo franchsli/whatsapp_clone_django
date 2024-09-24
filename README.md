@@ -3,6 +3,9 @@
 
 ## DO RIGHT NOW
 
+- Check if...
+  - Chat creation works correctly.
+  - Contact creation works correctly.
 - Check if all the views return the desired data (chats related views.)
 - (Chat Form) If a User deleted a chat, and want to create 'the same chat' again,
   remove the chat from the deleted chats list from the said User.

@@ -132,12 +132,10 @@ def exclude_user_tag(
     user_list = user_set.exclude(id=user.id)
     users_values = list(user_list.values_list(desired_field, flat=True))
 
-    if len(users_values) < 2:
-        return (
-            users_values[0]
-            if desired_field != "phone_number"
-            else f"{users_values[0].country_code}{users_values[0].national_number}"
-        )
+    if len(users_values) < 2 and desired_field != "phone_number":
+        return users_values[0]
+
+
     else:
         return list(
             map(

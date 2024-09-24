@@ -113,7 +113,6 @@ window.summon_chat = function(chat){
     }))
     localStorage.setItem('receiver_username', chat.dataset.contact)
     localStorage.setItem('chat_id', chat.dataset.chat)
-    localStorage.setItem('contact_phone_number', chat.dataset.contactPhone)
     localStorage.setItem('chat_members_phones', chat.dataset.chatMembersPhones)
 
 }
@@ -162,7 +161,6 @@ function send_message (message_type, message_text, message_image, message_sender
         'receiver_username': localStorage.getItem('receiver_username'),
         'sender_user_id': message_sender_id,
         'chat_id': localStorage.getItem('chat_id'),
-        'contact_phone_number': localStorage.getItem('contact_phone_number'),
         'chat_members_phones': localStorage.getItem('chat_members_phones')
     }))
 

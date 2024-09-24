@@ -40,11 +40,22 @@ class ChatConsumer(AsyncWebsocketConsumer):
                     "text": f"{text_data_json['sender_user_id']}-{text_data_json['message']}-{text_data_json['image']}",
                 },
             )
+            chat_instance = await database_sync_to_async(get_object_by_id)(
+                Chat, text_data_json["chat_id"]
+            )
+            chat_is_archived = await database_sync_to_async(chat_instance.archived_by_user)(
+                self.user_instance
+            )
             #ITERATE HERE TO GROUP LOGIC
-            self.receiver = text_data_json["contact_phone_number"].replace("+", "")
+            self.receiver = text_data_json["chat_members_phones"][0].replace("+", "")
             print(f"user_group_{self.receiver}")
-            print(f"Phone number: {text_data_json['contact_phone_number']}")
-            print(type(text_data_json['contact_phone_number']))
+            print(f"Phone number: {text_data_json['chat_members_phones'][0]}")
+            print(type(text_data_json['chat_members_phones'][0]))
+            if len(text_data_json["chat_members_phones"]) > 1:
+                pass
+            else:
+                self.receiver = text_data_json["chat_members_phones"][0].replace("+", "")
+
 
             await self.create_message(
                 text_data_json["sender_user_id"],
@@ -53,17 +64,10 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 text_data_json["image"],
             )
             receiver_instance = await database_sync_to_async(get_user_by_phone)(
-                text_data_json["contact_phone_number"]
+                text_data_json["chat_members_phones"][0]
             )
             sender_contact_instance = await database_sync_to_async(contact_from_user)(
                 receiver_instance, self.user_instance.phone_number
-            )
-
-            chat_instance = await database_sync_to_async(get_object_by_id)(
-                Chat, text_data_json["chat_id"]
-            )
-            chat_is_archived = await database_sync_to_async(chat_instance.archived_by_user)(
-                self.user_instance
             )
 
             await self.channel_layer.group_send(
@@ -91,20 +95,20 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
         elif text_data_json["type"] == "create_chat":
             contact = await database_sync_to_async(get_user_by_phone)(
-                text_data_json["contact_phone_number"]
+                text_data_json["chat_members_phones"]
             )
             await self.create_chat([self.user_instance, contact])
 
         elif text_data_json["type"] == "create_contact":
             await database_sync_to_async(create_contact)(
                 text_data_json["contact_name"],
-                text_data_json["contact_phone_number"],
+                text_data_json["chat_members_phones"],
                 self.user_instance,
             )
 
         elif text_data_json["type"] == "message_deletion":
             receiver_instance = await database_sync_to_async(get_user_by_phone)(
-                text_data_json["contact_phone_number"]
+                text_data_json["chat_members_phones"][0]
             )
             sender_contact_instance = await database_sync_to_async(contact_from_user)(
                 receiver_instance, self.user_instance.phone_number
@@ -120,7 +124,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
         elif text_data_json["type"] == "message_edition":
             receiver_instance = await database_sync_to_async(get_user_by_phone)(
-                text_data_json["contact_phone_number"]
+                text_data_json["chat_members_phones"][0]
             )
             sender_contact_instance = await database_sync_to_async(contact_from_user)(
                 receiver_instance, self.user_instance.phone_number
