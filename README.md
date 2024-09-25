@@ -6,6 +6,10 @@
 - Check if...
   - Chat creation works correctly.
   - Contact creation works correctly.
+  - Message edition works correctly.
+  - Message deletion works correctly.
+- Rework ChatConsumer:
+  - Create new methods (send_message_deletion, send_message_edition, send_notification, etc)
 - Check if all the views return the desired data (chats related views.)
 - (Chat Form) If a User deleted a chat, and want to create 'the same chat' again,
   remove the chat from the deleted chats list from the said User.

@@ -46,6 +46,13 @@ class ChatConsumer(AsyncWebsocketConsumer):
             chat_is_archived = await database_sync_to_async(chat_instance.archived_by_user)(
                 self.user_instance
             )
+
+            await self.create_message(
+                text_data_json["sender_user_id"],
+                text_data_json["chat_id"],
+                text_data_json["message"],
+                text_data_json["image"],
+            )
             #ITERATE HERE TO GROUP LOGIC
             self.receiver = text_data_json["chat_members_phones"][0].replace("+", "")
             print(f"user_group_{self.receiver}")
@@ -57,12 +64,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 self.receiver = text_data_json["chat_members_phones"][0].replace("+", "")
 
 
-            await self.create_message(
-                text_data_json["sender_user_id"],
-                text_data_json["chat_id"],
-                text_data_json["message"],
-                text_data_json["image"],
-            )
             receiver_instance = await database_sync_to_async(get_user_by_phone)(
                 text_data_json["chat_members_phones"][0]
             )
@@ -95,14 +96,14 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
         elif text_data_json["type"] == "create_chat":
             contact = await database_sync_to_async(get_user_by_phone)(
-                text_data_json["chat_members_phones"]
+                text_data_json["chat_members_phones"][0]
             )
             await self.create_chat([self.user_instance, contact])
 
         elif text_data_json["type"] == "create_contact":
             await database_sync_to_async(create_contact)(
                 text_data_json["contact_name"],
-                text_data_json["chat_members_phones"],
+                text_data_json["chat_members_phones"][0],
                 self.user_instance,
             )
 
@@ -155,6 +156,15 @@ class ChatConsumer(AsyncWebsocketConsumer):
         await self.send(
             text_data=f"chat_notification{event['sender_id'] + event['text']  + event['sender_contact_name'] + event['chat_is_archived']}"
         )
+    
+    async def send_message_creation(self):
+        pass
+
+    async def send_message_edition(self):
+        pass
+
+    async def send_message_deletion(self):
+        pass
 
     @database_sync_to_async
     def create_message(
