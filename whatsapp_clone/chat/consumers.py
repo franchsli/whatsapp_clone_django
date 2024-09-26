@@ -40,11 +40,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
                     "text": f"{text_data_json['sender_user_id']}-{text_data_json['message']}-{text_data_json['image']}",
                 },
             )
-            chat_instance = await database_sync_to_async(get_object_by_id)(
+            self.chat_instance = await database_sync_to_async(get_object_by_id)(
                 Chat, text_data_json["chat_id"]
-            )
-            chat_is_archived = await database_sync_to_async(chat_instance.archived_by_user)(
-                self.user_instance
             )
 
             await self.create_message(
@@ -53,34 +50,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 text_data_json["message"],
                 text_data_json["image"],
             )
-            #ITERATE HERE TO GROUP LOGIC
-            self.receiver = text_data_json["chat_members_phones"][0].replace("+", "")
-            print(f"user_group_{self.receiver}")
-            print(f"Phone number: {text_data_json['chat_members_phones'][0]}")
-            print(type(text_data_json['chat_members_phones'][0]))
-            if len(text_data_json["chat_members_phones"]) > 1:
-                pass
-            else:
-                self.receiver = text_data_json["chat_members_phones"][0].replace("+", "")
 
+            await self.send_message_notifications(text_data_json)
 
-            receiver_instance = await database_sync_to_async(get_user_by_phone)(
-                text_data_json["chat_members_phones"][0]
-            )
-            sender_contact_instance = await database_sync_to_async(contact_from_user)(
-                receiver_instance, self.user_instance.phone_number
-            )
-
-            await self.channel_layer.group_send(
-                f"user_group_{self.receiver}",
-                {
-                    "type": "chat_notification",
-                    "sender_id": f"{text_data_json['sender_user_id']}",
-                    "text": f"-{text_data_json['message'] if len(text_data_json['message']) > 0 else 'Photo 📷'}",
-                    "sender_contact_name": f"-{sender_contact_instance.name if sender_contact_instance else self.user_instance.phone_number}",
-                    "chat_is_archived": f"-{chat_is_archived}",
-                },
-            )
         # if the type of the 'request' is 'reconnect'
         # connect this consumer to another group
         # to be able to send messages.
@@ -157,13 +129,35 @@ class ChatConsumer(AsyncWebsocketConsumer):
             text_data=f"chat_notification{event['sender_id'] + event['text']  + event['sender_contact_name'] + event['chat_is_archived']}"
         )
     
-    async def send_message_creation(self):
+    async def send_message_notifications(self, websocket_message_data:dict):
+        for message_receiver_phone in websocket_message_data["chat_members_phones"]:
+            print(websocket_message_data["chat_members_phones"])
+            print(message_receiver_phone)
+            print(f"user_group_{message_receiver_phone}")        
+            receiver_instance = await database_sync_to_async(get_user_by_phone)(
+                message_receiver_phone
+            )
+            sender_contact_instance = await database_sync_to_async(contact_from_user)(
+                receiver_instance, self.user_instance.phone_number
+            )
+            chat_is_archived = await database_sync_to_async(self.chat_instance.archived_by_user)(
+                receiver_instance
+            )
+            await self.channel_layer.group_send(
+                f"user_group_{message_receiver_phone}",
+                {
+                    "type": "chat_notification",
+                    "sender_id": f"{websocket_message_data['sender_user_id']}",
+                    "text": f"-{websocket_message_data['message'] if len(websocket_message_data['message']) > 0 else 'Photo 📷'}",
+                    "sender_contact_name": f"-{sender_contact_instance.name if sender_contact_instance else self.user_instance.phone_number}",
+                    "chat_is_archived": f"-{chat_is_archived}",
+                },
+            )
+
+    async def send_message_edition(self, websocket_message_data:dict):
         pass
 
-    async def send_message_edition(self):
-        pass
-
-    async def send_message_deletion(self):
+    async def send_message_deletion(self, websocket_message_data:dict):
         pass
 
     @database_sync_to_async

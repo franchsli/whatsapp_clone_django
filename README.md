@@ -3,6 +3,7 @@
 
 ## DO RIGHT NOW
 
+- **FIX THIS** chat_members_phones_js is not a list, make it a Javascript array.
 - Check if...
   - Chat creation works correctly.
   - Contact creation works correctly.
