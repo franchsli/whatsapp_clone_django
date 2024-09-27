@@ -4,13 +4,13 @@
 <ul id="chat-list" class="scroll-section list-group list-group-flush overflow-y-scroll" style="max-height: 590px; height: 500px;">
   {% for chat in chats %}
   {% exclude_user_tag chat.users.all request.user 'phone_number' as chat_members_phones %}
-  {% with chat_members_phones_js=chat_members_phones|json_script %}
+  <div style="display: none;" id="chat-{{chat.id}}-members-phones">{{ chat_members_phones|json_script }}</div>
   <li onclick="summon_chat(this);" oncontextmenu="showDropdown(event, 'chat-dropdown{{chat.id}}')"
    hx-get="{% url 'display_chat' chat.id %}" hx-target="#chat-display"  
    hx-swap="innerHTML transition:true" id="chat-{{chat.id}}" 
    class="list-group-item p-3  d-flex flex-inline align-items-center chat" 
    role="button" data-chat={{chat.id}} data-contact='{% exclude_user_tag chat.users.all request.user 'username' %}'
-   data-chat-members-phones='{{ chat_members_phones_js }}'>
+   data-chat-members-phones-data-id="chat-{{chat.id}}-members-phones">
     {% comment "contact profile photo" %}{% endcomment %}
     <img class="ms-1 rounded-circle img-fluid" src="{% chat_desired_data chat request.user 'photo' %}" alt="Contact photo couldn't load" style="max-width: 45px;">
     <div class="d-flex flex-column ms-3 w-100">
@@ -83,7 +83,6 @@
       </div>
     </div>
   </li>
-  {% endwith %}
   {% endwith %}
   {% endfor %}
 </ul>

@@ -3,9 +3,7 @@
 
 ## DO RIGHT NOW
 
-- **FIX THIS** chat_members_phones_js is not a list, make it a Javascript array.
 - Check if...
-  - Chat creation works correctly.
   - Contact creation works correctly.
   - Message edition works correctly.
   - Message deletion works correctly.
@@ -74,10 +72,6 @@ Also don't forget to change the channel layer to redis.
 
 ## BUGS TO FIX
 
-- Users can't send messages to groups:
-  - The message will be created but it's sending issues an error.
-  - To **fix** this the Chat Consumer logic for sending messages needs to be reworked,
-    using a for loop to iterate over the user's numbers in the Chat and send the notification to each one.
 - Scroll to bottom func doesn't scroll to the botom anymore when the last messages
   are images, test why:
   - **THIS IS WHAT I THINK THAT HAPPENS**:

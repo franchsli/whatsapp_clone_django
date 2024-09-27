@@ -107,13 +107,17 @@ general_observer.observe(chats_and_more, observerConfig)
  * @param {HTMLElement} chat 
  */
 window.summon_chat = function(chat){
+    const chat_members_phones_container = document.getElementById(chat.dataset.chatMembersPhonesDataId)
+    const chat_members_phones = JSON.parse(chat_members_phones_container.firstChild.textContent)
+    console.log(chat_members_phones)
+    console.log(typeof(chat_members_phones))
     chat_websocket.send(JSON.stringify({
         'type':'reconnect',
         'reconnect_to': chat.dataset.chat
     }))
     localStorage.setItem('receiver_username', chat.dataset.contact)
     localStorage.setItem('chat_id', chat.dataset.chat)
-    localStorage.setItem('chat_members_phones', chat.dataset.chatMembersPhones)
+    localStorage.setItem('chat_members_phones', chat_members_phones)
 
 }
 

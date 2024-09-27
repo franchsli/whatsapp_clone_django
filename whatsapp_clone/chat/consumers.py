@@ -50,7 +50,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 text_data_json["message"],
                 text_data_json["image"],
             )
-
+            text_data_json["chat_members_phones"] = text_data_json["chat_members_phones"].split(',')
+            print(text_data_json["chat_members_phones"])
+            print(type(text_data_json["chat_members_phones"]))
             await self.send_message_notifications(text_data_json)
 
         # if the type of the 'request' is 'reconnect'
