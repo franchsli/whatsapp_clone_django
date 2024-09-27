@@ -28,38 +28,37 @@ class ChatConsumer(AsyncWebsocketConsumer):
     async def receive(self, text_data):
         # transform the text_data (message received [json])
         # to a python dictionary
-        text_data_json = json.loads(text_data)
+        self.text_data_json = json.loads(text_data)
         # handles the message as a 'request'
         # if the type of the 'request' is message, it means
         # a message needs to be created in the database with the dictionary data.
-        if text_data_json["type"] == "message":
+        if self.text_data_json["type"] == "message":
             await self.channel_layer.group_send(
                 self.room_group_name,
                 {
                     "type": "chat_message",
-                    "text": f"{text_data_json['sender_user_id']}-{text_data_json['message']}-{text_data_json['image']}",
+                    "text": f"{self.text_data_json['sender_user_id']}-{self.text_data_json['message']}-{self.text_data_json['image']}",
                 },
             )
             self.chat_instance = await database_sync_to_async(get_object_by_id)(
-                Chat, text_data_json["chat_id"]
+                Chat, self.text_data_json["chat_id"]
             )
 
             await self.create_message(
-                text_data_json["sender_user_id"],
-                text_data_json["chat_id"],
-                text_data_json["message"],
-                text_data_json["image"],
+                self.text_data_json["sender_user_id"],
+                self.text_data_json["chat_id"],
+                self.text_data_json["message"],
+                self.text_data_json["image"],
             )
-            text_data_json["chat_members_phones"] = text_data_json["chat_members_phones"].split(',')
-            print(text_data_json["chat_members_phones"])
-            print(type(text_data_json["chat_members_phones"]))
-            await self.send_message_notifications(text_data_json)
+            print(self.text_data_json["chat_members_phones"])
+            print(type(self.text_data_json["chat_members_phones"]))
+            await self.send_message_notifications(self.text_data_json)
 
         # if the type of the 'request' is 'reconnect'
         # connect this consumer to another group
         # to be able to send messages.
-        elif text_data_json["type"] == "reconnect":
-            group_name = text_data_json["reconnect_to"]
+        elif self.text_data_json["type"] == "reconnect":
+            group_name = self.text_data_json["reconnect_to"]
             print("reconnecting to group", group_name)
             await self.channel_layer.group_discard(
                 self.room_group_name, self.channel_name
@@ -68,50 +67,24 @@ class ChatConsumer(AsyncWebsocketConsumer):
             print("room", self.room_group_name)
             await self.channel_layer.group_add(self.room_group_name, self.channel_name)
 
-        elif text_data_json["type"] == "create_chat":
+        elif self.text_data_json["type"] == "create_chat":
             contact = await database_sync_to_async(get_user_by_phone)(
-                text_data_json["chat_members_phones"][0]
+                self.text_data_json["chat_members_phones"][0]
             )
             await self.create_chat([self.user_instance, contact])
 
-        elif text_data_json["type"] == "create_contact":
+        elif self.text_data_json["type"] == "create_contact":
             await database_sync_to_async(create_contact)(
-                text_data_json["contact_name"],
-                text_data_json["chat_members_phones"][0],
+                self.text_data_json["contact_name"],
+                self.text_data_json["chat_members_phones"][0],
                 self.user_instance,
             )
 
-        elif text_data_json["type"] == "message_deletion":
-            receiver_instance = await database_sync_to_async(get_user_by_phone)(
-                text_data_json["chat_members_phones"][0]
-            )
-            sender_contact_instance = await database_sync_to_async(contact_from_user)(
-                receiver_instance, self.user_instance.phone_number
-            )
-            await self.channel_layer.group_send(
-                self.room_group_name,
-                {
-                    "type": "chat_message_deletion",
-                    "sender_id": f"{text_data_json['sender_user_id']}",
-                    "sender_contact_name": f"-{sender_contact_instance.name if sender_contact_instance else self.user_instance.phone_number}",
-                },
-            )
+        elif self.text_data_json["type"] == "message_deletion":
+            await self.send_message_deletion(self.text_data_json)
 
-        elif text_data_json["type"] == "message_edition":
-            receiver_instance = await database_sync_to_async(get_user_by_phone)(
-                text_data_json["chat_members_phones"][0]
-            )
-            sender_contact_instance = await database_sync_to_async(contact_from_user)(
-                receiver_instance, self.user_instance.phone_number
-            )
-            await self.channel_layer.group_send(
-                self.room_group_name,
-                {
-                    "type": "chat_message_edition",
-                    "sender_id": f"{text_data_json['sender_user_id']}",
-                    "sender_contact_name": f"-{sender_contact_instance.name if sender_contact_instance else self.user_instance.phone_number}",
-                },
-            )
+        elif self.text_data_json["type"] == "message_edition":
+            await self.send_message_edition(self.text_data_json)
 
     async def chat_message(self, event):
         await self.send(text_data=f"chat_message{event['text']}")
@@ -132,8 +105,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         )
     
     async def send_message_notifications(self, websocket_message_data:dict):
-        for message_receiver_phone in websocket_message_data["chat_members_phones"]:
-            print(websocket_message_data["chat_members_phones"])
+        for message_receiver_phone in websocket_message_data["chat_members_phones"].split(','):
             print(message_receiver_phone)
             print(f"user_group_{message_receiver_phone}")        
             receiver_instance = await database_sync_to_async(get_user_by_phone)(
@@ -157,10 +129,38 @@ class ChatConsumer(AsyncWebsocketConsumer):
             )
 
     async def send_message_edition(self, websocket_message_data:dict):
-        pass
+        for message_receiver_phone in websocket_message_data["chat_members_phones"].split(','):
+            receiver_instance = await database_sync_to_async(get_user_by_phone)(
+                message_receiver_phone
+            )
+            sender_contact_instance = await database_sync_to_async(contact_from_user)(
+                receiver_instance, self.user_instance.phone_number
+            )
+            await self.channel_layer.group_send(
+                self.room_group_name,
+                {
+                    "type": "chat_message_edition",
+                    "sender_id": f"{websocket_message_data['sender_user_id']}",
+                    "sender_contact_name": f"-{sender_contact_instance.name if sender_contact_instance else self.user_instance.phone_number}",
+                },
+            )
 
     async def send_message_deletion(self, websocket_message_data:dict):
-        pass
+        for message_receiver_phone in websocket_message_data["chat_members_phones"].split(','):
+            receiver_instance = await database_sync_to_async(get_user_by_phone)(
+                message_receiver_phone
+            )
+            sender_contact_instance = await database_sync_to_async(contact_from_user)(
+                receiver_instance, self.user_instance.phone_number
+            )
+            await self.channel_layer.group_send(
+                self.room_group_name,
+                {
+                    "type": "chat_message_deletion",
+                    "sender_id": f"{websocket_message_data['sender_user_id']}",
+                    "sender_contact_name": f"-{sender_contact_instance.name if sender_contact_instance else self.user_instance.phone_number}",
+                },
+            )
 
     @database_sync_to_async
     def create_message(
@@ -233,28 +233,28 @@ class StatusConsumer(AsyncWebsocketConsumer):
     async def receive(self, text_data):
         # transform the text_data (status received [json])
         # to a python dictionary
-        text_data_json = json.loads(text_data)
-        print("STATUS DATA", text_data_json)
+        self.text_data_json = json.loads(text_data)
+        print("STATUS DATA", self.text_data_json)
 
-        if text_data_json["type"] == "CREATE":
-            await self.create_status(text_data_json["text"], text_data_json["image"])
+        if self.text_data_json["type"] == "CREATE":
+            await self.create_status(self.text_data_json["text"], self.text_data_json["image"])
             await self.channel_layer.group_send(
                 self.room_group_name,
                 {
                     "type": "status_notification",
                     "text": "-".join(
-                        [value for value in text_data_json.values() if value != None]
+                        [value for value in self.text_data_json.values() if value != None]
                     ),
                 },
             )
 
-        elif text_data_json["type"] == "DELETE":
-            await self.delete_status(text_data_json["status_id"])
+        elif self.text_data_json["type"] == "DELETE":
+            await self.delete_status(self.text_data_json["status_id"])
             await self.channel_layer.group_send(
                 self.room_group_name,
                 {
                     "type": "status_deletion",
-                    "text": text_data_json["status_id"],
+                    "text": self.text_data_json["status_id"],
                 },
             )
 
