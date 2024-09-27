@@ -129,40 +129,56 @@ class ChatConsumer(AsyncWebsocketConsumer):
             )
 
     async def send_message_edition(self, websocket_message_data:dict):
-        for message_receiver_phone in websocket_message_data["chat_members_phones"].split(','):
+        phones_in_chat = websocket_message_data["chat_members_phones"].split(',')
+        if len(phones_in_chat) > 1:
+            self.chat_instance = await database_sync_to_async(get_object_by_id)(
+                Chat, self.text_data_json["chat_id"]
+            )
+            self.sender_contact_name = self.chat_instance.name
+        else:
             receiver_instance = await database_sync_to_async(get_user_by_phone)(
-                message_receiver_phone
+                phones_in_chat[0]
             )
             sender_contact_instance = await database_sync_to_async(contact_from_user)(
                 receiver_instance, self.user_instance.phone_number
-            )
-            await self.channel_layer.group_send(
-                f"user_group_{message_receiver_phone}",
-                {
-                    "type": "chat_message_edition",
-                    "sender_id": f"{websocket_message_data['sender_user_id']}",
-                    "sender_contact_name": f"-{sender_contact_instance.name if sender_contact_instance else self.user_instance.phone_number}",
-                    "chat_id": f"-{websocket_message_data['chat_id']}"
-                },
             )
 
+            self.sender_contact_name = sender_contact_instance.name
+        await self.channel_layer.group_send(
+            self.room_group_name,
+            {
+                "type": "chat_message_edition",
+                "sender_id": f"{websocket_message_data['sender_user_id']}",
+                "sender_contact_name": f"-{self.sender_contact_name}",
+                "chat_id": f"-{websocket_message_data['chat_id']}"
+            },
+        )
+
     async def send_message_deletion(self, websocket_message_data:dict):
-        for message_receiver_phone in websocket_message_data["chat_members_phones"].split(','):
+        phones_in_chat = websocket_message_data["chat_members_phones"].split(',')
+        if len(phones_in_chat) > 1:
+            self.chat_instance = await database_sync_to_async(get_object_by_id)(
+                Chat, self.text_data_json["chat_id"]
+            )
+            self.sender_contact_name = self.chat_instance.name
+        else:
             receiver_instance = await database_sync_to_async(get_user_by_phone)(
-                message_receiver_phone
+                phones_in_chat[0]
             )
             sender_contact_instance = await database_sync_to_async(contact_from_user)(
                 receiver_instance, self.user_instance.phone_number
             )
-            await self.channel_layer.group_send(
-                f"user_group_{message_receiver_phone}",
-                {
-                    "type": "chat_message_deletion",
-                    "sender_id": f"{websocket_message_data['sender_user_id']}",
-                    "sender_contact_name": f"-{sender_contact_instance.name if sender_contact_instance else self.user_instance.phone_number}",
-                    "chat_id": f"-{websocket_message_data['chat_id']}"
-                },
-            )
+
+            self.sender_contact_name = sender_contact_instance.name
+        await self.channel_layer.group_send(
+            self.room_group_name,
+            {
+                "type": "chat_message_edition",
+                "sender_id": f"{websocket_message_data['sender_user_id']}",
+                "sender_contact_name": f"-{self.sender_contact_name}",
+                "chat_id": f"-{websocket_message_data['chat_id']}"
+            },
+        )
 
     @database_sync_to_async
     def create_message(
