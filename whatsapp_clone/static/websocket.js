@@ -488,6 +488,7 @@ chat_websocket.addEventListener('open', () => {
 chat_websocket.addEventListener('message', async (event) => {
     let message
     let sender_id
+    let chat_id
     let message_data
     let text
     let image
@@ -575,17 +576,21 @@ chat_websocket.addEventListener('message', async (event) => {
         message = message.split('-')
         sender_id = message[0]
         sender_username = message[1]
+        chat_id = message[2]
         /**
         * the JS code (receiver) analises the websocket message
         * and then decides whether or not to update the UI using
         * a HTMX.ajax request.
         */
-        tools.update_chat_list()
+        //tools.update_chat_list()
         if (document.getElementById('contact-name') !== null){
-            if (document.getElementById('contact-name').innerText === sender_username) {
-    
+            console.log("TRYING TO RELOAD CHAT")
+            console.log(chat_id, localStorage.getItem('chat_id') )
+            if (localStorage.getItem('chat_id') === chat_id) {
+                console.log('CHAT RELOADING')
                 htmx.ajax('GET', `/display_chat/${localStorage.getItem('chat_id')}`, '#chat-display').then(() => {
                     tools.scroll_to_bottom()
+                    console.log('CHAT REALOADED')
                 })
                 
             }

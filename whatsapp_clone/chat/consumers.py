@@ -91,12 +91,12 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
     async def chat_message_deletion(self, event):
         await self.send(
-            text_data=f"message_deletion{event['sender_id'] + event['sender_contact_name']}"
+            text_data=f"message_deletion{event['sender_id'] + event['sender_contact_name'] + event['chat_id']}"
         )
 
     async def chat_message_edition(self, event):
         await self.send(
-            text_data=f"message_edition{event['sender_id'] + event['sender_contact_name']}"
+            text_data=f"message_edition{event['sender_id'] + event['sender_contact_name'] + event['chat_id']}"
         )
 
     async def chat_notification(self, event):
@@ -137,11 +137,12 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 receiver_instance, self.user_instance.phone_number
             )
             await self.channel_layer.group_send(
-                self.room_group_name,
+                f"user_group_{message_receiver_phone}",
                 {
                     "type": "chat_message_edition",
                     "sender_id": f"{websocket_message_data['sender_user_id']}",
                     "sender_contact_name": f"-{sender_contact_instance.name if sender_contact_instance else self.user_instance.phone_number}",
+                    "chat_id": f"-{websocket_message_data['chat_id']}"
                 },
             )
 
@@ -154,11 +155,12 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 receiver_instance, self.user_instance.phone_number
             )
             await self.channel_layer.group_send(
-                self.room_group_name,
+                f"user_group_{message_receiver_phone}",
                 {
                     "type": "chat_message_deletion",
                     "sender_id": f"{websocket_message_data['sender_user_id']}",
                     "sender_contact_name": f"-{sender_contact_instance.name if sender_contact_instance else self.user_instance.phone_number}",
+                    "chat_id": f"-{websocket_message_data['chat_id']}"
                 },
             )
 
