@@ -21,7 +21,8 @@ const message_received_audio = new Audio('static/Audio/app/message_received.mp3'
 const message_sent_audio = new Audio('static/Audio/app/message_sent.mp3')
 const error_audio = new Audio('static/Audio/app/error_sound.mp3')
 const status_notification_audio = new Audio('static/Audio/app/new_status.mp3')
-const debugging_mode = false
+const debug_logs = 'issues'
+const debugging_mode = true
 
 // Callback function to execute when mutations are observed
 const chat_mutation_callback = function(mutationsList, observer) {
@@ -405,14 +406,25 @@ chat_websocket.addEventListener('open', () => {
      */
     htmx.logger = async function(elt, event, data) {
         // debugging :)
-        if (debugging_mode){
-            console.log('EVENT CALLED:', event)
-            console.log('ELEMENT THAT ISSUED THE REQUEST:', elt)
-            if(data){
+
+        if (debugging_mode && data){
+            let previous_event = data
+            if (debug_logs === 'issues'){
+                if(data.pathInfo){
+                    if(!data.pathInfo.responsePath && !data.successful){
+                        console.log('AN ERROR HAS OCURRED')
+                        console.log("PREVIOUS EVENT DATA:\n", previous_event)
+                        console.log("ACTUAL EVENT:\n", data)
+                    }
+                }
+            }
+            else if (debug_logs === 'relevant'){
+                console.log('EVENT CALLED:', event)
+                console.log('ELEMENT THAT ISSUED THE REQUEST:', elt)
                 if(data.pathInfo){
                     console.log('REQUEST PATH:', data.pathInfo.requestPath)
                     console.log('RESPONSE PATH:', data.pathInfo.responsePath)
-                    console.log('THIS REQUEST WAS SUCCESSFUL?:', data.successful)
+                    console.log('WAS THIS REQUEST SUCCESSFUL?:', data.successful)
                 }
             }
         }
@@ -552,6 +564,7 @@ chat_websocket.addEventListener('message', async (event) => {
         message = message.split('-')
         sender_id = message[0]
         sender_username = message[1]
+        chat_id = message[2]
         /**
         * the JS code (receiver) analises the websocket message
         * and then decides whether or not to update the UI using
@@ -559,7 +572,7 @@ chat_websocket.addEventListener('message', async (event) => {
         */
         tools.update_chat_list()
         if (document.getElementById('contact-name') !== null){
-            if (document.getElementById('contact-name').innerText === sender_username) {
+            if (localStorage.getItem('chat_id') === chat_id) {
     
                 htmx.ajax('GET', `/display_chat/${localStorage.getItem('chat_id')}`, '#chat-display').then(() => {
                     tools.scroll_to_bottom()
@@ -582,13 +595,13 @@ chat_websocket.addEventListener('message', async (event) => {
         * and then decides whether or not to update the UI using
         * a HTMX.ajax request.
         */
-        //tools.update_chat_list()
+        tools.update_chat_list()
         if (document.getElementById('contact-name') !== null){
             console.log("TRYING TO RELOAD CHAT")
             console.log(chat_id, localStorage.getItem('chat_id') )
             if (localStorage.getItem('chat_id') === chat_id) {
                 console.log('CHAT RELOADING')
-                htmx.ajax('GET', `/display_chat/${localStorage.getItem('chat_id')}`, '#chat-display').then(() => {
+                htmx.ajax('GET', `/display_chat/${localStorage.getItem('chat_id')}`, {target: '#chat-display', swap: 'outerHTML'}).then(() => {
                     tools.scroll_to_bottom()
                     console.log('CHAT REALOADED')
                 })
