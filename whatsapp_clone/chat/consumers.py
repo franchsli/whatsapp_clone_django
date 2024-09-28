@@ -33,6 +33,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         # if the type of the 'request' is message, it means
         # a message needs to be created in the database with the dictionary data.
         if self.text_data_json["type"] == "message":
+            print(self.user_instance.username)
             await self.channel_layer.group_send(
                 self.room_group_name,
                 {
@@ -43,16 +44,15 @@ class ChatConsumer(AsyncWebsocketConsumer):
             self.chat_instance = await database_sync_to_async(get_object_by_id)(
                 Chat, self.text_data_json["chat_id"]
             )
-
+            print(self.text_data_json["chat_members_phones"])
+            print(type(self.text_data_json["chat_members_phones"]))
+            await self.send_message_notifications(self.text_data_json)
             await self.create_message(
                 self.text_data_json["sender_user_id"],
                 self.text_data_json["chat_id"],
                 self.text_data_json["message"],
                 self.text_data_json["image"],
             )
-            print(self.text_data_json["chat_members_phones"])
-            print(type(self.text_data_json["chat_members_phones"]))
-            await self.send_message_notifications(self.text_data_json)
 
         # if the type of the 'request' is 'reconnect'
         # connect this consumer to another group

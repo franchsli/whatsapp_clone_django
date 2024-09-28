@@ -572,7 +572,7 @@ chat_websocket.addEventListener('message', async (event) => {
     }
 
     else if (event.data.includes('message_edition')){
-        message = event.data.replace('chat_message_deletion', '')
+        message = event.data.replace('chat_message_edition', '')
         message = message.split('-')
         sender_id = message[0]
         sender_username = message[1]
