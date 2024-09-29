@@ -3,9 +3,7 @@
 
 ## DO RIGHT NOW
 
-- **BUG** MESSAGE DELETION AND EDITION doesn't reload th messages list.
-  - This is caused at websocket.js in line 484,
-  cancels the chat reload...
+- **BUG** Clicking on 'Edit message' will issue a display_chat (receiver)
 - Check if...
   - Contact creation works correctly.
   - Message edition works correctly.

@@ -21,7 +21,7 @@ const message_received_audio = new Audio('static/Audio/app/message_received.mp3'
 const message_sent_audio = new Audio('static/Audio/app/message_sent.mp3')
 const error_audio = new Audio('static/Audio/app/error_sound.mp3')
 const status_notification_audio = new Audio('static/Audio/app/new_status.mp3')
-let new_message
+let new_message = false
 const debug_logs = 'issues'
 const debugging_mode = false
 
@@ -481,7 +481,11 @@ chat_websocket.addEventListener('open', () => {
     })
     htmx.on('htmx:beforeRequest', (event) => {
         // cancel the request if the requested chats is already displayed.
-        if(event.detail.pathInfo.requestPath.includes('display_chat') && event.srcElement !== document.body){
+        if(event.detail.pathInfo.requestPath.includes('display_chat')){
+            if(new_message){
+                new_message = false
+                return
+            }
             const displayed_chat =  document.getElementById('displayed-chat-info')
             if(displayed_chat){
                 const url_params = event.detail.pathInfo.requestPath.split('/')
@@ -593,6 +597,10 @@ chat_websocket.addEventListener('message', async (event) => {
         * and then decides whether or not to update the UI using
         * a HTMX.ajax request.
         */
+       if (sender_id === user_id){
+        return
+       }
+       new_message = true
         tools.update_chat_list()
         if (document.getElementById('contact-name') !== null){
             if (localStorage.getItem('chat_id') === chat_id) {
