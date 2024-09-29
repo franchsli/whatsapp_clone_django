@@ -111,8 +111,6 @@ general_observer.observe(chats_and_more, observerConfig)
 window.summon_chat = function(chat){
     const chat_members_phones_container = document.getElementById(chat.dataset.chatMembersPhonesDataId)
     const chat_members_phones = JSON.parse(chat_members_phones_container.firstChild.textContent)
-    console.log(chat_members_phones)
-    console.log(typeof(chat_members_phones))
     chat_websocket.send(JSON.stringify({
         'type':'reconnect',
         'reconnect_to': chat.dataset.chat
@@ -483,7 +481,7 @@ chat_websocket.addEventListener('open', () => {
     })
     htmx.on('htmx:beforeRequest', (event) => {
         // cancel the request if the requested chats is already displayed.
-        if(event.detail.pathInfo.requestPath.includes('display_chat') && !new_message){
+        if(event.detail.pathInfo.requestPath.includes('display_chat') && event.srcElement !== document.body){
             const displayed_chat =  document.getElementById('displayed-chat-info')
             if(displayed_chat){
                 const url_params = event.detail.pathInfo.requestPath.split('/')
@@ -579,10 +577,8 @@ chat_websocket.addEventListener('message', async (event) => {
                     tools.scroll_to_bottom()
                 })
                 
-            }
-            
+            } 
         }
-
     }
 
     else if (event.data.includes('message_edition')){
@@ -602,7 +598,7 @@ chat_websocket.addEventListener('message', async (event) => {
             if (localStorage.getItem('chat_id') === chat_id) {
                 htmx.ajax('GET', `/display_chat/${localStorage.getItem('chat_id')}`, '#chat-display').then(() => {
                     tools.scroll_to_bottom()
-                })   
+                })
             }
         }
     }
