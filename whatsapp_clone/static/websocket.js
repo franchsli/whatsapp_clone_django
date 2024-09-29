@@ -21,8 +21,9 @@ const message_received_audio = new Audio('static/Audio/app/message_received.mp3'
 const message_sent_audio = new Audio('static/Audio/app/message_sent.mp3')
 const error_audio = new Audio('static/Audio/app/error_sound.mp3')
 const status_notification_audio = new Audio('static/Audio/app/new_status.mp3')
+let new_message
 const debug_logs = 'issues'
-const debugging_mode = true
+const debugging_mode = false
 
 // Callback function to execute when mutations are observed
 const chat_mutation_callback = function(mutationsList, observer) {
@@ -176,7 +177,7 @@ const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]
 const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 chat_websocket.addEventListener('open', () => {
     console.log('CONNECTION OPENED WITH CHAT WEBSOCKET')
-    window.new_message = false
+    new_message = false
 
     window.toggleReadMore = function(text_id){
         tools.toggleReadMore(text_id)
@@ -507,6 +508,7 @@ chat_websocket.addEventListener('message', async (event) => {
     let sender_username
     let chat_is_archived
     if (event.data.includes('chat_message')){
+        console.log(event.data)
         message = event.data.replace('chat_message', '')
         message_data = message.split('-')
         sender_id = message_data[0]
@@ -519,7 +521,7 @@ chat_websocket.addEventListener('message', async (event) => {
             new_message = true
             htmx.ajax('GET', `/display_chat/${localStorage.getItem('chat_id')}`, '#chat-display').then(() => {
                 tools.update_chat_list()
-                window.new_message = false
+                new_message = false
             })
         }
         else {
@@ -560,7 +562,7 @@ chat_websocket.addEventListener('message', async (event) => {
     }
 
     else if (event.data.includes('message_deletion')){
-        message = event.data.replace('chat_message_deletion', '')
+        message = event.data.replace('message_deletion', '')
         message = message.split('-')
         sender_id = message[0]
         sender_username = message[1]
@@ -573,7 +575,6 @@ chat_websocket.addEventListener('message', async (event) => {
         tools.update_chat_list()
         if (document.getElementById('contact-name') !== null){
             if (localStorage.getItem('chat_id') === chat_id) {
-    
                 htmx.ajax('GET', `/display_chat/${localStorage.getItem('chat_id')}`, '#chat-display').then(() => {
                     tools.scroll_to_bottom()
                 })
@@ -585,7 +586,8 @@ chat_websocket.addEventListener('message', async (event) => {
     }
 
     else if (event.data.includes('message_edition')){
-        message = event.data.replace('chat_message_edition', '')
+        console.log(event.data)
+        message = event.data.replace('message_edition', '')
         message = message.split('-')
         sender_id = message[0]
         sender_username = message[1]
@@ -597,19 +599,12 @@ chat_websocket.addEventListener('message', async (event) => {
         */
         tools.update_chat_list()
         if (document.getElementById('contact-name') !== null){
-            console.log("TRYING TO RELOAD CHAT")
-            console.log(chat_id, localStorage.getItem('chat_id') )
             if (localStorage.getItem('chat_id') === chat_id) {
-                console.log('CHAT RELOADING')
-                htmx.ajax('GET', `/display_chat/${localStorage.getItem('chat_id')}`, {target: '#chat-display', swap: 'outerHTML'}).then(() => {
+                htmx.ajax('GET', `/display_chat/${localStorage.getItem('chat_id')}`, '#chat-display').then(() => {
                     tools.scroll_to_bottom()
-                    console.log('CHAT REALOADED')
-                })
-                
+                })   
             }
-            
         }
-
     }
 
 
