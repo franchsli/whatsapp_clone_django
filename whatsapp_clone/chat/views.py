@@ -42,19 +42,6 @@ def chat(request):
 
 # htmx
 def chats(request, archived:str):
-    """    return render(
-        request,
-        "layouts/partials/archived_chats.html",
-        {"chats": user_archived_chats},
-    )
-
-    Args:
-        request (_type_): _description_
-        archived (str): _description_
-
-    Returns:
-        _type_: _description_
-    """
     archived = True if archived == 'True' else False
     # returns the user chats ordered by the date of the latest message in the chat.
     chats = request.user.chats.annotate(
@@ -65,9 +52,16 @@ def chats(request, archived:str):
         if chat.archived_by_user(request.user) == archived:
             if not chat.deleted_by_user(request.user):
                 user_chats.append(chat)
-    return render(
-        request, "layouts/partials/components/chats.html", {"chats": user_chats}
-    )
+    if not archived:
+        return render(
+            request, "layouts/partials/components/chats.html", {"chats": user_chats}
+        )
+    else:
+        return render(
+        request,
+        "layouts/partials/archived_chats.html",
+        {"chats": user_chats},)
+
 
 
 def unread_chats(request, archived:str):
@@ -97,7 +91,7 @@ def group_chats(request, archived:str):
     )
     chat_groups = []
     for group in groups:
-        if not group.deleted_by_user(request.user) and group.archived_by_user(request.user):
+        if not group.deleted_by_user(request.user) and group.archived_by_user(request.user) == archived:
             chat_groups.append(group)
 
     return render(request, "layouts/partials/components/chats.html", {"chats": chat_groups})
@@ -111,10 +105,10 @@ def archive_chat(request, chat_id, archive):
         # returns all the desired chats depending on archive arg value
         if archive == True:
             request.user.archived_chats.add(chat)
-            return redirect("chats")
+            return redirect("chats", archived="False")
         else:
             request.user.archived_chats.remove(chat)
-            return redirect("archived_chats")
+            return redirect("chats", archived="True")
     else:
         return HttpResponseNotAllowed(["PATCH"])
 

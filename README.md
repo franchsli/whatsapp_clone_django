@@ -38,7 +38,6 @@
 - Add something to delete statuses automatically every 24 hours (cronjobs maybe).
 - Rework statuses UI.
 - Make the silence contact logic (booleand field [think it bro])
-- Review all the code, optimize it and delete spaguetti code.
 
 ## Improvements
 
