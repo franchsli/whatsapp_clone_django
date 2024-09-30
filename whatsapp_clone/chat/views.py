@@ -41,14 +41,28 @@ def chat(request):
 
 
 # htmx
-def chats(request):
+def chats(request, archived:str):
+    """    return render(
+        request,
+        "layouts/partials/archived_chats.html",
+        {"chats": user_archived_chats},
+    )
+
+    Args:
+        request (_type_): _description_
+        archived (str): _description_
+
+    Returns:
+        _type_: _description_
+    """
+    archived = True if archived == 'True' else False
     # returns the user chats ordered by the date of the latest message in the chat.
     chats = request.user.chats.annotate(
         last_message_date=Max("message__date")
     ).order_by("-last_message_date")
     user_chats = []
     for chat in chats:
-        if not chat.archived_by_user(request.user):
+        if chat.archived_by_user(request.user) == archived:
             if not chat.deleted_by_user(request.user):
                 user_chats.append(chat)
     return render(
@@ -56,14 +70,15 @@ def chats(request):
     )
 
 
-def get_unread_chats(request):
+def unread_chats(request, archived:str):
+    archived = True if archived == 'True' else False
     # returns the user chats ordered by the date of the latest message in the chat.
     chats = request.user.chats.annotate(
         last_message_date=Max("message__date")
     ).order_by("-last_message_date")
     user_chats = []
     for chat in chats:
-        if not chat.archived_by_user(request.user) and not chat.deleted_by_user(request.user):
+        if not chat.deleted_by_user(request.user) and chat.archived_by_user(request.user) == archived:
             if chat_is_unread_by_user(chat, request.user):
                 user_chats.append(chat) 
             
@@ -72,59 +87,9 @@ def get_unread_chats(request):
     )
 
 
-def get_archived_chats(request):
-    # returns the user chats ordered by the date of the latest message in the chat.
-    chats = request.user.chats.annotate(
-        last_message_date=Max("message__date")
-    ).order_by("-last_message_date")
-    user_archived_chats = []
-    for chat in chats:
-        if chat.archived_by_user(request.user) and not chat.deleted_by_user(request.user):
-            user_archived_chats.append(chat)
-
-    return render(
-        request,
-        "layouts/partials/archived_chats.html",
-        {"chats": user_archived_chats},
-    )
-
-
-def unread_archived_chats(request):
-    # returns the user chats ordered by the date of the latest message in the chat.
-    chats = request.user.chats.annotate(
-        last_message_date=Max("message__date")
-    ).order_by("-last_message_date")
-    user_unread_archived_chats = []
-    for chat in chats:
-        if chat.archived_by_user(request.user) and not chat.deleted_by_user(request.user):
-            if chat_is_unread_by_user(chat, request.user):
-                user_unread_archived_chats.append(chat)
-
-    return render(
-        request,
-        "layouts/partials/components/chats.html",
-        {"chats": user_unread_archived_chats},
-    )
-
-
-def get_group_chats(request):
+def group_chats(request, archived:str):
     # returns the user chats ordered by the date of the latest message in the group.
-    # EDIT THIS
-    groups = (
-        request.user.chats.filter(admins__isnull=False)
-        .annotate(last_message_date=Max("message__date"))
-        .order_by("-last_message_date")
-    )
-    chat_groups = []
-    for group in groups:
-        if not group.deleted_by_user(request.user):
-            chat_groups.append(group)
-
-    return render(request, "layouts/partials/components/chats.html", {"chats": chat_groups})
-
-def get_archived_groups(request):
-    # returns the user chats ordered by the date of the latest message in the group.
-    # EDIT THIS
+    archived = True if archived == 'True' else False
     groups = (
         request.user.chats.filter(admins__isnull=False)
         .annotate(last_message_date=Max("message__date"))
@@ -136,7 +101,6 @@ def get_archived_groups(request):
             chat_groups.append(group)
 
     return render(request, "layouts/partials/components/chats.html", {"chats": chat_groups})
-
 
 
 def archive_chat(request, chat_id, archive):

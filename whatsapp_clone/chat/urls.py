@@ -5,21 +5,14 @@ from . import views
 urlpatterns = [
     path("", views.chat, name="chat"),
     # htmx
-    path("chats/", views.chats, name="chats"),
-    path("unread_chats/", views.get_unread_chats, name="unread_chats"),
-    path("archived_chats/", views.get_archived_chats, name="archived_chats"),
-    path(
-        "unread_archived_chats/",
-        views.unread_archived_chats,
-        name="unread_archived_chats",
-    ),
+    path("chats/<str:archived>", views.chats, name="chats"),
+    path("unread_chats/<str:archived>", views.unread_chats, name="unread_chats"),
+    path("groups/<str:archived>", views.group_chats, name="groups"),
     path(
         "archive_chat/<int:chat_id>/<str:archive>/",
         views.archive_chat,
         name="archive_chat",
     ),
-    path("groups/", views.get_group_chats, name="groups"),
-    path("archived_groups", views.get_archived_groups, name="archived_groups"),
     path("display_user_ui/", views.display_user_ui, name="display_user_ui"),
     path("display_chat/<int:pk>", views.display_chat, name="display_chat"),
     path("delete_chat/<int:pk>", views.delete_chat, name="delete_chat"),

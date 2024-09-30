@@ -15,6 +15,6 @@
       <h1 class="text-white-50">No chats <i class="bi bi-emoji-frown"></i></h1>
     {% endfor %}
     <button type="submit" class="btn themed-button float-end mt-3">Delete chats</button>
-    <button type="button" class="btn btn-secondary float-end mt-3 me-3" hx-get="{% url 'chats' %}" hx-swap="outerHTML">Cancel</button>
+    <button type="button" class="btn btn-secondary float-end mt-3 me-3" hx-get="{% url 'chats' False %}" hx-swap="outerHTML">Cancel</button>
   </ul>
 </form>
