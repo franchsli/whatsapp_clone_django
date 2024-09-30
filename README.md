@@ -8,18 +8,10 @@
   - Contact creation works correctly.
   - Message edition works correctly.
   - Message deletion works correctly.
-- Rework ChatConsumer:
-  - Create new methods (send_message_deletion, send_message_edition, send_notification, etc)
-- Check if all the views return the desired data (chats related views.)
 - (Chat Form) If a User deleted a chat, and want to create 'the same chat' again,
   remove the chat from the deleted chats list from the said User.
 - Rework chat form to only check for Chats and not groups when checking if a Chat is already created.
   - Rework the API or implement complex logic before the use of the said API.
-- Check which bugs still happening.
-- Rework chat archiving logic:
-  - To check if a User has archived the Chat, use inverse relationship access.
-  - Look which views and filters need to be reworked due to this change.
-  - Rework chat_desired_data tag.
 - Finish the multiple chats deletion logic.
 - Implement something to show a close look when a image in a chat is clicked
   (like Whatsapp).
@@ -40,12 +32,7 @@
 ## ANOTHER THINGS TO DO
 
 - Rework the UI (in order to look like actual Whatsapp's UI):
-  - Recolor the text of 'select archive' in file form.
-- Implement something to create Group-like Chats.
-  - Look at chats.html line 63 and exception in chat_desired_data.
-- Implement something to archive group-like Chats.
-- Add HTMX functionality to the 3 pills for filtering the chat list:
-  - Think about adding archived_groups view.
+  - Recolor the text of 'select archive' in file form look at CSS theming.
 - Re think if consumers should create contacts or create another consumer for that
   (i don't think so).....
 - Add something to delete statuses automatically every 24 hours (cronjobs maybe).

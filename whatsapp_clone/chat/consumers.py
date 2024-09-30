@@ -137,7 +137,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             self.sender_contact_name = self.chat_instance.name
         else:
             receiver_instance = await database_sync_to_async(get_user_by_phone)(
-                phones_in_chat[0]
+                f"user_group_{phones_in_chat[0]}"
             )
             sender_contact_instance = await database_sync_to_async(contact_from_user)(
                 receiver_instance, self.user_instance.phone_number
@@ -163,7 +163,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             self.sender_contact_name = self.chat_instance.name
         else:
             receiver_instance = await database_sync_to_async(get_user_by_phone)(
-                phones_in_chat[0]
+                f"user_group_{phones_in_chat[0]}"
             )
             sender_contact_instance = await database_sync_to_async(contact_from_user)(
                 receiver_instance, self.user_instance.phone_number

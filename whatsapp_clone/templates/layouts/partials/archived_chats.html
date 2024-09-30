@@ -24,7 +24,7 @@
         <button onclick="exchange_elements_class(document.getElementsByClassName('filter-selector-active').item(0),
          this, 'filter-selector-active', 'filter-selector');" 
          class="filter-selector btn rounded-pill fs-6"
-         hx-get="{% url 'groups' %}" hx-target="#chat-list">Groups</button>
+         hx-get="{% url 'archived_groups' %}" hx-target="#chat-list">Groups</button>
     </div>
     {% include 'layouts/partials/components/chats.html' %}
 </div>

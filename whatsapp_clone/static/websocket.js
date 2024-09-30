@@ -22,8 +22,8 @@ const message_sent_audio = new Audio('static/Audio/app/message_sent.mp3')
 const error_audio = new Audio('static/Audio/app/error_sound.mp3')
 const status_notification_audio = new Audio('static/Audio/app/new_status.mp3')
 let new_message = false
-const debug_logs = 'issues'
-const debugging_mode = false
+const debug_logs = 'relevant'
+const debugging_mode = true
 
 // Callback function to execute when mutations are observed
 const chat_mutation_callback = function(mutationsList, observer) {
@@ -575,6 +575,10 @@ chat_websocket.addEventListener('message', async (event) => {
         * a HTMX.ajax request.
         */
         tools.update_chat_list()
+        if (sender_id === user_id){
+            return
+        }
+        new_message = true
         if (document.getElementById('contact-name') !== null){
             if (localStorage.getItem('chat_id') === chat_id) {
                 htmx.ajax('GET', `/display_chat/${localStorage.getItem('chat_id')}`, '#chat-display').then(() => {
@@ -597,11 +601,11 @@ chat_websocket.addEventListener('message', async (event) => {
         * and then decides whether or not to update the UI using
         * a HTMX.ajax request.
         */
+        tools.update_chat_list()
        if (sender_id === user_id){
-        return
+            return
        }
        new_message = true
-        tools.update_chat_list()
         if (document.getElementById('contact-name') !== null){
             if (localStorage.getItem('chat_id') === chat_id) {
                 htmx.ajax('GET', `/display_chat/${localStorage.getItem('chat_id')}`, '#chat-display').then(() => {
