@@ -23,7 +23,7 @@ const error_audio = new Audio('static/Audio/app/error_sound.mp3')
 const status_notification_audio = new Audio('static/Audio/app/new_status.mp3')
 let new_message = false
 const debug_logs = 'relevant'
-const debugging_mode = true
+const debugging_mode = false
 
 // Callback function to execute when mutations are observed
 const chat_mutation_callback = function(mutationsList, observer) {
@@ -37,6 +37,7 @@ const chat_mutation_callback = function(mutationsList, observer) {
                     window.new_message_input = document.getElementById('new-message')
                     window.new_message_button = document.getElementById('send-message-button')
                     window.delete_message_option_buttons = document.querySelectorAll('.delete-message')
+                    const imageInputCaller = document.getElementById('imageInputCaller')
                     const imageInput = document.getElementById('imageInput')
                     const imagePreview = document.getElementById('imagePreview')
                     imageInput.addEventListener('change', () => {
@@ -49,6 +50,11 @@ const chat_mutation_callback = function(mutationsList, observer) {
                             // scroll to bottom after deleting the message
                             setTimeout(tools.scroll_to_bottom, 1000)
                         }})
+                    
+                    imageInputCaller.addEventListener('click', (event) => {
+                        event.preventDefault()
+                        imageInput.click()
+                    })
                     
                     
                     new_message_input.addEventListener('keypress', (event) => {

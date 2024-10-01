@@ -72,9 +72,9 @@
     </ul>
   </div>
   <label for="imageInput" class="custom-file-input">
-    <button class="btn p-3"><i class="bi bi-plus"></i></button>
+    <button class="btn p-3" id="imageInputCaller"><i class="bi bi-plus"></i></button>
   </label>
-  <input type="file" id="imageInput" name="image" accept="image/*" style="display: none;">
+  <input class="d-none form-control" type="file" id="imageInput" name="image" accept="image/*">
   <div class="d-flex flex-column w-100">
     <div id="imagePreview" class="d-flex align-items-center justify-content-center"></div>
     <input id="new-message" class="form-control" type="text" name="new-message">
