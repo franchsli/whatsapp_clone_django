@@ -1,0 +1,22 @@
+databases:
+  - name: django_whatsapp
+    plan: free
+    databaseName: django_whatsapp
+    user: django_whatsapp_user
+
+services:
+  - type: web
+    plan: free
+    name: whatsapp_clone_django
+    runtime: python
+    buildCommand: "./build.sh"
+    startCommand: "python -m gunicorn whatsapp_clone_django.asgi:application -k uvicorn.workers.UvicornWorker"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: django_whatsapp
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: WEB_CONCURRENCY
+        value: 4
