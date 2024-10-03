@@ -170,6 +170,8 @@ def delete_chat(request, pk):
     if request.method == "PATCH":
         chat = Chat.objects.get(id=pk)
         request.user.deleted_chats.add(chat)
+        if chat.deleted_by_user.count() == chat.users.count():
+            chat.delete()
         return redirect("chats")
     else:
         return HttpResponseNotAllowed(["PATCH"])

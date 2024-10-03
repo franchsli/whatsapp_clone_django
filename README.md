@@ -3,6 +3,7 @@
 
 ## DO RIGHT NOW
 
+- **TEST** Implemented something to delete a Chat if all the Users in the Chat deleted it.
 - **BUG** Clicking on 'Edit message' will issue a display_chat (receiver)
 - Check if...
   - Contact creation works correctly.
@@ -12,6 +13,7 @@
   remove the chat from the deleted chats list from the said User.
 - Rework chat form to only check for Chats and not groups when checking if a Chat is already created.
   - Rework the API or implement complex logic before the use of the said API.
+- Make it responsive.
 - Finish the multiple chats deletion logic.
 - Implement something to show a close look when a image in a chat is clicked
   (like Whatsapp).
@@ -52,10 +54,8 @@
 READ THE CHATGPT Django Channels Websocket chat for IMPORTANT improvement.
 Also don't forget to change the channel layer to redis.
 
-- Make it responsive (or maybe not).
 - Implement all of the features at
   [dj-chat](https://github.com/adilmohak/dj-chat?tab=readme-ov-file#current-features)
-- Implement something to delete a Chat if all the Users in the Chat deleted it.
 
 ## BUGS TO FIX
 
