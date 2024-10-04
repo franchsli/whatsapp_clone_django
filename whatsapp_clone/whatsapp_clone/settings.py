@@ -166,3 +166,4 @@ REST_FRAMEWORK = {
 
 LOGIN_REDIRECT_URL = 'chat'
 LOGOUT_REDIRECT_URL = 'chat'
+PORT = int(os.environ.get("PORT", 8000))
