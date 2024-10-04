@@ -7,10 +7,10 @@ databases:
 services:
   - type: web
     plan: free
-    name: whatsapp_clone_django
+    name: whatsapp_clone
     runtime: python
     buildCommand: "./build.sh"
-    startCommand: "python -m gunicorn whatsapp_clone_django.asgi:application -k uvicorn.workers.UvicornWorker"
+    startCommand: "python -m gunicorn whatsapp_clone.asgi -k uvicorn.workers.UvicornWorker"
     envVars:
       - key: DATABASE_URL
         fromDatabase:
