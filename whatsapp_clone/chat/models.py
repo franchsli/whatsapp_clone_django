@@ -47,7 +47,6 @@ class Chat(models.Model):
     name = models.CharField(max_length=72, null=True, blank=True)
     photo = models.ImageField(blank=True, null=True, upload_to="chats/")
     archived_by = models.ManyToManyField(User, related_name="archived_chats", blank=True)
-    deleted_by = models.ManyToManyField(User, related_name="deleted_chats", blank=True)
 
     def __str__(self) -> str:
         return self.name if self.name else f"Chat object {self.pk}"
@@ -71,14 +70,6 @@ class Chat(models.Model):
             user (User): User model object.
         """
         return user.archived_chats.filter(id=self.pk).exists()
-    
-    def deleted_by_user(self, user:User) -> bool:
-        """Returns if the provided User deleted this Chat.
-
-        Args:
-            user (User): User model object.
-        """
-        return user.deleted_chats.filter(id=self.pk).exists()
 
     @property
     def has_photo(self):

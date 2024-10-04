@@ -23,7 +23,6 @@ def chat(request):
         if (
             not chat.last_message.read
             and chat.last_message.sender_user.id != request.user.id
-            and not chat.deleted_by_user(request.user)
         ):
             archived_unread_chats_num += 1
 
@@ -50,8 +49,7 @@ def chats(request, archived:str):
     user_chats = []
     for chat in chats:
         if chat.archived_by_user(request.user) == archived:
-            if not chat.deleted_by_user(request.user):
-                user_chats.append(chat)
+            user_chats.append(chat)
     if not archived:
         return render(
             request, "layouts/partials/components/chats.html", {"chats": user_chats}
@@ -72,7 +70,7 @@ def unread_chats(request, archived:str):
     ).order_by("-last_message_date")
     user_chats = []
     for chat in chats:
-        if not chat.deleted_by_user(request.user) and chat.archived_by_user(request.user) == archived:
+        if chat.archived_by_user(request.user) == archived:
             if chat_is_unread_by_user(chat, request.user):
                 user_chats.append(chat) 
             
@@ -91,7 +89,7 @@ def group_chats(request, archived:str):
     )
     chat_groups = []
     for group in groups:
-        if not group.deleted_by_user(request.user) and group.archived_by_user(request.user) == archived:
+        if group.archived_by_user(request.user) == archived:
             chat_groups.append(group)
 
     return render(request, "layouts/partials/components/chats.html", {"chats": chat_groups})
@@ -168,9 +166,9 @@ def display_chat(request, pk):
 
 def delete_chat(request, pk):
     if request.method == "PATCH":
-        chat = Chat.objects.get(id=pk)
+        chat:Chat = Chat.objects.get(id=pk)
         request.user.deleted_chats.add(chat)
-        if chat.deleted_by_user.count() == chat.users.count():
+        if chat.users.count() == 0:
             chat.delete()
         return redirect("chats")
     else:
