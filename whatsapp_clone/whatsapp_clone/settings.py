@@ -15,7 +15,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', default='django-insecure-^s2fgx-ldzz37
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'RENDER' not in os.environ
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.onrender.com']
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
@@ -103,11 +103,10 @@ WSGI_APPLICATION = 'whatsapp_clone.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(
-        default='postgres://postgres:nosequeponer@123-52@:5432/django_whatsapp',
+        default='postgres://postgres:nosequeponer@123-52@:5432/django_whatsapp' if DEBUG else os.environ.get('DATABASE_URL'),
         conn_max_age=600
     )
 }
-
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
