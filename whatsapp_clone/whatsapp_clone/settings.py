@@ -13,7 +13,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY', default='django-insecure-^s2fgx-ldzz37ci&z!yel6nk#8$*^^=prpir(=^nbdz*+%_of*')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = 'RENDER' not in os.environ
+DEBUG = 'False' not in os.environ
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.onrender.com']
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
@@ -165,4 +165,3 @@ REST_FRAMEWORK = {
 
 LOGIN_REDIRECT_URL = 'chat'
 LOGOUT_REDIRECT_URL = 'chat'
-PORT = int(os.environ.get("PORT", 8000))
