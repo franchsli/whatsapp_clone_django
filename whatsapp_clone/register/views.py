@@ -2,13 +2,11 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout
 from .forms import CustomUserCreationForm
 from django.http import HttpResponse
-from whatsapp_clone.settings import DEBUG
 
 
 # Create your views here.
 def register(request):
     data = {"form": CustomUserCreationForm()}
-    print(DEBUG)
     if request.method == "POST":
         new_user_form = CustomUserCreationForm(request.POST, request.FILES)
         if new_user_form.is_valid():
