@@ -3,7 +3,6 @@
 
 ## DO RIGHT NOW
 
-- Include media files in production (include settings.py 154-155 in if statement).
 - Implement a redis channel layer.
 - **TEST** Implemented something to delete a Chat if all the Users in the Chat deleted it.
 - **BUG** Clicking on 'Edit message' will issue a display_chat (receiver)
