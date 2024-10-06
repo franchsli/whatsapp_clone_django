@@ -62,7 +62,7 @@ CHANNEL_LAYERS = {
     }
 }
 if not DEBUG:
-    channel_port = os.environ.get("PORT", 8000)
+    channel_port = int(os.environ.get("PORT", 8000))
     CHANNEL_LAYERS = {
         "default": {
             "BACKEND": "channels_redis.core.RedisChannelLayer",
