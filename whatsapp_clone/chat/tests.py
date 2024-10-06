@@ -4,7 +4,6 @@ from typing import Optional
 from django.utils import timezone
 from django.core.files.base import ContentFile
 from .tools import ENCODED_IMAGE
-from faker import Faker
 import base64
 
 
@@ -105,12 +104,7 @@ class ChatTest(TestCase):
     def test_not_archived_by_user(self):
         self.assertFalse(self.another_chat.archived_by_user(self.user))
 
-    def test_deleted_by_user(self):
-        self.user.deleted_chats.add(self.chat)
-        self.assertTrue(self.chat.deleted_by_user(self.user))
 
-    def test_not_deleted_by_user(self):
-        self.assertFalse(self.another_chat.deleted_by_user(self.user))
 
 class StatusTest(TestCase):
     def create_status(

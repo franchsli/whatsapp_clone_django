@@ -166,7 +166,7 @@ def display_chat(request, pk):
 
 def delete_chat(request, pk):
     if request.method == "PATCH":
-        chat:Chat = Chat.objects.get(id=pk)
+        chat = Chat.objects.get(id=pk)
         request.user.deleted_chats.add(chat)
         if chat.users.count() == 0:
             chat.delete()

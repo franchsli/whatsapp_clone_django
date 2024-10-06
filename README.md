@@ -4,7 +4,6 @@
 ## DO RIGHT NOW
 
 - Implement a redis channel layer.
-- **TEST** Implemented something to delete a Chat if all the Users in the Chat deleted it.
 - **BUG** Clicking on 'Edit message' will issue a display_chat (receiver)
 - Check if...
   - Contact creation works correctly.
