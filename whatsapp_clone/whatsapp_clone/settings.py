@@ -61,6 +61,16 @@ CHANNEL_LAYERS = {
         "BACKEND": "channels.layers.InMemoryChannelLayer"
     }
 }
+if not DEBUG:
+    channel_port = os.environ.get("PORT", 8000)
+    CHANNEL_LAYERS = {
+        "default": {
+            "BACKEND": "channels_redis.core.RedisChannelLayer",
+            "CONFIG": {
+                "hosts": [("127.0.0.1", channel_port), (".onrender.com", channel_port), ("localhost", channel_port)],
+            },
+        },
+    }
 
 
 MIDDLEWARE = [
