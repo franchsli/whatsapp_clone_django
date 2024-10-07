@@ -103,20 +103,22 @@ class ChatConsumer(AsyncWebsocketConsumer):
         await self.send(
             text_data=f"chat_notification{event['sender_id'] + event['text']  + event['sender_contact_name'] + event['chat_is_archived']}"
         )
-    
-    async def send_message_notifications(self, websocket_message_data:dict):
-        for message_receiver_phone in websocket_message_data["chat_members_phones"].split(','):
+
+    async def send_message_notifications(self, websocket_message_data: dict):
+        for message_receiver_phone in websocket_message_data[
+            "chat_members_phones"
+        ].split(","):
             print(message_receiver_phone)
-            print(f"user_group_{message_receiver_phone}")        
+            print(f"user_group_{message_receiver_phone}")
             receiver_instance = await database_sync_to_async(get_user_by_phone)(
                 message_receiver_phone
             )
             sender_contact_instance = await database_sync_to_async(contact_from_user)(
                 receiver_instance, self.user_instance.phone_number
             )
-            chat_is_archived = await database_sync_to_async(self.chat_instance.archived_by_user)(
-                receiver_instance
-            )
+            chat_is_archived = await database_sync_to_async(
+                self.chat_instance.archived_by_user
+            )(receiver_instance)
             await self.channel_layer.group_send(
                 f"user_group_{message_receiver_phone}",
                 {
@@ -128,8 +130,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 },
             )
 
-    async def send_message_edition(self, websocket_message_data:dict):
-        phones_in_chat = websocket_message_data["chat_members_phones"].split(',')
+    async def send_message_edition(self, websocket_message_data: dict):
+        phones_in_chat = websocket_message_data["chat_members_phones"].split(",")
         if len(phones_in_chat) > 1:
             self.chat_instance = await database_sync_to_async(get_object_by_id)(
                 Chat, self.text_data_json["chat_id"]
@@ -150,12 +152,12 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 "type": "chat_message_edition",
                 "sender_id": f"{websocket_message_data['sender_user_id']}",
                 "sender_contact_name": f"-{self.sender_contact_name}",
-                "chat_id": f"-{websocket_message_data['chat_id']}"
+                "chat_id": f"-{websocket_message_data['chat_id']}",
             },
         )
 
-    async def send_message_deletion(self, websocket_message_data:dict):
-        phones_in_chat = websocket_message_data["chat_members_phones"].split(',')
+    async def send_message_deletion(self, websocket_message_data: dict):
+        phones_in_chat = websocket_message_data["chat_members_phones"].split(",")
         if len(phones_in_chat) > 1:
             self.chat_instance = await database_sync_to_async(get_object_by_id)(
                 Chat, self.text_data_json["chat_id"]
@@ -176,7 +178,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 "type": "chat_message_edition",
                 "sender_id": f"{websocket_message_data['sender_user_id']}",
                 "sender_contact_name": f"-{self.sender_contact_name}",
-                "chat_id": f"-{websocket_message_data['chat_id']}"
+                "chat_id": f"-{websocket_message_data['chat_id']}",
             },
         )
 
@@ -255,13 +257,19 @@ class StatusConsumer(AsyncWebsocketConsumer):
         print("STATUS DATA", self.text_data_json)
 
         if self.text_data_json["type"] == "CREATE":
-            await self.create_status(self.text_data_json["text"], self.text_data_json["image"])
+            await self.create_status(
+                self.text_data_json["text"], self.text_data_json["image"]
+            )
             await self.channel_layer.group_send(
                 self.room_group_name,
                 {
                     "type": "status_notification",
                     "text": "-".join(
-                        [value for value in self.text_data_json.values() if value != None]
+                        [
+                            value
+                            for value in self.text_data_json.values()
+                            if value != None
+                        ]
                     ),
                 },
             )

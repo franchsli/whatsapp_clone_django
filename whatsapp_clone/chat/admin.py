@@ -16,7 +16,9 @@ class CustomUserChangeForm(UserChangeForm):
 class CustomUserAdmin(UserAdmin):
     form = CustomUserChangeForm
 
-    fieldsets = UserAdmin.fieldsets + ((None, {"fields": ("phone_number", "photo", "about")}),)
+    fieldsets = UserAdmin.fieldsets + (
+        (None, {"fields": ("phone_number", "photo", "about")}),
+    )
 
 
 class ChatAdmin(admin.ModelAdmin):

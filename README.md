@@ -3,6 +3,9 @@
 
 ## DO RIGHT NOW
 
+- Fix production websocket connection:
+  - Read the saved answer there. [WebSocket with SSL](https://stackoverflow.com/questions/9745249/websocket-with-ssl).
+- Style all the max-width img to have a max-height as well.
 - Implement a redis channel layer.
 - **BUG** Clicking on 'Edit message' will issue a display_chat (receiver)
 - Check if...
@@ -52,7 +55,6 @@
 
 **IMPLEMENT**
 READ THE CHATGPT Django Channels Websocket chat for IMPORTANT improvement.
-Also don't forget to change the channel layer to redis.
 
 - Implement all of the features at
   [dj-chat](https://github.com/adilmohak/dj-chat?tab=readme-ov-file#current-features)
