@@ -3,8 +3,9 @@ import * as tools from  './tools.js';
 const user = document.getElementById('profile-pic')
 const user_id = user.getAttribute('data-user')
 const user_phone_number = user.getAttribute('data-phone')
-const chat_websocket = new WebSocket(`ws://${window.location.host}/`)
-const status_websocket = new WebSocket(`ws://${window.location.host}/status/`)
+const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+const chat_websocket = new WebSocket(`${protocol}//${window.location.host}/`)
+const status_websocket = new WebSocket(`${protocol}//${window.location.host}/status/`)
 const chats_and_more = document.getElementById("chats-and-more")
 const chat_form = document.getElementById("chat-creation-form")
 const chat_modal = document.getElementById('NewChat')
