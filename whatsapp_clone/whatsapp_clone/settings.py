@@ -1,6 +1,8 @@
 from pathlib import Path
 import os
 import dj_database_url
+import logging
+from urllib.parse import urlparse
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -62,12 +64,17 @@ CHANNEL_LAYERS = {
     }
 }
 if not DEBUG:
+    redis_url = urlparse(os.environ.get('REDIS_URL', 'redis://localhost:6379'))
+
+    logger = logging.getLogger(__name__)
+    logger.setLevel(logging.DEBUG)
+    logger.debug(f"Connecting to Redis at {redis_url.hostname}:{redis_url.port}")
     channel_port = int(os.environ.get("PORT", 8000))
     CHANNEL_LAYERS = {
         "default": {
             "BACKEND": "channels_redis.core.RedisChannelLayer",
             "CONFIG": {
-                "hosts": [os.environ.get('REDIS_URL', 'redis://localhost:8000')],
+                "hosts": [(redis_url.hostname, redis_url.port)],
             },
         },
     }
