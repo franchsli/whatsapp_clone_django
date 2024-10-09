@@ -67,7 +67,7 @@ if not DEBUG:
         "default": {
             "BACKEND": "channels_redis.core.RedisChannelLayer",
             "CONFIG": {
-                "hosts": [("127.0.0.1", channel_port), (".onrender.com", channel_port), ("localhost", channel_port)],
+                "hosts": [os.environ.get('REDIS_URL', 'redis://localhost:8000')],
             },
         },
     }
