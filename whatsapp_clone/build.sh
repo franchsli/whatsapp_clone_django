@@ -10,6 +10,3 @@ python manage.py collectstatic --no-input
 
 # Apply any outstanding database migrations
 python manage.py migrate
-
-# run daphne for websockets
-daphne whatsapp_clone.asgi:application
