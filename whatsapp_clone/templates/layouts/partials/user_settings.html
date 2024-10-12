@@ -22,7 +22,7 @@
         <li class="list-group-item p-3 d-flex flex-inline align-items-center setting" role="button" style="border: none;"
                 hx-get="{% url 'user_info' %}" hx-target="#chats-and-more">
                 {% if request.user.has_photo %}
-                <img class="rounded-circle img-fluid"  src="{{ request.user.photo.url }}" alt="Profile photo couldn't load." 
+                <img class="rounded-circle img-fluid"  src="{% static request.user.photo.url %}" alt="Profile photo couldn't load." 
                 style="max-width: 82px;">
                 {% else %}
                 <img class="rounded-circle img-fluid"  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNBNdcMDNS2r9df1IWFVc8AY0QNtfNhEJv7fGS5TdhUWrlBqfGu1PCCn9lKpL-FqF9dWc&usqp=CAU"
