@@ -1,5 +1,7 @@
 from django.urls import path
 from . import views
+from django.conf.urls.static import static
+import whatsapp_clone.settings as settings
 
 
 urlpatterns = [
@@ -49,3 +51,6 @@ urlpatterns = [
     path("edit_user_info/", views.edit_user_info, name="edit_user_info"),
     path("chats_selection/", views.chats_selection, name="chats_selection"),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
