@@ -58,12 +58,12 @@
                                 <div class="carousel-item" data-bs-interval="10000">
                                     {% endif %}
                                     {% if status.has_image and status.has_text is True %}
-                                    <img src="{% static status.image.url %}" class="d-block w-100" alt="Status image couldn't load">
+                                    <img src="{{status.image.url}}" class="d-block w-100" alt="Status image couldn't load">
                                     <div class="carousel-status d-none d-md-flex">
                                         <p>{{status.text}}</p>
                                     </div>
                                     {% elif status.has_image %}
-                                    <img src="{% static status.image.url %}" class="d-block w-100" alt="Status image couldn't load">
+                                    <img src="{{status.image.url}}" class="d-block w-100" alt="Status image couldn't load">
                                     {% else %}
                                     <div class="text-status d-none d-md-flex">
                                         <p>{{status.text}}</p>

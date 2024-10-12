@@ -8,7 +8,7 @@
     data-phone="{{request.user.phone_number}}">
     {% if request.user.has_photo %}
     <img class="ms-3 rounded-circle img-fluid" 
-    src="{% static request.user.photo.url %}" alt="Profile photo couldn't load" 
+    src="{{request.user.photo.url}}" alt="Profile photo couldn't load" 
     style="max-width: 50px;" role="button">
     {% else %}
     <img class="ms-3 rounded-circle img-fluid"
