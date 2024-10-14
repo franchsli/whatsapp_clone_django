@@ -1,6 +1,7 @@
 from pathlib import Path
 import os
 import dj_database_url
+import cloudinary
 import logging
 from urllib.parse import urlparse
 
@@ -34,6 +35,8 @@ DJANGO_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cloudinary_storage',
+    'cloudinary',
 ]
 
 THIRD_APPS = [
@@ -170,7 +173,13 @@ if not DEBUG:    # Tell Django to copy static assets into a path called `staticf
     # Enable the WhiteNoise storage backend, which compresses static files to reduce disk use
     # and renames the files with unique names for each version to support long-term caching
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-    MEDIA_ROOT = BASE_DIR / 'images/'
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+    cloudinary.config( 
+        cloud_name = os.environ.get('CLOUD_NAME'), 
+        api_key = os.environ.get('CLOUDINARY_API_KEY'), 
+        api_secret = os.environ.get('CLOUDINARY_API_SECRET'),
+        secure=True
+    )
 
 
 # Default primary key field type
