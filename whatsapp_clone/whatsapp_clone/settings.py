@@ -173,14 +173,12 @@ if not DEBUG:    # Tell Django to copy static assets into a path called `staticf
     # Enable the WhiteNoise storage backend, which compresses static files to reduce disk use
     # and renames the files with unique names for each version to support long-term caching
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get('CLOUD_NAME'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET')
+}
     DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-    cloudinary.config( 
-        cloud_name = os.environ.get('CLOUD_NAME'), 
-        api_key = os.environ.get('CLOUDINARY_API_KEY'), 
-        api_secret = os.environ.get('CLOUDINARY_API_SECRET'),
-        secure=True
-    )
-
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
