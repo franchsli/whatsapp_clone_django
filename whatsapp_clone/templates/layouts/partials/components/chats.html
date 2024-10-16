@@ -8,11 +8,11 @@
   <li onclick="summon_chat(this);" oncontextmenu="showDropdown(event, 'chat-dropdown{{chat.id}}')"
    hx-get="{% url 'display_chat' chat.id %}" hx-target="#chat-display"  
    hx-swap="innerHTML transition:true" id="chat-{{chat.id}}" 
-   class="list-group-item p-3  d-flex flex-inline align-items-center chat" 
+   class="list-group-item p-3 d-flex flex-inline align-items-center chat chat-pic" 
    role="button" data-chat={{chat.id}} data-contact='{% exclude_user_tag chat.users.all request.user 'username' %}'
    data-chat-members-phones-data-id="chat-{{chat.id}}-members-phones">
     {% comment "contact profile photo" %}{% endcomment %}
-    <img class="ms-1 rounded-circle img-fluid" src="{% chat_desired_data chat request.user 'photo' %}" alt="Contact photo couldn't load" style="max-width: 45px;">
+    <img class="ms-1 rounded-circle img-fluid" src="{% chat_desired_data chat request.user 'photo' %}" alt="Contact photo couldn't load">
     <div class="d-flex flex-column ms-3 w-100">
       <div class="d-flex justify-content-between">
         <span class="chat-name text-truncate" style="max-width: 210px;">{% chat_desired_data chat request.user 'name' %}</span>

@@ -64,6 +64,16 @@ main,  #base {
 .setting-icon{
   font-size: 25px;
 }
+
+#profile-pic img {
+  width: 50px;
+  height: 50px;
+}
+
+.chat-pic img, .contact-pic img {
+  width: 45px;
+  height: 45px;
+}
 .chat:hover, .contact:hover, .chat:hover button, .contact:hover button, .setting:hover{
   background-color: var(--bs-secondary-bg);
 }

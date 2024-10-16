@@ -3,10 +3,6 @@
 
 ## DO RIGHT NOW
 
-- Fix production websocket connection:
-  - Read the saved answer there. [WebSocket with SSL](https://stackoverflow.com/questions/9745249/websocket-with-ssl).
-- Style all the max-width img to have a max-height as well.
-- Implement a redis channel layer.
 - **BUG** Clicking on 'Edit message' will issue a display_chat (receiver)
 - Check if...
   - Contact creation works correctly.
