@@ -3,11 +3,10 @@
 
 ## DO RIGHT NOW
 
+- Add Contact deletion. (maybe in multi chats selection)
 - **BUG** Clicking on 'Edit message' will issue a display_chat (receiver)
 - Check if...
   - Contact creation works correctly.
-  - Message edition works correctly.
-  - Message deletion works correctly.
 - (Chat Form) If a User deleted a chat, and want to create 'the same chat' again,
   remove the chat from the deleted chats list from the said User.
 - Rework chat form to only check for Chats and not groups when checking if a Chat is already created.
@@ -57,6 +56,9 @@ READ THE CHATGPT Django Channels Websocket chat for IMPORTANT improvement.
 
 ## BUGS TO FIX
 
+- Chat list only will be dinamically updated if and only if
+  the User opened a Chat before.
+- When a unread Chat is opened only the unread messages will be shown.
 - Scroll to bottom func doesn't scroll to the botom anymore when the last messages
   are images, test why:
   - **THIS IS WHAT I THINK THAT HAPPENS**:
