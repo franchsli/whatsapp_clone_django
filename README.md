@@ -3,7 +3,6 @@
 
 ## DO RIGHT NOW
 
-- Add Contact deletion. (maybe in multi chats selection)
 - **BUG** Clicking on 'Edit message' will issue a display_chat (receiver)
 - Check if...
   - Contact creation works correctly.
@@ -13,6 +12,7 @@
   - Rework the API or implement complex logic before the use of the said API.
 - Make it responsive.
 - Finish the multiple chats deletion logic.
+- Add Contact deletion. (maybe in multi chats selection)
 - Implement something to show a close look when a image in a chat is clicked
   (like Whatsapp).
 - Add status complex status creation (like Whatsapp).
@@ -33,11 +33,9 @@
 
 - Rework the UI (in order to look like actual Whatsapp's UI):
   - Recolor the text of 'select archive' in file form look at CSS theming.
-- Re think if consumers should create contacts or create another consumer for that
-  (i don't think so).....
 - Add something to delete statuses automatically every 24 hours (cronjobs maybe).
 - Rework statuses UI.
-- Make the silence contact logic (booleand field [think it bro])
+- Make the silence contact logic (booleand field [think it tho])
 
 ## Improvements
 
@@ -47,10 +45,6 @@
   - if its a video, the length of the video.
   - Or if its not a video, 5 secs and users should be able to pause the event
     (like whatsapp).
-
-**IMPLEMENT**
-READ THE CHATGPT Django Channels Websocket chat for IMPORTANT improvement.
-
 - Implement all of the features at
   [dj-chat](https://github.com/adilmohak/dj-chat?tab=readme-ov-file#current-features)
 
