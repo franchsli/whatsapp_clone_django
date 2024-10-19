@@ -632,6 +632,48 @@ async function validate_chat_form(chat_form, error_audio, websocket){
 }
 
 
+async function validate_contact_form(contact_form, error_audio, notification_audio, websocket){
+    const inputs = contact_form.getElementsByTagName('input')
+    // gets the 'list' of Users who have the provided phone_number
+    // in the form
+    const users = await get(`/api/users/?phone_number=${inputs[2].value}`)
+    // gets a list of Contacts created by the User
+    // with the provided phone_number
+    const contacts = await get(`/api/contacts/?phone_number=${inputs[2].value}&created_by=${user_id}`)
+    // if no User created has the introduced phone_number
+    // notify the user
+    if (users.length === 0){
+        const validation_message = document.getElementById('contact-validation-message')
+        validation_message.innerText = 'No User with provided Phone, the Phone is not registered in this app.'
+        error_audio.play()
+    }
+    // if the User already created a Contact with such phone, notify the user
+    else if (contacts.length > 0){
+        const validation_message = document.getElementById('contact-validation-message')
+        validation_message.innerText = 'You already created a Contact with that Phone'
+        error_audio.play()
+    }
+    // if nothing happens, create the contact
+    else {
+        create_instance_via_consumer(contact_form, 'create_contact', websocket)
+        const toastNotification = document.getElementById('liveToast')
+        modifyNotification('Server', 
+        'The contact was created successfully! Update your contacts list by clicking the "contacts" button.')
+        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
+        notification_audio.play()            
+        toastBootstrap.show()
+        // clears phonenumber and contact name fields.
+        inputs[1].value = ''
+        inputs[2].value = ''
+        // clears the checkboxes
+        inputs[3].checked = false
+        inputs[4].checked = false
+    }
+
+    return false;
+}
+
+
 export {get, post, modifyNotification,
     scroll_to_bottom, toggleReadMore, 
     showDropdown, run_element_animation, checked, 
@@ -641,5 +683,5 @@ export {get, post, modifyNotification,
     exchange_elements_class, switch_element_visibility, load_more_messages, 
     load_older_messages, remove_duplicates, change_element_color, 
     filter_by_value, space_text, split_word, trigger_tooltips, 
-    create_instance_via_consumer, validate_chat_form
+    create_instance_via_consumer, validate_chat_form, validate_contact_form
 }
