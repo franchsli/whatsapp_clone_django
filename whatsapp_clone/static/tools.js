@@ -537,6 +537,11 @@ function fully_filled(form){
     return true;
 }
 
+function trigger_tooltips(){
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+}
+
 export {get, post, modifyNotification,
     scroll_to_bottom, toggleReadMore, 
     showDropdown, run_element_animation, checked, 
@@ -545,5 +550,5 @@ export {get, post, modifyNotification,
     previewImage, update_chat_list, at_least_one_attr, 
     exchange_elements_class, switch_element_visibility, load_more_messages, 
     load_older_messages, remove_duplicates, change_element_color, 
-    filter_by_value, space_text, split_word
+    filter_by_value, space_text, split_word, trigger_tooltips
 }

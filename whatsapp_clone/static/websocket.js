@@ -1,31 +1,38 @@
 import * as tools from  './tools.js';
 
-const user = document.getElementById('profile-pic')
-const user_id = user.getAttribute('data-user')
-const user_phone_number = user.getAttribute('data-phone')
-// sets the Websocket protocol depending on the WEB protocol
-const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-const chat_websocket = new WebSocket(`${protocol}//${window.location.host}/`)
-const status_websocket = new WebSocket(`${protocol}//${window.location.host}/status/`)
-const chats_and_more = document.getElementById("chats-and-more")
-const chat_form = document.getElementById("chat-creation-form")
-const chat_modal = document.getElementById('NewChat')
-const chat_display = document.getElementById('chat-display')
-const contact_form = document.getElementById("contact-creation-form")
-const contact_modal = document.getElementById('NewContact')
-const status_form = document.getElementById('status_form')
-const status_modal = document.getElementById('CreateStatusModal')
-const status_submit_button = document.getElementById('status-submit')
-const stauts_image_preview = document.getElementById('status-imagePreview')
-const status_image_input = document.getElementById('id_image')
-const notification_audio = new Audio('static/Audio/app/notification.mp3')
-const message_received_audio = new Audio('static/Audio/app/message_received.mp3')
-const message_sent_audio = new Audio('static/Audio/app/message_sent.mp3')
-const error_audio = new Audio('static/Audio/app/error_sound.mp3')
-const status_notification_audio = new Audio('static/Audio/app/new_status.mp3')
-let new_message = false
-const debug_logs = 'relevant'
-const debugging_mode = false
+const App = class {
+    constructor(){
+        // set up all the variables needed
+        this.user = document.getElementById('profile-pic')
+        this.user_id = user.getAttribute('data-user')
+        this.user_phone_number = user.getAttribute('data-phone')
+        // sets the Websocket protocol depending on the WEB protocol
+        this.protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+        this.chat_websocket = new WebSocket(`${protocol}//${window.location.host}/`)
+        this.status_websocket = new WebSocket(`${protocol}//${window.location.host}/status/`)
+        this.chats_and_more = document.getElementById("chats-and-more")
+        this.chat_form = document.getElementById("chat-creation-form")
+        this.chat_modal = document.getElementById('NewChat')
+        this.chat_display = document.getElementById('chat-display')
+        this.contact_form = document.getElementById("contact-creation-form")
+        this.contact_modal = document.getElementById('NewContact')
+        this.status_form = document.getElementById('status_form')
+        this.status_modal = document.getElementById('CreateStatusModal')
+        this.status_submit_button = document.getElementById('status-submit')
+        this.stauts_image_preview = document.getElementById('status-imagePreview')
+        this.status_image_input = document.getElementById('id_image')
+        this.notification_audio = new Audio('static/Audio/app/notification.mp3')
+        this.message_received_audio = new Audio('static/Audio/app/message_received.mp3')
+        this.message_sent_audio = new Audio('static/Audio/app/message_sent.mp3')
+        this.error_audio = new Audio('static/Audio/app/error_sound.mp3')
+        this.status_notification_audio = new Audio('static/Audio/app/new_status.mp3')
+        this.new_message = false
+        this.debug_logs = 'relevant'
+        this.debugging_mode = false
+    }
+
+}
+
 
 // Callback function to execute when mutations are observed
 const chat_mutation_callback = function(mutationsList, observer) {
@@ -93,8 +100,7 @@ const general_mutations_callback = function(mutationsList, observer) {
         // only trigger all the tooltips if the last mutation
         // has been made
         if (index + 1 === mutationsList.length){
-            const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-            const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+            tools.trigger_tooltips()
         }
         
     }
@@ -179,8 +185,7 @@ function send_message (message_type, message_text, message_image, message_sender
 }
 
 // trigger all the tooltips in the webpage
-const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+tools.trigger_tooltips()
 chat_websocket.addEventListener('open', () => {
     console.log('CONNECTION OPENED WITH CHAT WEBSOCKET')
     new_message = false
