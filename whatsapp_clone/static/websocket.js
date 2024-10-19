@@ -3,6 +3,7 @@ import * as tools from  './tools.js';
 const user = document.getElementById('profile-pic')
 const user_id = user.getAttribute('data-user')
 const user_phone_number = user.getAttribute('data-phone')
+// sets the Websocket protocol depending on the WEB protocol
 const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
 const chat_websocket = new WebSocket(`${protocol}//${window.location.host}/`)
 const status_websocket = new WebSocket(`${protocol}//${window.location.host}/status/`)

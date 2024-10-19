@@ -6,7 +6,7 @@ import sys
 
 def main():
     """Run administrative tasks."""
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'whatsapp_clone.settings')
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "whatsapp_clone.settings")
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
@@ -16,16 +16,18 @@ def main():
             "forget to activate a virtual environment?"
         ) from exc
     execute_from_command_line(sys.argv)
+
+
 # admin 1
 # windows
 # 595xc5d96c54zwhg
 # profile num: 3145538787
-    
+
 # admin 2
 # franchslimon
 # 5952xfhlñoXD4165@
 # profile num : 3125538098
-    
+
 # normal user
 # franchsli
 # 94f8e5jyt8954LOLMAO
@@ -41,5 +43,5 @@ def main():
 # 418d48e4158990FES52X
 # profile num: 3024165870
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

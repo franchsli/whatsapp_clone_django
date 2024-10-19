@@ -7,7 +7,9 @@ from phonenumber_field.modelfields import PhoneNumberField
 # Create your models here.
 class User(AbstractUser, UserManager):
     # custom fields
-    about = models.CharField(blank=True, null=False, default="Hey, I love this app 😍", max_length=150)
+    about = models.CharField(
+        blank=True, null=False, default="Hey, I love this app 😍", max_length=150
+    )
     phone_number = PhoneNumberField(unique=True)
     photo = models.ImageField(blank=True, null=True, upload_to="user/")
 
@@ -25,7 +27,9 @@ class Contact(models.Model):
     name = models.CharField(max_length=36, blank=False, null=False)
     phone_number = PhoneNumberField()
     statuses_muted = models.BooleanField(default=False)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name="contacts")
+    created_by = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="contacts"
+    )
 
     def __str__(self) -> str:
         return self.name
@@ -46,7 +50,9 @@ class Chat(models.Model):
     users = models.ManyToManyField(User, related_name="chats")
     name = models.CharField(max_length=72, null=True, blank=True)
     photo = models.ImageField(blank=True, null=True, upload_to="chats/")
-    archived_by = models.ManyToManyField(User, related_name="archived_chats", blank=True)
+    archived_by = models.ManyToManyField(
+        User, related_name="archived_chats", blank=True
+    )
 
     def __str__(self) -> str:
         return self.name if self.name else f"Chat object {self.pk}"
@@ -62,8 +68,8 @@ class Chat(models.Model):
             False otherwise.
         """
         return user.managed_groups.filter(id=self.pk).exists()
-    
-    def archived_by_user(self, user:User) -> bool:
+
+    def archived_by_user(self, user: User) -> bool:
         """Returns if the provided User archived this Chat.
 
         Args:
@@ -74,7 +80,7 @@ class Chat(models.Model):
     @property
     def has_photo(self):
         return True if self.photo else False
-    
+
     @property
     def last_message(self):
         return self.message_set.latest("date")

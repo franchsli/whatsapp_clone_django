@@ -7,6 +7,7 @@ class UserForm(ModelForm):
         model = User
         fields = ("first_name", "last_name", "username", "photo", "about")
 
+
 class ChatForm(ModelForm):
     class Meta:
         model = Chat

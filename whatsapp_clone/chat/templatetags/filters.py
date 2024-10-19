@@ -135,7 +135,6 @@ def exclude_user_tag(
     if len(users_values) < 2 and desired_field != "phone_number":
         return users_values[0]
 
-
     else:
         return list(
             map(
