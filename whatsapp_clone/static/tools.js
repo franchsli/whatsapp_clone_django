@@ -542,6 +542,36 @@ function trigger_tooltips(){
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 }
 
+/**
+ * Sends a message to the websocket for creating the desired instance using the given form data.
+ * @param {HTMLFormElement} form The HTML form element that contains all the inputs data to be set to the websocket.
+ * @param {String} instance_type A string telling the websocket consumer what type of instance it should create.
+ * @param {WebSocket} websocket The Websocket that has the desired consumer.
+ * @returns {false} To avoid form submission.
+ */
+function create_instance_via_consumer(form, instance_type, websocket){
+    const form_elements = form.elements
+    if (instance_type === 'create_chat'){
+        for (let index = 0; index < form_elements.length; index++) {
+            let element = form_elements[index];
+    
+            if (element.checked){
+                websocket.send(JSON.stringify({
+                    'type': instance_type,
+                    'contact_name': element.dataset.contactName,
+                    'contact_phone_number': element.id
+                }))}}}
+    else if(instance_type === 'create_contact'){
+        websocket.send(JSON.stringify({
+            'type': instance_type,
+            'contact_name': form_elements[1].value,
+            'contact_phone_number': form_elements[2].value
+        }))
+    }
+    return false
+}
+
+
 export {get, post, modifyNotification,
     scroll_to_bottom, toggleReadMore, 
     showDropdown, run_element_animation, checked, 
@@ -550,5 +580,5 @@ export {get, post, modifyNotification,
     previewImage, update_chat_list, at_least_one_attr, 
     exchange_elements_class, switch_element_visibility, load_more_messages, 
     load_older_messages, remove_duplicates, change_element_color, 
-    filter_by_value, space_text, split_word, trigger_tooltips
+    filter_by_value, space_text, split_word, trigger_tooltips, create_instance_via_consumer
 }

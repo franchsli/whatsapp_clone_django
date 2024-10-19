@@ -1,5 +1,106 @@
 import * as tools from  './tools.js';
 
+
+function load_global_doc_functions(){
+    window.toggleReadMore = function(text_id){
+        tools.toggleReadMore(text_id)
+    }
+
+    window.showDropdown  = function (event, dropdown_id) {
+        tools.showDropdown(event, dropdown_id)
+    }
+
+    window.run_element_animation = function(element){
+        tools.run_element_animation(element)
+    }
+    
+    window.switch_emojis = function(button){
+        tools.switch_emojis(button)
+    }
+
+    window.switch_checkboxes = function(form){
+        tools.switch_checkboxes(form)
+    }
+
+    window.toggle_element_inner_text = function(HTML_element, text_a, text_b){
+        tools.toggle_element_inner_text(HTML_element, text_a, text_b)
+    }
+
+    window.toggle_element_display = function(HTML_element){
+        tools.toggle_element_display(HTML_element)
+    }
+
+    window.exchange_elements_class = function(element_a, element_b, class_a, class_b){
+        tools.exchange_elements_class(element_a, element_b, class_a, class_b)
+    }
+
+    window.load_more_messages = function(html_element){
+        tools.load_more_messages(html_element)
+    }
+
+    window.load_older_messages = function(){
+        tools.load_older_messages()
+    }
+
+    window.date_already_displayed = function(date){
+        const similar_layers = document.querySelectorAll(`.date-${date.replaceAll(' ', '')}`)
+        const many_similar_layers = similar_layers.length > 1
+        if (many_similar_layers){
+            return true
+        }
+        else {
+            return false
+        }
+    }
+
+    window.remove_duplicates = function(class_name){
+        tools.remove_duplicates(class_name)
+    }
+
+    window.change_element_color = function(desired_color, target_element_id){
+        tools.change_element_color(desired_color, target_element_id)
+    }
+
+    window.filter_by_value = function(value, element_list){
+        tools.filter_by_value(value, element_list)
+    }
+
+    window.space_text = function(text_id){
+        tools.space_text(text_id)
+    }
+
+}
+
+
+
+class Chat_Web_Socket extends WebSocket {
+    /**
+     * Send the chat message data to the websocket.
+     * @param {String} message_type The type of the message.
+     * @param {String} message_text The text of the message.
+     * @param {String} message_image A string of image data encoded in base64.
+     * @param {String} message_sender_id The id of who sent the chat message.
+     */
+    send_message (message_type, message_text, message_image, message_sender_id){
+        this.send(JSON.stringify({
+            'type': message_type,
+            'message': message_text,
+            'image': message_image,
+            'receiver_username': localStorage.getItem('receiver_username'),
+            'sender_user_id': message_sender_id,
+            'chat_id': localStorage.getItem('chat_id'),
+            'chat_members_phones': localStorage.getItem('chat_members_phones')
+        }))
+
+    }
+
+}
+
+class Status_Web_Socket extends WebSocket {
+
+}
+
+
 const App = class {
     constructor(){
         // set up all the variables needed
@@ -29,7 +130,13 @@ const App = class {
         this.new_message = false
         this.debug_logs = 'relevant'
         this.debugging_mode = false
+        
     }
+    load_functions(){
+        load_global_doc_functions()
+    }
+
+
 
 }
 
@@ -135,127 +242,15 @@ window.summon_chat = function(chat){
 
 }
 
-/**
- * Sends a message to the websocket for creating the desired instance using the given form data.
- * @param {HTMLFormElement} form The HTML form element that contains all the inputs data to be set to the websocket.
- * @param {String} instance_type A string telling the websocket consumer what type of instance it should create.
- * @returns {false} To avoid form submission.
- */
-function create_instance(form, instance_type){
-    const form_elements = form.elements
-    if (instance_type === 'create_chat'){
-        for (let index = 0; index < form_elements.length; index++) {
-            let element = form_elements[index];
-    
-            if (element.checked){
-                chat_websocket.send(JSON.stringify({
-                    'type': instance_type,
-                    'contact_name': element.dataset.contactName,
-                    'contact_phone_number': element.id
-                }))}}}
-    else if(instance_type === 'create_contact'){
-        chat_websocket.send(JSON.stringify({
-            'type': instance_type,
-            'contact_name': form_elements[1].value,
-            'contact_phone_number': form_elements[2].value
-        }))
-    }
-    return false
-}
 
 
-/**
- * Send the chat message data to the websocket.
- * @param {String} message_type The type of the message.
- * @param {String} message_text The text of the message.
- * @param {String} message_image A string of image data encoded in base64.
- * @param {String} message_sender_id The id of who sent the chat message.
- */
-function send_message (message_type, message_text, message_image, message_sender_id){
-    chat_websocket.send(JSON.stringify({
-        'type': message_type,
-        'message': message_text,
-        'image': message_image,
-        'receiver_username': localStorage.getItem('receiver_username'),
-        'sender_user_id': message_sender_id,
-        'chat_id': localStorage.getItem('chat_id'),
-        'chat_members_phones': localStorage.getItem('chat_members_phones')
-    }))
 
-}
 
 // trigger all the tooltips in the webpage
 tools.trigger_tooltips()
 chat_websocket.addEventListener('open', () => {
     console.log('CONNECTION OPENED WITH CHAT WEBSOCKET')
     new_message = false
-
-    window.toggleReadMore = function(text_id){
-        tools.toggleReadMore(text_id)
-    }
-
-    window.showDropdown  = function (event, dropdown_id) {
-        tools.showDropdown(event, dropdown_id)
-    }
-
-    window.run_element_animation = function(element){
-        tools.run_element_animation(element)
-    }
-    
-    window.switch_emojis = function(button){
-        tools.switch_emojis(button)
-    }
-
-    window.switch_checkboxes = function(form){
-        tools.switch_checkboxes(form)
-    }
-
-    window.toggle_element_inner_text = function(HTML_element, text_a, text_b){
-        tools.toggle_element_inner_text(HTML_element, text_a, text_b)
-    }
-
-    window.toggle_element_display = function(HTML_element){
-        tools.toggle_element_display(HTML_element)
-    }
-
-    window.exchange_elements_class = function(element_a, element_b, class_a, class_b){
-        tools.exchange_elements_class(element_a, element_b, class_a, class_b)
-    }
-
-    window.load_more_messages = function(html_element){
-        tools.load_more_messages(html_element)
-    }
-
-    window.load_older_messages = function(){
-        tools.load_older_messages()
-    }
-
-    window.date_already_displayed = function(date){
-        const similar_layers = document.querySelectorAll(`.date-${date.replaceAll(' ', '')}`)
-        const many_similar_layers = similar_layers.length > 1
-        if (many_similar_layers){
-            return true
-        }
-        else {
-            return false
-        }
-    }
-
-    window.remove_duplicates = function(class_name){
-        tools.remove_duplicates(class_name)
-    }
-
-    window.change_element_color = function(desired_color, target_element_id){
-        tools.change_element_color(desired_color, target_element_id)
-    }
-
-    window.filter_by_value = function(value, element_list){
-        tools.filter_by_value(value, element_list)
-    }
-
-    window.space_text = function(text_id){
-        tools.space_text(text_id)
-    }
 
 
     chat_form.onsubmit = async (event) => {
