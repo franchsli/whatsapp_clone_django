@@ -589,6 +589,48 @@ function create_instance_via_consumer(form, instance_type, websocket){
     return false
 }
 
+async function validate_chat_form(chat_form, error_audio, websocket){
+    if (!checked(chat_form)){
+        error_audio.play()
+        const validation_message = document.getElementById('chat-validation-message')
+        validation_message.innerText = 'Please select a contact to create chat with'
+    }
+
+
+    else{
+        for (let index = 0; index < chat_form.elements.length; index++) {
+            // when the selected contact (checkbox) is found
+            if(chat_form.elements[index].checked){
+                const contact_phone_number = chat_form.elements[index].id
+                const contact_user_object = await get(`/api/users/?phone_number=${contact_phone_number}`)
+                const contact_user_id = contact_user_object[0].id
+                // do an API request and check if the user already have a chat with the
+                // said contact (User object id)
+                const already_created_chats_with_contact = await get(`/api/chats/?user_id=${user_id}&user_id=${contact_user_id}`)
+                
+                
+                // if the user has already a chat with the contact, display an error
+                if(already_created_chats_with_contact.length > 0){
+                    error_audio.play()
+                    const validation_message = document.getElementById('chat-validation-message')
+                    validation_message.innerText = 'You already have a chat with this contact, check your chat list.'
+                }
+                // create the chat otherwise
+                else {
+                    create_instance_via_consumer(chat_form, 'create_chat', websocket)
+                    const toastNotification = document.getElementById('liveToast')
+                    modifyNotification('Server', 
+                    'The chat was created successfully!! Update your chat list by clicking the "chats" button.')
+                    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
+                    toastBootstrap.show()
+                }
+                break
+            }
+        }
+    }
+    return false;   
+}
+
 
 export {get, post, modifyNotification,
     scroll_to_bottom, toggleReadMore, 
@@ -598,5 +640,6 @@ export {get, post, modifyNotification,
     previewImage, update_chat_list, at_least_one_attr, 
     exchange_elements_class, switch_element_visibility, load_more_messages, 
     load_older_messages, remove_duplicates, change_element_color, 
-    filter_by_value, space_text, split_word, trigger_tooltips, create_instance_via_consumer
+    filter_by_value, space_text, split_word, trigger_tooltips, 
+    create_instance_via_consumer, validate_chat_form
 }

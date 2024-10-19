@@ -144,11 +144,17 @@ const App = class {
         this.new_message = false
         this.debug_logs = 'relevant'
         this.debugging_mode = false
+        // event listeners
+        this.chat_form.onsubmit = async (event) => {
+            event.preventDefault()
+            tools.validate_chat_form(this.chat_form, this.error_audio, this.chat_websocket)
+        }
         
     }
     load_functions(){
         load_global_doc_functions()
     }
+
 
 
 
@@ -261,50 +267,6 @@ chat_websocket.addEventListener('open', () => {
     console.log('CONNECTION OPENED WITH CHAT WEBSOCKET')
     new_message = false
 
-
-    chat_form.onsubmit = async (event) => {
-        event.preventDefault()
-
-        if (!tools.checked(chat_form)){
-            error_audio.play()
-            const validation_message = document.getElementById('chat-validation-message')
-            validation_message.innerText = 'Please select a contact to create chat with'
-        }
-
-
-        else{
-            for (let index = 0; index < chat_form.elements.length; index++) {
-                // when the selected contact (checkbox) is found
-                if(chat_form.elements[index].checked){
-                    const contact_phone_number = chat_form.elements[index].id
-                    const contact_user_object = await tools.get(`/api/users/?phone_number=${contact_phone_number}`)
-                    const contact_user_id = contact_user_object[0].id
-                    // do an API request and check if the user already have a chat with the
-                    // said contact (User object id)
-                    const already_created_chats_with_contact = await tools.get(`/api/chats/?user_id=${user_id}&user_id=${contact_user_id}`)
-                    
-                    
-                    // if the user has already a chat with the contact, display an error
-                    if(already_created_chats_with_contact.length > 0){
-                        error_audio.play()
-                        const validation_message = document.getElementById('chat-validation-message')
-                        validation_message.innerText = 'You already have a chat with this contact, check your chat list.'
-                    }
-                    // create the chat otherwise
-                    else {
-                        create_instance(chat_form, 'create_chat')
-                        const toastNotification = document.getElementById('liveToast')
-                        tools.modifyNotification('Server', 
-                        'The chat was created successfully!! Update your chat list by clicking the "chats" button.')
-                        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
-                        toastBootstrap.show()
-                    }
-                    break
-                }
-            }
-        }
-        return false;   
-    }
 
     contact_form.onsubmit = async () => {
         const inputs = contact_form.getElementsByTagName('input')
