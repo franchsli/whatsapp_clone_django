@@ -3,6 +3,8 @@
 
 ## DO RIGHT NOW
 
+- Split all the code in websocket.js in a JS Class,
+  which will be initiated when the DOM is loaded.
 - **BUG** Clicking on 'Edit message' will issue a display_chat (receiver)
 - Check if...
   - Contact creation works correctly.
