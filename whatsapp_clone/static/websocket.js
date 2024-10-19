@@ -74,6 +74,19 @@ function load_global_doc_functions(){
 
 
 class Chat_Web_Socket extends WebSocket {
+    constructor(){
+        this.onopen = async (event) => {
+
+        }
+
+        this.onmessage = async (event) => {
+
+        }
+
+        this.onerror = async (event) => {
+            
+        }
+    }
     /**
      * Send the chat message data to the websocket.
      * @param {String} message_type The type of the message.
