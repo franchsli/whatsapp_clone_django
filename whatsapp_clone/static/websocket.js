@@ -144,7 +144,13 @@ const App = class {
         this.new_message = false
         this.debug_logs = 'relevant'
         this.debugging_mode = false
-        // event listeners
+        
+    }
+    load_functions(){
+        load_global_doc_functions()
+    }
+
+    load_event_listeners(){
         this.chat_form.onsubmit = async (event) => {
             event.preventDefault()
             tools.validate_chat_form(this.chat_form, this.error_audio, this.chat_websocket)
@@ -152,10 +158,54 @@ const App = class {
         this.contact_form.onsubmit = async () => {
             tools.validate_contact_form(this.contact_form, this.error_audio, this.notification_audio, this.chat_websocket)
         }
-        
-    }
-    load_functions(){
-        load_global_doc_functions()
+
+        this.status_submit_button.onclick = (event) => {
+            event.preventDefault()
+            if(tools.cand_send_messages(this.status_websocket)){
+                tools.validate_status_form(this.error_audio, this.status_websocket)
+            }
+
+        }
+        // gets the image preview div and updated it over time.
+        this.status_image_input.onchange = () => {
+            tools.previewImage(status_image_input, stauts_image_preview)
+        }
+
+        // resets the contact form values and validation errors when the modal is closed.
+        this.chat_modal.addEventListener('hidden.bs.modal', function (event) {
+            const validation_message = document.getElementById('chat-validation-message')
+            for (let index = 0; index < chat_form.elements.length; index++) {
+                if (chat_form.elements[index].type === 'checkbox'){
+                    chat_form.elements[index].checked = false
+                }
+                
+            }
+            validation_message.innerText = ''
+        })
+        // resets the contact form values and validation errors when the modal is closed.
+        this.contact_modal.addEventListener('hidden.bs.modal', function (event) {
+            const inputs = contact_form.getElementsByTagName('input')
+            const validation_message = document.getElementById('contact-validation-message')
+            inputs[1].value = ''
+            inputs[2].value = ''
+            inputs[3].checked = false
+            inputs[4].checked = false
+            validation_message.innerText = ''
+        })
+
+        // same for the status modal.
+        this.status_modal.addEventListener('hidden.bs.modal', function (event) {
+            const inputs = status_form.elements
+            const validation_message = document.getElementById('status-validation-message')
+            const image_container = document.getElementById('status-imagePreview')
+            const image = image_container.firstElementChild
+            inputs[2].value = ''
+            inputs[3].value = ''
+            if (image){
+                image.remove()
+            }
+            validation_message.innerText = ''
+        })
     }
 
 
@@ -269,74 +319,6 @@ window.summon_chat = function(chat){
 chat_websocket.addEventListener('open', () => {
     console.log('CONNECTION OPENED WITH CHAT WEBSOCKET')
     new_message = false
-
-    // gets the image preview div and updated it over time.
-    status_image_input.addEventListener('change', () => {
-        tools.previewImage(status_image_input, stauts_image_preview)
-    })
-
-    // resets the contact form values and validation errors when the modal is closed.
-    chat_modal.addEventListener('hidden.bs.modal', function (event) {
-        const validation_message = document.getElementById('chat-validation-message')
-        for (let index = 0; index < chat_form.elements.length; index++) {
-            if (chat_form.elements[index].type === 'checkbox'){
-                chat_form.elements[index].checked = false
-            }
-            
-        }
-        validation_message.innerText = ''
-    })
-    // resets the contact form values and validation errors when the modal is closed.
-    contact_modal.addEventListener('hidden.bs.modal', function (event) {
-        const inputs = contact_form.getElementsByTagName('input')
-        const validation_message = document.getElementById('contact-validation-message')
-        inputs[1].value = ''
-        inputs[2].value = ''
-        inputs[3].checked = false
-        inputs[4].checked = false
-        validation_message.innerText = ''
-    })
-
-    // same for the status modal.
-    status_modal.addEventListener('hidden.bs.modal', function (event) {
-        const inputs = status_form.elements
-        const validation_message = document.getElementById('status-validation-message')
-        const image_container = document.getElementById('status-imagePreview')
-        const image = image_container.firstElementChild
-        inputs[2].value = ''
-        inputs[3].value = ''
-        if (image){
-            image.remove()
-        }
-        validation_message.innerText = ''
-    })
-    
-
-    status_submit_button.onclick = (event) => {
-        event.preventDefault()
-        console.log(tools.not_empty(status_form))
-        if (tools.not_empty(status_form)){
-            const status_input = document.getElementById('id_text')
-            const image_container = document.getElementById('status-imagePreview')
-            const image = image_container.firstElementChild
-            status_websocket.send(JSON.stringify({
-                'type': 'CREATE',
-                'user_id': user_id,
-                'sender_phone_number': user_phone_number,
-                'text': status_input.value,
-                'image': image !== null ? image.src : null,
-
-            }))
-        }
-        else {
-            error_audio.play()
-            const validation_message = document.getElementById('status-validation-message')
-            validation_message.innerText = 'Please insert data!!!'
-            setTimeout(() => {
-                validation_message.textContent = ''
-            }, 5000)
-        }
-    }
 
     /**
      * Log htmx events in a comprehensive way.

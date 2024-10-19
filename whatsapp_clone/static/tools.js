@@ -673,6 +673,30 @@ async function validate_contact_form(contact_form, error_audio, notification_aud
     return false;
 }
 
+async function validate_status_form(error_audio, status_websocket){
+    console.log(not_empty(status_form))
+    if (not_empty(status_form)){
+        const status_input = document.getElementById('id_text')
+        const image_container = document.getElementById('status-imagePreview')
+        const image = image_container.firstElementChild
+        status_websocket.send(JSON.stringify({
+            'type': 'CREATE',
+            'user_id': user_id,
+            'sender_phone_number': user_phone_number,
+            'text': status_input.value,
+            'image': image !== null ? image.src : null,
+
+        }))
+    }
+    else {
+        error_audio.play()
+        const validation_message = document.getElementById('status-validation-message')
+        validation_message.innerText = 'Please insert data!!!'
+        setTimeout(() => {
+            validation_message.textContent = ''
+        }, 5000)
+    }
+}
 
 export {get, post, modifyNotification,
     scroll_to_bottom, toggleReadMore, 
@@ -683,5 +707,6 @@ export {get, post, modifyNotification,
     exchange_elements_class, switch_element_visibility, load_more_messages, 
     load_older_messages, remove_duplicates, change_element_color, 
     filter_by_value, space_text, split_word, trigger_tooltips, 
-    create_instance_via_consumer, validate_chat_form, validate_contact_form
+    create_instance_via_consumer, validate_chat_form, validate_contact_form,
+    validate_status_form, cand_send_messages
 }
