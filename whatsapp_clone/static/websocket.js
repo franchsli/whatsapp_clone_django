@@ -74,6 +74,7 @@ function load_global_doc_functions(){
 
 
 class Chat_Web_Socket extends WebSocket {
+
     constructor(){
         this.onopen = async (event) => {
 
@@ -148,6 +149,7 @@ const App = class {
     load_functions(){
         load_global_doc_functions()
     }
+
 
 
 
@@ -255,12 +257,6 @@ window.summon_chat = function(chat){
 
 }
 
-
-
-
-
-// trigger all the tooltips in the webpage
-tools.trigger_tooltips()
 chat_websocket.addEventListener('open', () => {
     console.log('CONNECTION OPENED WITH CHAT WEBSOCKET')
     new_message = false

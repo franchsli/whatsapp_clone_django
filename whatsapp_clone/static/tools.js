@@ -543,6 +543,18 @@ function trigger_tooltips(){
 }
 
 /**
+ * Checks whether or not a WebSocket is ready to send and receive messages.
+ * @param {WebSocket} websocket 
+ */
+function cand_send_messages(websocket){
+    return websocket.readyState === websocket.OPEN
+}
+
+
+
+
+
+/**
  * Sends a message to the websocket for creating the desired instance using the given form data.
  * @param {HTMLFormElement} form The HTML form element that contains all the inputs data to be set to the websocket.
  * @param {String} instance_type A string telling the websocket consumer what type of instance it should create.
@@ -550,23 +562,29 @@ function trigger_tooltips(){
  * @returns {false} To avoid form submission.
  */
 function create_instance_via_consumer(form, instance_type, websocket){
-    const form_elements = form.elements
-    if (instance_type === 'create_chat'){
-        for (let index = 0; index < form_elements.length; index++) {
-            let element = form_elements[index];
-    
-            if (element.checked){
-                websocket.send(JSON.stringify({
-                    'type': instance_type,
-                    'contact_name': element.dataset.contactName,
-                    'contact_phone_number': element.id
-                }))}}}
-    else if(instance_type === 'create_contact'){
-        websocket.send(JSON.stringify({
-            'type': instance_type,
-            'contact_name': form_elements[1].value,
-            'contact_phone_number': form_elements[2].value
-        }))
+    if (cand_send_messages(websocket)){
+        const form_elements = form.elements
+        if (instance_type === 'create_chat'){
+            for (let index = 0; index < form_elements.length; index++) {
+                let element = form_elements[index];
+        
+                if (element.checked){
+                    websocket.send(JSON.stringify({
+                        'type': instance_type,
+                        'contact_name': element.dataset.contactName,
+                        'contact_phone_number': element.id
+                    }))}}}
+        else if(instance_type === 'create_contact'){
+            websocket.send(JSON.stringify({
+                'type': instance_type,
+                'contact_name': form_elements[1].value,
+                'contact_phone_number': form_elements[2].value
+            }))
+        }
+    }
+
+    else {
+        console.error('THE GIVEN WEBSOCKET IS NOT OPEN')
     }
     return false
 }
