@@ -137,8 +137,14 @@ class Chat_Web_Socket extends WebSocket {
 
         }
 
-        this.onerror = async (error) => {
-            console.error(error)
+        this.onerror = (error) => {
+            console.log('WS State:', this.readyState);
+            console.log('WS Error:', error)
+        };
+
+        this.onclose = (event) => {
+            console.log('WS Closed. Code:', event.code, 'Reason:', event.reason);
+            console.log('Was clean?:', event.wasClean);
         }
     }
     /**
@@ -343,7 +349,13 @@ class Status_Web_Socket extends WebSocket {
             }
         }
         this.onerror = (error) => {
-            console.error(error)
+            console.log('WS State:', this.readyState);
+            console.log('WS Error:', error)
+        };
+
+        this.onclose = (event) => {
+            console.log('WS Closed. Code:', event.code, 'Reason:', event.reason);
+            console.log('Was clean?:', event.wasClean);
         }
     }
 
