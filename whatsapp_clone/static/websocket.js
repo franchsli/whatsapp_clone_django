@@ -348,7 +348,7 @@ class Status_Web_Socket extends WebSocket {
 }
 
 
-const App = class {
+class App {
     constructor(){
         // set up all the variables needed
         this.user = document.getElementById('profile-pic')
@@ -356,8 +356,8 @@ const App = class {
         this.user_phone_number = user.getAttribute('data-phone')
         // sets the Websocket protocol depending on the WEB protocol
         this.protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-        this.chat_websocket = new WebSocket(`${protocol}//${window.location.host}/`)
-        this.status_websocket = new WebSocket(`${protocol}//${window.location.host}/status/`)
+        this.chat_websocket = new Chat_Web_Socket(`${protocol}//${window.location.host}/`)
+        this.status_websocket = new Status_Web_Socket(`${protocol}//${window.location.host}/status/`)
         this.chats_and_more = document.getElementById("chats-and-more")
         this.chat_form = document.getElementById("chat-creation-form")
         this.chat_modal = document.getElementById('NewChat')
@@ -440,10 +440,6 @@ const App = class {
             validation_message.innerText = ''
         })
     }
-
-
-
-
 
 }
 
@@ -549,40 +545,42 @@ window.summon_chat = function(chat){
 
 }
 
-chat_websocket.addEventListener('open', () => {
-
-    /**
-     * Log htmx events in a comprehensive way.
-     * @param {HTMLElement} elt 
-     * @param {String} event 
-     * @param {Object} data 
-     */
-    htmx.logger = async function(elt, event, data) {
-        // debugging :)
-
-        if (debugging_mode && data){
-            let previous_event = data
-            if (debug_logs === 'issues'){
-                if(data.pathInfo){
-                    if(!data.pathInfo.responsePath && !data.successful){
-                        console.log('AN ERROR HAS OCURRED')
-                        console.log("PREVIOUS EVENT DATA:\n", previous_event)
-                        console.log("ACTUAL EVENT:\n", data)
-                    }
-                }
-            }
-            else if (debug_logs === 'relevant'){
-                console.log('EVENT CALLED:', event)
-                console.log('ELEMENT THAT ISSUED THE REQUEST:', elt)
-                if(data.pathInfo){
-                    console.log('REQUEST PATH:', data.pathInfo.requestPath)
-                    console.log('RESPONSE PATH:', data.pathInfo.responsePath)
-                    console.log('WAS THIS REQUEST SUCCESSFUL?:', data.successful)
+/**
+ * Log htmx events in a comprehensive way.
+ * @param {HTMLElement} elt 
+ * @param {String} event 
+ * @param {Object} data 
+ */
+htmx.logger = async function(elt, event, data) {
+    // debugging :)
+    if (main.debugging_mode && data){
+        let previous_event = data
+        if (main.debug_logs === 'issues'){
+            if(data.pathInfo){
+                if(!data.pathInfo.responsePath && !data.successful){
+                    console.log('AN ERROR HAS OCURRED')
+                    console.log("PREVIOUS EVENT DATA:\n", previous_event)
+                    console.log("ACTUAL EVENT:\n", data)
                 }
             }
         }
+        else if (debug_logs === 'relevant'){
+            console.log('EVENT CALLED:', event)
+            console.log('ELEMENT THAT ISSUED THE REQUEST:', elt)
+            if(data.pathInfo){
+                console.log('REQUEST PATH:', data.pathInfo.requestPath)
+                console.log('RESPONSE PATH:', data.pathInfo.responsePath)
+                console.log('WAS THIS REQUEST SUCCESSFUL?:', data.successful)
+            }
+        }
     }
-    htmx.logger()
+}
+htmx.logger()
+load_global_doc_functions()
+
+document.addEventListener('DOMContentLoaded', () => {
+    const main = new App()
+
     htmx.on('htmx:beforeRequest', (event) => {
         // sets a global variable with the 'scrollable view' height before loaidng the messages
         if(event.detail.pathInfo.requestPath.includes('previous_messages')){
@@ -600,7 +598,7 @@ chat_websocket.addEventListener('open', () => {
         else if(event.detail.pathInfo.requestPath.includes('edit_message')){
             // same logic as real-time message deletion
             // but this is due to a message edition
-            send_message('message_edition', '', '', user_id)
+            main.chat_websocket.send_message('message_edition', '', '', user_id)
         }
         else if(event.detail.pathInfo.requestPath.includes('delete_message')){
             /**
@@ -610,7 +608,7 @@ chat_websocket.addEventListener('open', () => {
              * and then decides whether or not to update the UI using
              * a HTMX.ajax request.
              */
-            send_message('message_deletion', '', '', user_id)
+            main.chat_websocket.send_message('message_deletion', '', '', user_id)
         }
         else if (event.detail.pathInfo.requestPath === '/statuses/'){
             window.user_statuses_caller = document.querySelector('#user-status-caller')
@@ -652,9 +650,9 @@ chat_websocket.addEventListener('open', () => {
             }
         }
     })
+    
+
 })
-
-
 
 // status_websocket.send(JSON.stringify({
 //     'type': 'CREATE',
