@@ -75,8 +75,9 @@ function load_global_doc_functions(){
 
 class Chat_Web_Socket extends WebSocket {
 
-    constructor(){
+    constructor(parent_app_class){
         this.onopen = async (event) => {
+            this.app = parent_app_class()
 
         }
 
@@ -141,11 +142,11 @@ class Chat_Web_Socket extends WebSocket {
         // if the message was sent by the auth user, play a sound and update the chat list
         // only append the message's HTML otherwise
         if (user_id === sender_id){
-            message_sent_audio.play()
-            new_message = true
+            this.app.message_sent_audio.play()
+            this.app.new_message = true
             htmx.ajax('GET', `/display_chat/${localStorage.getItem('chat_id')}`, '#chat-display').then(() => {
                 tools.update_chat_list()
-                new_message = false
+                this.app.new_message = false
             })
         }
         else {
@@ -178,7 +179,7 @@ class Chat_Web_Socket extends WebSocket {
             const toastNotification = document.getElementById('liveToast')
             tools.modifyNotification(sender_username, text)
             const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
-            message_received_audio.play()
+            this.app.message_received_audio.play()
             toastBootstrap.show()
             tools.update_chat_list()
 
@@ -200,7 +201,7 @@ class Chat_Web_Socket extends WebSocket {
         if (this.sender_id === user_id){
             return
         }
-        new_message = true
+        this.app.new_message = true
         if (document.getElementById('contact-name') !== null){
             if (localStorage.getItem('chat_id') === chat_id) {
                 htmx.ajax('GET', `/display_chat/${localStorage.getItem('chat_id')}`, '#chat-display').then(() => {
@@ -215,21 +216,21 @@ class Chat_Web_Socket extends WebSocket {
         console.log(event.data)
         this.message = event.data.replace('message_edition', '')
         this.message = this.message.split('-')
-        sender_id = this.message[0]
-        sender_username = this.message[1]
-        chat_id = this.message[2]
+        this.sender_id = this.message[0]
+        this.sender_username = this.message[1]
+        this.chat_id = this.message[2]
         /**
         * the JS code (receiver) analises the websocket message
         * and then decides whether or not to update the UI using
         * a HTMX.ajax request.
         */
         tools.update_chat_list()
-       if (this.sender_id === user_id){
+       if (this.sender_id === this.app.user_id){
             return
        }
-       new_message = true
+       this.app.new_message = true
         if (document.getElementById('contact-name') !== null){
-            if (localStorage.getItem('chat_id') === chat_id) {
+            if (localStorage.getItem('chat_id') === this.chat_id) {
                 htmx.ajax('GET', `/display_chat/${localStorage.getItem('chat_id')}`, '#chat-display').then(() => {
                     tools.scroll_to_bottom()
                 })
