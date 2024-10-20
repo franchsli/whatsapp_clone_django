@@ -101,10 +101,11 @@ function load_global_doc_functions(){
 
 class Chat_Web_Socket extends WebSocket {
 
-    constructor(parent_app_class){
+    constructor({url = '', protocols = null, parent_app_class = null}){
+        super(url, protocols)
         this.onopen = async (event) => {
             console.log('CONNECTION OPENED WITH CHAT WEBSOCKET')
-            this.app = parent_app_class()
+            this.app = parent_app_class
             this.app.new_message = false
 
         }
@@ -136,8 +137,8 @@ class Chat_Web_Socket extends WebSocket {
 
         }
 
-        this.onerror = async (event) => {
-            
+        this.onerror = async (error) => {
+            console.error(error)
         }
     }
     /**
@@ -269,8 +270,9 @@ class Chat_Web_Socket extends WebSocket {
 }
 
 class Status_Web_Socket extends WebSocket {
-    constructor(parent_app_class){
-        this.app = parent_app_class()
+    constructor({url = '', protocols = null, parent_app_class = null}){
+        super(url, protocols)
+        this.app = parent_app_class
         this.onopen = () => {
             console.log('CONNECTION OPENED WITH STATUS WEBSOCKET')
             window.delete_status = function(button){
@@ -341,7 +343,7 @@ class Status_Web_Socket extends WebSocket {
             }
         }
         this.onerror = (error) => {
-            console.log(error)
+            console.error(error)
         }
     }
 
@@ -352,12 +354,14 @@ class App {
     constructor(){
         // set up all the variables needed
         this.user = document.getElementById('profile-pic')
-        this.user_id = user.getAttribute('data-user')
-        this.user_phone_number = user.getAttribute('data-phone')
+        this.user_id = this.user.getAttribute('data-user')
+        this.user_phone_number = this.user.getAttribute('data-phone')
         // sets the Websocket protocol depending on the WEB protocol
         this.protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-        this.chat_websocket = new Chat_Web_Socket(`${protocol}//${window.location.host}/`)
-        this.status_websocket = new Status_Web_Socket(`${protocol}//${window.location.host}/status/`)
+        this.chat_websocket = new Chat_Web_Socket({url: `${this.protocol}//${window.location.host}/`,
+                                                    parent_app_class: this})
+        this.status_websocket = new Status_Web_Socket({url: `${this.protocol}//${window.location.host}/status/`,
+                                                    parent_app_class: this})
         this.chats_and_more = document.getElementById("chats-and-more")
         this.chat_form = document.getElementById("chat-creation-form")
         this.chat_modal = document.getElementById('NewChat')
@@ -445,7 +449,7 @@ class App {
 
 
 // Callback function to execute when mutations are observed
-const chat_mutation_callback = function(mutationsList, observer) {
+const chat_mutation_callback = function(mutationsList, chat_websocket) {
     for (const mutation of mutationsList) {
         if (mutation.type === 'childList') {
             // Check if a new element is added
@@ -479,7 +483,7 @@ const chat_mutation_callback = function(mutationsList, observer) {
                     new_message_input.addEventListener('keypress', (event) => {
                         if (event.key === 'Enter' && (new_message_input.value !== '' || imageInput.value !== '')){
                             let image = document.getElementById('imagePreview').firstElementChild
-                            send_message('message', new_message_input.value, imageInput.value !== '' ? image.src : '', user_id)
+                            chat_websocket.send_message('message', new_message_input.value, imageInput.value !== '' ? image.src : '', user_id)
                             
                             new_message_input.value = ''
                             //deletes the selected image
@@ -493,7 +497,7 @@ const chat_mutation_callback = function(mutationsList, observer) {
                     new_message_button.onclick = () => {
                         if (new_message_input.value !== '' || imageInput.value !== ''){
                             let image = document.getElementById('imagePreview').firstElementChild    
-                            send_message('message', new_message_input.value, imageInput.value !== '' ? image.src : '', user_id)
+                            chat_websocket.send_message('message', new_message_input.value, imageInput.value !== '' ? image.src : '', user_id)
                             
                             new_message_input.value = ''
                             //deletes the selected image
@@ -517,16 +521,7 @@ const general_mutations_callback = function(mutationsList, observer) {
 
 };
 
-// Create a MutationObserver with the callback
-const chat_observer = new MutationObserver(chat_mutation_callback);
-const general_observer = new MutationObserver(general_mutations_callback);
 
-// Configure the observer to watch for changes in the container's children
-const observerConfig = { childList: true };
-
-// Start observing the target container
-chat_observer.observe(chat_display, observerConfig);
-general_observer.observe(chats_and_more, observerConfig)
 
 /**
  * Tells the websocket to reconnect to the provided chat channel.
@@ -545,41 +540,52 @@ window.summon_chat = function(chat){
 
 }
 
-/**
- * Log htmx events in a comprehensive way.
- * @param {HTMLElement} elt 
- * @param {String} event 
- * @param {Object} data 
- */
-htmx.logger = async function(elt, event, data) {
-    // debugging :)
-    if (main.debugging_mode && data){
-        let previous_event = data
-        if (main.debug_logs === 'issues'){
-            if(data.pathInfo){
-                if(!data.pathInfo.responsePath && !data.successful){
-                    console.log('AN ERROR HAS OCURRED')
-                    console.log("PREVIOUS EVENT DATA:\n", previous_event)
-                    console.log("ACTUAL EVENT:\n", data)
-                }
-            }
-        }
-        else if (debug_logs === 'relevant'){
-            console.log('EVENT CALLED:', event)
-            console.log('ELEMENT THAT ISSUED THE REQUEST:', elt)
-            if(data.pathInfo){
-                console.log('REQUEST PATH:', data.pathInfo.requestPath)
-                console.log('RESPONSE PATH:', data.pathInfo.responsePath)
-                console.log('WAS THIS REQUEST SUCCESSFUL?:', data.successful)
-            }
-        }
-    }
-}
-htmx.logger()
+
 load_global_doc_functions()
 
 document.addEventListener('DOMContentLoaded', () => {
     const main = new App()
+    // Create a MutationObserver with the callback
+    const chat_observer = new MutationObserver(chat_mutation_callback, main.chat_websocket);
+    const general_observer = new MutationObserver(general_mutations_callback);
+
+    // Configure the observer to watch for changes in the container's children
+    const observerConfig = { childList: true };
+
+    // Start observing the target container
+    chat_observer.observe(main.chat_display, observerConfig);
+    general_observer.observe(main.chats_and_more, observerConfig)
+    /**
+     * Log htmx events in a comprehensive way.
+     * @param {HTMLElement} elt 
+     * @param {String} event 
+     * @param {Object} data 
+     */
+    htmx.logger = async function(elt, event, data) {
+        // debugging :)
+        if (main.debugging_mode && data){
+            let previous_event = data
+            if (main.debug_logs === 'issues'){
+                if(data.pathInfo){
+                    if(!data.pathInfo.responsePath && !data.successful){
+                        console.log('AN ERROR HAS OCURRED')
+                        console.log("PREVIOUS EVENT DATA:\n", previous_event)
+                        console.log("ACTUAL EVENT:\n", data)
+                    }
+                }
+            }
+            else if (debug_logs === 'relevant'){
+                console.log('EVENT CALLED:', event)
+                console.log('ELEMENT THAT ISSUED THE REQUEST:', elt)
+                if(data.pathInfo){
+                    console.log('REQUEST PATH:', data.pathInfo.requestPath)
+                    console.log('RESPONSE PATH:', data.pathInfo.responsePath)
+                    console.log('WAS THIS REQUEST SUCCESSFUL?:', data.successful)
+                }
+            }
+        }
+    }
+    htmx.logger()
 
     htmx.on('htmx:beforeRequest', (event) => {
         // sets a global variable with the 'scrollable view' height before loaidng the messages
