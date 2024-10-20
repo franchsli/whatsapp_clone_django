@@ -69,6 +69,32 @@ function load_global_doc_functions(){
         tools.space_text(text_id)
     }
 
+    window.status_app = {
+        pending_updates : false
+    }
+
+    window.init_status_carousel = function(status_carousel){
+        carousel = status_carousel
+        carousel_instance = new bootstrap.Carousel(carousel, {
+        interval: 5000,
+        touch: false
+        })
+    }
+
+    window.show_modal = function(modal){
+        modal.setAttribute('status', 'showing')
+    }
+    window.hide_modal = function(modal){
+        modal.setAttribute('status', 'hidden')
+        // if there any pendient updates in the UI, update it
+        if(status_app.pending_updates){
+            htmx.ajax('GET', '/statuses', '#chats-and-more')
+            .then( () => {
+                status_app.pending_updates = false
+            })
+        }
+    }
+
 }
 
 
@@ -77,7 +103,9 @@ class Chat_Web_Socket extends WebSocket {
 
     constructor(parent_app_class){
         this.onopen = async (event) => {
+            console.log('CONNECTION OPENED WITH CHAT WEBSOCKET')
             this.app = parent_app_class()
+            this.app.new_message = false
 
         }
 
@@ -241,6 +269,81 @@ class Chat_Web_Socket extends WebSocket {
 }
 
 class Status_Web_Socket extends WebSocket {
+    constructor(parent_app_class){
+        this.app = parent_app_class()
+        this.onopen = () => {
+            console.log('CONNECTION OPENED WITH STATUS WEBSOCKET')
+            window.delete_status = function(button){
+                this.send(JSON.stringify({
+                    'type':'DELETE',
+                    'user_id': button.dataset.creator,
+                    'status_id': button.dataset.status
+                }))
+                if (carousel_instance !== null){
+                    carousel_instance.next()
+                }
+            }
+        }
+        this.onmessage = async (event) => {
+            let status_event_data = event.data.replace('status_notification-','')
+            status_event_data = status_event_data.split('-')
+            if (status_event_data.includes('CREATE')){
+                // if the user_id of the user who triggered the message is not the same
+                // as the auth user, think displaying a notification.
+                if (status_event_data[1] !== user_id){
+                    const status_sender_data = await tools.get(`/api/contacts/?phone_number=${status_event_data[2]}&created_by=${user_id}`)
+                    // if the contacts IS NOT muted from statuses
+                    // display a notification
+                    if (!status_sender_data[0].statuses_muted){
+                        const toastNotification = document.getElementById('liveToast')
+                        tools.modifyNotification('Server', `${status_sender_data[0].name} uploaded a status!!!`)
+                        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
+                        this.app.status_notification_audio.play()                
+                        toastBootstrap.show()
+        
+                    }
+                }
+                // otherwise, it means that the user
+                // used the form, so clean it and display a success notification
+                else {
+                    const status_form_text = document.getElementById('id_text')
+                    const status_form_image = document.getElementById('id_image')
+                    const image_preview_container = document.getElementById('status-imagePreview')
+                    status_form_text.value = ''
+                    status_form_image.value = ''
+                    // if the image preview exists, delete it.
+                    if (image_preview_container.firstElementChild !== null){
+                        image_preview_container.firstElementChild.src = ''
+                    }
+                    //notify the user
+                    const toastNotification = document.getElementById('liveToast')
+                    tools.modifyNotification('Server', 'Status uploaded successfully!')
+                    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
+                    this.app.notification_audio.play()
+                    toastBootstrap.show()
+                }
+        
+            }
+            // if the status UI is already displayed and the user status modal is hidden, reload the view
+            // to be able to see the brand new contact status....
+            const status_modals = document.querySelectorAll('.status-modal')
+            const status_modals_showing = tools.at_least_one_attr(status_modals, 'status', 'showing')
+            if (document.getElementById('contact-statuses-list') !== null){
+                status_app = {
+                    pending_updates : true
+                }
+                if (!status_modals_showing){
+                    htmx.ajax('GET', '/statuses', '#chats-and-more')
+                    .then( () => {
+                        status_app.pending_updates = false
+                    })
+                } 
+            }
+        }
+        this.onerror = (error) => {
+            console.log(error)
+        }
+    }
 
 }
 
@@ -447,8 +550,6 @@ window.summon_chat = function(chat){
 }
 
 chat_websocket.addEventListener('open', () => {
-    console.log('CONNECTION OPENED WITH CHAT WEBSOCKET')
-    new_message = false
 
     /**
      * Log htmx events in a comprehensive way.
@@ -553,119 +654,6 @@ chat_websocket.addEventListener('open', () => {
     })
 })
 
-chat_websocket.addEventListener('message', async (event) => {
-
-})
-
-chat_websocket.addEventListener('error', (error) => {
-    console.error(error)
-})
-
-
-
-// status websocket handling
-status_websocket.addEventListener('open', () => {
-    console.log('CONNECTION OPENED WITH STATUS WEBSOCKET')
-    window.status_app = {
-        pending_updates : false
-    }
-    window.delete_status = function(button){
-        status_websocket.send(JSON.stringify({
-            'type':'DELETE',
-            'user_id': button.dataset.creator,
-            'status_id': button.dataset.status
-        }))
-        if (carousel_instance !== null){
-            carousel_instance.next()
-        }
-    }
-    window.init_status_carousel = function(status_carousel){
-        carousel = status_carousel
-        carousel_instance = new bootstrap.Carousel(carousel, {
-        interval: 5000,
-        touch: false
-        })
-    }
-
-    window.show_modal = function(modal){
-        modal.setAttribute('status', 'showing')
-    }
-    window.hide_modal = function(modal){
-        modal.setAttribute('status', 'hidden')
-        // if there any pendient updates in the UI, update it
-        if(status_app.pending_updates){
-            htmx.ajax('GET', '/statuses', '#chats-and-more')
-            .then( () => {
-                status_app.pending_updates = false
-            })
-        }
-    }
-
-
-})
-
-status_websocket.addEventListener('message', async (event) => {
-    let status_event_data = event.data.replace('status_notification-','')
-    status_event_data = status_event_data.split('-')
-    if (status_event_data.includes('CREATE')){
-        // if the user_id of the user who triggered the message is not the same
-        // as the auth user, think displaying a notification.
-        if (status_event_data[1] !== user_id){
-            const status_sender_data = await tools.get(`/api/contacts/?phone_number=${status_event_data[2]}&created_by=${user_id}`)
-            // if the contacts IS NOT muted from statuses
-            // display a notification
-            if (!status_sender_data[0].statuses_muted){
-                const toastNotification = document.getElementById('liveToast')
-                tools.modifyNotification('Server', `${status_sender_data[0].name} uploaded a status!!!`)
-                const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
-                status_notification_audio.play()                
-                toastBootstrap.show()
-
-            }
-        }
-        // otherwise, it means that the user
-        // used the form, so clean it and display a success notification
-        else {
-            const status_form_text = document.getElementById('id_text')
-            const status_form_image = document.getElementById('id_image')
-            const image_preview_container = document.getElementById('status-imagePreview')
-            status_form_text.value = ''
-            status_form_image.value = ''
-            // if the image preview exists, delete it.
-            if (image_preview_container.firstElementChild !== null){
-                image_preview_container.firstElementChild.src = ''
-            }
-            //notify the user
-            const toastNotification = document.getElementById('liveToast')
-            tools.modifyNotification('Server', 'Status uploaded successfully!')
-            const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
-            notification_audio.play()
-            toastBootstrap.show()
-        }
-
-    }
-    // if the status UI is already displayed and the user status modal is hidden, reload the view
-    // to be able to see the brand new contact status....
-    const status_modals = document.querySelectorAll('.status-modal')
-    const status_modals_showing = tools.at_least_one_attr(status_modals, 'status', 'showing')
-    if (document.getElementById('contact-statuses-list') !== null){
-        status_app = {
-            pending_updates : true
-        }
-        if (!status_modals_showing){
-            htmx.ajax('GET', '/statuses', '#chats-and-more')
-            .then( () => {
-                status_app.pending_updates = false
-            })
-        }
-            
-    }
-
-})
-
-status_websocket.addEventListener('error', (error) => {
-    console.log(error)
-})
 
 
 // status_websocket.send(JSON.stringify({
