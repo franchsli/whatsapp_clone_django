@@ -5,7 +5,7 @@
   {% for chat in chats %}
   {% exclude_user_tag chat.users.all request.user 'phone_number' as chat_members_phones %}
   <div style="display: none;" id="chat-{{chat.id}}-members-phones">{{ chat_members_phones|json_script }}</div>
-  <li onclick="summon_chat(this);" oncontextmenu="showDropdown(event, 'chat-dropdown{{chat.id}}')"
+  <li onclick="summon_chat(this, chat_websocket);" oncontextmenu="showDropdown(event, 'chat-dropdown{{chat.id}}')"
    hx-get="{% url 'display_chat' chat.id %}" hx-target="#chat-display"  
    hx-swap="innerHTML transition:true" id="chat-{{chat.id}}" 
    class="list-group-item p-3 d-flex flex-inline align-items-center chat chat-pic" 

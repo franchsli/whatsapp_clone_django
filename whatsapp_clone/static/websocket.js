@@ -539,7 +539,7 @@ const general_mutations_callback = function(mutationsList, observer) {
  * Tells the websocket to reconnect to the provided chat channel.
  * @param {HTMLElement} chat 
  */
-window.summon_chat = function(chat){
+window.summon_chat = function(chat, chat_websocket){
     const chat_members_phones_container = document.getElementById(chat.dataset.chatMembersPhonesDataId)
     const chat_members_phones = JSON.parse(chat_members_phones_container.firstChild.textContent)
     chat_websocket.send(JSON.stringify({
@@ -557,6 +557,7 @@ load_global_doc_functions()
 
 document.addEventListener('DOMContentLoaded', () => {
     const main = new App()
+    window.chat_websocket = main.chat_websocket.client_websocket
     // Create a MutationObserver with the callback
     const chat_observer = new MutationObserver(chat_mutation_callback, main.chat_websocket);
     const general_observer = new MutationObserver(general_mutations_callback);
@@ -652,8 +653,8 @@ document.addEventListener('DOMContentLoaded', () => {
     htmx.on('htmx:beforeRequest', (event) => {
         // cancel the request if the requested chats is already displayed.
         if(event.detail.pathInfo.requestPath.includes('display_chat')){
-            if(new_message){
-                new_message = false
+            if(main.new_message){
+                main.new_message = false
                 return
             }
             const displayed_chat =  document.getElementById('displayed-chat-info')
