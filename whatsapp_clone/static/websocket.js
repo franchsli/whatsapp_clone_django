@@ -99,18 +99,18 @@ function load_global_doc_functions(){
 
 
 
-class Chat_Web_Socket extends WebSocket {
+class Chat_Web_Socket{
 
     constructor({url = '', protocols = null, parent_app_class = null}){
-        super(url, protocols)
-        this.onopen = async (event) => {
+        this.client_websocket = new WebSocket(url, protocols)
+        this.client_websocket.onopen = async (event) => {
             console.log('CONNECTION OPENED WITH CHAT WEBSOCKET')
             this.app = parent_app_class
             this.app.new_message = false
 
         }
 
-        this.onmessage = async (event) => {
+        this.client_websocket.onmessage = async (event) => {
             this.message = null
             this.sender_id = null
             this.chat_id = null
@@ -137,12 +137,12 @@ class Chat_Web_Socket extends WebSocket {
 
         }
 
-        this.onerror = (error) => {
-            console.log('WS State:', this.readyState);
+        this.client_websocket.onerror = (error) => {
+            console.log('WS State:', this.client_websocket.readyState);
             console.log('WS Error:', error)
         };
 
-        this.onclose = (event) => {
+        this.client_websocket.onclose = (event) => {
             console.log('WS Closed. Code:', event.code, 'Reason:', event.reason);
             console.log('Was clean?:', event.wasClean);
         }
@@ -155,7 +155,7 @@ class Chat_Web_Socket extends WebSocket {
      * @param {String} message_sender_id The id of who sent the chat message.
      */
     send_message (message_type, message_text, message_image, message_sender_id){
-        this.send(JSON.stringify({
+        this.carousel_instance.send(JSON.stringify({
             'type': message_type,
             'message': message_text,
             'image': message_image,
