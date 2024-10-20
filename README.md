@@ -3,8 +3,8 @@
 
 ## DO RIGHT NOW
 
-- Split all the code in websocket.js in a JS Class,
-  which will be initiated when the DOM is loaded.
+- Emoji API is not working anymore.
+- Fix chat_mutation_callback so it accepts the websocket and user_id succefully.
   - Check which things are left to do.
 - **BUG** Clicking on 'Edit message' will issue a display_chat (receiver)
 - Check if...

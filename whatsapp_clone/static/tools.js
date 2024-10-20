@@ -698,6 +698,103 @@ async function validate_status_form(error_audio, status_websocket){
     }
 }
 
+
+function load_global_doc_functions(){
+    window.toggleReadMore = function(text_id){
+        toggleReadMore(text_id)
+    }
+
+    window.showDropdown  = function (event, dropdown_id) {
+        showDropdown(event, dropdown_id)
+    }
+
+    window.run_element_animation = function(element){
+        run_element_animation(element)
+    }
+    
+    window.switch_emojis = function(button){
+        switch_emojis(button)
+    }
+
+    window.switch_checkboxes = function(form){
+        switch_checkboxes(form)
+    }
+
+    window.toggle_element_inner_text = function(HTML_element, text_a, text_b){
+        toggle_element_inner_text(HTML_element, text_a, text_b)
+    }
+
+    window.toggle_element_display = function(HTML_element){
+        toggle_element_display(HTML_element)
+    }
+
+    window.exchange_elements_class = function(element_a, element_b, class_a, class_b){
+        exchange_elements_class(element_a, element_b, class_a, class_b)
+    }
+
+    window.load_more_messages = function(html_element){
+        load_more_messages(html_element)
+    }
+
+    window.load_older_messages = function(){
+        load_older_messages()
+    }
+
+    window.date_already_displayed = function(date){
+        const similar_layers = document.querySelectorAll(`.date-${date.replaceAll(' ', '')}`)
+        const many_similar_layers = similar_layers.length > 1
+        if (many_similar_layers){
+            return true
+        }
+        else {
+            return false
+        }
+    }
+
+    window.remove_duplicates = function(class_name){
+        remove_duplicates(class_name)
+    }
+
+    window.change_element_color = function(desired_color, target_element_id){
+        change_element_color(desired_color, target_element_id)
+    }
+
+    window.filter_by_value = function(value, element_list){
+        filter_by_value(value, element_list)
+    }
+
+    window.space_text = function(text_id){
+        space_text(text_id)
+    }
+
+    window.status_app = {
+        pending_updates : false
+    }
+
+    window.init_status_carousel = function(status_carousel){
+        carousel = status_carousel
+        carousel_instance = new bootstrap.Carousel(carousel, {
+        interval: 5000,
+        touch: false
+        })
+    }
+
+    window.show_modal = function(modal){
+        modal.setAttribute('status', 'showing')
+    }
+    window.hide_modal = function(modal){
+        modal.setAttribute('status', 'hidden')
+        // if there any pendient updates in the UI, update it
+        if(status_app.pending_updates){
+            htmx.ajax('GET', '/statuses', '#chats-and-more')
+            .then( () => {
+                status_app.pending_updates = false
+            })
+        }
+    }
+
+}
+
 export {get, post, modifyNotification,
     scroll_to_bottom, toggleReadMore, 
     showDropdown, run_element_animation, checked, 
@@ -708,5 +805,5 @@ export {get, post, modifyNotification,
     load_older_messages, remove_duplicates, change_element_color, 
     filter_by_value, space_text, split_word, trigger_tooltips, 
     create_instance_via_consumer, validate_chat_form, validate_contact_form,
-    validate_status_form, cand_send_messages
+    validate_status_form, cand_send_messages, load_global_doc_functions
 }

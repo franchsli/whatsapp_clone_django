@@ -1,104 +1,5 @@
 import * as tools from  './tools.js';
 
-
-function load_global_doc_functions(){
-    window.toggleReadMore = function(text_id){
-        tools.toggleReadMore(text_id)
-    }
-
-    window.showDropdown  = function (event, dropdown_id) {
-        tools.showDropdown(event, dropdown_id)
-    }
-
-    window.run_element_animation = function(element){
-        tools.run_element_animation(element)
-    }
-    
-    window.switch_emojis = function(button){
-        tools.switch_emojis(button)
-    }
-
-    window.switch_checkboxes = function(form){
-        tools.switch_checkboxes(form)
-    }
-
-    window.toggle_element_inner_text = function(HTML_element, text_a, text_b){
-        tools.toggle_element_inner_text(HTML_element, text_a, text_b)
-    }
-
-    window.toggle_element_display = function(HTML_element){
-        tools.toggle_element_display(HTML_element)
-    }
-
-    window.exchange_elements_class = function(element_a, element_b, class_a, class_b){
-        tools.exchange_elements_class(element_a, element_b, class_a, class_b)
-    }
-
-    window.load_more_messages = function(html_element){
-        tools.load_more_messages(html_element)
-    }
-
-    window.load_older_messages = function(){
-        tools.load_older_messages()
-    }
-
-    window.date_already_displayed = function(date){
-        const similar_layers = document.querySelectorAll(`.date-${date.replaceAll(' ', '')}`)
-        const many_similar_layers = similar_layers.length > 1
-        if (many_similar_layers){
-            return true
-        }
-        else {
-            return false
-        }
-    }
-
-    window.remove_duplicates = function(class_name){
-        tools.remove_duplicates(class_name)
-    }
-
-    window.change_element_color = function(desired_color, target_element_id){
-        tools.change_element_color(desired_color, target_element_id)
-    }
-
-    window.filter_by_value = function(value, element_list){
-        tools.filter_by_value(value, element_list)
-    }
-
-    window.space_text = function(text_id){
-        tools.space_text(text_id)
-    }
-
-    window.status_app = {
-        pending_updates : false
-    }
-
-    window.init_status_carousel = function(status_carousel){
-        carousel = status_carousel
-        carousel_instance = new bootstrap.Carousel(carousel, {
-        interval: 5000,
-        touch: false
-        })
-    }
-
-    window.show_modal = function(modal){
-        modal.setAttribute('status', 'showing')
-    }
-    window.hide_modal = function(modal){
-        modal.setAttribute('status', 'hidden')
-        // if there any pendient updates in the UI, update it
-        if(status_app.pending_updates){
-            htmx.ajax('GET', '/statuses', '#chats-and-more')
-            .then( () => {
-                status_app.pending_updates = false
-            })
-        }
-    }
-
-}
-
-
-
 class Chat_Web_Socket{
 
     constructor({url = '', parent_app_class = null}){
@@ -395,9 +296,6 @@ class App {
         this.debugging_mode = false
         
     }
-    load_functions(){
-        load_global_doc_functions()
-    }
 
     load_event_listeners(){
         this.chat_form.onsubmit = async (event) => {
@@ -461,7 +359,9 @@ class App {
 
 
 // Callback function to execute when mutations are observed
-const chat_mutation_callback = function(mutationsList, chat_websocket) {
+const chat_mutation_callback = function(mutationsList, observer, user_id) {
+    console.log(chat_websocket)
+    console.log(user_id)
     for (const mutation of mutationsList) {
         if (mutation.type === 'childList') {
             // Check if a new element is added
@@ -553,13 +453,13 @@ window.summon_chat = function(chat, chat_websocket){
 }
 
 
-load_global_doc_functions()
+tools.load_global_doc_functions()
 
 document.addEventListener('DOMContentLoaded', () => {
     const main = new App()
     window.chat_websocket = main.chat_websocket.client_websocket
     // Create a MutationObserver with the callback
-    const chat_observer = new MutationObserver(chat_mutation_callback, main.chat_websocket);
+    const chat_observer = new MutationObserver(chat_mutation_callback, main.chat_websocket.client_websocket, main.user_id);
     const general_observer = new MutationObserver(general_mutations_callback);
 
     // Configure the observer to watch for changes in the container's children
