@@ -81,6 +81,121 @@ class Chat_Web_Socket extends WebSocket {
         }
 
         this.onmessage = async (event) => {
+            this.message = null
+            this.sender_id = null
+            this.chat_id = null
+            this.message_data = null
+            this.text = null
+            this.image = null
+            this.sender_username = null
+            this.chat_is_archived = null
+            if (event.data.includes('chat_message')){
+                console.log(event.data)
+                this.message = event.data.replace('chat_message', '')
+                this.message_data = message.split('-')
+                this.sender_id = this.message_data[0]
+                this.text = this.message_data[1]
+                this.image = this.message_data[2]
+                // if the message was sent by the auth user, play a sound and update the chat list
+                // only append the message's HTML otherwise
+                if (user_id === sender_id){
+                    message_sent_audio.play()
+                    new_message = true
+                    htmx.ajax('GET', `/display_chat/${localStorage.getItem('chat_id')}`, '#chat-display').then(() => {
+                        tools.update_chat_list()
+                        new_message = false
+                    })
+                }
+                else {
+                    // timeout to make sure the new message is already stored in the database before requesting it
+                    setTimeout(() => {
+                        htmx.ajax('GET', `/append_message/${localStorage.getItem('chat_id')}`, {target:'#chat-messages', swap:'beforeend'}).then( () => {
+                            tools.update_chat_list()
+                        })  
+                    }, 500)
+         
+                }
+            }
+        
+            else if (event.data.includes('chat_notification')){
+                this.message = event.data.replace('chat_notification', '')
+                this.message = this.message.split('-')
+                this.sender_id = this.message[0]
+                this.text = this.message[1]
+                this.sender_username = this.message[2]
+                this.chat_is_archived = this.message[3] === 'True' ? true : false
+        
+                const displayed_chat_contact_info = document.getElementById('contact-name')
+                let noti_from_opened_chat = false
+                // if a chat is opened
+                if (displayed_chat_contact_info){
+                    // Tells whether or not the notification is from the currently opened chat
+                    noti_from_opened_chat = displayed_chat_contact_info.dataset.userObjectId === sender_id
+                }
+                if(!chat_is_archived && !noti_from_opened_chat){
+                    const toastNotification = document.getElementById('liveToast')
+                    tools.modifyNotification(sender_username, text)
+                    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
+                    message_received_audio.play()
+                    toastBootstrap.show()
+                    tools.update_chat_list()
+        
+                }
+            }
+        
+            else if (event.data.includes('message_deletion')){
+                this.message = event.data.replace('message_deletion', '')
+                this.message = this.message.split('-')
+                this.sender_id = this.message[0]
+                this.sender_username = this.message[1]
+                this.chat_id = this.message[2]
+                /**
+                * the JS code (receiver) analises the websocket message
+                * and then decides whether or not to update the UI using
+                * a HTMX.ajax request.
+                */
+                tools.update_chat_list()
+                if (this.sender_id === user_id){
+                    return
+                }
+                new_message = true
+                if (document.getElementById('contact-name') !== null){
+                    if (localStorage.getItem('chat_id') === chat_id) {
+                        htmx.ajax('GET', `/display_chat/${localStorage.getItem('chat_id')}`, '#chat-display').then(() => {
+                            tools.scroll_to_bottom()
+                        })
+                        
+                    } 
+                }
+            }
+        
+            else if (event.data.includes('message_edition')){
+                console.log(event.data)
+                this.message = event.data.replace('message_edition', '')
+                this.message = this.message.split('-')
+                sender_id = this.message[0]
+                sender_username = this.message[1]
+                chat_id = this.message[2]
+                /**
+                * the JS code (receiver) analises the websocket message
+                * and then decides whether or not to update the UI using
+                * a HTMX.ajax request.
+                */
+                tools.update_chat_list()
+               if (this.sender_id === user_id){
+                    return
+               }
+               new_message = true
+                if (document.getElementById('contact-name') !== null){
+                    if (localStorage.getItem('chat_id') === chat_id) {
+                        htmx.ajax('GET', `/display_chat/${localStorage.getItem('chat_id')}`, '#chat-display').then(() => {
+                            tools.scroll_to_bottom()
+                        })
+                    }
+                }
+            }
+        
+        
 
         }
 
@@ -424,120 +539,6 @@ chat_websocket.addEventListener('open', () => {
 })
 
 chat_websocket.addEventListener('message', async (event) => {
-    let message
-    let sender_id
-    let chat_id
-    let message_data
-    let text
-    let image
-    let sender_username
-    let chat_is_archived
-    if (event.data.includes('chat_message')){
-        console.log(event.data)
-        message = event.data.replace('chat_message', '')
-        message_data = message.split('-')
-        sender_id = message_data[0]
-        text = message_data[1]
-        image = message_data[2]
-        // if the message was sent by the auth user, play a sound and update the chat list
-        // only append the message's HTML otherwise
-        if (user_id === sender_id){
-            message_sent_audio.play()
-            new_message = true
-            htmx.ajax('GET', `/display_chat/${localStorage.getItem('chat_id')}`, '#chat-display').then(() => {
-                tools.update_chat_list()
-                new_message = false
-            })
-        }
-        else {
-            // timeout to make sure the new message is already stored in the database before requesting it
-            setTimeout(() => {
-                htmx.ajax('GET', `/append_message/${localStorage.getItem('chat_id')}`, {target:'#chat-messages', swap:'beforeend'}).then( () => {
-                    tools.update_chat_list()
-                })  
-            }, 500)
- 
-        }
-    }
-
-    else if (event.data.includes('chat_notification')){
-        message = event.data.replace('chat_notification', '')
-        message = message.split('-')
-        sender_id = message[0]
-        text = message[1]
-        sender_username = message[2]
-        chat_is_archived = message[3] === 'True' ? true : false
-
-        const displayed_chat_contact_info = document.getElementById('contact-name')
-        let noti_from_opened_chat = false
-        // if a chat is opened
-        if (displayed_chat_contact_info){
-            // Tells whether or not the notification is from the currently opened chat
-            noti_from_opened_chat = displayed_chat_contact_info.dataset.userObjectId === sender_id
-        }
-        if(!chat_is_archived && !noti_from_opened_chat){
-            const toastNotification = document.getElementById('liveToast')
-            tools.modifyNotification(sender_username, text)
-            const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
-            message_received_audio.play()
-            toastBootstrap.show()
-            tools.update_chat_list()
-
-        }
-    }
-
-    else if (event.data.includes('message_deletion')){
-        message = event.data.replace('message_deletion', '')
-        message = message.split('-')
-        sender_id = message[0]
-        sender_username = message[1]
-        chat_id = message[2]
-        /**
-        * the JS code (receiver) analises the websocket message
-        * and then decides whether or not to update the UI using
-        * a HTMX.ajax request.
-        */
-        tools.update_chat_list()
-        if (sender_id === user_id){
-            return
-        }
-        new_message = true
-        if (document.getElementById('contact-name') !== null){
-            if (localStorage.getItem('chat_id') === chat_id) {
-                htmx.ajax('GET', `/display_chat/${localStorage.getItem('chat_id')}`, '#chat-display').then(() => {
-                    tools.scroll_to_bottom()
-                })
-                
-            } 
-        }
-    }
-
-    else if (event.data.includes('message_edition')){
-        console.log(event.data)
-        message = event.data.replace('message_edition', '')
-        message = message.split('-')
-        sender_id = message[0]
-        sender_username = message[1]
-        chat_id = message[2]
-        /**
-        * the JS code (receiver) analises the websocket message
-        * and then decides whether or not to update the UI using
-        * a HTMX.ajax request.
-        */
-        tools.update_chat_list()
-       if (sender_id === user_id){
-            return
-       }
-       new_message = true
-        if (document.getElementById('contact-name') !== null){
-            if (localStorage.getItem('chat_id') === chat_id) {
-                htmx.ajax('GET', `/display_chat/${localStorage.getItem('chat_id')}`, '#chat-display').then(() => {
-                    tools.scroll_to_bottom()
-                })
-            }
-        }
-    }
-
 
 })
 
