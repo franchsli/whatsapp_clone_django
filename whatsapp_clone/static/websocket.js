@@ -101,8 +101,8 @@ function load_global_doc_functions(){
 
 class Chat_Web_Socket{
 
-    constructor({url = '', protocols = null, parent_app_class = null}){
-        this.client_websocket = new WebSocket(url, protocols)
+    constructor({url = '', parent_app_class = null}){
+        this.client_websocket = new WebSocket(url)
         this.client_websocket.onopen = async (event) => {
             console.log('CONNECTION OPENED WITH CHAT WEBSOCKET')
             this.app = parent_app_class
@@ -275,14 +275,14 @@ class Chat_Web_Socket{
 
 }
 
-class Status_Web_Socket extends WebSocket {
-    constructor({url = '', protocols = null, parent_app_class = null}){
-        super(url, protocols)
+class Status_Web_Socket {
+    constructor({url = '', parent_app_class = null}){
+        this.websocket_client = new WebSocket(url)
         this.app = parent_app_class
-        this.onopen = () => {
+        this.websocket_client.onopen = () => {
             console.log('CONNECTION OPENED WITH STATUS WEBSOCKET')
             window.delete_status = function(button){
-                this.send(JSON.stringify({
+                this.websocket_client.send(JSON.stringify({
                     'type':'DELETE',
                     'user_id': button.dataset.creator,
                     'status_id': button.dataset.status
@@ -292,7 +292,7 @@ class Status_Web_Socket extends WebSocket {
                 }
             }
         }
-        this.onmessage = async (event) => {
+        this.websocket_client.onmessage = async (event) => {
             let status_event_data = event.data.replace('status_notification-','')
             status_event_data = status_event_data.split('-')
             if (status_event_data.includes('CREATE')){
@@ -348,12 +348,12 @@ class Status_Web_Socket extends WebSocket {
                 } 
             }
         }
-        this.onerror = (error) => {
+        this.websocket_client.onerror = (error) => {
             console.log('WS State:', this.readyState);
             console.log('WS Error:', error)
         };
 
-        this.onclose = (event) => {
+        this.websocket_client.onclose = (event) => {
             console.log('WS Closed. Code:', event.code, 'Reason:', event.reason);
             console.log('Was clean?:', event.wasClean);
         }
