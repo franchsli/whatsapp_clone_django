@@ -4,8 +4,7 @@
 ## DO RIGHT NOW
 
 - Emoji API is not working anymore.
-- Fix chat_mutation_callback so it accepts the websocket and user_id succefully.
-  - Check which things are left to do.
+- **BUG** Sent messages are automatically marked as 'read'.
 - **BUG** Clicking on 'Edit message' will issue a display_chat (receiver)
 - Check if...
   - Contact creation works correctly.

@@ -1,7 +1,6 @@
 import * as tools from  './tools.js';
 
 class Chat_Web_Socket{
-
     constructor({url = '', parent_app_class = null}){
         this.client_websocket = new WebSocket(url)
         this.client_websocket.onopen = async (event) => {
@@ -56,7 +55,7 @@ class Chat_Web_Socket{
      * @param {String} message_sender_id The id of who sent the chat message.
      */
     send_message (message_type, message_text, message_image, message_sender_id){
-        this.carousel_instance.send(JSON.stringify({
+        this.client_websocket.send(JSON.stringify({
             'type': message_type,
             'message': message_text,
             'image': message_image,
@@ -71,13 +70,13 @@ class Chat_Web_Socket{
     handle_chat_message(event){
         console.log(event.data)
         this.message = event.data.replace('chat_message', '')
-        this.message_data = message.split('-')
+        this.message_data = this.message.split('-')
         this.sender_id = this.message_data[0]
         this.text = this.message_data[1]
         this.image = this.message_data[2]
         // if the message was sent by the auth user, play a sound and update the chat list
         // only append the message's HTML otherwise
-        if (user_id === sender_id){
+        if (this.user_id === this.sender_id){
             this.app.message_sent_audio.play()
             this.app.new_message = true
             htmx.ajax('GET', `/display_chat/${localStorage.getItem('chat_id')}`, '#chat-display').then(() => {
@@ -358,80 +357,7 @@ class App {
 }
 
 
-// Callback function to execute when mutations are observed
-const chat_mutation_callback = function(mutationsList, observer, user_id) {
-    console.log(chat_websocket)
-    console.log(user_id)
-    for (const mutation of mutationsList) {
-        if (mutation.type === 'childList') {
-            // Check if a new element is added
-            const addedNodes = mutation.addedNodes;
-            for (const addedNode of addedNodes) {
-                // Check if it's a footer element node
-                if (addedNode.nodeType === 1 && addedNode.tagName === 'FOOTER'){ 
-                    window.new_message_input = document.getElementById('new-message')
-                    window.new_message_button = document.getElementById('send-message-button')
-                    window.delete_message_option_buttons = document.querySelectorAll('.delete-message')
-                    const imageInputCaller = document.getElementById('imageInputCaller')
-                    const imageInput = document.getElementById('imageInput')
-                    const imagePreview = document.getElementById('imagePreview')
-                    imageInput.addEventListener('change', () => {
-                        tools.previewImage(imageInput, imagePreview)
-                    });
 
-                    
-                    delete_message_option_buttons.forEach( button => {
-                        button.onclick = function() {
-                            // scroll to bottom after deleting the message
-                            setTimeout(tools.scroll_to_bottom, 1000)
-                        }})
-                    
-                    imageInputCaller.addEventListener('click', (event) => {
-                        event.preventDefault()
-                        imageInput.click()
-                    })
-                    
-                    
-                    new_message_input.addEventListener('keypress', (event) => {
-                        if (event.key === 'Enter' && (new_message_input.value !== '' || imageInput.value !== '')){
-                            let image = document.getElementById('imagePreview').firstElementChild
-                            chat_websocket.send_message('message', new_message_input.value, imageInput.value !== '' ? image.src : '', user_id)
-                            
-                            new_message_input.value = ''
-                            //deletes the selected image
-                            if (imageInput.value != ''){
-                                imageInput.value = ''
-                                image.remove()
-                            }      
-                        }})
-                    
-                
-                    new_message_button.onclick = () => {
-                        if (new_message_input.value !== '' || imageInput.value !== ''){
-                            let image = document.getElementById('imagePreview').firstElementChild    
-                            chat_websocket.send_message('message', new_message_input.value, imageInput.value !== '' ? image.src : '', user_id)
-                            
-                            new_message_input.value = ''
-                            //deletes the selected image
-                            if (imageInput.value != ''){
-                                imageInput.value = ''
-                                image.remove()
-                            }}}
-                        tools.scroll_to_bottom()
-
-                }}}}};
-
-const general_mutations_callback = function(mutationsList, observer) {
-    for (let index = 0; index < mutationsList.length; index++) {
-        // only trigger all the tooltips if the last mutation
-        // has been made
-        if (index + 1 === mutationsList.length){
-            tools.trigger_tooltips()
-        }
-        
-    }
-
-};
 
 
 
@@ -458,9 +384,83 @@ tools.load_global_doc_functions()
 document.addEventListener('DOMContentLoaded', () => {
     const main = new App()
     window.chat_websocket = main.chat_websocket.client_websocket
+    // Callback function to execute when mutations are observed
+    const chat_mutation_callback = function(mutationsList, observer) {
+        console.log(main.chat_websocket.client_websocket)
+        console.log(main.user_id)
+        for (const mutation of mutationsList) {
+            if (mutation.type === 'childList') {
+                // Check if a new element is added
+                const addedNodes = mutation.addedNodes;
+                for (const addedNode of addedNodes) {
+                    // Check if it's a footer element node
+                    if (addedNode.nodeType === 1 && addedNode.tagName === 'FOOTER'){ 
+                        window.new_message_input = document.getElementById('new-message')
+                        window.new_message_button = document.getElementById('send-message-button')
+                        window.delete_message_option_buttons = document.querySelectorAll('.delete-message')
+                        const imageInputCaller = document.getElementById('imageInputCaller')
+                        const imageInput = document.getElementById('imageInput')
+                        const imagePreview = document.getElementById('imagePreview')
+                        imageInput.addEventListener('change', () => {
+                            tools.previewImage(imageInput, imagePreview)
+                        });
+
+                        
+                        delete_message_option_buttons.forEach( button => {
+                            button.onclick = function() {
+                                // scroll to bottom after deleting the message
+                                setTimeout(tools.scroll_to_bottom, 1000)
+                            }})
+                        
+                        imageInputCaller.addEventListener('click', (event) => {
+                            event.preventDefault()
+                            imageInput.click()
+                        })
+                        
+                        
+                        new_message_input.addEventListener('keypress', (event) => {
+                            if (event.key === 'Enter' && (new_message_input.value !== '' || imageInput.value !== '')){
+                                let image = document.getElementById('imagePreview').firstElementChild
+                                main.chat_websocket.send_message('message', new_message_input.value, imageInput.value !== '' ? image.src : '', main.user_id)
+                                
+                                new_message_input.value = ''
+                                //deletes the selected image
+                                if (imageInput.value != ''){
+                                    imageInput.value = ''
+                                    image.remove()
+                                }      
+                            }})
+                        
+                    
+                        new_message_button.onclick = () => {
+                            if (new_message_input.value !== '' || imageInput.value !== ''){
+                                let image = document.getElementById('imagePreview').firstElementChild    
+                                main.chat_websocket.send_message('message', new_message_input.value, imageInput.value !== '' ? image.src : '', main.user_id)
+                                
+                                new_message_input.value = ''
+                                //deletes the selected image
+                                if (imageInput.value != ''){
+                                    imageInput.value = ''
+                                    image.remove()
+                                }}}
+                            tools.scroll_to_bottom()
+
+                    }}}}};
+
+    const general_mutations_callback = function(mutationsList, observer) {
+        for (let index = 0; index < mutationsList.length; index++) {
+            // only trigger all the tooltips if the last mutation
+            // has been made
+            if (index + 1 === mutationsList.length){
+                tools.trigger_tooltips()
+            }
+            
+        }
+
+    };
     // Create a MutationObserver with the callback
-    const chat_observer = new MutationObserver(chat_mutation_callback, main.chat_websocket.client_websocket, main.user_id);
-    const general_observer = new MutationObserver(general_mutations_callback);
+    const chat_observer = new MutationObserver(chat_mutation_callback)
+    const general_observer = new MutationObserver(general_mutations_callback)
 
     // Configure the observer to watch for changes in the container's children
     const observerConfig = { childList: true };
