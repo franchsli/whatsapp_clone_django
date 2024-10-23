@@ -76,7 +76,8 @@ class Chat_Web_Socket{
         this.image = this.message_data[2]
         // if the message was sent by the auth user, play a sound and update the chat list
         // only append the message's HTML otherwise
-        if (this.user_id === this.sender_id){
+        console.log('USER ID', this.app.user_id, 'SENDER ID', this.sender_id)
+        if (this.app.user_id === this.sender_id){
             this.app.message_sent_audio.play()
             this.app.new_message = true
             htmx.ajax('GET', `/display_chat/${localStorage.getItem('chat_id')}`, '#chat-display').then(() => {
@@ -133,7 +134,7 @@ class Chat_Web_Socket{
         * a HTMX.ajax request.
         */
         tools.update_chat_list()
-        if (this.sender_id === user_id){
+        if (this.sender_id === this.app.user_id){
             return
         }
         this.app.new_message = true
