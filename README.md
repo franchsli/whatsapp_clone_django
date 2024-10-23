@@ -4,7 +4,7 @@
 ## DO RIGHT NOW
 
 - Emoji API is not working anymore.
-- **BUG** Sent messages are automatically marked as 'read'.
+- **BUG** Sent messages are automatically marked as 'read' (check consumers.py or websocket.js).
 - **BUG** Clicking on 'Edit message' will issue a display_chat (receiver)
 - Check if...
   - Contact creation works correctly.
