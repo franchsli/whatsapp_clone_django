@@ -383,6 +383,7 @@ tools.load_global_doc_functions()
 
 document.addEventListener('DOMContentLoaded', () => {
     const main = new App()
+    main.load_event_listeners()
     window.chat_websocket = main.chat_websocket.client_websocket
     // Callback function to execute when mutations are observed
     const chat_mutation_callback = function(mutationsList, observer) {
