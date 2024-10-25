@@ -11,7 +11,6 @@
   remove the chat from the deleted chats list from the said User.
 - Rework chat form to only check for Chats and not groups when checking if a Chat is already created.
   - Rework the API or implement complex logic before the use of the said API.
-- Make it responsive.
 - Finish the multiple chats deletion logic.
 - Add Contact deletion. (maybe in multi chats selection)
 - Implement something to show a close look when a image in a chat is clicked
@@ -33,7 +32,8 @@
 ## ANOTHER THINGS TO DO
 
 - Rework the UI (in order to look like actual Whatsapp's UI):
-  - Recolor the text of 'select archive' in file form look at CSS theming.
+  - Make it responsive.
+  - Recolor the text of 'select archive' in file form, look at CSS theming.
 - Add something to delete statuses automatically every 24 hours (cronjobs maybe).
 - Rework statuses UI.
 - Make the silence contact logic (booleand field [think it tho])
@@ -76,6 +76,8 @@
 ## SPEED TESTS RESULTS
 
 1. [16/08/2024] (RETRIEVE 1003 CHATS): 42.74s.
+2. [] (DOMContent Load without cache): 907 ms
+3. [] (Web page load): 1.79 s
 
 **RESOURCES**:
 
