@@ -76,8 +76,8 @@
 ## SPEED TESTS RESULTS
 
 1. [16/08/2024] (RETRIEVE 1003 CHATS): 42.74s.
-2. [] (DOMContent Load without cache): 907 ms
-3. [] (Web page load): 1.79 s
+2. [24/10/2024] (DOMContent Load without cache): 907 ms
+3. [24/10/2024] (Web page load): 1.79s
 
 **RESOURCES**:
 
