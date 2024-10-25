@@ -321,9 +321,9 @@ class App {
         // resets the contact form values and validation errors when the modal is closed.
         this.chat_modal.addEventListener('hidden.bs.modal', function (event) {
             const validation_message = document.getElementById('chat-validation-message')
-            for (let index = 0; index < chat_form.elements.length; index++) {
-                if (chat_form.elements[index].type === 'checkbox'){
-                    chat_form.elements[index].checked = false
+            for (let index = 0; index < this.chat_form.elements.length; index++) {
+                if (this.chat_form.elements[index].type === 'checkbox'){
+                    this.chat_form.elements[index].checked = false
                 }
                 
             }

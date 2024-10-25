@@ -1,9 +1,7 @@
 [data-bs-theme="dark"] {
     --primary-color: black;
-    --bs-body-color: var(--bs-dark-bg-subtle);
-    --bs-body-color-rgb: #{to-rgb($black)};
-    --bs-body-bg: var(--primary-color)
-    --bs-body-bg-rgb: #{to-rgb(--primary-color)};
+    --bs-body-bg: var(--bs-dark-bg-subtle)
+    --bs-body-bg-rgb: #{to-rgb(--bs-dark-bg-subtle)};
     --bs-tertiary-bg: var(--bs-tertiary-bg);
     --bs-themed-success-rgb: rgb(26, 161, 121);
     --bs-themed-success-darker-rgb: var(--bs-success-bg-subtle);
@@ -16,10 +14,10 @@
     }
 
     nav, footer, .message-date {
-        background-color: var(--bs-body-color);
+        background-color: var(--bs-tertiary-bg);
     }
     .dropdown-menu {
-        background-color: var(--bs-body-color);
+        background-color: var(--bs-tertiary-bg);
         color: var(--bs-body-color);
     }
     .dropdown-menu li:hover, li .btn:hover{

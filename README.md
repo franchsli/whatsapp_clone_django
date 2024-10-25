@@ -33,7 +33,6 @@
 
 - Rework the UI (in order to look like actual Whatsapp's UI):
   - Make it responsive.
-  - Recolor the text of 'select archive' in file form, look at CSS theming.
 - Add something to delete statuses automatically every 24 hours (cronjobs maybe).
 - Rework statuses UI.
 - Make the silence contact logic (booleand field [think it tho])
