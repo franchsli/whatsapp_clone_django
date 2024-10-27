@@ -1,5 +1,5 @@
 [data-bs-theme="dark"] {
-    --primary-color: black;
+    --primary-color: #0C0C0C;
     --bs-body-bg: var(--primary-color);
     --bs-body-bg-rgb: #{to-rgb($primary-color)};
     --bs-themed-success-rgb: rgb(26, 161, 121);
