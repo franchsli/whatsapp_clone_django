@@ -3,7 +3,7 @@
 
 ## DO RIGHT NOW
 
-- Emoji API is not working anymore.
+- **FIX** Styles show some things transparent.
 - **BUG** Clicking on 'Edit message' will issue a display_chat (receiver)
 - Check if...
   - Contact creation works correctly.

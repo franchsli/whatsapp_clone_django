@@ -197,20 +197,21 @@ function display_button_inner_text(button, input){
 function load_emojis(emoji_list_name, parent_element){
     const input = document.getElementById('new-message')
     const emoji_category_header = document.createElement('span')
+    const access_key = '0ab43ec7529b0728fb908ef31e968f5df77d0b5d'
     emoji_category_header.classList.add('p-3')
     emoji_category_header.style.display = "block"
     emoji_category_header.style.width = "100%"
     emoji_category_header.innerText = emoji_list_name.split('-').join(' ')
     parent_element.appendChild(emoji_category_header)
 
-    fetch(`https://emojihub.yurace.pro/api/all/category/${emoji_list_name}`)
+    fetch(`https://emoji-api.com/categories/${emoji_list_name}?access_key=${access_key}`)
     .then( (response) => {
         return response.json()
     })
     .then( (emojis) => {
         for (let index = 0; index < emojis.length; index++) {
             let new_button = document.createElement('button')
-            new_button.innerHTML = emojis[index].htmlCode[0]
+            new_button.innerHTML = emojis[index].character
             new_button.classList.add('btn', 'm-1', 'action')
             new_button.style.fontSize = '30px'
             new_button.onclick = (event) => {
