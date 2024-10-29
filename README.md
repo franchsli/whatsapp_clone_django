@@ -6,6 +6,8 @@
 - **BUG** Clicking on 'Edit message' will issue a display_chat (receiver)
 - Check if...
   - Contact creation works correctly.
+  - Status creation works correctly.
+  - Groups messagin works correctly.
 - (Chat Form) If a User deleted a chat, and want to create 'the same chat' again,
   remove the chat from the deleted chats list from the said User.
 - Rework chat form to only check for Chats and not groups when checking if a Chat is already created.
