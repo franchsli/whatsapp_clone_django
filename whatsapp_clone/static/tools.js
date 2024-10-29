@@ -538,6 +538,9 @@ function fully_filled(form){
     return true;
 }
 
+/**
+ * Activates all the tooltipis in the document.
+ */
 function trigger_tooltips(){
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
@@ -550,10 +553,6 @@ function trigger_tooltips(){
 function cand_send_messages(websocket){
     return websocket.readyState === websocket.OPEN
 }
-
-
-
-
 
 /**
  * Sends a message to the websocket for creating the desired instance using the given form data.
@@ -590,13 +589,19 @@ function create_instance_via_consumer(form, instance_type, websocket){
     return false
 }
 
+/**
+ * Validates a chat form.
+ * @param {HTMLFormElement} chat_form 
+ * @param {HTMLAudioElement} error_audio 
+ * @param {WebSocket} websocket 
+ * @returns false to stop normal form submission
+ */
 async function validate_chat_form(chat_form, error_audio, websocket){
     if (!checked(chat_form)){
         error_audio.play()
         const validation_message = document.getElementById('chat-validation-message')
         validation_message.innerText = 'Please select a contact to create chat with'
     }
-
 
     else{
         for (let index = 0; index < chat_form.elements.length; index++) {
@@ -670,7 +675,6 @@ async function validate_contact_form(contact_form, error_audio, notification_aud
         inputs[3].checked = false
         inputs[4].checked = false
     }
-
     return false;
 }
 
@@ -699,7 +703,10 @@ async function validate_status_form(error_audio, status_websocket){
     }
 }
 
-
+/**
+ * Loads many functions so they could be used
+ * anywhere (document or js files)
+ */
 function load_global_doc_functions(){
     window.toggleReadMore = function(text_id){
         toggleReadMore(text_id)
@@ -796,15 +803,16 @@ function load_global_doc_functions(){
 
 }
 
-export {get, post, modifyNotification,
-    scroll_to_bottom, toggleReadMore, 
-    showDropdown, run_element_animation, checked, 
-    not_empty, toggle_element_inner_text, load_emojis, 
-    switch_emojis, switch_checkboxes, toggle_element_display, 
-    previewImage, update_chat_list, at_least_one_attr, 
-    exchange_elements_class, switch_element_visibility, load_more_messages, 
-    load_older_messages, remove_duplicates, change_element_color, 
-    filter_by_value, space_text, split_word, trigger_tooltips, 
+export {
+    get, post, modifyNotification,
+    scroll_to_bottom, toggleReadMore, showDropdown, 
+    run_element_animation, checked, not_empty, 
+    toggle_element_inner_text, load_emojis, switch_emojis, 
+    switch_checkboxes, toggle_element_display, previewImage, 
+    update_chat_list, at_least_one_attr, exchange_elements_class, 
+    switch_element_visibility, load_more_messages, load_older_messages, 
+    remove_duplicates, change_element_color, filter_by_value, 
+    space_text, split_word, trigger_tooltips, 
     create_instance_via_consumer, validate_chat_form, validate_contact_form,
     validate_status_form, cand_send_messages, load_global_doc_functions
 }

@@ -64,7 +64,6 @@
         the messages, giving the effect that it has not been completely scrolled.
       4. To fix this you can change the image format to an optimized one or implement
       loading techniques, right now the messages images have lazy loading.
-
     - I think is because the readmore height isn't kept in count when scrolling.
 
 ## NOTES FOR LATER
