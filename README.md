@@ -3,7 +3,7 @@
 
 ## DO RIGHT NOW
 
-- **BUG** Clicking on 'Edit message' will issue a display_chat (receiver)
+- **ERROR** Statuses can't be created due to a ReferenceError.
 - Check if...
   - Contact creation works correctly.
   - Status creation works correctly.
@@ -52,6 +52,7 @@
 
 ## BUGS TO FIX
 
+- **BUG** Clicking on 'Edit message' will issue a display_chat (receiver)
 - Chat list only will be dinamically updated if and only if
   the User opened a Chat before.
 - When a unread Chat is opened only the unread messages will be shown.

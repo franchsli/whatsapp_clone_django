@@ -637,7 +637,15 @@ async function validate_chat_form(chat_form, error_audio, websocket){
     return false;   
 }
 
-
+/**
+ * Creates a contact via websocket with the given form data if and
+ * only if the form is valid.
+ * @param {HTMLFormElement} contact_form 
+ * @param {HTMLAudioElement} error_audio 
+ * @param {HTMLAudioElement} notification_audio 
+ * @param {Websocket} websocket 
+ * @returns
+ */
 async function validate_contact_form(contact_form, error_audio, notification_audio, websocket){
     const inputs = contact_form.getElementsByTagName('input')
     // gets the 'list' of Users who have the provided phone_number
@@ -678,6 +686,12 @@ async function validate_contact_form(contact_form, error_audio, notification_aud
     return false;
 }
 
+/**
+ * Creates a status via websocket if and only if
+ * the stauts form is valid,
+ * @param {HTMLAudioElement} error_audio 
+ * @param {WebSocket} status_websocket 
+ */
 async function validate_status_form(error_audio, status_websocket){
     console.log(not_empty(status_form))
     if (not_empty(status_form)){
