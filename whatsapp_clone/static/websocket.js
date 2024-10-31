@@ -199,8 +199,8 @@ class Status_Web_Socket {
             if (status_event_data.includes('CREATE')){
                 // if the user_id of the user who triggered the message is not the same
                 // as the auth user, think displaying a notification.
-                if (status_event_data[1] !== user_id){
-                    const status_sender_data = await tools.get(`/api/contacts/?phone_number=${status_event_data[2]}&created_by=${user_id}`)
+                if (status_event_data[1] !== parent_app_class.user_id){
+                    const status_sender_data = await tools.get(`/api/contacts/?phone_number=${status_event_data[2]}&created_by=${parent_app_class.user_id}`)
                     // if the contacts IS NOT muted from statuses
                     // display a notification
                     if (!status_sender_data[0].statuses_muted){
@@ -309,7 +309,7 @@ class App {
         this.status_submit_button.onclick = (event) => {
             event.preventDefault()
             if(tools.cand_send_messages(this.status_websocket)){
-                tools.validate_status_form(this.error_audio, this.status_websocket)
+                tools.validate_status_form(this.error_audio, this.status_websocket, this.user_id, this.user_phone_number)
             }
 
         }

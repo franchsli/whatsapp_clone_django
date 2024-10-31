@@ -3,7 +3,6 @@
 
 ## DO RIGHT NOW
 
-- **ERROR** Statuses can't be created due to a ReferenceError.
 - Check if...
   - Contact creation works correctly.
   - Status creation works correctly.

@@ -691,14 +691,15 @@ async function validate_contact_form(contact_form, error_audio, notification_aud
  * the stauts form is valid,
  * @param {HTMLAudioElement} error_audio 
  * @param {WebSocket} status_websocket 
+ * @param {String} user_id
  */
-async function validate_status_form(error_audio, status_websocket){
+async function validate_status_form(error_audio, status_websocket, user_id, user_phone_number){
     console.log(not_empty(status_form))
     if (not_empty(status_form)){
         const status_input = document.getElementById('id_text')
         const image_container = document.getElementById('status-imagePreview')
         const image = image_container.firstElementChild
-        status_websocket.send(JSON.stringify({
+        status_websocket.websocket_client.send(JSON.stringify({
             'type': 'CREATE',
             'user_id': user_id,
             'sender_phone_number': user_phone_number,
