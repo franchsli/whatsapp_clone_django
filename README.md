@@ -5,11 +5,10 @@
 
 - Check if...
   - Contact creation works correctly.
-  - Status creation works correctly.
-  - Groups messagin works correctly.
+  - Groups messaging works correctly.
 - (Chat Form) If a User deleted a chat, and want to create 'the same chat' again,
   remove the chat from the deleted chats list from the said User.
-- Rework chat form to only check for Chats and not groups when checking if a Chat is already created.
+- Rework chat form to only check for Chats and not groups when checking if a Chat is already created (using chat api ofc).
   - Rework the API or implement complex logic before the use of the said API.
 - Finish the multiple chats deletion logic.
 - Add Contact deletion. (maybe in multi chats selection)
