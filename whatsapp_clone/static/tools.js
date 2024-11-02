@@ -693,7 +693,7 @@ async function validate_contact_form(contact_form, error_audio, notification_aud
  * @param {WebSocket} status_websocket 
  * @param {String} user_id
  */
-async function validate_status_form(error_audio, status_websocket, user_id, user_phone_number){
+async function validate_status_form(error_audio, status_websocket){
     console.log(not_empty(status_form))
     if (not_empty(status_form)){
         const status_input = document.getElementById('id_text')

@@ -386,10 +386,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const main = new App()
     main.load_event_listeners()
     window.chat_websocket = main.chat_websocket.client_websocket
+    window.user_id = main.user_id
+    window.user_phone_number = main.user_phone_number
     // Callback function to execute when mutations are observed
     const chat_mutation_callback = function(mutationsList, observer) {
-        console.log(main.chat_websocket.client_websocket)
-        console.log(main.user_id)
         for (const mutation of mutationsList) {
             if (mutation.type === 'childList') {
                 // Check if a new element is added
