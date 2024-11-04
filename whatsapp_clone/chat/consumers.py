@@ -5,7 +5,11 @@ from .tools import *
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils import timezone
 from typing import Union, Optional
-import json
+import json, logging
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+
 
 
 class ChatConsumer(AsyncWebsocketConsumer):
@@ -33,7 +37,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         # if the type of the 'request' is message, it means
         # a message needs to be created in the database with the dictionary data.
         if self.text_data_json["type"] == "message":
-            print(self.user_instance.username)
+            logger.debug(self.user_instance.username)
             await self.channel_layer.group_send(
                 self.room_group_name,
                 {
@@ -44,8 +48,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
             self.chat_instance = await database_sync_to_async(get_object_by_id)(
                 Chat, self.text_data_json["chat_id"]
             )
-            print(self.text_data_json["chat_members_phones"])
-            print(type(self.text_data_json["chat_members_phones"]))
+            logger.debug(self.text_data_json["chat_members_phones"])
+            logger.debug(type(self.text_data_json["chat_members_phones"]))
             await self.send_message_notifications(self.text_data_json)
             await self.create_message(
                 self.text_data_json["sender_user_id"],
@@ -59,12 +63,12 @@ class ChatConsumer(AsyncWebsocketConsumer):
         # to be able to send messages.
         elif self.text_data_json["type"] == "reconnect":
             group_name = self.text_data_json["reconnect_to"]
-            print("reconnecting to group", group_name)
+            logger.debug("reconnecting to group", group_name)
             await self.channel_layer.group_discard(
                 self.room_group_name, self.channel_name
             )
             self.room_group_name = group_name
-            print("room", self.room_group_name)
+            logger.debug("room", self.room_group_name)
             await self.channel_layer.group_add(self.room_group_name, self.channel_name)
 
         elif self.text_data_json["type"] == "create_chat":
@@ -108,8 +112,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
         for message_receiver_phone in websocket_message_data[
             "chat_members_phones"
         ].split(","):
-            print(message_receiver_phone)
-            print(f"user_group_{message_receiver_phone}")
+            logger.debug(message_receiver_phone)
+            logger.debug(f"user_group_{message_receiver_phone}")
             receiver_instance = await database_sync_to_async(get_user_by_phone)(
                 message_receiver_phone
             )
@@ -254,7 +258,7 @@ class StatusConsumer(AsyncWebsocketConsumer):
         # transform the text_data (status received [json])
         # to a python dictionary
         self.text_data_json = json.loads(text_data)
-        print("STATUS DATA", self.text_data_json)
+        logger.debug("STATUS DATA", self.text_data_json)
 
         if self.text_data_json["type"] == "CREATE":
             await self.create_status(

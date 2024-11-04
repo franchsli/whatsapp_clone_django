@@ -68,7 +68,6 @@ class Chat_Web_Socket{
     }
 
     handle_chat_message(event){
-        console.log(event.data)
         this.message = event.data.replace('chat_message', '')
         this.message_data = this.message.split('-')
         this.sender_id = this.message_data[0]
@@ -76,7 +75,6 @@ class Chat_Web_Socket{
         this.image = this.message_data[2]
         // if the message was sent by the auth user, play a sound and update the chat list
         // only append the message's HTML otherwise
-        console.log('USER ID', this.app.user_id, 'SENDER ID', this.sender_id)
         if (this.app.user_id === this.sender_id){
             this.app.message_sent_audio.play()
             this.app.new_message = true
@@ -149,7 +147,6 @@ class Chat_Web_Socket{
     }
 
     handle_message_edition(event){
-        console.log(event.data)
         this.message = event.data.replace('message_edition', '')
         this.message = this.message.split('-')
         this.sender_id = this.message[0]

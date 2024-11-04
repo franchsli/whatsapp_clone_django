@@ -5,7 +5,10 @@ from typing import Union, List
 from .models import User, Chat, Contact, Status
 from phonenumber_field.phonenumber import PhoneNumber
 from django.core.exceptions import ObjectDoesNotExist
-import base64
+import base64, logging
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
 
 
 def get_user_by_id(user_id: Union[str, int]) -> Union[object, Exception]:
@@ -97,7 +100,7 @@ def get_contact_in_chat(chat: Chat, logged_user: User) -> Union[Contact, None]:
         )
         return contact
     except Contact.DoesNotExist:
-        print(
+        logger.debug(
             f"NO CONTACT FOUND WITH SUCH ARGUMENTS:\ncreated_by={logged_user}\nphone_number={other_user.phone_number}"
         )
 
