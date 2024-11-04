@@ -3,8 +3,6 @@
 
 ## DO RIGHT NOW
 
-- remove ENCODED_IMAGE variable value and code something to get a encoded
-  image from somewhere or at least use a encoded image with less data.
 - Check if...
   - Contact creation works correctly.
   - Groups messaging works correctly.
