@@ -3,6 +3,7 @@
 
 ## DO RIGHT NOW
 
+- **ERROR** ReferenceError with 'sender_id' when the User receives messages from the Group.
 - Check if...
   - Contact creation works correctly.
   - Groups messaging works correctly.
