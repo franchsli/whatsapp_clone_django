@@ -6,13 +6,12 @@
 - **ERROR** ReferenceError with 'sender_id' when the User receives messages from the Group.
 - Check if...
   - Contact creation works correctly.
-  - Groups messaging works correctly.
 - (Chat Form) If a User deleted a chat, and want to create 'the same chat' again,
   remove the chat from the deleted chats list from the said User.
 - Rework chat form to only check for Chats and not groups when checking if a Chat is already created (using chat api ofc).
   - Rework the API or implement complex logic before the use of the said API.
 - Finish the multiple chats deletion logic.
-- Add Contact deletion. (maybe in multi chats selection)
+- Add Contact deletion. (maybe in multi chats selection as well)
 - Implement something to show a close look when a image in a chat is clicked
   (like Whatsapp).
 - Add status complex status creation (like Whatsapp).
@@ -34,7 +33,6 @@
 - Rework the UI (in order to look like actual Whatsapp's UI):
   - Make it responsive.
 - Add something to delete statuses automatically every 24 hours (cronjobs maybe).
-- Rework statuses UI.
 - Make the silence contact logic (booleand field [think it tho])
 
 ## Improvements
