@@ -15,7 +15,6 @@ constantly==23.10.4
 coreapi==2.3.3
 coreschema==0.0.4
 crispy-bootstrap5==2023.10
-cryptography==41.0.7
 daphne==4.0.0
 dj-database-url==2.2.0
 Django==5.0
@@ -24,7 +23,6 @@ django-crispy-forms==2.1
 django-filter==23.5
 django-phonenumber-field==7.3.0
 djangorestframework==3.14.0
-Faker==27.0.0
 gunicorn==23.0.0
 h11==0.14.0
 hyperlink==21.0.0
