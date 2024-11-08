@@ -43,7 +43,6 @@
   - if its a video, the length of the video.
   - Or if its not a video, 5 secs and users should be able to pause the event
     (like whatsapp).
-- Implement a custom UserAdmin [Example there](https://docs.djangoproject.com/en/5.0/topics/auth/customizing/#a-full-example)
 - Implement all of the features at
   [dj-chat](https://github.com/adilmohak/dj-chat?tab=readme-ov-file#current-features)
 
@@ -98,3 +97,4 @@
 - [The Stocks V3 CSS RESORUCES](https://v3.thestocks.im/)
 - [More CSS RESOURCES](https://thestocks.im/?ref=buffer-resources)
 - [Colors gradients](https://cssgradient.io/gradient-backgrounds/)
+- [Example there](https://docs.djangoproject.com/en/5.0/topics/auth/customizing/#a-full-example)
