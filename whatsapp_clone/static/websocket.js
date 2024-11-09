@@ -263,9 +263,9 @@ class Status_Web_Socket {
 class App {
     constructor(){
         // set up all the variables needed
-        this.user = document.getElementById('profile-pic')
-        this.user_id = this.user.getAttribute('data-user')
-        this.user_phone_number = this.user.getAttribute('data-phone')
+        window.user = document.getElementById('profile-pic')
+        window.user_id = user.getAttribute('data-user')
+        window.user_phone_number = user.getAttribute('data-phone')
         // sets the Websocket protocol depending on the WEB protocol
         this.protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
         this.chat_websocket = new Chat_Web_Socket({url: `${this.protocol}//${window.location.host}/`,
@@ -306,7 +306,7 @@ class App {
         this.status_submit_button.onclick = (event) => {
             event.preventDefault()
             if(tools.cand_send_messages(this.status_websocket)){
-                tools.validate_status_form(this.error_audio, this.status_websocket, this.user_id, this.user_phone_number)
+                tools.validate_status_form(this.error_audio, this.status_websocket, user_id, user_phone_number)
             }
 
         }
@@ -383,8 +383,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const main = new App()
     main.load_event_listeners()
     window.chat_websocket = main.chat_websocket.client_websocket
-    window.user_id = main.user_id
-    window.user_phone_number = main.user_phone_number
     // Callback function to execute when mutations are observed
     const chat_mutation_callback = function(mutationsList, observer) {
         for (const mutation of mutationsList) {
