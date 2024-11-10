@@ -107,7 +107,7 @@ class Chat_Web_Socket{
         // if a chat is opened
         if (displayed_chat_contact_info){
             // Tells whether or not the notification is from the currently opened chat
-            noti_from_opened_chat = displayed_chat_contact_info.dataset.userObjectId === sender_id
+            noti_from_opened_chat = displayed_chat_contact_info.dataset.userObjectId === this.sender_id
         }
         if(!chat_is_archived && !noti_from_opened_chat){
             const toastNotification = document.getElementById('liveToast')
@@ -132,7 +132,7 @@ class Chat_Web_Socket{
         * a HTMX.ajax request.
         */
         tools.update_chat_list()
-        if (this.sender_id === this.app.user_id){
+        if (this.sender_id === user_id){
             return
         }
         this.app.new_message = true
@@ -158,7 +158,7 @@ class Chat_Web_Socket{
         * a HTMX.ajax request.
         */
         tools.update_chat_list()
-       if (this.sender_id === this.app.user_id){
+       if (this.sender_id === user_id){
             return
        }
        this.app.new_message = true
@@ -196,8 +196,8 @@ class Status_Web_Socket {
             if (status_event_data.includes('CREATE')){
                 // if the user_id of the user who triggered the message is not the same
                 // as the auth user, think displaying a notification.
-                if (status_event_data[1] !== parent_app_class.user_id){
-                    const status_sender_data = await tools.get(`/api/contacts/?phone_number=${status_event_data[2]}&created_by=${parent_app_class.user_id}`)
+                if (status_event_data[1] !== user_id){
+                    const status_sender_data = await tools.get(`/api/contacts/?phone_number=${status_event_data[2]}&created_by=${user_id}`)
                     // if the contacts IS NOT muted from statuses
                     // display a notification
                     if (!status_sender_data[0].statuses_muted){
