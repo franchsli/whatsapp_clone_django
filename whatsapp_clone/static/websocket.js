@@ -75,7 +75,7 @@ class Chat_Web_Socket{
         this.image = this.message_data[2]
         // if the message was sent by the auth user, play a sound and update the chat list
         // only append the message's HTML otherwise
-        if (this.app.user_id === this.sender_id){
+        if (user_id === this.sender_id){
             this.app.message_sent_audio.play()
             this.app.new_message = true
             htmx.ajax('GET', `/display_chat/${localStorage.getItem('chat_id')}`, '#chat-display').then(() => {
@@ -418,7 +418,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         new_message_input.addEventListener('keypress', (event) => {
                             if (event.key === 'Enter' && (new_message_input.value !== '' || imageInput.value !== '')){
                                 let image = document.getElementById('imagePreview').firstElementChild
-                                main.chat_websocket.send_message('message', new_message_input.value, imageInput.value !== '' ? image.src : '', main.user_id)
+                                main.chat_websocket.send_message('message', new_message_input.value, imageInput.value !== '' ? image.src : '', user_id)
                                 
                                 new_message_input.value = ''
                                 //deletes the selected image
@@ -432,7 +432,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         new_message_button.onclick = () => {
                             if (new_message_input.value !== '' || imageInput.value !== ''){
                                 let image = document.getElementById('imagePreview').firstElementChild    
-                                main.chat_websocket.send_message('message', new_message_input.value, imageInput.value !== '' ? image.src : '', main.user_id)
+                                main.chat_websocket.send_message('message', new_message_input.value, imageInput.value !== '' ? image.src : '', user_id)
                                 
                                 new_message_input.value = ''
                                 //deletes the selected image
