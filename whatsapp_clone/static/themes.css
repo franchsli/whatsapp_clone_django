@@ -1,7 +1,7 @@
 [data-bs-theme="dark"] {
     --primary-color: #0C0C0C;
     --bs-body-bg: var(--primary-color);
-    --bs-body-bg-rgb: #{to-rgb($primary-color)};
+    --bs-body-bg-rgb: 12, 12, 12;
     --bs-themed-success-rgb: rgb(26, 161, 121);
     --bs-themed-success-darker-rgb: var(--bs-success-bg-subtle);
     --bs-heading-color: white;

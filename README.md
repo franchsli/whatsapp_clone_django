@@ -48,8 +48,6 @@
 ## BUGS TO FIX
 
 - **BUG** Clicking on 'Edit message' will issue a display_chat (receiver)
-- Chat list only will be dinamically updated if and only if
-  the User opened a Chat before.
 - When a unread Chat is opened only the unread messages will be shown.
 - Scroll to bottom func doesn't scroll to the botom anymore when the last messages
   are images, test why:
