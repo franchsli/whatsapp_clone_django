@@ -109,9 +109,9 @@ class Chat_Web_Socket{
             // Tells whether or not the notification is from the currently opened chat
             noti_from_opened_chat = displayed_chat_contact_info.dataset.userObjectId === this.sender_id
         }
-        if(!chat_is_archived && !noti_from_opened_chat){
+        if(!this.chat_is_archived && !noti_from_opened_chat){
             const toastNotification = document.getElementById('liveToast')
-            tools.modifyNotification(sender_username, text)
+            tools.modifyNotification(this.sender_username, this.text)
             const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
             this.app.message_received_audio.play()
             toastBootstrap.show()
@@ -137,7 +137,7 @@ class Chat_Web_Socket{
         }
         this.app.new_message = true
         if (document.getElementById('contact-name') !== null){
-            if (localStorage.getItem('chat_id') === chat_id) {
+            if (localStorage.getItem('chat_id') === this.chat_id) {
                 htmx.ajax('GET', `/display_chat/${localStorage.getItem('chat_id')}`, '#chat-display').then(() => {
                     tools.scroll_to_bottom()
                 })
