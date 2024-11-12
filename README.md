@@ -47,20 +47,8 @@
 
 ## BUGS TO FIX
 
-- **BUG** Clicking on 'Edit message' will issue a display_chat (receiver)
+- Clicking on 'Edit message' will issue a display_chat (receiver)
 - When a unread Chat is opened only the unread messages will be shown.
-- Scroll to bottom func doesn't scroll to the botom anymore when the last messages
-  are images, test why:
-  - **THIS IS WHAT I THINK THAT HAPPENS**:
-    The chat gets displayed but somehow scroll_to_bottom doesn't work as expected.
-    - It's because the images in the chat load with delay:
-      1. All the messages (text) load.
-      2. scroll_to_botom executes.
-      3. The high resolution images load, 'lengthening' the space used by
-        the messages, giving the effect that it has not been completely scrolled.
-      4. To fix this you can change the image format to an optimized one or implement
-      loading techniques, right now the messages images have lazy loading.
-    - I think is because the readmore height isn't kept in count when scrolling.
 
 ## NOTES FOR LATER
 
