@@ -11,7 +11,7 @@
   {% comment "settings or details of contacts" %}{% endcomment %}
   <div class="d-flex align-items-center">
     <form class="d-flex me-3" role="search">
-      <input class="form-control me-2" type="search" placeholder="Search message..." aria-label="Search" 
+      <input id="message-searcher" class="form-control me-2" type="search" placeholder="Search message..." aria-label="Search" 
       onkeyup="filter_by_value(this.value, document.getElementById('chat-messages'))">
       <button class="btn themed-button" type="submit"><i class="bi bi-search"></i></button>
     </form>
