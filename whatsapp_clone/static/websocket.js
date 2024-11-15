@@ -511,7 +511,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const actual_scrollable_view = messages.scrollHeight - messages.clientHeight
             messages.scroll(0, actual_scrollable_view - previous_scrollable_view)
         }
-        else if(event.detail.pathInfo.requestPath.includes('edit_message')){
+        else if(event.detail.pathInfo.requestPath.includes('edit_message') && event.detail.requestConfig.verb !== 'get'){
             // same logic as real-time message deletion
             // but this is due to a message edition
             main.chat_websocket.send_message('message_edition', '', '', user_id)

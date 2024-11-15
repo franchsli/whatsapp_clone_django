@@ -47,7 +47,6 @@
 
 ## BUGS TO FIX
 
-- Clicking on 'Edit message' will issue a display_chat (receiver)
 - When a unread Chat is opened only the unread messages will be shown.
 
 ## NOTES FOR LATER
