@@ -3,10 +3,10 @@
 
 ## DO RIGHT NOW
 
-- Check if...
-  - Contact creation works correctly.
 - (Chat Form) If a User deleted a chat, and want to create 'the same chat' again,
   remove the chat from the deleted chats list from the said User.
+- Check if...
+  - Contact creation works correctly.
 - Rework chat form to only check for Chats and not groups when checking if a Chat is already created (using chat api ofc).
   - Rework the API or implement complex logic before the use of the said API.
 - Finish the multiple chats deletion logic.
@@ -47,7 +47,7 @@
 
 ## BUGS TO FIX
 
-- When a unread Chat is opened only the unread messages will be shown.
+NONE LOL (YET)
 
 ## NOTES FOR LATER
 
