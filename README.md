@@ -3,6 +3,8 @@
 
 ## DO RIGHT NOW
 
+- Rework statuses UI and remove duplicated HTML code adding the logic
+  to difference whether its the User status or a Contact´s status.
 - (Chat Form) If a User deleted a chat, and want to create 'the same chat' again,
   remove the chat from the deleted chats list from the said User.
 - Check if...

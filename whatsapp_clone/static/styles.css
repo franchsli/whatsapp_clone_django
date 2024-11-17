@@ -275,3 +275,80 @@ main,  #base {
 .important-icon{
   font-size: 20px;
 }
+
+/*Status styles*/
+.status-container {
+  max-width: 450px;
+  height: 85vh;
+  background-color: #000;
+  position: relative;
+}
+
+.status-header {
+  background: rgba(0, 0, 0, 0.5);
+  padding: 12px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+}
+
+.progress-container {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.status-progress {
+  height: 3px;
+  background: rgba(255, 255, 255, 0.3);
+  flex: 1;
+}
+
+.status-progress-bar {
+  height: 100%;
+  background-color: #fff;
+  width: 0;
+  transition: width 0.1s linear;
+}
+
+.status-progress.viewed .status-progress-bar {
+  width: 100%;
+}
+
+.status-content {
+  height: 100vh;
+  width: 100%;
+  object-fit: cover;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.username {
+  color: #fff;
+  font-size: 14px;
+  margin-bottom: 0;
+}
+
+.timestamp {
+  color: #ccc;
+  font-size: 12px;
+}
+
+/* Custom carousel controls */
+.carousel-control-prev, .carousel-control-next {
+  width: 50%;
+  background: none;
+  border: none;
+  opacity: 0;
+}
+
+.carousel-item {
+  transition: transform .3s ease-in-out;
+}
