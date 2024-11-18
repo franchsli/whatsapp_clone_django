@@ -6,14 +6,23 @@
             <!-- Status 1 -->
             <div class="carousel-item active">
                 <img src="https://picsum.photos/450/800" alt="Status 1" class="status-content">
+                <div class="status-text-overlay">
+                    <p class="status-text">Having a great time! 🌞</p>
+                </div>
             </div>
             <!-- Status 2 -->
             <div class="carousel-item">
                 <img src="https://picsum.photos/450/800" alt="Status 2" class="status-content">
+                <div class="status-text-overlay">
+                    <p class="status-text">Beautiful sunset view 🌅</p>
+                </div>
             </div>
             <!-- Status 3 -->
             <div class="carousel-item">
                 <img src="https://picsum.photos/450/800" alt="Status 3" class="status-content">
+                <div class="status-text-overlay">
+                    <p class="status-text">Weekend vibes only ✨</p>
+                </div>
             </div>
         </div>
     </div>
@@ -38,7 +47,7 @@
             <button class="btn text-white me-2">
                 <i class="bi bi-arrow-left"></i>
             </button>
-            <img src="https://picsum.photos/40" alt="User Avatar" class="avatar me-2">
+            <img src="https://picsum.photos/40/" alt="User Avatar" class="avatar me-2">
             <div class="flex-grow-1">
                 <p class="username">Username</p>
                 <p class="timestamp">2 hours ago</p>
@@ -49,11 +58,20 @@
         </div>
     </div>
 
+    <!-- Reply input area -->
+    <div class="status-actions">
+        <input type="text" class="status-input" placeholder="Reply to status...">
+        <button class="btn text-white">
+            <i class="bi bi-arrow-up-circle-fill"></i>
+        </button>
+    </div>
+
     <!-- Touch areas for navigation -->
     <button class="carousel-control-prev" type="button" data-bs-target="#statusCarousel" data-bs-slide="prev"></button>
     <button class="carousel-control-next" type="button" data-bs-target="#statusCarousel" data-bs-slide="next"></button>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const carousel = document.getElementById('statusCarousel');
@@ -75,7 +93,6 @@
                     clearInterval(statusTimer);
                     progressBars[currentStatus].classList.add('viewed');
                     
-                    // Move to next status
                     if (currentStatus < progressBars.length - 1) {
                         currentStatus++;
                         carousel.querySelector('.carousel-control-next').click();
@@ -85,17 +102,14 @@
             }, statusDuration / 100);
         }
 
-        // Initialize first status
         startStatusTimer();
 
-        // Handle manual navigation
         carousel.addEventListener('slide.bs.carousel', function(event) {
             clearInterval(statusTimer);
             currentStatus = event.to;
             startStatusTimer();
         });
 
-        // Pause timer when tab is inactive
         document.addEventListener('visibilitychange', function() {
             if (document.hidden) {
                 clearInterval(statusTimer);
