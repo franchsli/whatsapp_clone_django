@@ -5,11 +5,7 @@
         <div class="carousel-inner">
             <!--Statuses-->
             {% for status in statuses %}
-                {% if forloop.first %}
-                <div class="status-container carousel-item active">  
-                {% else %}
                 <div class="status-container carousel-item">
-                {% endif %}
                     <img src="https://picsum.photos/450/800" alt="Status 1" class="status-content">
                     <div class="status-text-overlay">
                         <p class="status-text">Having a great time! 🌞</p>
@@ -24,13 +20,11 @@
         <!-- Progress bars -->
         <div class="progress-container">
             {% for status in statuses %}
-                {% if forloop.first %}
-                    <div class="status-progress viewed">  
-                {% else %}
                     <div class="status-progress">
-                {% endif %}
-                    <div class="status-progress-bar"></div>
+                        <div class="status-progress-bar"></div>
+                    </div>  
             {% endfor %}
+                    
         </div>
         
         <!-- User info -->
