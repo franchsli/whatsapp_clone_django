@@ -279,7 +279,7 @@ main,  #base {
 /*Status styles*/
 .status-container {
   max-width: 450px;
-  height: 85vh;
+  height: 80vh;
   background-color: #000;
   position: relative;
 }
