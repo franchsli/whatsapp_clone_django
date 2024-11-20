@@ -5,6 +5,12 @@
 
 - Rework statuses UI and remove duplicated HTML code adding the logic
   to difference whether its the User status or a Contact´s status.
+- Implement a dynamic status length:
+  - If its a photo 5 secs.
+  - if its a long text (more than 200 chars) 10 secs.
+  - if its a video, the length of the video.
+  - Or if its not a video, 5 secs and users should be able to pause the event
+    (like whatsapp).
 - (Chat Form) If a User deleted a chat, and want to create 'the same chat' again,
   remove the chat from the deleted chats list from the said User.
 - Check if...
@@ -31,19 +37,12 @@
 
 ## ANOTHER THINGS TO DO
 
-- Rework the UI (in order to look like actual Whatsapp's UI):
-  - Make it responsive.
+- Make responsive.
 - Add something to delete statuses automatically every 24 hours (cronjobs maybe).
 - Make the silence contact logic (booleand field [think it tho])
 
 ## Improvements
 
-- Implement a dynamic status length:
-  - If its a photo 5 secs.
-  - if its a long text (more than 200 chars) 10 secs.
-  - if its a video, the length of the video.
-  - Or if its not a video, 5 secs and users should be able to pause the event
-    (like whatsapp).
 - Implement all of the features at
   [dj-chat](https://github.com/adilmohak/dj-chat?tab=readme-ov-file#current-features)
 
