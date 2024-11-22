@@ -1,15 +1,25 @@
 <!-- ========== Inside modal content ========== -->
+{% load static %}
+{% load filters %}
 <div class="status-container">
     <!-- Status carousel -->
-    <div id="statusCarousel" class="carousel slide" data-bs-interval="false">
+    <div id="contact{{contact.id}}status" class="carousel slide" data-bs-interval="false">
         <div class="carousel-inner">
             <!--Statuses-->
             {% for status in statuses %}
                 <div class="status-container carousel-item">
-                    <img src="https://picsum.photos/450/800" alt="Status 1" class="status-content">
-                    <div class="status-text-overlay">
-                        <p class="status-text">Having a great time! 🌞</p>
-                    </div>
+                    {% if status.has_image and status.has_text %}
+                        <img src="{{status.image.url}}" alt="Status {{forloop.counter}}" class="status-content">
+                        <div class="status-text-overlay">
+                            <p class="status-text">{{status.text}}</p>
+                        </div>
+                    {% elif status.has_image %}
+                        <img src="{{status.image.url}}" alt="Status {{forloop.counter}}" class="status-content">
+                    {% else %}
+                        <div class="status-text-overlay">
+                            <p class="status-text">{{status.text}}</p>
+                        </div>          
+                    {% endif %}
                 </div>
             {% endfor %}
         </div>
@@ -32,10 +42,10 @@
             <button class="btn text-white me-2">
                 <i class="bi bi-arrow-left"></i>
             </button>
-            <img src="https://picsum.photos/50/" alt="User Avatar" class="avatar me-2">
+            <img class="avatar me-2" src="{% get_contact_photo request.user.phone_number %}" alt="User pfp">
             <div class="flex-grow-1">
-                <p class="username">Username</p>
-                <p class="timestamp">2 hours ago</p>
+                <p class="username">{{request.user.username}}</p>
+                <p class="timestamp">{{ user_statuses|latest_data:"upload_date"|timesince }} ago</p>
             </div>
             <button class="btn text-white">
                 <i class="bi bi-three-dots-vertical"></i>
@@ -55,51 +65,3 @@
     <button class="carousel-control-prev" type="button" data-bs-target="#statusCarousel" data-bs-slide="prev"></button>
     <button class="carousel-control-next" type="button" data-bs-target="#statusCarousel" data-bs-slide="next"></button>
 </div>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const carousel = document.getElementById('statusCarousel');
-        const progressBars = document.querySelectorAll('.status-progress');
-        const statusDuration = 5000; // 5 seconds per status
-        let currentStatus = 0;
-        let statusTimer;
-
-        function startStatusTimer() {
-            const progressBar = progressBars[currentStatus].querySelector('.status-progress-bar');
-            let progress = 0;
-            clearInterval(statusTimer);
-            
-            statusTimer = setInterval(() => {
-                progress += 1;
-                progressBar.style.width = `${progress}%`;
-                
-                if (progress >= 100) {
-                    clearInterval(statusTimer);
-                    progressBars[currentStatus].classList.add('viewed');
-                    
-                    if (currentStatus < progressBars.length - 1) {
-                        currentStatus++;
-                        carousel.querySelector('.carousel-control-next').click();
-                        startStatusTimer();
-                    }
-                }
-            }, statusDuration / 100);
-        }
-
-        startStatusTimer();
-
-        carousel.addEventListener('slide.bs.carousel', function(event) {
-            clearInterval(statusTimer);
-            currentStatus = event.to;
-            startStatusTimer();
-        });
-
-        document.addEventListener('visibilitychange', function() {
-            if (document.hidden) {
-                clearInterval(statusTimer);
-            } else {
-                startStatusTimer();
-            }
-        });
-    });
-</script>

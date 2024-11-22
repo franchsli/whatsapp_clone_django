@@ -800,6 +800,48 @@ function load_global_doc_functions(){
         interval: 5000,
         touch: false
         })
+        const progressBars = document.querySelectorAll('.status-progress');
+        const statusDuration = 5000; // 5 seconds per status
+        let currentStatus = 0;
+        let statusTimer;
+
+        function startStatusTimer() {
+            const progressBar = progressBars[currentStatus].querySelector('.status-progress-bar');
+            let progress = 0;
+            clearInterval(statusTimer);
+            
+            statusTimer = setInterval(() => {
+                progress += 1;
+                progressBar.style.width = `${progress}%`;
+                
+                if (progress >= 100) {
+                    clearInterval(statusTimer);
+                    progressBars[currentStatus].classList.add('viewed');
+                    
+                    if (currentStatus < progressBars.length - 1) {
+                        currentStatus++;
+                        carousel.querySelector('.carousel-control-next').click();
+                        startStatusTimer();
+                    }
+                }
+            }, statusDuration / 100);
+        }
+
+        startStatusTimer();
+
+        carousel.addEventListener('slide.bs.carousel', function(event) {
+            clearInterval(statusTimer);
+            currentStatus = event.to;
+            startStatusTimer();
+        });
+
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                clearInterval(statusTimer);
+            } else {
+                startStatusTimer();
+            }
+        });
     }
 
     window.show_modal = function(modal){
