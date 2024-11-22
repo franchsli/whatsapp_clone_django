@@ -277,6 +277,10 @@ main,  #base {
 }
 
 /*Status styles*/
+.carousel {
+  height: 100% !important;
+}
+
 .status-container {
   max-width: 450px;
   height: 90vh;

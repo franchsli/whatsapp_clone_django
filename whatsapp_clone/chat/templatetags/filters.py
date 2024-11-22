@@ -3,8 +3,10 @@ from django.db.models import QuerySet
 from chat.models import User, Chat, Message
 from chat.tools import DEFAULT_USER_PHOTO_URL, get_contact_in_chat, object_photo
 from typing import Union, List
-import re
+import re, logging
 
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
 register = template.Library()
 
 
@@ -212,11 +214,14 @@ def get_contact_photo(phone: str) -> str:
     Returns:
         str: The url of the user photo, or a default url if the user has no photo.
     """
-    user = User.objects.get(phone_number=phone)
-    if user.has_photo:
-        return user.photo.url
-    else:
-        return DEFAULT_USER_PHOTO_URL
+    try:
+        user = User.objects.get(phone_number=phone)
+        if user.has_photo:
+            return user.photo.url
+        else:
+            return DEFAULT_USER_PHOTO_URL
+    except User.DoesNotExist:
+        logger.debug(f'No User found with the following phone_number:\n{phone}')
 
 
 @register.simple_tag
