@@ -7,20 +7,37 @@
         <div class="carousel-inner">
             <!--Statuses-->
             {% for status in statuses %}
-                <div class="status-container carousel-item active">
-                    {% if status.has_image and status.has_text %}
-                        <img src="{{status.image.url}}" alt="Status {{forloop.counter}}" class="status-content">
-                        <div class="status-text-overlay">
-                            <p class="status-text">{{status.text}}</p>
-                        </div>
-                    {% elif status.has_image %}
-                        <img src="{{status.image.url}}" alt="Status {{forloop.counter}}" class="status-content">
-                    {% else %}
-                        <div class="status-text-overlay">
-                            <p class="status-text">{{status.text}}</p>
-                        </div>          
-                    {% endif %}
-                </div>
+                {% if forloop.first %}
+                    <div class="status-container carousel-item active">
+                        {% if status.has_image and status.has_text %}
+                            <img src="{{status.image.url}}" alt="Status {{forloop.counter}}" class="status-content">
+                            <div class="status-text-overlay">
+                                <p class="status-text">{{status.text}}</p>
+                            </div>
+                        {% elif status.has_image %}
+                            <img src="{{status.image.url}}" alt="Status {{forloop.counter}}" class="status-content">
+                        {% else %}
+                            <div class="status-text-overlay">
+                                <p class="status-text">{{status.text}}</p>
+                            </div>          
+                        {% endif %}
+                    </div>
+                {% else %}
+                    <div class="status-container carousel-item">
+                        {% if status.has_image and status.has_text %}
+                            <img src="{{status.image.url}}" alt="Status {{forloop.counter}}" class="status-content">
+                            <div class="status-text-overlay">
+                                <p class="status-text">{{status.text}}</p>
+                            </div>
+                        {% elif status.has_image %}
+                            <img src="{{status.image.url}}" alt="Status {{forloop.counter}}" class="status-content">
+                        {% else %}
+                            <div class="status-text-overlay">
+                                <p class="status-text">{{status.text}}</p>
+                            </div>          
+                        {% endif %}
+                    </div>
+                {% endif %}
             {% endfor %}
         </div>
 
@@ -29,9 +46,15 @@
             <!-- Progress bars -->
             <div class="progress-container">
                 {% for status in statuses %}
+                    {% if forloop.first %}
                         <div class="status-progress viewed">
                             <div class="status-progress-bar"></div>
+                        </div>                  
+                    {% else %}
+                        <div class="status-progress">
+                            <div class="status-progress-bar"></div>
                         </div>  
+                    {% endif %}
                 {% endfor %}
                         
             </div>
