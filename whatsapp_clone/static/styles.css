@@ -277,7 +277,7 @@ main,  #base {
 }
 
 /*Status styles*/
-.carousel{
+.carousel, .carousel-inner{
   height: 100% !important;
 }
 
