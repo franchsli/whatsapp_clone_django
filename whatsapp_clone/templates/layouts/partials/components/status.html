@@ -39,15 +39,14 @@
         
         <!-- User info -->
         <div class="d-flex align-items-center">
-            <button class="btn text-white me-2">
-                <i class="bi bi-arrow-left"></i>
-            </button>
+            <button onclick="hide_modal(document.querySelector(`#status-modal{{ contact.id }}`))" type="button"
+            class="btn-close me-2" data-bs-dismiss="modal" aria-label="Close"></button>
             <img class="avatar me-2" src="{% get_contact_photo contact.phone_number %}" alt="User pfp">
             <div class="flex-grow-1">
                 <p class="username">{{contact.name}}</p>
                 <p class="timestamp">{{ user_statuses|latest_data:"upload_date"|timesince }} ago</p>
             </div>
-            <button class="btn text-white">
+            <button class="btn">
                 <i class="bi bi-three-dots-vertical"></i>
             </button>
         </div>
