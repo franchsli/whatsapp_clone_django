@@ -277,14 +277,13 @@ main,  #base {
 }
 
 /*Status styles*/
-.carousel {
+.carousel{
   height: 100% !important;
 }
 
 .status-container {
   max-width: 450px;
   height: 90vh;
-  background-color: #000;
   position: relative;
 }
 
