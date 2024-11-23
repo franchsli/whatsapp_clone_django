@@ -277,14 +277,41 @@ main,  #base {
 }
 
 /*Status styles*/
-.carousel, .carousel-inner{
-  height: 100% !important;
-}
-
-.status-container {
-  max-width: 450px;
+.status-wrapper {
+  width: 100%;
   height: 90vh;
   position: relative;
+  background-color: #000;
+  overflow: hidden;
+}
+
+.carousel, 
+.carousel-inner,
+.carousel-item {
+  height: 100%;
+}
+
+.status-content-wrapper {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  background-color: #000;
+}
+
+.status-content {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Text-only status styling */
+.carousel-item:not(:has(img)) .status-text-overlay {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(45deg, #1a1a1a, #333);
 }
 
 .status-header {

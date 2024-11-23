@@ -1,41 +1,45 @@
 <!-- ========== Inside modal content ========== -->
 {% load static %}
 {% load filters %}
-<div class="status-container">
+<div class="status-wrapper">
     <!-- Status carousel -->
     <div id="contact{{contact.id}}status" class="carousel slide" data-bs-interval="false">
         <div class="carousel-inner">
             <!--Statuses-->
             {% for status in statuses %}
                 {% if forloop.first %}
-                    <div class="status-container carousel-item active">
-                        {% if status.has_image and status.has_text %}
-                            <img src="{{status.image.url}}" alt="Status {{forloop.counter}}" class="status-content">
-                            <div class="status-text-overlay">
-                                <p class="status-text">{{status.text}}</p>
-                            </div>
-                        {% elif status.has_image %}
-                            <img src="{{status.image.url}}" alt="Status {{forloop.counter}}" class="status-content">
-                        {% else %}
-                            <div class="status-text-overlay">
-                                <p class="status-text">{{status.text}}</p>
-                            </div>          
-                        {% endif %}
+                    <div class="carousel-item active">
+                        <div class="status-content-wrapper">
+                            {% if status.has_image and status.has_text %}
+                                <img src="{{status.image.url}}" alt="Status {{forloop.counter}}" class="status-content">
+                                <div class="status-text-overlay">
+                                    <p class="status-text">{{status.text}}</p>
+                                </div>
+                            {% elif status.has_image %}
+                                <img src="{{status.image.url}}" alt="Status {{forloop.counter}}" class="status-content">
+                            {% else %}
+                                <div class="status-text-overlay">
+                                    <p class="status-text">{{status.text}}</p>
+                                </div>          
+                            {% endif %}
+                        </div>
                     </div>
                 {% else %}
-                    <div class="status-container carousel-item">
-                        {% if status.has_image and status.has_text %}
-                            <img src="{{status.image.url}}" alt="Status {{forloop.counter}}" class="status-content">
-                            <div class="status-text-overlay">
-                                <p class="status-text">{{status.text}}</p>
-                            </div>
-                        {% elif status.has_image %}
-                            <img src="{{status.image.url}}" alt="Status {{forloop.counter}}" class="status-content">
-                        {% else %}
-                            <div class="status-text-overlay">
-                                <p class="status-text">{{status.text}}</p>
-                            </div>          
-                        {% endif %}
+                    <div class="carousel-item">
+                        <div class="status-content-wrapper">
+                            {% if status.has_image and status.has_text %}
+                                <img src="{{status.image.url}}" alt="Status {{forloop.counter}}" class="status-content">
+                                <div class="status-text-overlay">
+                                    <p class="status-text">{{status.text}}</p>
+                                </div>
+                            {% elif status.has_image %}
+                                <img src="{{status.image.url}}" alt="Status {{forloop.counter}}" class="status-content">
+                            {% else %}
+                                <div class="status-text-overlay">
+                                    <p class="status-text">{{status.text}}</p>
+                                </div>          
+                            {% endif %}
+                        </div>
                     </div>
                 {% endif %}
             {% endfor %}

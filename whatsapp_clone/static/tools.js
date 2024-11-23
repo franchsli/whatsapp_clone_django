@@ -797,50 +797,139 @@ function load_global_doc_functions(){
     window.init_status_carousel = function(status_carousel){
         carousel = status_carousel
         carousel_instance = new bootstrap.Carousel(carousel, {
-        touch: false
+        touch: false,
+        wrap: false,
+        interval: false
         })
-        const progressBars = document.querySelectorAll('.status-progress');
-        const statusDuration = 5000; // 5 seconds per status
-        let currentStatus = 0;
-        let statusTimer;
+    // Get progress bars specifically for this carousel
+    const progressBars = carousel.querySelectorAll('.status-progress');
+    const statusDuration = 5000;
+    let currentStatus = 0;
+    let statusTimer;
+    let isTransitioning = false;
 
-        function startStatusTimer() {
-            const progressBar = progressBars[currentStatus].querySelector('.status-progress-bar');
-            let progress = 0;
-            clearInterval(statusTimer);
-            
-            statusTimer = setInterval(() => {
-                progress += 1;
-                progressBar.style.width = `${progress}%`;
-                
-                if (progress >= 100) {
-                    clearInterval(statusTimer);
-                    progressBars[currentStatus].classList.add('viewed');
-                    
-                    if (currentStatus < progressBars.length - 1) {
-                        currentStatus++;
-                        carousel.querySelector('.carousel-control-next').click();
-                        startStatusTimer();
-                    }
-                }
-            }, statusDuration / 100);
-        }
-
-        startStatusTimer();
-
-        carousel.addEventListener('slide.bs.carousel', function(event) {
-            clearInterval(statusTimer);
-            currentStatus = event.to;
-            startStatusTimer();
-        });
-
-        document.addEventListener('visibilitychange', function() {
-            if (document.hidden) {
-                clearInterval(statusTimer);
-            } else {
-                startStatusTimer();
+    function resetProgressBars() {
+        progressBars.forEach((bar, index) => {
+            const progressBar = bar.querySelector('.status-progress-bar');
+            if (index < currentStatus) {
+                progressBar.style.width = '100%';
+                bar.classList.add('viewed');
+            } else if (index > currentStatus) {
+                progressBar.style.width = '0%';
+                bar.classList.remove('viewed');
             }
         });
+    }
+
+    function startStatusTimer() {
+        if (isTransitioning) return;
+        
+        const progressBar = progressBars[currentStatus]?.querySelector('.status-progress-bar');
+        if (!progressBar) return;
+        
+        let progress = 0;
+        clearInterval(statusTimer);
+        
+        statusTimer = setInterval(() => {
+            if (isTransitioning) {
+                clearInterval(statusTimer);
+                return;
+            }
+            
+            progress += 1;
+            progressBar.style.width = `${progress}%`;
+            
+            if (progress >= 100) {
+                clearInterval(statusTimer);
+                progressBars[currentStatus].classList.add('viewed');
+                
+                if (currentStatus < progressBars.length - 1) {
+                    currentStatus++;
+                    const nextButton = carousel.querySelector('.carousel-control-next');
+                    if (nextButton) {
+                        isTransitioning = true;
+                        nextButton.click();
+                    }
+                }
+            }
+        }, statusDuration / 100);
+    }
+
+    // Handle manual navigation buttons
+    const prevButton = carousel.querySelector('.carousel-control-prev');
+    const nextButton = carousel.querySelector('.carousel-control-next');
+
+    if (prevButton) {
+        prevButton.addEventListener('click', (e) => {
+            if (currentStatus > 0 && !isTransitioning) {
+                isTransitioning = true;
+                currentStatus--;
+                clearInterval(statusTimer);
+            }
+        });
+    }
+
+    if (nextButton) {
+        nextButton.addEventListener('click', (e) => {
+            if (currentStatus < progressBars.length - 1 && !isTransitioning) {
+                isTransitioning = true;
+                currentStatus++;
+                clearInterval(statusTimer);
+            }
+        });
+    }
+
+    // Handle carousel events
+    carousel.addEventListener('slide.bs.carousel', function(event) {
+        clearInterval(statusTimer);
+        currentStatus = event.to;
+        resetProgressBars();
+    });
+
+    carousel.addEventListener('slid.bs.carousel', function() {
+        isTransitioning = false;
+        startStatusTimer();
+    });
+
+    // Handle visibility change
+    function handleVisibilityChange() {
+        if (document.hidden) {
+            clearInterval(statusTimer);
+        } else {
+            // Only restart if this carousel is currently visible in a modal
+            const modal = carousel.closest('.modal');
+            if (modal && modal.classList.contains('show')) {
+                startStatusTimer();
+            }
+        }
+    }
+
+    // Clean up previous visibility listener if it exists
+    document.removeEventListener('visibilitychange', handleVisibilityChange);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    // Start the initial timer
+    resetProgressBars();
+    startStatusTimer();
+
+    // Clean up function
+    return function cleanup() {
+        clearInterval(statusTimer);
+        document.removeEventListener('visibilitychange', handleVisibilityChange);
+        
+        // Remove event listeners
+        if (prevButton) {
+            prevButton.replaceWith(prevButton.cloneNode(true));
+        }
+        if (nextButton) {
+            nextButton.replaceWith(nextButton.cloneNode(true));
+        }
+        
+        // Dispose carousel instance
+        if (carousel_instance) {
+            carousel_instance.dispose();
+        }
+    };
     }
 
     window.show_modal = function(modal){
