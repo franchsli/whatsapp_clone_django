@@ -3,7 +3,7 @@
 {% load filters %}
 <div class="status-wrapper">
     <!-- Status carousel -->
-    <div id="contact{{contact.id}}status" class="carousel slide" data-bs-interval="false">
+    <div id="contact{{contact.id}}status" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
             <!--Statuses-->
             {% for status in statuses %}
@@ -44,7 +44,7 @@
                 {% endif %}
             {% endfor %}
         </div>
-
+    </div>
         <!-- Header with progress and user info -->
         <div class="status-header">
             <!-- Progress bars -->
@@ -53,14 +53,13 @@
                     {% if forloop.first %}
                         <div class="status-progress viewed">
                             <div class="status-progress-bar"></div>
-                        </div>                  
+                        </div>
                     {% else %}
                         <div class="status-progress">
                             <div class="status-progress-bar"></div>
-                        </div>  
+                        </div>
                     {% endif %}
                 {% endfor %}
-                        
             </div>
             
             <!-- User info -->
@@ -89,5 +88,4 @@
         <!-- Touch areas for navigation -->
         <button class="carousel-control-prev" type="button" data-bs-target="#contact{{contact.id}}status" data-bs-slide="prev"></button>
         <button class="carousel-control-next" type="button" data-bs-target="#contact{{contact.id}}status" data-bs-slide="next"></button>
-    </div>
 </div>
