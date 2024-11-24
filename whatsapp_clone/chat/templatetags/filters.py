@@ -216,10 +216,7 @@ def get_contact_photo(phone: str) -> str:
     """
     try:
         user = User.objects.get(phone_number=phone)
-        if user.has_photo:
-            return user.photo.url
-        else:
-            return DEFAULT_USER_PHOTO_URL
+        return object_photo(user)
     except User.DoesNotExist:
         logger.debug(f'No User found with the following phone_number:\n{phone}')
 

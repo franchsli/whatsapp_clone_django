@@ -66,7 +66,9 @@
             <div class="d-flex align-items-center">
                 <button onclick="hide_modal(document.querySelector(`#status-modal{{ contact.id }}`))" type="button"
                 class="btn-close me-2" data-bs-dismiss="modal" aria-label="Close"></button>
-                <img class="avatar me-2" src="{% get_contact_photo contact.phone_number %}" alt="User pfp">
+                {% if contact.user_exists %}
+                    <img class="avatar me-2" src="{% get_contact_photo contact.phone_number %}" alt="User pfp">
+                {% endif %}
                 <div class="flex-grow-1">
                     <p class="username">{{contact.name}}</p>
                     <p class="timestamp">{{ user_statuses|latest_data:"upload_date"|timesince }} ago</p>
