@@ -349,11 +349,13 @@ main,  #base {
 
 /* Text-only status styling */
 .carousel-item:not(:has(img)) .status-text-overlay {
-  height: 100%;
+  height: 75%;
+  /* background: linear-gradient(45deg, #1a1a1a, #333); */
+  /* overflow-y: scroll !important; */
+  margin: 3rem !important;
   display: flex;
-  align-items: center;
   justify-content: center;
-  background: linear-gradient(45deg, #1a1a1a, #333);
+  align-items: center;
 }
 
 .status-text {
