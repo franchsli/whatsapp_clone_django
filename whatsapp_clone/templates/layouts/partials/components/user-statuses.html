@@ -6,7 +6,7 @@
     <div id="UserStatusesCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
             <!--Statuses-->
-            {% for status in statuses %}
+            {% for status in user_statuses %}
                 {% if forloop.first %}
                     <div class="carousel-item active">
                         <div class="status-content-wrapper">
@@ -49,7 +49,7 @@
         <div class="status-header">
             <!-- Progress bars -->
             <div class="progress-container">
-                {% for status in statuses %}
+                {% for status in user_statuses %}
                     {% if forloop.first %}
                         <div class="status-progress viewed">
                             <div class="status-progress-bar"></div>
