@@ -298,13 +298,6 @@ main,  #base {
   background-color: #000;
 }
 
-.status-content {
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-  display: block;
-}
-
 .status-header {
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
   padding: 12px;
@@ -341,7 +334,7 @@ main,  #base {
 .status-content {
   height: 100vh;
   width: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .status-text-overlay {

@@ -797,7 +797,6 @@ function load_global_doc_functions(){
     window.init_status_carousel = function(status_carousel){
         carousel = status_carousel
         carousel_instance = new bootstrap.Carousel(carousel, {
-        interval: 5000,
         touch: false
         })
     }
