@@ -3,7 +3,6 @@
 
 ## DO RIGHT NOW
 
-- Check why Statuses view issues a request to /None.
 - Rework statuses UI and remove duplicated HTML code adding the logic
   to difference whether its the User status or a Contact´s status.
 - Implement a dynamic status length:
