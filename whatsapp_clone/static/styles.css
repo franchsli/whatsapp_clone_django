@@ -347,6 +347,15 @@ main,  #base {
   background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
 }
 
+/* Text-only status styling */
+.carousel-item:not(:has(img)) .status-text-overlay {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(45deg, #1a1a1a, #333);
+}
+
 .status-text {
   color: #fff;
   font-size: 1.25rem;
@@ -355,6 +364,7 @@ main,  #base {
   padding: 10px;
   font-weight: 500;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  overflow-wrap: break-word;
 }
 
 .avatar {
