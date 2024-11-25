@@ -50,15 +50,9 @@
             <!-- Progress bars -->
             <div class="progress-container">
                 {% for status in user_statuses %}
-                    {% if forloop.first %}
-                        <div class="status-progress viewed">
-                            <div class="status-progress-bar"></div>
-                        </div>
-                    {% else %}
-                        <div class="status-progress">
-                            <div class="status-progress-bar"></div>
-                        </div>
-                    {% endif %}
+                    <div class="status-progress">
+                        <div class="status-progress-bar"></div>
+                    </div>
                 {% endfor %}
             </div>
             
