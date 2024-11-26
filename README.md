@@ -3,7 +3,7 @@
 
 ## DO RIGHT NOW
 
-- Add filling progress bar animation to statuses.
+- Correct filling progress bar animation to statuses.
 - Implement a dynamic status length:
   - If its a photo 5 secs.
   - if its a long text (more than 200 chars) 10 secs.

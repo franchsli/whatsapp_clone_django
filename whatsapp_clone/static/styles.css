@@ -324,13 +324,21 @@ main,  #base {
   height: 100%;
   background-color: #fff;
   width: 0;
-  transition: width 0.1s linear;
 }
 
 .status-progress.viewed .status-progress-bar {
-  width: 100%;
+  animation-name: fill-progress-bar;
+  animation-duration: 5s;
 }
 
+@keyframes fill-progress-bar{
+  from{
+    width: 0;
+  }
+  to{
+    width: 100%;
+  }
+}
 .status-content {
   height: 100vh;
   width: 100%;

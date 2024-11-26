@@ -811,6 +811,8 @@ function load_global_doc_functions(){
 
     window.show_modal = function(modal){
         modal.setAttribute('status', 'showing')
+        console.log(modal)
+        // implement logic there
     }
     window.hide_modal = function(modal){
         modal.setAttribute('status', 'hidden')
