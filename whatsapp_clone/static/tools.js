@@ -800,19 +800,17 @@ function load_global_doc_functions(){
         interval: 5000,
         touch: false
         })
-
+        const status_container = carousel.parentElement
+        const status_bars = status_container.querySelectorAll('.status-progress')
+        status_bars[0].classList.add('viewed')
         carousel.addEventListener('slid.bs.carousel', (event) => {
-            const status_container = carousel.parentElement
-            const status_bars = status_container.querySelectorAll('.status-progress')
-            status_bars[event.from].classList.add('viewed')
+            status_bars[event.to].classList.add('viewed')
         })
 
     }
 
     window.show_modal = function(modal){
         modal.setAttribute('status', 'showing')
-        console.log(modal)
-        // implement logic there
     }
     window.hide_modal = function(modal){
         modal.setAttribute('status', 'hidden')
