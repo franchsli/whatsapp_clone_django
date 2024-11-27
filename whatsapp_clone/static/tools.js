@@ -798,21 +798,32 @@ function load_global_doc_functions(){
         carousel = status_carousel
         carousel_instance = new bootstrap.Carousel(carousel, {
         interval: 5000,
-        touch: false
+        touch: false,
         })
         const status_container = carousel.parentElement
         const status_bars = status_container.querySelectorAll('.status-progress')
+        const statuses_len = status_bars.length
         status_bars[0].classList.add('viewed')
         carousel.addEventListener('slid.bs.carousel', (event) => {
+            //debugger
             status_bars[event.to].classList.add('viewed')
+            if (statuses_len - 1 === event.to){
+                setTimeout(() => {
+                    const carousel_header = carousel.nextElementSibling
+                    const user_info_header = carousel_header.querySelector('.d-flex')
+                    const hide_button = user_info_header.querySelector('.btn-close')
+                    carousel_instance.dispose()
+                    hide_button.click()
+                }, 5000)
+            }
         })
-
     }
 
     window.show_modal = function(modal){
         modal.setAttribute('status', 'showing')
     }
     window.hide_modal = function(modal){
+        //debugger
         modal.setAttribute('status', 'hidden')
         // if there any pendient updates in the UI, update it
         if(status_app.pending_updates){
