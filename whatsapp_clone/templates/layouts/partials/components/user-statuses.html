@@ -65,8 +65,9 @@
                     <p class="username">{{request.user.username}}</p>
                     <p class="timestamp">{{ user_statuses|latest_data:"upload_date"|timesince }} ago</p>
                 </div>
-                <button class="btn">
-                    <i class="bi bi-three-dots-vertical"></i>
+                <button onclick="delete_status(this)" type="button" class="btn delete-action mx-1 status-deletion"
+                  data-status="{{status.id}}" data-creator="{{request.user.id}}">
+                  <i class="bi bi-trash"></i>
                 </button>
             </div>
         </div>
