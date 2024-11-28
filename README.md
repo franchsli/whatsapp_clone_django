@@ -3,7 +3,7 @@
 
 ## DO RIGHT NOW
 
-- Implement a dynamic status length:
+- Implement a dynamic status length and fix delete button in user statuses:
   - If its a photo 5 secs.
   - if its a long text (more than 200 chars) 10 secs.
   - if its a video, the length of the video.

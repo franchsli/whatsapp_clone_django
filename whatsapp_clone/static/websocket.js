@@ -179,7 +179,8 @@ class Status_Web_Socket {
         this.app = parent_app_class
         this.websocket_client.onopen = () => {
             console.log('CONNECTION OPENED WITH STATUS WEBSOCKET')
-            window.delete_status = function(button){
+            window.delete_status = (button) => {
+                debugger
                 this.websocket_client.send(JSON.stringify({
                     'type':'DELETE',
                     'user_id': button.dataset.creator,
