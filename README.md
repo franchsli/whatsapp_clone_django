@@ -3,6 +3,7 @@
 
 ## DO RIGHT NOW
 
+- Implement something to display the individual status upload time.
 - Implement a dynamic status length and fix delete button in user statuses:
   - If its a photo 5 secs.
   - if its a long text (more than 200 chars) 10 secs.
@@ -38,6 +39,7 @@
 
 - Make responsive.
 - Add something to delete statuses automatically every 24 hours (cronjobs maybe).
+- Add something to answer to statuses.
 - Make the silence contact logic (booleand field [think it tho])
 
 ## Improvements
