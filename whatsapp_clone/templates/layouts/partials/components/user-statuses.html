@@ -5,20 +5,22 @@
     <!-- Status carousel -->
     <div id="UserStatusesCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
+            <div class="primary-status-header">
+                <!-- Progress bars -->
+                <div class="progress-container">
+                    {% for status in user_statuses %}
+                        <div class="status-progress">
+                            <div class="status-progress-bar"></div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
             <!--Statuses-->
             {% for status in user_statuses %}
                 {% if forloop.first %}
                     <div class="carousel-item active">
                         <!-- Header with progress and user info -->
-                        <div class="status-header">
-                            <!-- Progress bars -->
-                            <div class="progress-container">
-                                {% for status in user_statuses %}
-                                    <div class="status-progress">
-                                        <div class="status-progress-bar"></div>
-                                    </div>
-                                {% endfor %}
-                            </div>
+                        <div class="status-header pb-2">
                             <!-- User info -->
                             <div class="d-flex align-items-center">
                                 <button onclick="hide_modal(document.querySelector(`#user-status-modal{{ request.user.id }}`))" type="button"
@@ -52,15 +54,7 @@
                 {% else %}
                     <div class="carousel-item">
                         <!-- Header with progress and user info -->
-                        <div class="status-header">
-                            <!-- Progress bars -->
-                            <div class="progress-container">
-                                {% for status in user_statuses %}
-                                    <div class="status-progress">
-                                        <div class="status-progress-bar"></div>
-                                    </div>
-                                {% endfor %}
-                            </div>
+                        <div class="status-header pb-2">
                             <!-- User info -->
                             <div class="d-flex align-items-center">
                                 <button onclick="hide_modal(document.querySelector(`#user-status-modal{{ request.user.id }}`))" type="button"
