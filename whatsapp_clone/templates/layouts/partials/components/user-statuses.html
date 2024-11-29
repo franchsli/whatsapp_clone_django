@@ -9,6 +9,31 @@
             {% for status in user_statuses %}
                 {% if forloop.first %}
                     <div class="carousel-item active">
+                        <!-- Header with progress and user info -->
+                        <div class="status-header">
+                            <!-- Progress bars -->
+                            <div class="progress-container">
+                                {% for status in user_statuses %}
+                                    <div class="status-progress">
+                                        <div class="status-progress-bar"></div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <!-- User info -->
+                            <div class="d-flex align-items-center">
+                                <button onclick="hide_modal(document.querySelector(`#user-status-modal{{ request.user.id }}`))" type="button"
+                                class="btn-close me-2" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <img class="avatar me-2" src="{% get_contact_photo request.user.phone_number %}" alt="User pfp">
+                                <div class="flex-grow-1">
+                                    <p class="username">{{request.user.username}}</p>
+                                    <p class="timestamp">{{ user_statuses|latest_data:"upload_date"|timesince }} ago</p>
+                                </div>
+                                <button onclick="delete_status(this)" type="button" class="btn delete-action mx-1 status-deletion"
+                                data-status="{{status.id}}" data-creator="{{request.user.id}}">
+                                <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </div>
                         <div class="status-content-wrapper">
                             {% if status.has_image and status.has_text %}
                                 <img src="{{status.image.url}}" alt="Status {{forloop.counter}}" class="status-content">
@@ -26,6 +51,31 @@
                     </div>
                 {% else %}
                     <div class="carousel-item">
+                        <!-- Header with progress and user info -->
+                        <div class="status-header">
+                            <!-- Progress bars -->
+                            <div class="progress-container">
+                                {% for status in user_statuses %}
+                                    <div class="status-progress">
+                                        <div class="status-progress-bar"></div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <!-- User info -->
+                            <div class="d-flex align-items-center">
+                                <button onclick="hide_modal(document.querySelector(`#user-status-modal{{ request.user.id }}`))" type="button"
+                                class="btn-close me-2" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <img class="avatar me-2" src="{% get_contact_photo request.user.phone_number %}" alt="User pfp">
+                                <div class="flex-grow-1">
+                                    <p class="username">{{request.user.username}}</p>
+                                    <p class="timestamp">{{ user_statuses|latest_data:"upload_date"|timesince }} ago</p>
+                                </div>
+                                <button onclick="delete_status(this)" type="button" class="btn delete-action mx-1 status-deletion"
+                                data-status="{{status.id}}" data-creator="{{request.user.id}}">
+                                <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </div>
                         <div class="status-content-wrapper">
                             {% if status.has_image and status.has_text %}
                                 <img src="{{status.image.url}}" alt="Status {{forloop.counter}}" class="status-content">
@@ -45,34 +95,7 @@
             {% endfor %}
         </div>
     </div>
-        <!-- Header with progress and user info -->
-        <div class="status-header">
-            <!-- Progress bars -->
-            <div class="progress-container">
-                {% for status in user_statuses %}
-                    <div class="status-progress">
-                        <div class="status-progress-bar"></div>
-                    </div>
-                {% endfor %}
-            </div>
-            
-            <!-- User info -->
-            <div class="d-flex align-items-center">
-                <button onclick="hide_modal(document.querySelector(`#user-status-modal{{ request.user.id }}`))" type="button"
-                class="btn-close me-2" data-bs-dismiss="modal" aria-label="Close"></button>
-                <img class="avatar me-2" src="{% get_contact_photo request.user.phone_number %}" alt="User pfp">
-                <div class="flex-grow-1">
-                    <p class="username">{{request.user.username}}</p>
-                    <p class="timestamp">{{ user_statuses|latest_data:"upload_date"|timesince }} ago</p>
-                </div>
-                {% for status in user_statuses %}
-                    <button onclick="delete_status(this)" type="button" class="btn delete-action mx-1 status-deletion"
-                    data-status="{{status.id}}" data-creator="{{request.user.id}}">
-                    <i class="bi bi-trash"></i>
-                    </button>
-                {% endfor %}
-            </div>
-        </div>
+
 
         <!-- Reply input area -->
         <div class="status-actions">
