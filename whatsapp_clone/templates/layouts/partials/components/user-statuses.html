@@ -28,7 +28,7 @@
                                 <img class="avatar me-2" src="{% get_contact_photo request.user.phone_number %}" alt="User pfp">
                                 <div class="flex-grow-1">
                                     <p class="username">{{request.user.username}}</p>
-                                    <p class="timestamp">{{ user_statuses|latest_data:"upload_date"|timesince }} ago</p>
+                                    <p class="timestamp">{{ status.upload_date|timesince }} ago</p>
                                 </div>
                                 <button onclick="delete_status(this)" type="button" class="btn delete-action mx-1 status-deletion"
                                 data-status="{{status.id}}" data-creator="{{request.user.id}}">
@@ -62,7 +62,7 @@
                                 <img class="avatar me-2" src="{% get_contact_photo request.user.phone_number %}" alt="User pfp">
                                 <div class="flex-grow-1">
                                     <p class="username">{{request.user.username}}</p>
-                                    <p class="timestamp">{{ user_statuses|latest_data:"upload_date"|timesince }} ago</p>
+                                    <p class="timestamp">{{ status.upload_date|timesince }} ago</p>
                                 </div>
                                 <button onclick="delete_status(this)" type="button" class="btn delete-action mx-1 status-deletion"
                                 data-status="{{status.id}}" data-creator="{{request.user.id}}">

@@ -68,7 +68,7 @@ def unread_messages_counter(messages_queryset: QuerySet, user_id: int) -> int:
 
 @register.filter
 def latest_data(queryset: QuerySet, desired_field_name: str):
-    """Returns the latest deisired field value from
+    """Returns the latest desired field value from
     the given queryset.
 
     Args:
