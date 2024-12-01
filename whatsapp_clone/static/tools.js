@@ -805,8 +805,19 @@ function load_global_doc_functions(){
         const statuses_len = status_bars.length
         status_bars[0].classList.add('viewed')
         carousel.addEventListener('slid.bs.carousel', (event) => {
-            //debugger
             status_bars[event.to].classList.add('viewed')
+            debugger
+            const status_content_wrapper = event.relatedTarget.querySelector('.status-content-wrapper')
+            const text_container = status_content_wrapper.querySelector('.status-text-overlay')
+            const text = text_container.firstElementChild
+            if (text.innerText.length > 32) {
+                text_container.classList.replace('status-text-overlay', 'status-large-text-overlay')
+                if(text.innerText.length > 450){
+                    text_container.style.overflowY = 'scroll'
+                    text_container.style.height = '80%'
+                }
+                
+            }
             if (statuses_len - 1 === event.to){
                 setTimeout(() => {
                     const carousel_header = carousel.nextElementSibling

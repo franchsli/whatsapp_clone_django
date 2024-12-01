@@ -3,9 +3,9 @@
 
 ## DO RIGHT NOW
 
-- Implement a dynamic status length and fix delete button in user statuses:
+- Implement a dynamic status length:
   - If its a photo 5 secs.
-  - if its a long text (more than 200 chars) 10 secs.
+  - if its a long text (more than 200 chars) 10 secs. (THE MAXIMUM LENGTH IS NO IMAGE AND 450 CHARS)
   - if its a video, the length of the video.
   - Or if its not a video, 5 secs and users should be able to pause the event
     (like whatsapp).

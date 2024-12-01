@@ -356,7 +356,7 @@ main,  #base {
   object-fit: contain;
 }
 
-.status-text-overlay {
+.status-content-wrapper img + .status-text-overlay {
   position: absolute;
   bottom: 60px;
   left: 0;
@@ -367,14 +367,18 @@ main,  #base {
 }
 
 /* Text-only status styling */
-.carousel-item:not(:has(img)) .status-text-overlay {
+.status-content-wrapper:not(:has(img)) .status-text-overlay {
   height: 75%;
-  /* background: linear-gradient(45deg, #1a1a1a, #333); */
-  /* overflow-y: scroll !important; */
   margin: 3rem !important;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+/* 32+ chars */
+.status-content-wrapper:not(:has(img)) .status-large-text-overlay {
+  height: 75%;
+  margin: 3rem !important;
 }
 
 .status-text {
