@@ -806,7 +806,6 @@ function load_global_doc_functions(){
         status_bars[0].classList.add('viewed')
         carousel.addEventListener('slid.bs.carousel', (event) => {
             status_bars[event.to].classList.add('viewed')
-            debugger
             const status_content_wrapper = event.relatedTarget.querySelector('.status-content-wrapper')
             const text_container = status_content_wrapper.querySelector('.status-text-overlay')
             const text = text_container.firstElementChild
@@ -834,7 +833,6 @@ function load_global_doc_functions(){
         modal.setAttribute('status', 'showing')
     }
     window.hide_modal = function(modal){
-        //debugger
         modal.setAttribute('status', 'hidden')
         // if there any pendient updates in the UI, update it
         if(status_app.pending_updates){

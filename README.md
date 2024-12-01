@@ -9,7 +9,7 @@
   - if its a video, the length of the video.
   - Or if its not a video, 5 secs and users should be able to pause the event
     (like whatsapp).
-  - Add comments in the new code created.
+  - Add comments in the new created code.
 - (Chat Form) If a User deleted a chat, and want to create 'the same chat' again,
   remove the chat from the deleted chats list from the said User.
 - Check if...
