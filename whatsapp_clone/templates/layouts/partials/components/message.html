@@ -5,7 +5,7 @@
 {% if message.sender_user == request.user %}
 <div class="p-2 mw-100" hx-target="this" hx-swap="outerHTML" style="display: grid;">
   {% if message.has_image %}
-  <img type="button" loading="lazy" class="mw-100 mh-100 mb-3" src="{{message.image.url}}" alt="Message image couldn't load" 
+  <img onclick="preview_chat_image(this.src, 'message-image-status-preview');" type="button" loading="lazy" class="mw-100 mh-100 mb-3" src="{{message.image.url}}" alt="Message image couldn't load" 
   data-bs-toggle="modal" data-bs-target="#imagePreviewModal">
   {% endif %}
   {% only_emoji message.text as only_emojis %}

@@ -843,6 +843,11 @@ function load_global_doc_functions(){
         }
     }
 
+    window.preview_chat_image = function(url, image_html_element_id){
+        const image_html = document.getElementById(image_html_element_id)
+        image_html.src = url
+    }
+
 }
 
 export {
