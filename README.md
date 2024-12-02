@@ -18,8 +18,6 @@
   - Rework the API or implement complex logic before the use of the said API.
 - Finish the multiple chats deletion logic.
 - Add Contact deletion. (maybe in multi chats selection as well)
-- Implement something to show a close look when a image in a chat is clicked
-  (like Whatsapp).
 - Add status complex status creation (like Whatsapp).
   - Users could select the color of the background for
     statuses.

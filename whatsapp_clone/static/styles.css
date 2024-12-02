@@ -356,6 +356,10 @@ main,  #base {
   object-fit: contain;
 }
 
+#imagePreviewModal .modal-content img{
+  width: 100%;
+}
+
 .status-content-wrapper img + .status-text-overlay {
   position: absolute;
   bottom: 60px;
