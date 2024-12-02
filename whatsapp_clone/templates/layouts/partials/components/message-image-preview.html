@@ -1,0 +1,13 @@
+{% load static %}
+{% load filters %}
+
+  <!-- Message's image preview Modal -->
+  <div class="modal fade" id="imagePreviewModal">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-body">
+            <img src="{{message.image.url}}" alt="Message image couldn't load">
+        </div>
+      </div>
+    </div>
+  </div>
