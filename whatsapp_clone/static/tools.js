@@ -719,7 +719,7 @@ async function validate_status_form(error_audio, status_websocket){
 }
 
 /**
- * Loads many functions so they could be used
+ * Loads many functions so they can be used
  * anywhere (document or js files)
  */
 function load_global_doc_functions(){
@@ -804,8 +804,11 @@ function load_global_doc_functions(){
         const status_bars = status_container.querySelectorAll('.status-progress')
         const statuses_len = status_bars.length
         status_bars[0].classList.add('viewed')
+        // everytime the carousel is in a new slide
         carousel.addEventListener('slid.bs.carousel', (event) => {
+            // check the current slide as viewed
             status_bars[event.to].classList.add('viewed')
+            // sylize it depending on the content.
             const status_content_wrapper = event.relatedTarget.querySelector('.status-content-wrapper')
             const text_container = status_content_wrapper.querySelector('.status-text-overlay')
             const text = text_container.firstElementChild
@@ -815,13 +818,13 @@ function load_global_doc_functions(){
                     text_container.style.overflowY = 'scroll'
                     text_container.style.height = '80%'
                 }
-                
             }
             if (statuses_len - 1 === event.to){
                 setTimeout(() => {
                     const carousel_header = carousel.nextElementSibling
                     const user_info_header = carousel_header.querySelector('.d-flex')
                     const hide_button = user_info_header.querySelector('.btn-close')
+                    // closes the carousel instance and hides the modal containing it.
                     carousel_instance.dispose()
                     hide_button.click()
                 }, 5000)
@@ -843,6 +846,11 @@ function load_global_doc_functions(){
         }
     }
 
+    /**
+     * Loads an image source in the img element found with the given id.
+     * @param {String} url 
+     * @param {String} image_html_element_id 
+     */
     window.preview_chat_image = function(url, image_html_element_id){
         const image_html = document.getElementById(image_html_element_id)
         image_html.src = url
