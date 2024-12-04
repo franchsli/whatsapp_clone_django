@@ -57,6 +57,13 @@ NONE LOL (YET)
 2. [24/10/2024] (DOMContent Load without cache): 907 ms
 3. [24/10/2024] (Web page load): 1.79s
 
+## SCREENSHOTS
+
+![chats and opened chat](https://github.com/user-attachments/assets/afc004af-5634-4ed7-9a3e-dce90b94e799)
+![statuses view 1](https://github.com/user-attachments/assets/2c3eae1f-6946-41cf-9825-31c9642227cd)
+![status view 2](https://github.com/user-attachments/assets/bb56c211-40a0-4652-93fc-3a21c8b7fedb)
+
+
 **RESOURCES**:
 
 - [Django static files compressor docs](https://django-compressor.readthedocs.io/en/latest/quickstart.html)
