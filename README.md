@@ -3,6 +3,7 @@
 
 ## DO RIGHT NOW
 
+- Add something to answer to statuses.
 - Implement a dynamic status length:
   - If its a photo 5 secs.
   - if its a long text (more than 200 chars) 10 secs. (THE MAXIMUM LENGTH IS NO IMAGE AND 450 CHARS)
@@ -35,7 +36,6 @@
 
 - Make responsive.
 - Add something to delete statuses automatically every 24 hours (cronjobs maybe).
-- Add something to answer to statuses.
 - Make the silence contact logic (booleand field [think it tho])
 
 ## Improvements
@@ -62,7 +62,6 @@ NONE LOL (YET)
 ![chats and opened chat](https://github.com/user-attachments/assets/afc004af-5634-4ed7-9a3e-dce90b94e799)
 ![statuses view 1](https://github.com/user-attachments/assets/2c3eae1f-6946-41cf-9825-31c9642227cd)
 ![status view 2](https://github.com/user-attachments/assets/bb56c211-40a0-4652-93fc-3a21c8b7fedb)
-
 
 **RESOURCES**:
 
