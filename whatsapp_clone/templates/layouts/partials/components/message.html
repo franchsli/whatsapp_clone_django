@@ -42,6 +42,8 @@
   <ul id="customDropdown-{{message.id}}" class="dropdown-menu animated-dropdown">
     <li><span role="button" class="dropdown-item edit-action" hx-get="{% url 'edit_message' message.id %}"><i
           class="bi bi-pencil-square"></i> Edit message</span></li>
+    <li><span role="button" class="dropdown-item edit-action"><i
+          class="bi bi-reply-fill"></i> Reply</span></li>
     {% if not starred_by_user %}
       <li><span role="button" class="dropdown-item edit-action" hx-patch="{% url 'star_message' message.id %}"
             hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'><i
@@ -60,7 +62,8 @@
 {% else %}
 <div class="p-2" style="display: grid;" hx-target="this" hx-swap="outerHTML">
   {% if message.has_image %}
-  <img loading="lazy" class="mw-100 mh-100 mb-3" src="{{message.image.url}}" alt="Message image couldn't load.">
+  <img onclick="preview_chat_image(this.src, 'message-image-status-preview');" type="button" loading="lazy" class="mw-100 mh-100 mb-3" src="{{message.image.url}}" alt="Message image couldn't load" 
+  data-bs-toggle="modal" data-bs-target="#imagePreviewModal">
   {% endif %}
   {% only_emoji message.text as only_emojis %}
   {% if only_emojis %}
@@ -86,6 +89,8 @@
     toggleReadMore('{{message.id}}')
   </script>
   <ul id="customDropdown-{{message.id}}" class="dropdown-menu animated-dropdown">
+    <li><span role="button" class="dropdown-item edit-action"><i
+      class="bi bi-reply-fill"></i> Reply</span></li>
     {% if not starred_by_user %}
       <li><span role="button" class="dropdown-item edit-action" hx-patch="{% url 'star_message' message.id %}"
             hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'><i
