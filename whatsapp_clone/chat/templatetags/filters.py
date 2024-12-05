@@ -44,7 +44,12 @@ def last_message(messages: QuerySet) -> Message:
         return messages.latest("date")
     except Message.DoesNotExist:
         return ""
-
+    
+@register.filter
+def message_text(message: Message) -> Message:
+    """Returns the latest's Message text.
+    """
+    return 'Photo 📷' if message.has_image else message.text
 
 @register.filter
 def unread_messages_counter(messages_queryset: QuerySet, user_id: int) -> int:

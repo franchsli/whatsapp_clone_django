@@ -45,12 +45,12 @@
                 {% else %}
                   <i class="bi bi-check2-all"></i>
                 {% endif %}
-                {{ latest_message.text }}</span>
+                {{ latest_message|message_text }}</span>
             {% else %}
               {% if latest_message.read %}
-                <span class="last-chat-message text-truncate">{{ latest_message.text }}</span>
+                <span class="last-chat-message text-truncate">{{ latest_message|message_text }}</span>
               {% else %}
-                <span class="last-chat-message-unread text-truncate">{{ latest_message.text }}</span>
+                <span class="last-chat-message-unread text-truncate">{{ latest_message|message_text }}</span>
               {% endif %}
             {% endif %}
           
