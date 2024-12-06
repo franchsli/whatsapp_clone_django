@@ -42,7 +42,7 @@
   <ul id="customDropdown-{{message.id}}" class="dropdown-menu animated-dropdown">
     <li><span role="button" class="dropdown-item edit-action" hx-get="{% url 'edit_message' message.id %}"><i
           class="bi bi-pencil-square"></i> Edit message</span></li>
-    <li><span role="button" class="dropdown-item edit-action"><i
+    <li onclick="reply_to_message('{{message.id}}')"><span role="button" class="dropdown-item edit-action"><i
           class="bi bi-reply-fill"></i> Reply</span></li>
     {% if not starred_by_user %}
       <li><span role="button" class="dropdown-item edit-action" hx-patch="{% url 'star_message' message.id %}"
