@@ -17,6 +17,10 @@ main,  #base {
   background-color: var(--bs-body-bg);
 }
 
+#chat-display{
+  height: 100vh;
+}
+
 .message {
   max-width: 50%;
   display: flex;
