@@ -718,6 +718,32 @@ async function validate_status_form(error_audio, status_websocket){
     }
 }
 
+async function reply_to_message(message_id) {
+    // data of the replied message
+    const message_data = await get(`/api/messages/${message_id}/`)
+    const reply_preview = document.getElementById('reply-preview')
+    // creating the html elements for the preview...
+    const container = document.createElement('div')
+    const preview_text = document.createElement('span')
+    // styling with classes
+    container.classList.add('p-2', 'd-flex', 'flex-column', 'w-100')
+    preview_text.id = `text-${message_id}1`
+    preview_text.classList.add('d-flex', 'texto-body-tertiary')
+    // add them to the DOM
+    reply_preview.appendChild(container)
+    container.appendChild(preview_text)
+    if (message_data.image){
+        preview_text.innerText = 'Photo 📷'
+    }
+    else {
+        preview_text.innerText = message_data.text
+    }
+
+    space_text(`${message.id}1`)
+    toggleReadMore(`${message.id}1`)
+
+}
+
 /**
  * Loads many functions so they can be used
  * anywhere (document or js files)
@@ -854,6 +880,10 @@ function load_global_doc_functions(){
     window.preview_chat_image = function(url, image_html_element_id){
         const image_html = document.getElementById(image_html_element_id)
         image_html.src = url
+    }
+
+    window.reply_to_message = function(message_id){
+        reply_to_message(message_id)
     }
 
 }

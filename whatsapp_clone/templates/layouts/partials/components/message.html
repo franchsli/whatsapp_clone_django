@@ -110,12 +110,13 @@
 
 <div class="p-2 d-flex flex-column w-100">
   {% if message.has_image %}
-  <span id="text-{{message.id}}2" class="d-flex text-body-tertiary">Photo</span>
+  <span id="text-{{message.id}}1" class="d-flex text-body-tertiary">Photo</span>
+  {% else %}
+  <span id="text-{{message.id}}1" class="d-flex text-body-tertiary">{{message.text}}</span>
   {% endif %}
-  <span id="text-{{message.id}}2" class="d-flex text-body-tertiary">{{message.text}}</span>
   <script type="text/javascript">
-    space_text('{{message.id}}')
-    toggleReadMore('{{message.id}}2')
+    space_text('{{message.id}}1')
+    toggleReadMore('{{message.id}}1')
   </script>
 </div>
 
