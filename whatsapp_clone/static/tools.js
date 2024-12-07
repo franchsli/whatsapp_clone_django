@@ -718,13 +718,14 @@ async function validate_status_form(error_audio, status_websocket){
     }
 }
 
-async function reply_to_message(message_id) {
+async function reply_to_message(message_id, from_request_user) {
     // data of the replied message
     const message_data = await get(`/api/messages/${message_id}/`)
     const reply_preview = document.getElementById('reply-preview')
     reply_preview.innerHTML = ''
     // creating the html elements for the preview...
     const container = document.createElement('div')
+    const sender_name = document.createElement('span')
     const preview_text = document.createElement('span')
     // styling with classes
     container.classList.add('p-2', 'd-flex', 'flex-column', 'w-100')
@@ -732,6 +733,7 @@ async function reply_to_message(message_id) {
     preview_text.classList.add('d-flex', 'text-body-tertiary')
     // add them to the DOM
     reply_preview.appendChild(container)
+    container.appendChild(sender_name)
     container.appendChild(preview_text)
     if (message_data.image){
         preview_text.innerText = 'Photo 📷'
@@ -739,6 +741,14 @@ async function reply_to_message(message_id) {
     else {
         preview_text.innerText = message_data.text
     }
+    if (from_request_user){
+        sender_name.innerText = 'You'
+    }
+    else{
+        const sender_name_container = document.getElementById('contact-name')
+        sender_name.innerText = sender_name_container.innerText
+    }
+
 
 }
 
@@ -880,8 +890,8 @@ function load_global_doc_functions(){
         image_html.src = url
     }
 
-    window.reply_to_message = function(message_id){
-        reply_to_message(message_id)
+    window.reply_to_message = function(message_id, from_request_user){
+        reply_to_message(message_id, from_request_user)
     }
 
 }
