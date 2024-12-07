@@ -718,7 +718,13 @@ async function validate_status_form(error_audio, status_websocket){
     }
 }
 
-async function reply_to_message(message_id, from_request_user) {
+/**
+ * Loads the reply preview HTML to the desired message
+ * @param {String} message_id 
+ * @param {Boolean} from_request_user 
+ * @param {String} request_user_id Required only if from_request_user is false
+ */
+async function reply_to_message(message_id, from_request_user, request_user_id) {
     // data of the replied message
     const message_data = await get(`/api/messages/${message_id}/`)
     const reply_preview = document.getElementById('reply-preview')
@@ -745,8 +751,9 @@ async function reply_to_message(message_id, from_request_user) {
         sender_name.innerText = 'You'
     }
     else{
-        const sender_name_container = document.getElementById('contact-name')
-        sender_name.innerText = sender_name_container.innerText
+        const contact = await get(`/api/users/${message_data.sender_user}/`)
+        const senders = await get(`/api/contacts/?phone_number=${contact.phone_number}&created_by=${request_user_id}`)
+        sender_name.innerText = senders[0].name
     }
 
 
@@ -890,8 +897,8 @@ function load_global_doc_functions(){
         image_html.src = url
     }
 
-    window.reply_to_message = function(message_id, from_request_user){
-        reply_to_message(message_id, from_request_user)
+    window.reply_to_message = function(message_id, from_request_user, request_user_id){
+        reply_to_message(message_id, from_request_user, request_user_id)
     }
 
 }
