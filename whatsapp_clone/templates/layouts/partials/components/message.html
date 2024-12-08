@@ -4,6 +4,17 @@
 {% with starred_by_user=message|starred_by_user_filter:request.user %}
 {% if message.sender_user == request.user %}
 <div class="p-2 mw-100" hx-target="this" hx-swap="outerHTML" style="display: grid;">
+  {% if message.reply_to %}
+  <div class="border-start border-primary-subtle border-3 p-2 d-flex flex-column w-100"
+  style="background-color: var(--bs-tertiary-bg);">
+    {% if message.reply_to.has_image %}
+    <span class="d-flex text-body-tertiary">Photo</span>
+    {% else %}
+    <span class="d-flex text-body-tertiary">{{message.reply_to.text}}</span>
+    {% endif %}
+  </div>
+  {% endif %}
+
   {% if message.has_image %}
   <img onclick="preview_chat_image(this.src, 'message-image-status-preview');" type="button" loading="lazy" class="mw-100 mh-100 mb-3" src="{{message.image.url}}" alt="Message image couldn't load" 
   data-bs-toggle="modal" data-bs-target="#imagePreviewModal">
@@ -62,6 +73,16 @@
 </div>
 {% else %}
 <div class="p-2" style="display: grid;" hx-target="this" hx-swap="outerHTML">
+  {% if message.reply_to %}
+  <div class="border-start border-primary-subtle border-3 p-2 d-flex flex-column w-100"
+  style="background-color: var(--bs-tertiary-bg);">
+    {% if message.reply_to.has_image %}
+    <span class="d-flex text-body-tertiary">Photo</span>
+    {% else %}
+    <span class="d-flex text-body-tertiary">{{message.reply_to.text}}</span>
+    {% endif %}
+  </div>
+  {% endif %}
   {% if message.has_image %}
   <img onclick="preview_chat_image(this.src, 'message-image-status-preview');" type="button" loading="lazy" class="mw-100 mh-100 mb-3" src="{{message.image.url}}" alt="Message image couldn't load" 
   data-bs-toggle="modal" data-bs-target="#imagePreviewModal">
@@ -105,24 +126,6 @@
 </div>
 {% endif %}
 {% endwith %}
-
-
-<!-- ========== HTML FOR RESPONSES
-
-<div class="p-2 d-flex flex-column w-100">
-  {% if message.has_image %}
-  <span id="text-{{message.id}}1" class="d-flex text-body-tertiary">Photo</span>
-  {% else %}
-  <span id="text-{{message.id}}1" class="d-flex text-body-tertiary">{{message.text}}</span>
-  {% endif %}
-  <script type="text/javascript">
-    space_text('{{message.id}}1')
-    toggleReadMore('{{message.id}}1')
-  </script>
-</div>
-
-========== -->
-
 
 
 
