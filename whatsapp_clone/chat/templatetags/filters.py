@@ -1,6 +1,6 @@
 from django import template
 from django.db.models import QuerySet
-from chat.models import User, Chat, Message
+from chat.models import User, Chat, Message, Contact
 from chat.tools import DEFAULT_USER_PHOTO_URL, get_contact_in_chat, object_photo
 from typing import Union, List
 import re, logging
@@ -237,3 +237,26 @@ def only_emoji(text: str) -> bool:
         bool: True if it's only a emoji, False otherwise.
     """
     return bool(re.match(r"\W+", text))
+
+@register.simple_tag
+def replies_to(message:Message, auth_user:User) -> str:
+    """Returns the name of the User
+    (contact instance) who sent the Message
+    that is being replied.
+
+    Args:
+        message (Message): The reply.
+        auth_user (User): The auth User in session.
+
+    Returns:
+        str: The name of the User
+    (contact instance) who sent the Message
+    that is being replied.
+    If no contact is found, return User instance username
+    """
+    try:
+        return Contact.objects.get(phone_number=message.sender_user.phone_number,
+                                   created_by=auth_user).name
+    except Contact.DoesNotExist:
+        return User.objects.get(phone_number=message.sender_user.phone_number).username
+
