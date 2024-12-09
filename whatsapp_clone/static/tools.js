@@ -748,7 +748,8 @@ async function reply_to_message(message_id, from_request_user, request_user_id) 
         preview_text.innerText = message_data.text
     }
     if (from_request_user){
-        sender_name.innerText = 'You'
+        const request_user = await get(`/api/users/${message_data.sender_user}/`)
+        sender_name.innerText = `${request_user.username} (You)`
     }
     else{
         const contact = await get(`/api/users/${message_data.sender_user}/`)

@@ -258,5 +258,6 @@ def replies_to(message:Message, auth_user:User) -> str:
         return Contact.objects.get(phone_number=message.sender_user.phone_number,
                                    created_by=auth_user).name
     except Contact.DoesNotExist:
-        return User.objects.get(phone_number=message.sender_user.phone_number).username
+        username = User.objects.get(phone_number=message.sender_user.phone_number).username
+        return f'{username} (You)' if username == auth_user.username else username
 
