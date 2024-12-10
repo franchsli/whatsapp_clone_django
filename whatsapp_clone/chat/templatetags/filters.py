@@ -44,12 +44,13 @@ def last_message(messages: QuerySet) -> Message:
         return messages.latest("date")
     except Message.DoesNotExist:
         return ""
-    
+
+
 @register.filter
 def message_text(message: Message) -> Message:
-    """Returns the latest's Message text.
-    """
-    return 'Photo 📷' if message.has_image else message.text
+    """Returns the latest's Message text."""
+    return "Photo 📷" if message.has_image else message.text
+
 
 @register.filter
 def unread_messages_counter(messages_queryset: QuerySet, user_id: int) -> int:
@@ -223,7 +224,7 @@ def get_contact_photo(phone: str) -> str:
         user = User.objects.get(phone_number=phone)
         return object_photo(user)
     except User.DoesNotExist:
-        logger.debug(f'No User found with the following phone_number:\n{phone}')
+        logger.debug(f"No User found with the following phone_number:\n{phone}")
 
 
 @register.simple_tag
@@ -238,8 +239,9 @@ def only_emoji(text: str) -> bool:
     """
     return bool(re.match(r"\W+", text))
 
+
 @register.simple_tag
-def replies_to(message:Message, auth_user:User) -> str:
+def replies_to(message: Message, auth_user: User) -> str:
     """Returns the name of the User
     (contact instance) who sent the Message
     that is being replied.
@@ -255,9 +257,11 @@ def replies_to(message:Message, auth_user:User) -> str:
     If no contact is found, return User instance username
     """
     try:
-        return Contact.objects.get(phone_number=message.sender_user.phone_number,
-                                   created_by=auth_user).name
+        return Contact.objects.get(
+            phone_number=message.sender_user.phone_number, created_by=auth_user
+        ).name
     except Contact.DoesNotExist:
-        username = User.objects.get(phone_number=message.sender_user.phone_number).username
-        return f'{username} (You)' if username == auth_user.username else username
-
+        username = User.objects.get(
+            phone_number=message.sender_user.phone_number
+        ).username
+        return f"{username} (You)" if username == auth_user.username else username

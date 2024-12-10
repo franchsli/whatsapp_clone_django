@@ -94,8 +94,12 @@ class Message(models.Model):
     edited = models.BooleanField(blank=False, null=False, default=False)
     read = models.BooleanField(blank=False, null=False, default=False)
     chat = models.ForeignKey(Chat, on_delete=models.CASCADE)
-    starred_by = models.ManyToManyField(User, blank=True, related_name="starred_messages")
-    reply_to = models.ForeignKey('self', blank=True, null=True, on_delete=models.CASCADE)
+    starred_by = models.ManyToManyField(
+        User, blank=True, related_name="starred_messages"
+    )
+    reply_to = models.ForeignKey(
+        "self", blank=True, null=True, on_delete=models.CASCADE
+    )
 
     def __str__(self) -> str:
         return self.text

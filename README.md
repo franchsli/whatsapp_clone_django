@@ -3,6 +3,10 @@
 
 ## DO RIGHT NOW
 
+- Finish message reply logic:
+  1. Add 'reply_to' to send_message function (websocket.js).
+  2. Rework create_message ChatConsumer function (consumers.py):
+  - Add new Optional parameter (reply_to)
 - Add something to answer to statuses.
 - Implement a dynamic status length:
   - If its a photo 5 secs.

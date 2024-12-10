@@ -11,7 +11,6 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
 
-
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         # default group name
