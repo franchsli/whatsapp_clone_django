@@ -727,6 +727,8 @@ async function validate_status_form(error_audio, status_websocket){
 async function reply_to_message(message_id, from_request_user, request_user_id) {
     // data of the replied message
     const message_data = await get(`/api/messages/${message_id}/`)
+    // stores the replied message id for later
+    localStorage.setItem('reply_to', message_id)
     const reply_preview = document.getElementById('reply-preview')
     reply_preview.innerHTML = ''
     // creating the html elements for the preview...

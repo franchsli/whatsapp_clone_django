@@ -62,9 +62,11 @@ class Chat_Web_Socket{
             'receiver_username': localStorage.getItem('receiver_username'),
             'sender_user_id': message_sender_id,
             'chat_id': localStorage.getItem('chat_id'),
-            'chat_members_phones': localStorage.getItem('chat_members_phones')
+            'chat_members_phones': localStorage.getItem('chat_members_phones'),
+            'reply_to': localStorage.getItem('reply_to')
         }))
-
+        // removes the item to avoid bugs
+        localStorage.removeItem('reply_to')
     }
 
     handle_chat_message(event){
@@ -373,6 +375,8 @@ window.summon_chat = function(chat, chat_websocket){
     localStorage.setItem('receiver_username', chat.dataset.contact)
     localStorage.setItem('chat_id', chat.dataset.chat)
     localStorage.setItem('chat_members_phones', chat_members_phones)
+    // clears this key to avoid bugs
+    localStorage.removeItem('reply_to')
 
 }
 

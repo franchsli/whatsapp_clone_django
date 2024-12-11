@@ -3,11 +3,7 @@
 
 ## DO RIGHT NOW
 
-- Finish message reply logic:
-  1. Add 'reply_to' to send_message function (websocket.js).
-  2. Rework create_message ChatConsumer function (consumers.py):
-  - Add new Optional parameter (reply_to)
-- Add something to answer to statuses.
+- Add something to answer to statuses (using the existing Message replies logic).
 - Implement a dynamic status length:
   - If its a photo 5 secs.
   - if its a long text (more than 200 chars) 10 secs. (THE MAXIMUM LENGTH IS NO IMAGE AND 450 CHARS)
@@ -44,6 +40,7 @@
 
 ## Improvements
 
+- use SessionStorage insetead of localStorage. (multi tab chatting)
 - Implement all of the features at
   [dj-chat](https://github.com/adilmohak/dj-chat?tab=readme-ov-file#current-features)
 

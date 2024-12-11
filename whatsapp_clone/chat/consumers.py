@@ -55,6 +55,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 self.text_data_json["chat_id"],
                 self.text_data_json["message"],
                 self.text_data_json["image"],
+                self.text_data_json["reply_to"],
             )
 
         # if the type of the 'request' is 'reconnect'
@@ -192,6 +193,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         chat_id: Union[str, int],
         text: Optional[str] = None,
         image: Optional[str] = None,
+        replies_to: Optional[str] = None,
     ) -> None:
         """Creates and stores a new message object in the database.
 
@@ -200,6 +202,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             chat_id (Union[str, int]): The id (numeric value) of the chat that the sender sent this message on.
             text (str): What the message says.
             image (str): The image encoded base64  image data.
+            replies_to (str): The id of the message that is being replied.
         """
         sender_user_instance = User.objects.get(id=sender_user_id)
         chat_instance = Chat.objects.get(id=chat_id)
@@ -216,6 +219,14 @@ class ChatConsumer(AsyncWebsocketConsumer):
             image_file = encoded_image_to_file(image, "user_message")
             new_message.image = image_file
             new_message.save()
+        
+        if replies_to:
+            try:
+                reply_instance = Message.objects.get(id=replies_to)
+                new_message.reply_to = reply_instance
+                new_message.save()
+            except Message.DoesNotExist:
+                logger.debug('NO MESSAGE WITH SUCH ID')
 
     @database_sync_to_async
     def create_chat(self, users: list) -> None:
