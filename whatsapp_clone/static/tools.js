@@ -762,6 +762,12 @@ async function reply_to_message(message_id, from_request_user, request_user_id) 
 
 }
 
+
+function clear_status_progress(progress_bar){
+    progress_bar.classList.remove('viewing', 'viewed')
+}
+
+
 /**
  * Loads many functions so they can be used
  * anywhere (document or js files)
@@ -844,8 +850,7 @@ function load_global_doc_functions(){
         interval: 5000,
         touch: false,
         })
-        const status_container = carousel.parentElement
-        const status_bars = status_container.querySelectorAll('.status-progress')
+        const status_bars = carousel.querySelectorAll('.status-progress')
         const statuses_len = status_bars.length
         status_bars[0].classList.add('viewed')
         // everytime the carousel is in a new slide
@@ -855,20 +860,23 @@ function load_global_doc_functions(){
             // sylize it depending on the content.
             const status_content_wrapper = event.relatedTarget.querySelector('.status-content-wrapper')
             const text_container = status_content_wrapper.querySelector('.status-text-overlay')
-            const text = text_container.firstElementChild
-            if (text.innerText.length > 32) {
-                text_container.classList.replace('status-text-overlay', 'status-large-text-overlay')
-                if(text.innerText.length > 450){
-                    text_container.style.overflowY = 'scroll'
-                    text_container.style.height = '80%'
-                }
+            if (text_container){
+                const text = text_container.firstElementChild
+                if (text.innerText.length > 32) {
+                    text_container.classList.replace('status-text-overlay', 'status-large-text-overlay')
+                    if(text.innerText.length > 450){
+                        text_container.style.overflowY = 'scroll'
+                        text_container.style.height = '80%'
+                    }
+            }
             }
             if (statuses_len - 1 === event.to){
                 setTimeout(() => {
-                    const carousel_header = carousel.nextElementSibling
-                    const user_info_header = carousel_header.querySelector('.d-flex')
-                    const hide_button = user_info_header.querySelector('.btn-close')
+                    status_bars.forEach(bar => {
+                        clear_status_progress(bar)
+                    });
                     // closes the carousel instance and hides the modal containing it.
+                    const hide_button = carousel.querySelector('.btn-close')
                     carousel_instance.dispose()
                     hide_button.click()
                 }, 5000)

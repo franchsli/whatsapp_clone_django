@@ -340,15 +340,12 @@ main,  #base {
   width: 0;
 }
 
-.status-progress.viewing .status-progress-bar {
+.status-progress.viewed .status-progress-bar {
   animation-name: fill-progress-bar;
   animation-duration: 5s;
   width: 100%;
 }
 
-.status-progress.viewed .status-progress-bar {
-  width: 100%;
-}
 
 @keyframes fill-progress-bar{
   from{
