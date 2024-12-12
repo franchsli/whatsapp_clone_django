@@ -3,7 +3,6 @@
 
 ## DO RIGHT NOW
 
-- Add something to answer to statuses (using the existing Message replies logic).
 - Implement a dynamic status length:
   - If its a photo 5 secs.
   - if its a long text (more than 200 chars) 10 secs. (THE MAXIMUM LENGTH IS NO IMAGE AND 450 CHARS)
