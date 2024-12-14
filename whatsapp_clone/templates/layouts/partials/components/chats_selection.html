@@ -6,10 +6,10 @@
       {% for chat in request.user.chats.all %}
       <li id="chat-{{chat.id}}" 
       class="list-group-item p-3 d-flex flex-inline align-items-center chat chat-pic" 
-      role="button" data-chat={{chat.id}} data-contact='{% exclude_user_tag chat.users.all request.user 'username' %}'>
+      role="button" data-chat={{chat.id}}>
         <input type="checkbox" class="form-check-input" id="{{ chat.id }}">
         <img class="ms-1 rounded-circle img-fluid" src="{% chat_desired_data chat request.user 'photo' %}" alt="Contact photo couldn't load">
-        <label class="form-check-label ms-3" for={{ chat.id }}>{% exclude_user_tag chat.users.all request.user 'username' %} </label>
+        <label class="form-check-label ms-3" for={{ chat.id }}>{% get_chat_users_data chat 'username' %} </label>
       </li>
       {% empty %}
       <h1 class="text-white-50">No chats <i class="bi bi-emoji-frown"></i></h1>

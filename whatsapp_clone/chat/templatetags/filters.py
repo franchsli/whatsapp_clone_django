@@ -1,20 +1,13 @@
 from django import template
 from django.db.models import QuerySet
 from chat.models import User, Chat, Message, Contact
-from chat.tools import DEFAULT_USER_PHOTO_URL, get_contact_in_chat, object_photo
+from chat.tools import get_contact_in_chat, object_photo
 from typing import Union, List
 import re, logging
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 register = template.Library()
-
-
-@register.filter
-def exclude_user(value, user):
-    user_list = list(value.values_list("username", flat=True))
-    return user_list[1] if user_list[1] != user.username else user_list[0]
-
 
 @register.filter
 def to_list(value) -> list:
@@ -26,7 +19,6 @@ def to_list(value) -> list:
     Returns:
         _list_: A list made from the queryset data.
     """
-    # you CAN ALSO use list comprehension (super effective)
     return list(value.values_list("id", flat=True).order_by("date"))
 
 
@@ -123,27 +115,27 @@ def archived_by_user_filter(chat: Chat, user: User) -> bool:
     return chat.archived_by_user(user)
 
 
-@register.simple_tag
-def exclude_user_tag(
-    user_set: QuerySet, user: User, desired_field: str
+@register.simple_tag(takes_context=True)
+def get_chat_users_data(context, chat: Chat, desired_data_field: str
 ) -> Union[str, List[str]]:
-    """Removes the given user object from the provided user_set.
+    """Return the desired data from the Users in the Chat excluding
+    the auth user (aka logged user).
 
     Args:
-        user_set (Queryset): An user object queryset.
-        user (User): The user that will be removed.
-        desired_field (str): The desired field of the user object.
+        context (_type_): The context in the template.
+        chat (Chat): Chat that the Users are in.
+        desired_data_field (str): The name of the field that contains
+        the desired data.
 
     Returns:
-        str: The user left after excluding the given user.
+        Union[str, List[str]]: The desired data of the Users excluding
+        the logged one.
     """
-    user_list = user_set.exclude(id=user.id)
-    users_values = list(user_list.values_list(desired_field, flat=True))
-
-    if len(users_values) < 2 and desired_field != "phone_number":
-        return users_values[0]
-
-    else:
+    user_list = chat.users.exclude(id=context["request"].user.id)
+    users_data = list(user_list.values_list(desired_data_field, flat=True))
+    # only shows relevant data fomr the phone numbers, because that field
+    # stores an object and not a string.
+    if desired_data_field == "phone_number":
         return list(
             map(
                 lambda user_phone: (
@@ -151,9 +143,16 @@ def exclude_user_tag(
                     if type(user_phone) != str
                     else None
                 ),
-                users_values,
+                users_data,
             )
         )
+    
+    elif desired_data_field == "username" and chat.is_group:
+        return chat.name
+        
+    else:
+        return users_data[0] if len(users_data) < 2 else users_data
+
 
 
 @register.simple_tag

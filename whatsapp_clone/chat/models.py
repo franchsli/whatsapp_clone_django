@@ -78,12 +78,16 @@ class Chat(models.Model):
         return user.archived_chats.filter(id=self.pk).exists()
 
     @property
-    def has_photo(self):
+    def has_photo(self) -> bool:
         return True if self.photo else False
 
     @property
     def last_message(self):
         return self.message_set.latest("date")
+
+    @property
+    def is_group(self) -> bool:
+        return len(self.admins.all()) >= 1
 
 
 class Message(models.Model):
