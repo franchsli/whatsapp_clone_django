@@ -629,6 +629,7 @@ async function validate_chat_form(chat_form, error_audio, websocket){
                     'The chat was created successfully!! Update your chat list by clicking the "chats" button.')
                     const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
                     toastBootstrap.show()
+                    update_chat_list()
                 }
                 break
             }
@@ -682,7 +683,7 @@ async function validate_contact_form(contact_form, error_audio, notification_aud
         // clears the checkboxes
         inputs[3].checked = false
         inputs[4].checked = false
-        
+        update_chat_list()
     }
     return false;
 }
