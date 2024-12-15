@@ -10,7 +10,6 @@ import json, logging
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
-
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         # default group name
@@ -31,7 +30,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
     async def receive(self, text_data):
         # transform the text_data (message received [json])
         # to a python dictionary
-        self.text_data_json = json.loads(text_data)
+        self.text_data_json: dict = json.loads(text_data)
         # handles the message as a 'request'
         # if the type of the 'request' is message, it means
         # a message needs to be created in the database with the dictionary data.
@@ -219,14 +218,14 @@ class ChatConsumer(AsyncWebsocketConsumer):
             image_file = encoded_image_to_file(image, "user_message")
             new_message.image = image_file
             new_message.save()
-        
+
         if replies_to:
             try:
                 reply_instance = Message.objects.get(id=replies_to)
                 new_message.reply_to = reply_instance
                 new_message.save()
             except Message.DoesNotExist:
-                logger.debug('NO MESSAGE WITH SUCH ID')
+                logger.debug("NO MESSAGE WITH SUCH ID")
 
     @database_sync_to_async
     def create_chat(self, users: list) -> None:

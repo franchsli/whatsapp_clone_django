@@ -141,7 +141,7 @@ def get_contacts_statuses(user: User, muted: bool) -> dict:
     return contacts_with_statuses
 
 
-def object_photo(object:Union[User, Chat]) -> str:
+def object_photo(object: Union[User, Chat]) -> str:
     """Returns the object photo field url if exists,
     returns a default photo url otherwise.
 
@@ -154,13 +154,14 @@ def object_photo(object:Union[User, Chat]) -> str:
     """
     return object.photo.url if object.has_photo else DEFAULT_USER_PHOTO_URL
 
-def get_object_by_id(object_class:object, id:Union[str, int]) -> Union[object, Exception]:
+
+def get_object_by_id(
+    object_class: object, id: Union[str, int]
+) -> Union[object, Exception]:
     try:
         return object_class.objects.get(id=id)
     except object_class.DoesNotExist:
-        raise ObjectDoesNotExist(f'NO {type(object_class).__name__} WITH SUCH ID')
-
-    
+        raise ObjectDoesNotExist(f"NO {type(object_class).__name__} WITH SUCH ID")
 
 
 def encoded_image_to_file(
@@ -181,6 +182,7 @@ def encoded_image_to_file(
     image_bytes_data = base64.b64decode(image_string_data)
     image_file = ContentFile(image_bytes_data, f"{file_name}.{file_extension}")
     return image_file
+
 
 # CONSTANT VARIABLES
 DEFAULT_USER_PHOTO_URL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNBNdcMDNS2r9df1IWFVc8AY0QNtfNhEJv7fGS5TdhUWrlBqfGu1PCCn9lKpL-FqF9dWc&usqp=CAU"
