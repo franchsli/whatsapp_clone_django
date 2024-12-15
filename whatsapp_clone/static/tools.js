@@ -682,6 +682,7 @@ async function validate_contact_form(contact_form, error_audio, notification_aud
         // clears the checkboxes
         inputs[3].checked = false
         inputs[4].checked = false
+        
     }
     return false;
 }

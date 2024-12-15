@@ -299,16 +299,16 @@ class App {
     load_event_listeners(){
         this.chat_form.onsubmit = async (event) => {
             event.preventDefault()
-            tools.validate_chat_form(this.chat_form, this.error_audio, this.chat_websocket)
+            tools.validate_chat_form(this.chat_form, this.error_audio, this.chat_websocket.client_websocket)
         }
         this.contact_form.onsubmit = async () => {
-            tools.validate_contact_form(this.contact_form, this.error_audio, this.notification_audio, this.chat_websocket)
+            tools.validate_contact_form(this.contact_form, this.error_audio, this.notification_audio, this.chat_websocket.client_websocket)
         }
 
         this.status_submit_button.onclick = (event) => {
             event.preventDefault()
-            if(tools.cand_send_messages(this.status_websocket)){
-                tools.validate_status_form(this.error_audio, this.status_websocket, user_id, user_phone_number)
+            if(tools.cand_send_messages(this.status_websocket.client_websocket)){
+                tools.validate_status_form(this.error_audio, this.status_websocket.client_websocket, user_id, user_phone_number)
             }
 
         }
