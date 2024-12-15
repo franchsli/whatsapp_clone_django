@@ -594,7 +594,7 @@ function create_instance_via_consumer(form, instance_type, websocket){
  * @param {HTMLFormElement} chat_form 
  * @param {HTMLAudioElement} error_audio 
  * @param {WebSocket} websocket 
- * @returns false to stop normal form submission
+ * @returns {false} false to stop normal form submission
  */
 async function validate_chat_form(chat_form, error_audio, websocket){
     if (!checked(chat_form)){
@@ -645,7 +645,7 @@ async function validate_chat_form(chat_form, error_audio, websocket){
  * @param {HTMLAudioElement} error_audio 
  * @param {HTMLAudioElement} notification_audio 
  * @param {Websocket} websocket 
- * @returns
+ * @returns {false}
  */
 async function validate_contact_form(contact_form, error_audio, notification_audio, websocket){
     const inputs = contact_form.getElementsByTagName('input')
@@ -764,7 +764,10 @@ async function reply_to_message(message_id, from_request_user, request_user_id) 
 
 }
 
-
+/**
+ * Reset the given status progress bar.
+ * @param {HTMLElement} progress_bar 
+ */
 function clear_status_progress(progress_bar){
     progress_bar.classList.remove('viewing', 'viewed')
 }

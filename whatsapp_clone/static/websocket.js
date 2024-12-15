@@ -325,7 +325,6 @@ class App {
                 if (chat_form_elements[index].type === 'checkbox'){
                     chat_form_elements[index].checked = false
                 }
-                
             }
             validation_message.innerText = ''
         })
@@ -356,10 +355,6 @@ class App {
     }
 
 }
-
-
-
-
 
 
 /**
