@@ -202,7 +202,7 @@ def chat_desired_data(
         # in case no contact is found,
         # it means the user is not in the contact list
         else:
-            user = chat.users.exclude(id=auth_user.pk)
+            user = chat.users.exclude(id=auth_user.pk).first()
             if desired_value == "photo":
                 return object_photo(user)
             else:

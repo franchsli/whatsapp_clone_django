@@ -3,6 +3,8 @@
 
 ## DO RIGHT NOW
 
+- Check if...
+  - Contact creation works correctly.
 - Implement a dynamic status length:
   - If its a photo 5 secs.
   - if its a long text (more than 200 chars) 10 secs. (THE MAXIMUM LENGTH IS NO IMAGE AND 450 CHARS)
@@ -11,8 +13,6 @@
     (like whatsapp).
 - (Chat Form) If a User deleted a chat, and want to create 'the same chat' again,
   remove the chat from the deleted chats list from the said User.
-- Check if...
-  - Contact creation works correctly.
 - Rework chat form to only check for Chats and not groups when checking if a Chat is already created (using chat api ofc).
   - Rework the API or implement complex logic before the use of the said API.
 - Finish the multiple chats deletion logic.
