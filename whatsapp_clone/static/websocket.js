@@ -59,14 +59,14 @@ class Chat_Web_Socket{
             'type': message_type,
             'message': message_text,
             'image': message_image,
-            'receiver_username': localStorage.getItem('receiver_username'),
+            'receiver_username': sessionStorage.getItem('receiver_username'),
             'sender_user_id': message_sender_id,
-            'chat_id': localStorage.getItem('chat_id'),
-            'chat_members_phones': localStorage.getItem('chat_members_phones'),
-            'reply_to': localStorage.getItem('reply_to')
+            'chat_id': sessionStorage.getItem('chat_id'),
+            'chat_members_phones': sessionStorage.getItem('chat_members_phones'),
+            'reply_to': sessionStorage.getItem('reply_to')
         }))
         // removes the item to avoid bugs
-        localStorage.removeItem('reply_to')
+        sessionStorage.removeItem('reply_to')
     }
 
     handle_chat_message(event){
@@ -80,7 +80,7 @@ class Chat_Web_Socket{
         if (user_id === this.sender_id){
             this.app.message_sent_audio.play()
             this.app.new_message = true
-            htmx.ajax('GET', `/display_chat/${localStorage.getItem('chat_id')}`, '#chat-display').then(() => {
+            htmx.ajax('GET', `/display_chat/${sessionStorage.getItem('chat_id')}`, '#chat-display').then(() => {
                 tools.update_chat_list()
                 this.app.new_message = false
             })
@@ -88,7 +88,7 @@ class Chat_Web_Socket{
         else {
             // timeout to make sure the new message is already stored in the database before requesting it
             setTimeout(() => {
-                htmx.ajax('GET', `/append_message/${localStorage.getItem('chat_id')}`, {target:'#chat-messages', swap:'beforeend'}).then( () => {
+                htmx.ajax('GET', `/append_message/${sessionStorage.getItem('chat_id')}`, {target:'#chat-messages', swap:'beforeend'}).then( () => {
                     tools.update_chat_list()
                 })  
             }, 500)
@@ -139,8 +139,8 @@ class Chat_Web_Socket{
         }
         this.app.new_message = true
         if (document.getElementById('contact-name') !== null){
-            if (localStorage.getItem('chat_id') === this.chat_id) {
-                htmx.ajax('GET', `/display_chat/${localStorage.getItem('chat_id')}`, '#chat-display').then(() => {
+            if (sessionStorage.getItem('chat_id') === this.chat_id) {
+                htmx.ajax('GET', `/display_chat/${sessionStorage.getItem('chat_id')}`, '#chat-display').then(() => {
                     tools.scroll_to_bottom()
                 })
                 
@@ -165,8 +165,8 @@ class Chat_Web_Socket{
        }
        this.app.new_message = true
         if (document.getElementById('contact-name') !== null){
-            if (localStorage.getItem('chat_id') === this.chat_id) {
-                htmx.ajax('GET', `/display_chat/${localStorage.getItem('chat_id')}`, '#chat-display').then(() => {
+            if (sessionStorage.getItem('chat_id') === this.chat_id) {
+                htmx.ajax('GET', `/display_chat/${sessionStorage.getItem('chat_id')}`, '#chat-display').then(() => {
                     tools.scroll_to_bottom()
                 })
             }
@@ -368,11 +368,11 @@ window.summon_chat = function(chat, chat_websocket){
         'type':'reconnect',
         'reconnect_to': chat.dataset.chat
     }))
-    localStorage.setItem('receiver_username', chat.dataset.contact)
-    localStorage.setItem('chat_id', chat.dataset.chat)
-    localStorage.setItem('chat_members_phones', chat_members_phones)
+    sessionStorage.setItem('receiver_username', chat.dataset.contact)
+    sessionStorage.setItem('chat_id', chat.dataset.chat)
+    sessionStorage.setItem('chat_members_phones', chat_members_phones)
     // clears this key to avoid bugs
-    localStorage.removeItem('reply_to')
+    sessionStorage.removeItem('reply_to')
 
 }
 
@@ -542,7 +542,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const emoji_class = document.querySelector('.emoji-class-active')
             tools.load_emojis(emoji_class.dataset.emojiPack, emoji_container)
             // UPDATE THE CHAT LIST IF THERE WERE UNREAD MESSAGES
-            const unread_messages_counter = document.getElementById(`chat-${localStorage.getItem('chat_id')}unread-counter`)
+            const unread_messages_counter = document.getElementById(`chat-${sessionStorage.getItem('chat_id')}unread-counter`)
             if (unread_messages_counter){
                 tools.update_chat_list()
             }

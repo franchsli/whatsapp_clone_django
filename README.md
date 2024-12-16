@@ -32,12 +32,10 @@
 ## ANOTHER THINGS TO DO
 
 - Make responsive.
-- Add something to delete statuses automatically every 24 hours (cronjobs maybe).
 - Make the silence contact logic (booleand field [think it tho])
 
 ## Improvements
 
-- use SessionStorage insetead of localStorage. (multi tab chatting)
 - Implement all of the features at
   [dj-chat](https://github.com/adilmohak/dj-chat?tab=readme-ov-file#current-features)
 

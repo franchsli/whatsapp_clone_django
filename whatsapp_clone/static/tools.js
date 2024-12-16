@@ -341,7 +341,7 @@ function update_chat_list(){
  */
 function load_older_messages(){
     if (document.getElementById('chat-messages') !== null){
-        htmx.ajax('GET', `/previous_messages/${localStorage.getItem('chat_id')}/${localStorage.getItem('oldest_message_date')}/`,
+        htmx.ajax('GET', `/previous_messages/${sessionStorage.getItem('chat_id')}/${sessionStorage.getItem('oldest_message_date')}/`,
          {target:'#chat-messages', swap:'afterbegin'})
         
     }
@@ -404,7 +404,7 @@ function switch_element_visibility(element, display_type='block'){
 function load_more_messages(message_list){
     if (message_list.scrollTop === 0){
         const oldest_message = document.querySelector('.message')
-        localStorage.setItem('oldest_message_date', oldest_message.dataset.date)
+        sessionStorage.setItem('oldest_message_date', oldest_message.dataset.date)
         load_older_messages()
     }
 }
@@ -730,7 +730,7 @@ async function reply_to_message(message_id, from_request_user, request_user_id) 
     // data of the replied message
     const message_data = await get(`/api/messages/${message_id}/`)
     // stores the replied message id for later
-    localStorage.setItem('reply_to', message_id)
+    sessionStorage.setItem('reply_to', message_id)
     const reply_preview = document.getElementById('reply-preview')
     reply_preview.innerHTML = ''
     // creating the html elements for the preview...
