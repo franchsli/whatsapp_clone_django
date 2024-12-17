@@ -165,18 +165,6 @@ def display_chat(request, pk):
     else:
         return HttpResponseNotAllowed(["GET"])
 
-
-def delete_chat(request, pk):
-    if request.method == "PATCH":
-        chat = Chat.objects.get(id=pk)
-        request.user.deleted_chats.add(chat)
-        if chat.users.count() == 0:
-            chat.delete()
-        return redirect("chats")
-    else:
-        return HttpResponseNotAllowed(["PATCH"])
-
-
 def get_contacts(request):
     if request.method == "GET":
         contacts = request.user.contacts.all()

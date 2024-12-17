@@ -17,7 +17,6 @@ urlpatterns = [
     ),
     path("display_user_ui/", views.display_user_ui, name="display_user_ui"),
     path("display_chat/<int:pk>", views.display_chat, name="display_chat"),
-    path("delete_chat/<int:pk>", views.delete_chat, name="delete_chat"),
     path("contacts/", views.get_contacts, name="get_contacts"),
     path("get_contact/<int:pk>", views.get_contact, name="get_contact"),
     path("edit_contact/<int:pk>", views.edit_contact, name="edit_contact"),

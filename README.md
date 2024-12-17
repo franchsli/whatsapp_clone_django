@@ -9,8 +9,6 @@
   - if its a video, the length of the video.
   - Or if its not a video, 5 secs and users should be able to pause the event
     (like whatsapp).
-- (Chat Form) If a User deleted a chat, and want to create 'the same chat' again,
-  remove the chat from the deleted chats list from the said User.
 - Rework chat form to only check for Chats and not groups when checking if a Chat is already created (using chat api ofc).
   - Rework the API or implement complex logic before the use of the said API.
 - Finish the multiple chats deletion logic.
