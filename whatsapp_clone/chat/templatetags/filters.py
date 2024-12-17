@@ -1,5 +1,5 @@
 from django import template
-from django.db.models import QuerySet
+from django.db.models import QuerySet, Q
 from chat.models import User, Chat, Message, Contact
 from chat.tools import get_contact_in_chat, object_photo
 from typing import Union, List
@@ -113,6 +113,11 @@ def starred_by_user_filter(message: Message, user: User) -> bool:
 @register.filter
 def archived_by_user_filter(chat: Chat, user: User) -> bool:
     return chat.archived_by_user(user)
+
+@register.filter
+def unarchived_chats(user, user_chats):
+    chats = user_chats.exclude(Q(id__in=user.archived_chats.all()))
+    return chats
 
 
 @register.simple_tag(takes_context=True)

@@ -3,6 +3,7 @@
 
 ## DO RIGHT NOW
 
+- Finish the multiple chats archivation logic.
 - Implement a dynamic status length:
   - If its a photo 5 secs.
   - if its a long text (more than 200 chars) 10 secs. (THE MAXIMUM LENGTH IS NO IMAGE AND 450 CHARS)
@@ -11,7 +12,6 @@
     (like whatsapp).
 - Rework chat form to only check for Chats and not groups when checking if a Chat is already created (using chat api ofc).
   - Rework the API or implement complex logic before the use of the said API.
-- Finish the multiple chats archivation logic.
 - Add status complex status creation (like Whatsapp).
   - Users could select the color of the background for
     statuses.
@@ -32,6 +32,7 @@
 
 ## Improvements
 
+- Speed up chats view.
 - Implement all of the features at
   [dj-chat](https://github.com/adilmohak/dj-chat?tab=readme-ov-file#current-features)
 
