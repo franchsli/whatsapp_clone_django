@@ -87,7 +87,7 @@ class Chat(models.Model):
 
     @property
     def is_group(self) -> bool:
-        return len(self.admins.all()) >= 1
+        return self.admins.count() >= 1
 
 
 class Message(models.Model):
