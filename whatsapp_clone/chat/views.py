@@ -17,7 +17,6 @@ def chat(request):
     status_form = StatusForm(
         initial={"uploaded_by": request.user, "upload_date": timezone.now}
     )
-    contacts = request.user.contacts.order_by("name")
     archived_unread_chats_num = 0
     for chat in request.user.archived_chats.all():
         if (
@@ -31,7 +30,6 @@ def chat(request):
         "index.html",
         {
             "chat_form": chat_form,
-            "contacts": contacts,
             "contact_form": contact_form,
             "status_form": status_form,
             "archived_unread_chats_num": archived_unread_chats_num,
