@@ -11,8 +11,7 @@
     (like whatsapp).
 - Rework chat form to only check for Chats and not groups when checking if a Chat is already created (using chat api ofc).
   - Rework the API or implement complex logic before the use of the said API.
-- Finish the multiple chats deletion logic.
-- Add Contact deletion. (maybe in multi chats selection as well)
+- Finish the multiple chats archivation logic.
 - Add status complex status creation (like Whatsapp).
   - Users could select the color of the background for
     statuses.
