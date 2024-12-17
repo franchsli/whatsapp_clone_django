@@ -24,10 +24,11 @@
               {% else %} 
                 <span class="themed-text">
               {% endif %}
+              
               {% if 'day' in time_difference and 'week' not in time_difference %}
                 {# Between 1 day and 1 week ago, display the day name #}
                 {{ latest_message.date|date:"l" }}</span>
-              {% elif 'week' in time_difference %}
+              {% elif 'week' in time_difference or 'month' in time_difference %}
                 {# More than a week ago, display the whole date #}
                 {{ latest_message.date|date:"F j, Y" }}</span>
               {% else %}

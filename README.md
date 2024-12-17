@@ -29,7 +29,6 @@
 ## ANOTHER THINGS TO DO
 
 - Make responsive.
-- Make the silence contact logic (booleand field [think it tho])
 
 ## Improvements
 
