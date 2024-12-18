@@ -33,6 +33,8 @@
 ## Improvements
 
 - Speed up chats view.
+- [Stress test](https://locust.io/)
+- [Stress Test Docs](https://docs.locust.io/en/stable/quickstart.html)
 - Implement all of the features at
   [dj-chat](https://github.com/adilmohak/dj-chat?tab=readme-ov-file#current-features)
 

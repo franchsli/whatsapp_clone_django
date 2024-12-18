@@ -72,7 +72,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
         elif self.text_data_json["type"] == "create_chat":
             contact = await database_sync_to_async(get_user_by_phone)(
-                self.text_data_json["chat_members_phones"][0]
+                self.text_data_json["contact_phone_number"]
             )
             await self.create_chat([self.user_instance, contact])
 

@@ -41,7 +41,10 @@ def last_message(messages: QuerySet) -> Message:
 @register.filter
 def message_text(message: Message) -> Message:
     """Returns the latest's Message text."""
-    return "Photo 📷" if message.has_image else message.text
+    if message:
+        return "Photo 📷" if message.has_image else message.text
+    else:
+        return ""
 
 
 @register.filter
