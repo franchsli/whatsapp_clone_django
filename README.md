@@ -3,15 +3,11 @@
 
 ## DO RIGHT NOW
 
-- Finish the multiple chats archivation logic.
-- Implement a dynamic status length:
-  - If its a photo 5 secs.
-  - if its a long text (more than 200 chars) 10 secs. (THE MAXIMUM LENGTH IS NO IMAGE AND 450 CHARS)
-  - if its a video, the length of the video.
-  - Or if its not a video, 5 secs and users should be able to pause the event
-    (like whatsapp).
 - Rework chat form to only check for Chats and not groups when checking if a Chat is already created (using chat api ofc).
   - Rework the API or implement complex logic before the use of the said API.
+- Add user settings to personalize things like notification appareance
+  or even UI theming (the dark and light theme will remain the same,
+  but more themes will be added  [don't know when, don't know how])
 - Add status complex status creation (like Whatsapp).
   - Users could select the color of the background for
     statuses.
@@ -22,29 +18,21 @@
   THAT CHANGES THE COLOR OF THE FOUND ELEMENT WITH THE GIVEN ID WITH THE INPUT COLOR,
   LIKE THIS:
     onclick="change_element_color(this.style.color, target_element_id)"
-- Add user settings to personalize things like notification appareance
-  or even UI theming (the dark and light theme will remain the same,
-  but more themes will be added  [don't know when, don't know how])
-
-## ANOTHER THINGS TO DO
-
-- Make responsive.
+- Implement a dynamic status length:
+  - If its a photo 5 secs.
+  - if its a long text (more than 200 chars) 10 secs. (THE MAXIMUM LENGTH IS NO IMAGE AND 450 CHARS)
+  - if its a video, the length of the video.
+  - Or if its not a video, 5 secs and users should be able to pause the event
+    (like whatsapp).
 
 ## Improvements
 
+- Check if 'await' does something in async functions with await inside (get and patch)
 - Speed up chats view.
 - [Stress test](https://locust.io/)
 - [Stress Test Docs](https://docs.locust.io/en/stable/quickstart.html)
 - Implement all of the features at
   [dj-chat](https://github.com/adilmohak/dj-chat?tab=readme-ov-file#current-features)
-
-## BUGS TO FIX
-
-NONE LOL (YET)
-
-## NOTES FOR LATER
-
-- If the unread counter badges are acting weird, see update_chat_list() at summon_chat.
 
 ## SPEED TESTS RESULTS
 

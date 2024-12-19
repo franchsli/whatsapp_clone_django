@@ -1,7 +1,7 @@
 {% load filters %}
 {% load static %}
 
-<form hx-target="this" id="archive-chats-form" onsubmit="event.preventDefault(); validate_archive_form(this);" data-user="{{request.user.id}}">
+<form hx-target="this" id="archive-chats-form" data-user="{{request.user.id}}">
   {% csrf_token %}
   <div class="validation-error"></div>
   <ul id="chat-list" class="scroll-section list-group list-group-flush overflow-y-scroll" style="max-height: 590px; height: 500px;">
@@ -18,7 +18,8 @@
       <h1 class="text-white-50">No chats <i class="bi bi-emoji-frown"></i></h1>
     {% endfor %}
     {% endwith %}
-    <button type="submit" class="btn themed-button float-end mt-3">Archive chats</button>
+    <button type="button" class="btn themed-button float-end mt-3" onclick="validate_archive_form(this.parentElement.parentElement);"
+    >Archive chats</button>
     <button type="button" class="btn btn-secondary float-end mt-3 me-3" hx-get="{% url 'chats' False %}" hx-swap="outerHTML">Cancel</button>
   </ul>
 </form>

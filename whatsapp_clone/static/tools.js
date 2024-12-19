@@ -17,16 +17,16 @@ async function get(url){
  * @param {String} token The csrf token.
  */
 async function post(url, data, token){
-    fetch(url, {
+    const response = await fetch(url, {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {'Accept': 'application/json, text/plain',
-            'Content-Type': 'application/json;charset=UTF-8', 
-            'X-CSRFToken': token
+        'Content-Type': 'application/json;charset=UTF-8', 
+        'X-CSRFToken': token
         }
     })
-    .then(response => {return response.json()})
-    .catch(error => console.log(error.message))
+    const returned_data = response.json()
+    return returned_data
 }
 
 /**
@@ -37,7 +37,7 @@ async function post(url, data, token){
  * @param {String} token The csrf token.
  */
 async function patch(url, data, token){
-    fetch(url, {
+    const response = await fetch(url, {
         method: 'PATCH',
         body: JSON.stringify(data),
         headers: {'Accept': 'application/json, text/plain',
@@ -45,8 +45,8 @@ async function patch(url, data, token){
         'X-CSRFToken': token
         }
     })
-    .then(response => {return response.json()})
-    .catch(error => console.log(error.message))
+    const returned_data = response.json()
+    return returned_data
 }
 
 /**
@@ -809,8 +809,10 @@ async function validate_archive_form(form){
                 const response = await patch(`/api/chats/${chat.id}/`, 
                     data,
                      form.firstElementChild.value)
-            }   
+            }
         }
+        // show the updated chat list (unarchived chats)
+        htmx.ajax('GET', '/chats/False', {target:'#archive-chats-form', swap:'outerHTML'})
     }
     else{
         const message_container = form.querySelector('.validation-error')
