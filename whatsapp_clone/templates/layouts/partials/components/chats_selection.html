@@ -1,7 +1,9 @@
 {% load filters %}
 {% load static %}
 
-<form hx-target="this">
+<form hx-target="this" id="archive-chats-form" onsubmit="event.preventDefault(); validate_archive_form(this);" data-user="{{request.user.id}}">
+  {% csrf_token %}
+  <div class="validation-error"></div>
   <ul id="chat-list" class="scroll-section list-group list-group-flush overflow-y-scroll" style="max-height: 590px; height: 500px;">
     {% with unarchived_chats=request.user|unarchived_chats:request.user.chats.all %}
       {% for chat in unarchived_chats %}
@@ -10,7 +12,7 @@
       role="button" data-chat={{chat.id}}>
         <input type="checkbox" class="form-check-input" id="{{ chat.id }}">
         <img class="ms-1 rounded-circle img-fluid" src="{% chat_desired_data chat request.user 'photo' %}" alt="Contact photo couldn't load">
-        <label class="form-check-label ms-3" for={{ chat.id }}>{% get_chat_users_data chat 'username' %} </label>
+        <label class="form-check-label ms-3" for={{ chat.id }}>{% chat_desired_data chat request.user 'name' %}</label>
       </li>
       {% empty %}
       <h1 class="text-white-50">No chats <i class="bi bi-emoji-frown"></i></h1>

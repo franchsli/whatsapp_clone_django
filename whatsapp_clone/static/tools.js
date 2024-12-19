@@ -16,14 +16,36 @@ async function get(url){
  * @param {Object} data The object containing all the data to be sent to the endpoint.
  * @param {String} token The csrf token.
  */
-function post(url, data, token){
+async function post(url, data, token){
     fetch(url, {
         method: 'POST',
         body: JSON.stringify(data),
-        headers: {'content-type':'aplication/json', 
-        'X-CSRFToken': token}
+        headers: {'Accept': 'application/json, text/plain',
+            'Content-Type': 'application/json;charset=UTF-8', 
+            'X-CSRFToken': token
+        }
     })
-    .then(response => console.log(response.json))
+    .then(response => {return response.json()})
+    .catch(error => console.log(error.message))
+}
+
+/**
+ * Does a PUT request to the specified URL and returns the response in  JSON format
+ * if the response is succesful, logs an error otherwise.
+ * @param {String} url The url to which the request will be made.
+ * @param {Object} data The object containing all the data to be sent to the endpoint.
+ * @param {String} token The csrf token.
+ */
+async function patch(url, data, token){
+    fetch(url, {
+        method: 'PATCH',
+        body: JSON.stringify(data),
+        headers: {'Accept': 'application/json, text/plain',
+        'Content-Type': 'application/json;charset=UTF-8', 
+        'X-CSRFToken': token
+        }
+    })
+    .then(response => {return response.json()})
     .catch(error => console.log(error.message))
 }
 
@@ -772,6 +794,30 @@ function clear_status_progress(progress_bar){
     progress_bar.classList.remove('viewing', 'viewed')
 }
 
+/**
+ * 
+ * @param {HTMLFormElement} form 
+ */
+async function validate_archive_form(form){
+    if(checked(form)){
+        debugger
+        for (let index = 0; index < form.elements.length; index++) {
+            const chat = form.elements[index];
+            if (chat.checked){
+                const chat_instance = await get(`/api/chats/${chat.id}/`)
+                const data = {archived_by: [...chat_instance.archived_by, form.dataset.user]}
+                const response = await patch(`/api/chats/${chat.id}/`, 
+                    data,
+                     form.firstElementChild.value)
+            }   
+        }
+    }
+    else{
+        const message_container = form.querySelector('.validation-error')
+        message_container.innerText = 'INVALID, PLEASE SELECT ONE CHAT AT LEAST'
+    }
+}
+
 
 /**
  * Loads many functions so they can be used
@@ -915,6 +961,10 @@ function load_global_doc_functions(){
 
     window.reply_to_message = function(message_id, from_request_user, request_user_id){
         reply_to_message(message_id, from_request_user, request_user_id)
+    }
+
+    window.validate_archive_form = function(form){
+        validate_archive_form(form)
     }
 
 }
