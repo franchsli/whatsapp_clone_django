@@ -3,6 +3,10 @@
 
 ## DO RIGHT NOW
 
+- Finish group logic:
+  - Creating groups.
+  - Leaving groups.
+  - Deleting groups (Only can be done by an admin)
 - Add status complex status creation (like Whatsapp).
   - Users could select the color of the background for
     statuses.
