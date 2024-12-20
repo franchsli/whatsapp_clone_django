@@ -3,8 +3,6 @@
 
 ## DO RIGHT NOW
 
-- Rework chat form to only check for Chats and not groups when checking if a Chat is already created (using chat api ofc).
-  - Rework the API or implement complex logic before the use of the said API.
 - Add user settings to personalize things like notification appareance
   or even UI theming (the dark and light theme will remain the same,
   but more themes will be added  [don't know when, don't know how])
