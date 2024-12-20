@@ -10,13 +10,6 @@
 </nav>
 
 <div>
-    <form class="d-flex m-3" role="search">
-        <input id="settings-search" class="form-control mx-2" 
-        type="search" placeholder="Search settings..." aria-label="Search" 
-        oninput="filter_by_value(this.value, document.getElementById('settings-list'));">
-        </input>
-        <button class="btn themed-button" type="submit"><i class="bi bi-search"></i></button>
-    </form>
     <ul id="settings-list" class="scroll-section list-group list-group-flush overflow-y-scroll" 
     style="max-height: 615px;">
         <li class="list-group-item p-3 d-flex flex-inline align-items-center setting" role="button" style="border: none;"
@@ -34,12 +27,6 @@
                         <span>{{ request.user.about }}</span>
                 </span>
         </li>
-        <li class="list-group-item p-4 d-flex flex-inline align-items-center setting" role="button">
-                <span class="me-3"><i class="bi bi-lock-fill important-icon"></i></span><span> Privacy</span></li>
-        <li class="list-group-item p-4 d-flex flex-inline align-items-center setting" role="button">
-                <span class="me-3"><i class="bi bi-chat-left-text-fill important-icon"></i></span><span> Chats</span></li>
-        <li class="list-group-item p-4 d-flex flex-inline align-items-center setting" role="button">
-                <span class="me-3"><i class="bi bi-bell-fill important-icon"></i></span><span> Notifications</span></li>
         <li class="list-group-item p-4 d-flex flex-inline align-items-center setting" role="button">
                 <span class="me-3"><i class="bi bi-escape important-icon"></i><a style="text-decoration: none;" href="{% url 'exit' %}"> Log out</a></span></li>
     </ul>

@@ -3,9 +3,6 @@
 
 ## DO RIGHT NOW
 
-- Add user settings to personalize things like notification appareance
-  or even UI theming (the dark and light theme will remain the same,
-  but more themes will be added  [don't know when, don't know how])
 - Add status complex status creation (like Whatsapp).
   - Users could select the color of the background for
     statuses.
