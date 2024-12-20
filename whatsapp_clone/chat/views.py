@@ -435,7 +435,7 @@ def edit_user_info(request):
             },
         )
     elif request.method == "POST":
-        user_form = UserForm(request.POST, instance=request.user)
+        user_form = UserForm(request.POST, request.FILES, instance=request.user)
         if user_form.is_valid():
             user_form.save()
         return redirect("user_info")

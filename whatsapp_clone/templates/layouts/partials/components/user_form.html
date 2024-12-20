@@ -11,7 +11,7 @@
     </div>
 </nav>
 
-<form hx-post="{% url 'user_info' %}" hx-target="#chats-and-more" 
+<form hx-encoding="multipart/form-data" hx-post="{% url 'edit_user_info' %}" hx-target="#chats-and-more" 
     hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
     {{ user_form | crispy }}
     <button id="submit-user-form" class="btn" type="submit">Submit</button>

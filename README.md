@@ -8,6 +8,7 @@
     statuses.
     - [Useful library for that](https://github.com/fabiocaccamo/django-colorfield)
 - Add chat wallpapers user CSS url for images and a JS color selector for colors.
+  - This should be an user field [Useful library for that](https://github.com/fabiocaccamo/django-colorfield).
   - [USE THIS](https://getbootstrap.com/docs/5.3/forms/form-control#color).
   - EVERY TIME YOU IMPLEMENT A COLOR PICKER YOU SHOULD ADD A ONINPUT THEN A FUNCTION
   THAT CHANGES THE COLOR OF THE FOUND ELEMENT WITH THE GIVEN ID WITH THE INPUT COLOR,
