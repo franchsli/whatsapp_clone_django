@@ -22,13 +22,25 @@
                  alt="Default photo couldn't load." style="max-width: 200px; max-height: 200px; width: 200px; height: 200px;">
                 {% endif %}
         </li>
-        <li class="list-group-item p-1 d-flex flex-inline align-items-center" style="border: none;">
-                <span class="ms-3 d-flex flex-column">
-                        <span class="themed-text">Your username</span>
+        <li class="list-group-item p-1 d-flex flex-inline align-items-center w-100" style="border: none;">
+                <ul class="list-group list-group-flush w-100">
+                    <li class="list-group-item d-flex flex-column">
+                        <span class="themed-text">First name:</span>
+                        <span>{{ request.user.firstname }}</span>
+                    </li>
+                    <li class="list-group-item d-flex flex-column">
+                        <span class="themed-text">Last name:</span>
+                        <span>{{ request.user.lastname }}</span>
+                    </li>
+                    <li class="list-group-item d-flex flex-column">
+                        <span class="themed-text">Username:</span>
                         <span>{{ request.user.username }}</span>
-                        <span class="themed-text">Your about</span>
+                    </li>
+                    <li class="list-group-item d-flex flex-column">
+                        <span class="themed-text">About:</span>
                         <span>{{ request.user.about }}</span>
-                </span>
+                    </li>
+                </ul>
         </li>
     </ul>
     <button class="btn m-3 d-flex themed-button" hx-get="{% url 'edit_user_info' %}" hx-target="#chats-and-more">Edit</button>
