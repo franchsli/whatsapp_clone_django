@@ -45,7 +45,6 @@ urlpatterns = [
         views.mute_contact_statuses,
         name="mute_contact_statuses",
     ),
-    path("user_settings/", views.user_settings, name="user_settings"),
     path("user_info/", views.user_info, name="user_info"),
     path("edit_user_info/", views.edit_user_info, name="edit_user_info"),
     path("chats_selection/", views.chats_selection, name="chats_selection"),

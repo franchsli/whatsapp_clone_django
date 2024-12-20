@@ -416,10 +416,6 @@ def create_status(request):
         return HttpResponseNotAllowed(["POST"])
 
 
-def user_settings(request):
-    return render(request, "layouts/partials/user_settings.html", {})
-
-
 def user_info(request):
     if request.method == "GET":
         return render(request, "layouts/partials/user_info.html", {})
@@ -430,8 +426,7 @@ def user_info(request):
 
 def edit_user_info(request):
     if request.method == "GET":
-        user_instance = User.objects.get(id=request.user.id)
-        user_form = UserForm(instance=user_instance)
+        user_form = UserForm(instance=request.user)
         return render(
             request,
             "layouts/partials/components/user_form.html",
@@ -440,8 +435,7 @@ def edit_user_info(request):
             },
         )
     elif request.method == "POST":
-        user_instance = User.objects.get(id=request.user.id)
-        user_form = UserForm(request.POST, instance=user_instance)
+        user_form = UserForm(request.POST, instance=request.user)
         if user_form.is_valid():
             user_form.save()
         return redirect("user_info")
