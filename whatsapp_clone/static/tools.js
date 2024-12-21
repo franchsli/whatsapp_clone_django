@@ -261,31 +261,21 @@ function switch_emojis(button){
     load_emojis(button.dataset.emojiPack, emoji_container)
 }
 
-/**
- * Applies an event listener
- * in the provided form checkboxes,
- * to prevent multiple checkboxes being selected.
- * @param {HTMLFormElement} form 
- */
-function switch_purpose(form){
-    const elements = form.elements
-    for (let i = 0; i < elements.length; i++) {
-        if(elements[i].type === 'checkbox'){
-            elements[i].addEventListener('change', () => {
-                // if the current checkbox is checked
-                // uncheck all the other checkboxes
-                if(elements[i].checked){
-                    for (let j = 0; j < elements.length; j++) {
-                        if(elements[i] !== elements[j]){
-                            elements[j].checked = false
-                        }
-                    }
-                }
-            })
-        }
-        
-    }
 
+function switch_purpose(form, form_header){
+    const checked_checkboxes = form.querySelectorAll('input:checked')
+    if(checked_checkboxes.length <= 1){
+        form.dataset.creating = 'chat'
+        if (form_header){
+            form_header.innerText = 'Start new chat'
+        }
+    }
+    else{
+        form.dataset.creating = 'group'
+        if (form_header){
+            form_header.innerText = 'Start new group'
+        }
+    }
 }
 
 /**
@@ -844,8 +834,8 @@ function load_global_doc_functions(){
         switch_emojis(button)
     }
 
-    window.switch_purpose = function(form){
-        switch_purpose(form)
+    window.switch_purpose = function(form, form_header){
+        switch_purpose(form, form_header)
     }
 
     window.toggle_element_inner_text = function(HTML_element, text_a, text_b){

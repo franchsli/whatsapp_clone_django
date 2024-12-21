@@ -27,6 +27,7 @@
 
 ## Improvements
 
+- Check why switch_purpose() runs so many times.
 - Check if 'await' does something in async functions with await inside (get and patch)
 - Speed up chats view.
 - [Stress test](https://locust.io/)

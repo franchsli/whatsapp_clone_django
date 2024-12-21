@@ -21,11 +21,12 @@
 
         <script>
           const chat_creation_form = document.getElementById("chat-creation-form");
+          const chat_creation_form_label = document.getElementById('NewChatLabel')
           const observer = new MutationObserver(function (mutations) {
             mutations.forEach(function (mutation) {
               if (mutation.type === "childList") {
                 // Form elements have changed
-                switch_purpose(chat_creation_form)
+                switch_purpose(chat_creation_form, chat_creation_form_label)
               }
             });
           });
