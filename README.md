@@ -4,6 +4,8 @@
 ## DO RIGHT NOW
 
 - Finish group logic:
+  - Rework and optimize create_instance_via_consumer() function
+  and the consumer as well.
   - Creating groups.
   - Leaving groups.
   - Deleting groups (Only can be done by an admin)
@@ -27,7 +29,6 @@
 
 ## Improvements
 
-- Check if 'await' does something in async functions with await inside (get and patch)
 - Speed up chats view.
 - [Stress test](https://locust.io/)
 - [Stress Test Docs](https://docs.locust.io/en/stable/quickstart.html)
