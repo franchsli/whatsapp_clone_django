@@ -267,7 +267,7 @@ function switch_emojis(button){
  * to prevent multiple checkboxes being selected.
  * @param {HTMLFormElement} form 
  */
-function switch_checkboxes(form){
+function switch_purpose(form){
     const elements = form.elements
     for (let i = 0; i < elements.length; i++) {
         if(elements[i].type === 'checkbox'){
@@ -844,8 +844,8 @@ function load_global_doc_functions(){
         switch_emojis(button)
     }
 
-    window.switch_checkboxes = function(form){
-        switch_checkboxes(form)
+    window.switch_purpose = function(form){
+        switch_purpose(form)
     }
 
     window.toggle_element_inner_text = function(HTML_element, text_a, text_b){
@@ -978,7 +978,7 @@ export {
     scroll_to_bottom, toggleReadMore, showDropdown, 
     run_element_animation, checked, not_empty, 
     toggle_element_inner_text, load_emojis, switch_emojis, 
-    switch_checkboxes, toggle_element_display, previewImage, 
+    switch_purpose, toggle_element_display, previewImage, 
     update_chat_list, at_least_one_attr, exchange_elements_class, 
     switch_element_visibility, load_more_messages, load_older_messages, 
     remove_duplicates, change_element_color, filter_by_value, 

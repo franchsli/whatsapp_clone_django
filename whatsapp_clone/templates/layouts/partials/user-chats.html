@@ -15,22 +15,22 @@
       </div>
       <div class="modal-body">
         <form id="chat-creation-form" hx-get="{% url 'update_chat_form' %}" hx-target="this"
-          hx-trigger="load, click from:#create-chat">
+          hx-trigger="load, click from:#create-chat" data-creating="chat">
           {% include 'layouts/partials/chat_form_elements.html' %}
         </form>
 
         <script>
-          const myForm = document.getElementById("chat-creation-form");
+          const chat_creation_form = document.getElementById("chat-creation-form");
           const observer = new MutationObserver(function (mutations) {
             mutations.forEach(function (mutation) {
               if (mutation.type === "childList") {
                 // Form elements have changed
-                switch_checkboxes(myForm)
+                switch_purpose(chat_creation_form)
               }
             });
           });
 
-          observer.observe(myForm, { childList: true }); // Observe for child list changes
+          observer.observe(chat_creation_form, { childList: true }); 
         </script>
       </div>
     </div>
