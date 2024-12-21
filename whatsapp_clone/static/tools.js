@@ -172,12 +172,13 @@ function toggle_element_inner_text(HTML_element, text_a, text_b){
  * @returns {Boolean} Returns true if at least a checkbox in the form was checked, false otherwise.
  */
 function checked(form){
-    for (let index = 0; index < form.elements.length; index++) {
-        let element = form.elements[index];
-        if (element.checked){
-            return true}
+    const checked_checkboxes = form.querySelectorAll('input:checked')
+    if (checked_checkboxes.length >= 1){
+        return true;
     }
-    return false
+    else{
+        return false;
+    }
 }
 
 /**
