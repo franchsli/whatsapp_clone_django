@@ -182,6 +182,20 @@ function checked(form){
 }
 
 /**
+ * Returns the ID of the first checked checkbox in the given form.
+ * @param {HTMLFormElement} form 
+ */
+function checked_checkbox_id(form){
+    const checkboxes = form.querySelector('input[type="checkbox"]')
+    for (let index = 0; index < checkboxes.length; index++) {
+        const checkbox = checkboxes[index];
+        if (checkbox.cheked){
+            return checkbox.id
+        }
+    }
+}
+
+/**
  * Returns true if any input in the provided form is not empty, false otherwise.
  * @param {HTMLFormElement} form 
  * @param {String} excluded_type The type of input that will be excluded from the
@@ -617,36 +631,43 @@ async function validate_chat_form(chat_form, error_audio, websocket){
     }
 
     else{
-        for (let index = 0; index < chat_form.elements.length; index++) {
-            // when the selected contact (checkbox) is found
-            if(chat_form.elements[index].checked){
-                debugger
-                const contact_phone_number = chat_form.elements[index].id
-                const contact_user_object = await get(`/api/users/?phone_number=${contact_phone_number}`)
-                const contact_user_id = contact_user_object[0].id
-                // do an API request and check if the user already have a chat with the
-                // said contact (User object id)
-                const already_created_chats_with_contact = await get(`/api/chats/?user_id=${user_id}&user_id=${contact_user_id}`)
-                // exclude all the groups
-                const actual_chats = already_created_chats_with_contact.filter((chat) => {chat.admins.length === 0})
-                
-                // if the user has already a chat with the contact, display an error
-                if(actual_chats.length > 0){
-                    error_audio.play()
-                    const validation_message = document.getElementById('chat-validation-message')
-                    validation_message.innerText = 'You already have a chat with this contact, check your chat list.'
-                }
-                // create the chat otherwise
-                else {
-                    create_instance_via_consumer(chat_form, 'create_chat', websocket)
-                    const toastNotification = document.getElementById('liveToast')
-                    modifyNotification('Server', 
-                    'The chat was created successfully!! Update your chat list by clicking the "chats" button.')
-                    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
-                    toastBootstrap.show()
-                    update_chat_list()
-                }
-                break
+        
+        const checked_checkboxes = chat_form.querySelectorAll('input:checked')
+        if (checked_checkboxes.length >= 2){
+            // group logic there (NEEDS TO BE REWORKED)
+            create_instance_via_consumer(chat_form, 'create_chat', websocket)
+            const toastNotification = document.getElementById('liveToast')
+            modifyNotification('Server', 
+            'The group was created successfully!! Update your chat list by clicking the "chats" button.')
+            const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
+            toastBootstrap.show()
+            update_chat_list()
+        }
+        else{
+            const contact_phone_number = checked_checkbox_id(chat_form)
+            const contact_user_object = await get(`/api/users/?phone_number=${contact_phone_number}`)
+            const contact_user_id = contact_user_object[0].id
+            // do an API request and check if the user already have a chat with the
+            // said contact (User object id)
+            const already_created_chats_with_contact = await get(`/api/chats/?user_id=${user_id}&user_id=${contact_user_id}`)
+            // exclude all the groups
+            const actual_chats = already_created_chats_with_contact.filter((chat) => {chat.admins.length === 0})
+            
+            // if the user has already a chat with the contact, display an error
+            if(actual_chats.length > 0){
+                error_audio.play()
+                const validation_message = document.getElementById('chat-validation-message')
+                validation_message.innerText = 'You already have a chat with this contact, check your chat list.'
+            }
+            // create the chat otherwise
+            else {
+                create_instance_via_consumer(chat_form, 'create_chat', websocket)
+                const toastNotification = document.getElementById('liveToast')
+                modifyNotification('Server', 
+                'The chat was created successfully!! Update your chat list by clicking the "chats" button.')
+                const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
+                toastBootstrap.show()
+                update_chat_list()
             }
         }
     }
