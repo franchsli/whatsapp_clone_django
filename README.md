@@ -4,15 +4,8 @@
 ## DO RIGHT NOW
 
 - Finish group logic:
-  - Rework and optimize create_instance_via_consumer() function
-  and the consumer as well.
-  - Creating groups.
   - Leaving groups.
   - Deleting groups (Only can be done by an admin)
-- Add status complex status creation (like Whatsapp).
-  - Users could select the color of the background for
-    statuses.
-    - [Useful library for that](https://github.com/fabiocaccamo/django-colorfield)
 - Add chat wallpapers user CSS url for images and a JS color selector for colors.
   - This should be an user field [Useful library for that](https://github.com/fabiocaccamo/django-colorfield).
   - [USE THIS](https://getbootstrap.com/docs/5.3/forms/form-control#color).
@@ -20,6 +13,10 @@
   THAT CHANGES THE COLOR OF THE FOUND ELEMENT WITH THE GIVEN ID WITH THE INPUT COLOR,
   LIKE THIS:
     onclick="change_element_color(this.style.color, target_element_id)"
+- Add status complex status creation (like Whatsapp).
+  - Users could select the color of the background for
+    statuses.
+    - [Useful library for that](https://github.com/fabiocaccamo/django-colorfield)
 - Implement a dynamic status length:
   - If its a photo 5 secs.
   - if its a long text (more than 200 chars) 10 secs. (THE MAXIMUM LENGTH IS NO IMAGE AND 450 CHARS)

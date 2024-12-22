@@ -319,14 +319,15 @@ class App {
 
         // resets the contact form values and validation errors when the modal is closed.
         this.chat_modal.addEventListener('hidden.bs.modal', function (event) {
-            const chat_form_elements = document.getElementById("chat-creation-form").elements
+            const form_title = document.getElementById('NewChatLabel')
             const validation_message = document.getElementById('chat-validation-message')
-            for (let index = 0; index < chat_form_elements.length; index++) {
-                if (chat_form_elements[index].type === 'checkbox'){
-                    chat_form_elements[index].checked = false
-                }
+            const chat_form = document.getElementById("chat-creation-form")
+            const checked_cheboxes = chat_form.querySelectorAll('input:checked')
+            for (let index = 0; index < checked_cheboxes.length; index++) {
+                checked_cheboxes[index].checked = false 
             }
             validation_message.innerText = ''
+            form_title.innerText = 'Start new chat'
         })
         // resets the contact form values and validation errors when the modal is closed.
         this.contact_modal.addEventListener('hidden.bs.modal', function (event) {

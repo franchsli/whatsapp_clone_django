@@ -279,14 +279,18 @@ function switch_emojis(button){
 
 function switch_purpose(form, form_header){
     const checked_checkboxes = form.querySelectorAll('input:checked')
+    const chat_name = form.querySelector('input[type="text"]')
     if(checked_checkboxes.length <= 1){
         form.dataset.creating = 'chat'
+        chat_name.hidden = true
+        chat_name.value = ''
         if (form_header){
             form_header.innerText = 'Start new chat'
         }
     }
     else{
         form.dataset.creating = 'group'
+        chat_name.hidden = false
         if (form_header){
             form_header.innerText = 'Start new group'
         }
@@ -588,7 +592,7 @@ function cand_send_messages(websocket){
  * @param {WebSocket} websocket The Websocket that has the desired consumer.
  * @returns {false} To avoid form submission.
  */
-function create_instance_via_consumer(form, instance_type, websocket){
+function create_instance_via_consumer(form, instance_type, websocket, group_name){
     if (cand_send_messages(websocket)){
         const form_elements = form.elements
         if (instance_type === 'create_chat'){
@@ -601,12 +605,11 @@ function create_instance_via_consumer(form, instance_type, websocket){
         }
         else if(instance_type === 'create_group'){
             const checked_inputs = form.querySelectorAll('input:checked')
-            debugger
             let phone_numbers = [...checked_inputs].map((input) => input.id)
 
             websocket.send(JSON.stringify({
                 'type': instance_type,
-                'group_name': 'New Group',
+                'group_name': group_name,
                 'contacts_phone_numbers': phone_numbers
             }))
         }
@@ -639,19 +642,28 @@ async function validate_chat_form(chat_form, error_audio, websocket){
         const validation_message = document.getElementById('chat-validation-message')
         validation_message.innerText = 'Please select a contact to create chat with'
     }
-
     else{
         
         const checked_checkboxes = chat_form.querySelectorAll('input:checked')
         if (checked_checkboxes.length >= 2){
-            // group logic there (NEEDS TO BE REWORKED)
-            create_instance_via_consumer(chat_form, 'create_group', websocket)
-            const toastNotification = document.getElementById('liveToast')
-            modifyNotification('Server', 
-            'The group was created successfully!! Update your chat list by clicking the "chats" button.')
-            const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
-            toastBootstrap.show()
-            update_chat_list()
+            const group_name_container = chat_form.querySelector('input[type="text"]')
+            const group_name = group_name_container.value.trim()
+            if (group_name !== ''){
+                create_instance_via_consumer(chat_form, 'create_group', websocket, group_name)
+                const toastNotification = document.getElementById('liveToast')
+                modifyNotification('Server', 
+                'The group was created successfully!! Update your chat list by clicking the "chats" button.')
+                const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
+                toastBootstrap.show()
+                update_chat_list()
+            }
+
+            else{
+                error_audio.play()
+                const validation_message = document.getElementById('chat-validation-message')
+                validation_message.innerText = 'You must give the group a name!'
+            }
+
         }
         else{
             const contact_phone_number = checked_checkbox_id(chat_form)
