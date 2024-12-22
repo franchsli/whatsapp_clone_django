@@ -592,15 +592,25 @@ function create_instance_via_consumer(form, instance_type, websocket){
     if (cand_send_messages(websocket)){
         const form_elements = form.elements
         if (instance_type === 'create_chat'){
-            for (let index = 0; index < form_elements.length; index++) {
-                let element = form_elements[index];
-        
-                if (element.checked){
-                    websocket.send(JSON.stringify({
-                        'type': instance_type,
-                        'contact_name': element.dataset.contactName,
-                        'contact_phone_number': element.id
-                    }))}}}
+            const checked_input = form.querySelector('input:checked')
+            websocket.send(JSON.stringify({
+                'type': instance_type,
+                'contact_name': checked_input.dataset.contactName,
+                'contact_phone_number': checked_input.id
+            }))
+        }
+        else if(instance_type === 'create_group'){
+            const checked_inputs = form.querySelectorAll('input:checked')
+            debugger
+            let phone_numbers = [...checked_inputs].map((input) => input.id)
+
+            websocket.send(JSON.stringify({
+                'type': instance_type,
+                'group_name': 'New Group',
+                'contacts_phone_numbers': phone_numbers
+            }))
+        }
+
         else if(instance_type === 'create_contact'){
             websocket.send(JSON.stringify({
                 'type': instance_type,
@@ -635,7 +645,7 @@ async function validate_chat_form(chat_form, error_audio, websocket){
         const checked_checkboxes = chat_form.querySelectorAll('input:checked')
         if (checked_checkboxes.length >= 2){
             // group logic there (NEEDS TO BE REWORKED)
-            create_instance_via_consumer(chat_form, 'create_chat', websocket)
+            create_instance_via_consumer(chat_form, 'create_group', websocket)
             const toastNotification = document.getElementById('liveToast')
             modifyNotification('Server', 
             'The group was created successfully!! Update your chat list by clicking the "chats" button.')

@@ -4,7 +4,8 @@
   {% for contact in contacts %}
   <li class="list-group-item p-3  d-flex flex-inline align-items-center contact" role="button"
     data-contact={{contact.id}}>
-    <input onclick="switch_purpose(document.getElementById('chat-creation-form'), document.getElementById('NewChatLabel'));" type="checkbox" class="form-check-input" id="{{ contact.phone_number }}" data-contact-name={{contact.name}}>
+    <input onclick="switch_purpose(document.getElementById('chat-creation-form'), document.getElementById('NewChatLabel'));" 
+    type="checkbox" class="form-check-input" id="{{ contact.phone_number }}" data-contact-name={{contact.name}}>
     <label class="form-check-label ms-3" for={{ contact.phone_number }}>{{contact.name}}</label>
   </li>
   {% empty %}

@@ -75,6 +75,10 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 self.text_data_json["contact_phone_number"]
             )
             await self.create_chat([self.user_instance, contact])
+        
+        elif self.text_data_json["type"] == "create_group":
+            await self.create_group(self.user_instance, self.text_data_json["contacts_phone_numbers"],
+                                     self.text_data_json["group_name"])
 
         elif self.text_data_json["type"] == "create_contact":
             await database_sync_to_async(create_contact)(
@@ -237,6 +241,22 @@ class ChatConsumer(AsyncWebsocketConsumer):
         new_chat = Chat.objects.create()
         new_chat.users.set(users)
         new_chat.save()
+    
+    @database_sync_to_async
+    def create_group(self, creator:User, contacts_phones:list[str], name:str) -> None:
+        """Creates a group (Chat)
+
+        Args:
+            creator (User): The User who created the group.
+            contacts_phones (list[str]): The phones of the Users that will be added to the group.
+            name (str): Name of the group.
+        """
+        new_group = Chat.objects.create(name=name)
+        new_group.admins.add(creator)
+        contacts_phones.append(creator.phone_number)
+        users = User.objects.filter(phone_number__in=contacts_phones)
+        new_group.users.set(users)
+        new_group.save()
 
     async def disconnect(self, close_code):
         await self.channel_layer.group_discard(self.room_group_name, self.channel_name)
