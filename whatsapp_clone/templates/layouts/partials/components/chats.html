@@ -76,6 +76,18 @@
                     hx-swap="outerHTML" hx-target="#chat-list" 
                     hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'><i class="bi bi-archive"></i> Archive chat</span></li>
           {% endif %}
+          {% if chat.is_group %}
+              {% if chat|user_is_admin:request.user %}
+              <li onclick="event.stopPropagation();">
+                <span class="dropdown-item edit-action" hx-patch="{% url 'archive_chat' chat.id True %}" 
+                      hx-swap="outerHTML" hx-target="#chat-list" 
+                      hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'><i class="bi bi-archive"></i> Delete group</span></li>
+              {% endif %}
+              <li onclick="event.stopPropagation();">
+                <span class="dropdown-item edit-action" hx-patch="{% url 'archive_chat' chat.id True %}" 
+                      hx-swap="outerHTML" hx-target="#chat-list" 
+                      hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'><i class="bi bi-archive"></i> Leave group</span></li>
+          {% endif %}
         </ul>
       </div>
     </div>

@@ -118,9 +118,13 @@ def archived_by_user_filter(chat: Chat, user: User) -> bool:
     return chat.archived_by_user(user)
 
 @register.filter
-def unarchived_chats(user, user_chats):
+def unarchived_chats(user:User, user_chats:QuerySet) -> QuerySet:
     chats = user_chats.exclude(Q(id__in=user.archived_chats.all()))
     return chats
+
+@register.filter
+def user_is_admin(chat:Chat, user:User) -> bool:
+    return chat.user_is_admin(user)
 
 
 @register.simple_tag(takes_context=True)
