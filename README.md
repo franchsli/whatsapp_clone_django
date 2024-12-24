@@ -4,7 +4,6 @@
 ## DO RIGHT NOW
 
 - Finish group logic:
-  - Leaving groups. (python view for htmx)
   - Deleting groups (Only can be done by an admin, do the python view for htmx)
 - Add chat wallpapers user CSS url for images and a JS color selector for colors.
   - This should be an user field [Useful library for that](https://github.com/fabiocaccamo/django-colorfield).

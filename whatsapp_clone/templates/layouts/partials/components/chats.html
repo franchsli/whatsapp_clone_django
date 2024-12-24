@@ -2,7 +2,9 @@
 {% load static %}
 
 <ul id="chat-list" class="scroll-section list-group list-group-flush overflow-y-scroll" style="max-height: 590px; height: 500px;">
+
   {% for chat in chats %}
+  {% with are_archived=chat|archived_by_user_filter:request.user %}
   {% get_chat_users_data chat 'phone_number' as chat_members_phones %}
   <div style="display: none;" id="chat-{{chat.id}}-members-phones">{{ chat_members_phones|json_script }}</div>
   <li onclick="summon_chat(this, chat_websocket);" oncontextmenu="showDropdown(event, 'chat-dropdown{{chat.id}}')"
@@ -65,7 +67,7 @@
             {% endif %}
         {% endwith %}
         <ul id="chat-dropdown{{chat.id}}" class="dropdown-menu animated-dropdown">
-          {% if chat|archived_by_user_filter:request.user %}
+          {% if are_archived %}
             <li onclick="event.stopPropagation();">
               <span class="dropdown-item edit-action" hx-patch="{% url 'archive_chat' chat.id False %}" 
                     hx-swap="innerHTML" hx-target="#chats-and-more" 
@@ -79,19 +81,28 @@
           {% if chat.is_group %}
               {% if chat|user_is_admin:request.user %}
               <li onclick="event.stopPropagation();">
-                <span class="dropdown-item edit-action" hx-patch="{% url 'archive_chat' chat.id True %}" 
+                <span class="dropdown-item edit-action" hx-patch="{% url 'archive_chat' chat.id are_archived %}" 
                       hx-swap="outerHTML" hx-target="#chat-list" 
                       hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'><i class="bi bi-archive"></i> Delete group</span></li>
               {% endif %}
-              <li onclick="event.stopPropagation();">
-                <span class="dropdown-item edit-action" hx-patch="{% url 'archive_chat' chat.id True %}" 
-                      hx-swap="outerHTML" hx-target="#chat-list" 
-                      hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'><i class="bi bi-archive"></i> Leave group</span></li>
+              {% if are_archived %}
+                <li onclick="event.stopPropagation();">
+                  <span class="dropdown-item edit-action" hx-patch="{% url 'leave_group' chat.id are_archived %}" 
+                        hx-swap="innerHTML" hx-target="#chats-and-more"  
+                        hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'><i class="bi bi-archive"></i> Leave group</span></li>
+              {% else %}
+                <li onclick="event.stopPropagation();">
+                  <span class="dropdown-item edit-action" hx-patch="{% url 'leave_group' chat.id are_archived %}" 
+                        hx-swap="outerHTML" hx-target="#chat-list" 
+                        hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'><i class="bi bi-archive"></i> Leave group</span></li>
+              {% endif %}
+
           {% endif %}
         </ul>
       </div>
     </div>
   </li>
+  {% endwith %}
   {% endwith %}
   {% endfor %}
 </ul>

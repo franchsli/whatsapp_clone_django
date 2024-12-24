@@ -19,10 +19,7 @@ def chat(request):
     )
     archived_unread_chats_num = 0
     for chat in request.user.archived_chats.all():
-        if (
-            not chat.last_message.read
-            and chat.last_message.sender_user.id != request.user.id
-        ):
+        if chat_is_unread_by_user(chat, request.user):
             archived_unread_chats_num += 1
 
     return render(
@@ -115,10 +112,7 @@ def display_user_ui(request):
     if request.method == "GET":
         archived_unread_chats_num = 0
         for chat in request.user.archived_chats.all():
-            if (
-                not chat.last_message.read
-                and chat.last_message.sender_user.id != request.user.id
-            ):
+            if chat_is_unread_by_user(chat, request.user):
                 archived_unread_chats_num += 1
 
         return render(
@@ -448,3 +442,16 @@ def chats_selection(request):
         return render(request, "layouts/partials/components/chats_selection.html", {})
     else:
         return HttpResponseNotAllowed(["GET"])
+
+def leave_group(request, pk, archived):
+    if request.method == "PATCH":
+        group = Chat.objects.get(id=pk)
+        group.users.remove(request.user)
+        if group.user_is_admin(request.user):
+            group.admins.remove(request.user)
+        if group.archived_by_user(request.user):
+            group.archived_by.remove(request.user)
+        group.save()
+        return redirect("chats", archived=archived)
+    else:
+        return HttpResponseNotAllowed(["PATCH"])

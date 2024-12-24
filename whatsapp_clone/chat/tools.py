@@ -2,7 +2,7 @@
 
 from django.core.files.base import ContentFile
 from typing import Union, List
-from .models import User, Chat, Contact, Status
+from .models import User, Chat, Contact, Status, Message
 from phonenumber_field.phonenumber import PhoneNumber
 from django.core.exceptions import ObjectDoesNotExist
 import base64, logging
@@ -118,10 +118,13 @@ def chat_is_unread_by_user(chat: Chat, user: User) -> bool:
         isn't read and it wasn't sent by the user,
         False otherwise.
     """
-    last_message = chat.message_set.latest("date")
-    if not last_message.read and last_message.sender_user.pk != user.pk:
-        return True
-    else:
+    try:
+        last_message = chat.message_set.latest("date")
+        if not last_message.read and last_message.sender_user.pk != user.pk:
+            return True
+        else:
+            return False
+    except Message.DoesNotExist:
         return False
 
 
