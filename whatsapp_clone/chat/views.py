@@ -455,3 +455,12 @@ def leave_group(request, pk, archived):
         return redirect("chats", archived=archived)
     else:
         return HttpResponseNotAllowed(["PATCH"])
+
+def delete_group(request, pk, archived):
+    if request.method == "DELETE":
+        group = Chat.objects.get(id=pk)
+        if group.user_is_admin(request.user):
+            group.delete()
+        return redirect("chats", archived=archived)
+    else:
+        return HttpResponseNotAllowed(["DELETE"])
