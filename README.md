@@ -9,11 +9,10 @@
   - Rework chat_is_unread_by_user() tools function.
   - Rework unread_chats view.
 - Add chat wallpapers user CSS url for images and a JS color selector for colors.
-  - Add colored background field [Useful library for that](https://github.com/fabiocaccamo/django-colorfield).
-  - Add image background field (ImageField).
-  - Add prefered background method field (str, either color or image)
-  - Based on the prefered_background field, the background for chats will be either stored color or image.
+  - Add chats_background field (ImageField).
+  - In the form, the User should be able to upload an Image or to seletc a color
   - [USE THIS](https://getbootstrap.com/docs/5.3/forms/form-control#color).
+  - If the user selected a color, convert that color in a Image, use the image otherwise (if image)
   - EVERY TIME YOU IMPLEMENT A COLOR PICKER YOU SHOULD ADD A ONINPUT THEN A FUNCTION
   THAT CHANGES THE COLOR OF THE FOUND ELEMENT WITH THE GIVEN ID WITH THE INPUT COLOR,
   LIKE THIS:
