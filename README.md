@@ -3,6 +3,11 @@
 
 ## DO RIGHT NOW
 
+- Rework all the reading message logic.
+  - Add read_by ManytoMany field to Message model.
+  - If the length of read_by is >= 1 then its read.
+  - Rework chat_is_unread_by_user() tools function.
+  - Rework unread_chats view.
 - Add chat wallpapers user CSS url for images and a JS color selector for colors.
   - Add colored background field [Useful library for that](https://github.com/fabiocaccamo/django-colorfield).
   - Add image background field (ImageField).

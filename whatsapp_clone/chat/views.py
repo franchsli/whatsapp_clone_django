@@ -66,14 +66,23 @@ def chats(request, archived: str):
 def unread_chats(request, archived: str):
     archived = True if archived == "True" else False
     # returns the user chats ordered by the date of the latest message in the chat.
-    chats = request.user.chats.annotate(
-        last_message_date=Max("message__date")
-    ).order_by("-last_message_date")
-    user_chats = []
-    for chat in chats:
-        if chat.archived_by_user(request.user) == archived:
-            if chat_is_unread_by_user(chat, request.user):
-                user_chats.append(chat)
+    if not archived:
+        user_chats = (
+            request.user.chats
+            .exclude(archived_by=request.user)
+            .annotate(last_message_date=Max("message__date"))
+            .order_by("-last_message_date")
+        )
+    else:
+        user_chats = (
+            request.user.chats
+            .filter(archived_by=request.user)
+            .annotate(last_message_date=Max("message__date"))
+            .order_by("-last_message_date")
+        )
+    for chat in user_chats:
+        if chat_is_unread_by_user(chat, request.user):
+            user_chats.append(chat)
 
     return render(
         request, "layouts/partials/components/chats.html", {"chats": user_chats}
