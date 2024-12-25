@@ -3,7 +3,6 @@
 
 ## DO RIGHT NOW
 
-- Remove chat dropdown (its useless).
 - Add chat wallpapers user CSS url for images and a JS color selector for colors.
   - Add colored background field [Useful library for that](https://github.com/fabiocaccamo/django-colorfield).
   - Add image background field (ImageField).
