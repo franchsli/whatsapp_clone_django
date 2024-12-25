@@ -26,7 +26,6 @@
 
 ## Improvements
 
-- Speed up chats view.
 - [Stress test](https://locust.io/)
 - [Stress Test Docs](https://docs.locust.io/en/stable/quickstart.html)
 - Implement all of the features at

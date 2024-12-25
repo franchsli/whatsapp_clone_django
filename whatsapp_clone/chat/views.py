@@ -4,7 +4,7 @@ from django.utils import timezone
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Max
 from django.http import HttpResponseNotAllowed
-from .models import User, Chat, Contact, Message, Status
+from .models import Chat, Contact, Message, Status
 from .forms import UserForm, ChatForm, ContactForm, MessageForm, StatusForm
 from typing import Union
 from .tools import get_contacts_statuses, chat_is_unread_by_user
@@ -38,18 +38,24 @@ def chat(request):
 def chats(request, archived: str):
     archived = True if archived == "True" else False
     # returns the user chats ordered by the date of the latest message in the chat.
-    chats = request.user.chats.annotate(
-        last_message_date=Max("message__date")
-    ).order_by("-last_message_date")
-    user_chats = []
-    for chat in chats:
-        if chat.archived_by_user(request.user) == archived:
-            user_chats.append(chat)
+
     if not archived:
+        user_chats = (
+            request.user.chats
+            .exclude(archived_by=request.user)
+            .annotate(last_message_date=Max("message__date"))
+            .order_by("-last_message_date")
+        )
         return render(
             request, "layouts/partials/components/chats.html", {"chats": user_chats}
         )
     else:
+        user_chats = (
+            request.user.chats
+            .filter(archived_by=request.user)
+            .annotate(last_message_date=Max("message__date"))
+            .order_by("-last_message_date")
+        )
         return render(
             request,
             "layouts/partials/archived_chats.html",
