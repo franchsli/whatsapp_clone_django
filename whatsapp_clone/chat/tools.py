@@ -120,7 +120,7 @@ def chat_is_unread_by_user(chat: Chat, user: User) -> bool:
     """
     latest_message:Message = chat.last_message
     if latest_message:
-        if latest_message.sender_user != user and not latest_message.read_by.contains(user) :
+        if latest_message.sender_user != user and not latest_message.read_by.contains(user):
             return True
         else:
             return False

@@ -147,22 +147,22 @@ def display_user_ui(request):
 def display_chat(request, pk):
     if request.method == "GET":
         chat = Chat.objects.get(id=pk)
-        unread_messages = chat.message_set.filter(read=False).exclude(
+        unread_messages = chat.message_set.exclude(
             sender_user__pk=request.user.id
-        )
+        ).filter(read_by=request.user)
         if unread_messages.exists():
             # retrieves all the unread messages in the chat
             chat_messages = unread_messages.order_by("date")
             for message in chat_messages:
-                message.read = True
+                message.read_by.add(request.user)
                 message.save()
 
         else:
             # retrieves the last 20 messages in the chat
             chat_messages = chat.message_set.order_by("-date")[:20:-1]
             for message in chat_messages:
-                if not message.read and message.sender_user.pk != request.user.id:
-                    message.read = True
+                if not message.read_by.contains(request.user) and message.sender_user.pk != request.user.id:
+                    message.read_by.add(request.user)
                     message.save()
 
         return render(
