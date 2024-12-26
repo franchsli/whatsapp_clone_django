@@ -21,7 +21,7 @@
         {% with chat_messages=chat.message_set.all %}
         {% with latest_message=chat_messages|last_message %}
           {% with time_difference=latest_message.date|timesince %}
-              {% if latest_message.read or latest_message.sender_user == request.user %}
+              {% if latest_message.was_read or latest_message.sender_user == request.user %}
                 <span class="last-chat-message-date">
               {% else %} 
                 <span class="themed-text">
@@ -43,14 +43,14 @@
         <div class="d-flex justify-content-between">
             {% if latest_message.sender_user == request.user %}
               <span class="last-chat-message text-truncate">
-                {% if latest_message.read %}
+                {% if latest_message.was_read %}
                   <i class="bi bi-check2-all text-info"></i>
                 {% else %}
                   <i class="bi bi-check2-all"></i>
                 {% endif %}
                 {{ latest_message|message_text }}</span>
             {% else %}
-              {% if latest_message.read %}
+              {% if latest_message.was_read %}
                 <span class="last-chat-message text-truncate">{{ latest_message|message_text }}</span>
               {% else %}
                 <span class="last-chat-message-unread text-truncate">{{ latest_message|message_text }}</span>
@@ -58,10 +58,10 @@
             {% endif %}
           
           <!-- ========== ESPACE TO PUT THE NUMBERS OF UNREAD MESSAGES ========== -->
-            {% if not latest_message.read and latest_message.sender_user != request.user %}
-              {% with unread_messages_counter=chat_messages|unread_messages_counter:request.user.id %}
+            {% if not latest_message.was_read and latest_message.sender_user != request.user %}
+              {% with unread_messages_counter=chat_messages|unread_messages_counter:request.user %}
                 {% if unread_messages_counter > 0 %}
-                  <span class="badge rounded-pill" id="chat-{{chat.id}}unread-counter">{{ chat_messages|unread_messages_counter:request.user.id }}</span>
+                  <span class="badge rounded-pill" id="chat-{{chat.id}}unread-counter">{{ chat_messages|unread_messages_counter:request.user }}</span>
                 {% endif %}
               {% endwith %}
             {% endif %}

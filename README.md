@@ -26,6 +26,8 @@
 
 ## Improvements
 
+- **BUG** When a Chat is displayed and one of the Users sends a message
+and then the auth user sends a message, all the unread messages will be displayed.
 - [Stress test](https://locust.io/)
 - [Stress Test Docs](https://docs.locust.io/en/stable/quickstart.html)
 - Implement all of the features at

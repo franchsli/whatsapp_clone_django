@@ -48,7 +48,7 @@ def message_text(message: Message) -> Message:
 
 
 @register.filter
-def unread_messages_counter(messages_queryset: QuerySet, user_id: int) -> int:
+def unread_messages_counter(messages_queryset: QuerySet, user: User) -> int:
     """Returns the number of unread messages in the
     queryset by the User with the given id
 
@@ -59,10 +59,7 @@ def unread_messages_counter(messages_queryset: QuerySet, user_id: int) -> int:
     Returns:
         int: The number of unread messages.
     """
-    unread_counter = 0
-    for message in messages_queryset.iterator():
-        if not message.read and message.sender_user.id != user_id:
-            unread_counter += 1
+    unread_counter = messages_queryset.exclude(sender_user=user).exclude(read_by=user).count()
 
     return unread_counter
 
