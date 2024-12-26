@@ -3,11 +3,7 @@
 
 ## DO RIGHT NOW
 
-- Rework all the reading message logic.
-  - Add read_by ManytoMany field to Message model.
-  - If the length of read_by is >= 1 then its read.
-  - Rework chat_is_unread_by_user() tools function.
-  - Rework unread_chats view.
+- Optimize get_contacts_statuses() tools.py function and the places where its implemented.
 - Add chat wallpapers user CSS url for images and a JS color selector for colors.
   - Add chats_background field (ImageField).
   - In the form, the User should be able to upload an Image or to seletc a color

@@ -118,14 +118,16 @@ def chat_is_unread_by_user(chat: Chat, user: User) -> bool:
         isn't read and it wasn't sent by the user,
         False otherwise.
     """
-    try:
-        last_message = chat.message_set.latest("date")
-        if not last_message.read and last_message.sender_user.pk != user.pk:
+    latest_message:Message = chat.last_message
+    if latest_message:
+        if latest_message.sender_user != user and not latest_message.read_by.contains(user) :
             return True
         else:
             return False
-    except Message.DoesNotExist:
+    else:
         return False
+        
+
 
 
 def get_contacts_statuses(user: User, muted: bool) -> dict:

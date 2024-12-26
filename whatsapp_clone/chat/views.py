@@ -65,22 +65,23 @@ def chats(request, archived: str):
 
 def unread_chats(request, archived: str):
     archived = True if archived == "True" else False
+    user_chats = []
     # returns the user chats ordered by the date of the latest message in the chat.
     if not archived:
-        user_chats = (
+        chats = (
             request.user.chats
             .exclude(archived_by=request.user)
             .annotate(last_message_date=Max("message__date"))
             .order_by("-last_message_date")
         )
     else:
-        user_chats = (
+        chats = (
             request.user.chats
             .filter(archived_by=request.user)
             .annotate(last_message_date=Max("message__date"))
             .order_by("-last_message_date")
         )
-    for chat in user_chats:
+    for chat in chats:
         if chat_is_unread_by_user(chat, request.user):
             user_chats.append(chat)
 

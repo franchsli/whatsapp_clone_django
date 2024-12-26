@@ -83,7 +83,10 @@ class Chat(models.Model):
 
     @property
     def last_message(self):
-        return self.message_set.latest("date")
+        if self.message_set.count() >= 1:
+            return self.message_set.latest("date")
+        else:
+            return None
 
     @property
     def is_group(self) -> bool:
@@ -96,7 +99,7 @@ class Message(models.Model):
     image = models.ImageField(blank=True, null=True, upload_to="messages/")
     date = models.DateTimeField(default=timezone.now)
     edited = models.BooleanField(blank=False, null=False, default=False)
-    read = models.BooleanField(blank=False, null=False, default=False)
+    read_by = models.ManyToManyField(User, blank=True, related_name="seen_messages")
     chat = models.ForeignKey(Chat, on_delete=models.CASCADE)
     starred_by = models.ManyToManyField(
         User, blank=True, related_name="starred_messages"
@@ -112,12 +115,13 @@ class Message(models.Model):
     def has_image(self):
         return True if self.image else False
 
+    @property
+    def was_read(self):
+        return self.read_by.count() >= 1
+
     def starred_by_user(self, user: User) -> bool:
-        return (
-            True
-            if self.pk in user.starred_messages.values_list("id", flat=True)
-            else False
-        )
+        return self.pk in user.starred_messages.values_list("id", flat=True)
+  
 
 
 class Status(models.Model):
