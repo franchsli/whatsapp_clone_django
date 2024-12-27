@@ -3,7 +3,6 @@
 
 ## DO RIGHT NOW
 
-- Optimize get_contacts_statuses() tools.py function and the places where its implemented.
 - Add chat wallpapers user CSS url for images and a JS color selector for colors.
   - Add chats_background field (ImageField).
   - In the form, the User should be able to upload an Image or to seletc a color
@@ -28,16 +27,6 @@
 
 - **BUG** When a Chat is displayed and one of the Users sends a message
 and then the auth user sends a message, all the unread messages will be displayed.
-- [Stress test](https://locust.io/)
-- [Stress Test Docs](https://docs.locust.io/en/stable/quickstart.html)
-- Implement all of the features at
-  [dj-chat](https://github.com/adilmohak/dj-chat?tab=readme-ov-file#current-features)
-
-## SPEED TESTS RESULTS
-
-1. [16/08/2024] (RETRIEVE 1003 CHATS): 42.74s.
-2. [24/10/2024] (DOMContent Load without cache): 907 ms
-3. [24/10/2024] (Web page load): 1.79s
 
 ## SCREENSHOTS
 
