@@ -12,10 +12,28 @@
 </nav>
 
 
-
+{{ background_form.media }}
 <form hx-encoding="multipart/form-data" hx-post="{% url 'edit_chats_background' %}" hx-target="#chats-and-more" 
     hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
-    {{ background_form | crispy }}
+    {{ background_form.non_field_errors }}
+    <div class"fieldWrapper">
+        {{ background_form.user|as_crispy_field }}
+        {{ background_form.user.errors }}
+    </div>
+    <div class"fieldWrapper">
+        {{ background_form.image|as_crispy_field }}
+        {{ background_form.image.errors }}
+    </div>
+    <div class"fieldWrapper">
+        {{ background_form.color|as_crispy_field }}
+        <input type="color" class="form-control form-control-color" 
+                id="ColorInputSelector" value="#563d7c" title="Choose your desired color">
+        {{ background_form.color.errors }}
+    </div>
+    <div class"fieldWrapper">
+        {{ background_form.preferred_background|as_crispy_field }}
+        {{ background_form.preferred_background.errors }}
+    </div>
     <button id="submit-user-form" class="btn" type="submit">Submit</button>
     <button class="btn" hx-get="{% url 'chats_background' %}">Cancel</button>
 </form>
