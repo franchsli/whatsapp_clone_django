@@ -500,10 +500,10 @@ def edit_chats_background(request):
                       {"background_form": chats_background_form})
     
     elif request.method == "POST":
-        chats_background_form = ChatBackgroundForm(instance=chat_background, initial={"user":request.user})
+        chats_background_form = ChatBackgroundForm(request.POST, request.FILES, instance=chat_background, initial={"user":request.user})
         if chats_background_form.is_valid():
             chats_background_form.save()
-            return redirect("chats_background")
+        return redirect("chats_background")
 
 
     else:
