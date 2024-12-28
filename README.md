@@ -3,14 +3,15 @@
 
 ## DO RIGHT NOW
 
+- **BUG** When a Chat is displayed and one of the Users sends a message
+and then the auth user sends a message, all the unread messages will be displayed.
 - Add chat wallpapers user CSS url for images and a JS color selector for colors.
-  - Add chats_background field (ImageField).
-  - In the form, the User should be able to upload an Image or to seletc a color
-  - [USE THIS](https://getbootstrap.com/docs/5.3/forms/form-control#color).
-  - If the user selected a color, convert that color in a Image, use the image otherwise (if image)
+  - Create ChatBackground ModelForm.
+  - Add ChatBackground ModelForm in user settings view.
   - EVERY TIME YOU IMPLEMENT A COLOR PICKER YOU SHOULD ADD A ONINPUT THEN A FUNCTION
   THAT CHANGES THE COLOR OF THE FOUND ELEMENT WITH THE GIVEN ID WITH THE INPUT COLOR,
   LIKE THIS:
+  - [USE THIS](https://getbootstrap.com/docs/5.3/forms/form-control#color).
     onclick="change_element_color(this.style.color, target_element_id)"
 - Add status complex status creation (like Whatsapp).
   - Users could select the color of the background for
@@ -23,37 +24,8 @@
   - Or if its not a video, 5 secs and users should be able to pause the event
     (like whatsapp).
 
-## Improvements
-
-- **BUG** When a Chat is displayed and one of the Users sends a message
-and then the auth user sends a message, all the unread messages will be displayed.
-
 ## SCREENSHOTS
 
 ![chats and opened chat](https://github.com/user-attachments/assets/afc004af-5634-4ed7-9a3e-dce90b94e799)
 ![statuses view 1](https://github.com/user-attachments/assets/2c3eae1f-6946-41cf-9825-31c9642227cd)
 ![status view 2](https://github.com/user-attachments/assets/bb56c211-40a0-4652-93fc-3a21c8b7fedb)
-
-**RESOURCES**:
-
-- [Django static files compressor docs](https://django-compressor.readthedocs.io/en/latest/quickstart.html)
-- [Usage of Django static files compressor](https://django-compressor.readthedocs.io/en/latest/usage.html)
-- [Faker docs](https://pypi.org/project/Faker/).
-- [HTMX Swap Animations](https://htmx.org/examples/animations/)
-- [Custom theme modes](https://getbootstrap.com/docs/5.3/customize/color-modes/#adding-theme-colors)
-- [Interface icons](https://www.flaticon.com/uicons/interface-icons)
-- [Outer queryset](https://docs.djangoproject.com/en/5.0/ref/models/expressions/#referencing-columns-from-the-outer-queryset)
-- [db queries with Q](https://docs.djangoproject.com/en/5.0/topics/db/queries/#complex-lookups-with-q-objects)
-- [queryset operators](https://docs.djangoproject.com/en/5.0/ref/models/querysets/#operators-that-return-new-querysets)
-- Read non-standar htmx events  for messages [hx-trigger](https://htmx.org/attributes/hx-trigger/)
-- [Closed tags checker](https://www.aliciaramirez.com/closing-tags-checker/)
-- [Queryset lists](https://docs.djangoproject.com/en/5.0/ref/models/querysets/#values-list)
-- [For...empty](https://docs.djangoproject.com/en/5.0/ref/templates/builtins/#for-empty)
-- [CSS Components](https://uiverse.io/)
-- [Filtering Views and ViewSets](https://www.django-rest-framework.org/api-guide/filtering/)
-- [CSS Animations](https://xsgames.co/animatiss/)
-- [Languages Documentation](https://devdocs.io/)
-- [The Stocks V3 CSS RESORUCES](https://v3.thestocks.im/)
-- [More CSS RESOURCES](https://thestocks.im/?ref=buffer-resources)
-- [Colors gradients](https://cssgradient.io/gradient-backgrounds/)
-- [Example there](https://docs.djangoproject.com/en/5.0/topics/auth/customizing/#a-full-example)

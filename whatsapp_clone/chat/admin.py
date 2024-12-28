@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import UserChangeForm
-from .models import User, Chat, Message, Contact, Status
+from .models import User, Chat, Message, Contact, Status, ChatBackground
 
 # Register your models here.
 
@@ -42,8 +42,14 @@ class StatusAdmin(admin.ModelAdmin):
     list_filter = ("uploaded_by", "upload_date")
 
 
+class ChatBackgrounAdmin(admin.ModelAdmin):
+    list_display = ("user", "image", "color", "preferred_background")
+    list_filter = ("preferred_background",)
+
+
 admin.site.register(User, CustomUserAdmin)
 admin.site.register(Chat, ChatAdmin)
 admin.site.register(Message, MessageAdmin)
 admin.site.register(Contact, ContactAdmin)
 admin.site.register(Status, StatusAdmin)
+admin.site.register(ChatBackground, ChatBackgrounAdmin)

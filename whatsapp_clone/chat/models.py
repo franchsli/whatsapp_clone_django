@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import AbstractUser, UserManager
 from phonenumber_field.modelfields import PhoneNumberField
+from colorfield.fields import ColorField
 
 
 # Create your models here.
@@ -143,3 +144,31 @@ class Status(models.Model):
 
     class Meta:
         verbose_name_plural = "statuses"
+
+class ChatBackground(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    image = models.ImageField(blank=True, null=True, upload_to="backgrounds/")
+    color = ColorField(default="#0dcaf0")
+    BACKGROUNDS = [
+        ("IMG", "IMAGE"),
+        ("CLR", "COLOR")
+    ]
+    preferred_background = models.CharField(blank=False, null=False, max_length=3, default="CLR", choices=BACKGROUNDS)
+
+
+    def __str__(self) -> str:
+        return f"{self.user.username}'s background"
+    
+    @property
+    def selected_background(self) -> str:
+        if self.preferred_background == "CLR":
+            return self.color
+        else:
+            return self.image.url if self.has_image else self.color
+
+    @property
+    def has_image(self) -> bool:
+        return True if self.image else False
+
+
+    

@@ -49,6 +49,7 @@ THIRD_APPS = [
     "phonenumber_field",
     "daphne",
     "channels",
+    "colorfield",
 ]
 
 CREATED_APPS = [
