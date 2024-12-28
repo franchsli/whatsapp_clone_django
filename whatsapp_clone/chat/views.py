@@ -4,8 +4,8 @@ from django.utils import timezone
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Max
 from django.http import HttpResponseNotAllowed
-from .models import Chat, Contact, Message, Status
-from .forms import UserForm, ChatForm, ContactForm, MessageForm, StatusForm
+from .models import Chat, Contact, Message, Status, ChatBackground
+from .forms import UserForm, ChatForm, ContactForm, MessageForm, StatusForm, ChatBackgroundForm
 from typing import Union
 from .tools import get_contacts_statuses, chat_is_unread_by_user
 
@@ -480,3 +480,32 @@ def delete_group(request, pk, archived):
         return redirect("chats", archived=archived)
     else:
         return HttpResponseNotAllowed(["DELETE"])
+
+def chats_background(request):
+    chat_background, _ = ChatBackground.objects.get_or_create(user=request.user)
+    print(chat_background)
+    print(chat_background.color)
+    print(chat_background.preferred_background)
+    return render(request, "layouts/partials/chats_background.html", {
+            "chat_background": chat_background
+        })
+
+
+
+def edit_chats_background(request):
+    chat_background, _ = ChatBackground.objects.get_or_create(user=request.user)
+    if request.method == "GET":
+        chats_background_form = ChatBackgroundForm(instance=chat_background, initial={"user":request.user})
+        return render(request, "layouts/partials/components/background_form.html", 
+                      {"background_form": chats_background_form})
+    
+    elif request.method == "POST":
+        chats_background_form = ChatBackgroundForm(instance=chat_background, initial={"user":request.user})
+        if chats_background_form.is_valid():
+            chats_background_form.save()
+            return redirect("chats_background")
+
+
+    else:
+        return HttpResponseNotAllowed(["GET", "POST"])
+

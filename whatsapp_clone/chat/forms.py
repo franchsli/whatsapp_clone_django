@@ -1,4 +1,4 @@
-from .models import Chat, Contact, Message, Status, User
+from .models import Chat, Contact, Message, Status, User, ChatBackground
 from django.forms import ModelForm, HiddenInput, Textarea
 
 
@@ -48,4 +48,13 @@ class StatusForm(ModelForm):
             "uploaded_by": HiddenInput(),
             "text": Textarea(attrs={"cols": 1, "rows": 1}),
             "upload_date": HiddenInput(),
+        }
+
+class ChatBackgroundForm(ModelForm):
+    class Meta:
+        model = ChatBackground
+        fields = "__all__"
+
+        widgets = {
+            "user": HiddenInput(),
         }

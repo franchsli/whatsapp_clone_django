@@ -39,6 +39,8 @@
           hx-target="#chat-list" hx-swap="outerHTML">Archive chats <i class="bi bi-person-circle"></i></button></li>
         <li><button class="dropdown-item" hx-get="{% url 'user_info' %}" 
           hx-target="#chats-and-more">Profile <i class="bi bi-person-gear"></i></button></li>
+        <li><button class="dropdown-item" hx-get="{% url 'chats_background' %}" 
+            hx-target="#chats-and-more">Chats background <i class="bi bi-image"></i></button></li>
         <li class="exit-btn"><a class="dropdown-item" href="{% url 'exit' %}">Log out <i class="bi bi-escape"></i></a></li>
       </ul>
     </div>

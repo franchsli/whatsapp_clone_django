@@ -50,6 +50,8 @@ urlpatterns = [
     path("chats_selection/", views.chats_selection, name="chats_selection"),
     path("leave_group/<str:pk>/<str:archived>", views.leave_group, name="leave_group"),
     path("delete_group/<str:pk>/<str:archived>", views.delete_group, name="delete_group"),
+    path("chats_background/", views.chats_background, name="chats_background"),
+    path("edit_chat_background/", views.edit_chats_background, name="edit_chats_background"),
 ]
 
 if settings.DEBUG:

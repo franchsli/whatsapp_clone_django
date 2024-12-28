@@ -1,0 +1,41 @@
+{% load static %}
+{% load filters %}
+{% load crispy_forms_tags %}
+<nav class="d-flex align-items-center justify-content-between">
+    <div class="row d-flex align-items-center p-3">
+        <button class="arrow action btn col-auto ms-2"hx-get="{% url 'display_user_ui' %}" 
+                hx-target="#chats-and-more">
+                <i class="bi bi-arrow-left"></i></button>
+        <span class="col-auto fs-5">Chats Background <i class="bi bi-image"></i></span>
+    </div>
+</nav>
+
+<div>
+    <ul id="background-info" class="scroll-section list-group list-group-flush overflow-y-scroll" 
+    style="max-height: 615px;">
+        <li class="list-group-item p-3 d-flex flex-inline align-items-center mx-auto mb-3" style="border: none;">
+                {% if chat_background.has_image %}
+                <img class="img-fluid"  src="{{ chat_background.image.url }}" alt="Chats background couldn't load." 
+                style="max-width: 200px; max-height: 200px; width: 200px; height: 200px;">
+                {% endif %}
+        </li>
+        <li class="list-group-item p-1 d-flex flex-inline align-items-center w-100" style="border: none;">
+                <ul class="list-group list-group-flush w-100">
+                    <li class="list-group-item d-flex flex-column">
+                        <span class="themed-text">Image:</span>
+                        <span>{{ chat_background.image }}</span>
+                    </li>
+                    <li class="list-group-item d-flex flex-column">
+                        <span class="themed-text">Color:</span>
+                        <span>{{ chat_background.color }}</span>
+                    </li>
+                    <li class="list-group-item d-flex flex-column">
+                        <span class="themed-text">Preferred background:</span>
+                        <span>{{ chat_background.preferred_background }}</span>
+                    </li>
+
+                </ul>
+        </li>
+    </ul>
+    <button class="btn m-3 d-flex themed-button" hx-get="{% url 'edit_chats_background' %}" hx-target="#chats-and-more">Edit</button>
+</div>

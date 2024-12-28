@@ -1,0 +1,21 @@
+{% load static %}
+{% load filters %}
+{% load crispy_forms_tags %}
+
+<nav class="d-flex align-items-center justify-content-between">
+    <div class="row d-flex align-items-center p-3">
+        <button class="arrow action btn col-auto ms-2" hx-get="{% url 'display_user_ui' %}" 
+                hx-target="#chats-and-more">
+                <i class="bi bi-arrow-left"></i></button>
+        <span class="col-auto fs-5">Chats Background <i class="bi bi-image"></i></span>
+    </div>
+</nav>
+
+
+
+<form hx-encoding="multipart/form-data" hx-post="{% url 'edit_chats_background' %}" hx-target="#chats-and-more" 
+    hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+    {{ background_form | crispy }}
+    <button id="submit-user-form" class="btn" type="submit">Submit</button>
+    <button class="btn" hx-get="{% url 'chats_background' %}">Cancel</button>
+</form>
