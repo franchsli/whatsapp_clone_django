@@ -483,9 +483,6 @@ def delete_group(request, pk, archived):
 
 def chats_background(request):
     chat_background, _ = ChatBackground.objects.get_or_create(user=request.user)
-    print(chat_background)
-    print(chat_background.color)
-    print(chat_background.preferred_background)
     return render(request, "layouts/partials/chats_background.html", {
             "chat_background": chat_background
         })

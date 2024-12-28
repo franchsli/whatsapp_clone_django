@@ -6,13 +6,7 @@
 - **BUG** When a Chat is displayed and one of the Users sends a message
 and then the auth user sends a message, all the unread messages will be displayed.
 - Add chat wallpapers user CSS url for images and a JS color selector for colors.
-  - Create ChatBackground ModelForm.
-  - Add ChatBackground ModelForm in user settings view.
-  - EVERY TIME YOU IMPLEMENT A COLOR PICKER YOU SHOULD ADD A ONINPUT THEN A FUNCTION
-  THAT CHANGES THE COLOR OF THE FOUND ELEMENT WITH THE GIVEN ID WITH THE INPUT COLOR,
-  LIKE THIS:
   - [USE THIS](https://getbootstrap.com/docs/5.3/forms/form-control#color).
-    onclick="change_element_color(this.style.color, target_element_id)"
 - Add status complex status creation (like Whatsapp).
   - Users could select the color of the background for
     statuses.

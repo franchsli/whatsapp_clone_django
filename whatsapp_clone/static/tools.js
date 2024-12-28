@@ -456,15 +456,12 @@ function remove_duplicates(class_name){
 }
 
 /**
- * Changes the color of the found element with the given ID with the desired one.
- * @param {String} desired_color The new color for the target element.
- * @param {String} target_element_id The ID of the target element.
+ * Changes the color (hex value) of the given input with the desired one.
+ * @param {String} desired_color The new color (hex value) for the the input.
+ * @param {HTMLInputElement} input The input that will be altered.
  */
-function change_element_color(desired_color, target_element_id){
-    const target_element_HTML = document.getElementById(target_element_id)
-    if (target_element_HTML){
-        target_element_HTML.style.color = desired_color
-    }
+function change_input_color(desired_color, input){
+    input.value = desired_color
 }
 
 /**
@@ -917,8 +914,8 @@ function load_global_doc_functions(){
         remove_duplicates(class_name)
     }
 
-    window.change_element_color = function(desired_color, target_element_id){
-        change_element_color(desired_color, target_element_id)
+    window.change_input_color = function(desired_color, target_element_id){
+        change_input_color(desired_color, target_element_id)
     }
 
     window.filter_by_value = function(value, element_list){
@@ -1015,7 +1012,7 @@ export {
     switch_purpose, toggle_element_display, previewImage, 
     update_chat_list, at_least_one_attr, exchange_elements_class, 
     switch_element_visibility, load_more_messages, load_older_messages, 
-    remove_duplicates, change_element_color, filter_by_value, 
+    remove_duplicates, change_input_color, filter_by_value, 
     space_text, split_word, trigger_tooltips, 
     create_instance_via_consumer, validate_chat_form, validate_contact_form,
     validate_status_form, cand_send_messages, load_global_doc_functions

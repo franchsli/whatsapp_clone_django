@@ -26,8 +26,9 @@
     </div>
     <div class"fieldWrapper">
         {{ background_form.color|as_crispy_field }}
-        <input type="color" class="form-control form-control-color" 
-                id="ColorInputSelector" value="#563d7c" title="Choose your desired color">
+        <input type="color" class="form-control form-control-color"
+        oninput="change_input_color(this.value, document.getElementById('id_color'));" 
+                id="ColorInputSelector" value="{{request.user.chatbackground.color}}" title="Choose your desired color">
         {{ background_form.color.errors }}
     </div>
     <div class"fieldWrapper">
