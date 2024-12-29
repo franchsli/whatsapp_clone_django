@@ -11,32 +11,25 @@
 </nav>
 
 <div>
-    <ul id="background-info" class="scroll-section list-group list-group-flush overflow-y-scroll" 
+    <ul id="background-info" class="scroll-section list-group list-group-flush overflow-y-scroll p-3" 
     style="max-height: 615px;">
-        <li class="list-group-item p-3 d-flex flex-inline align-items-center mx-auto mb-3" style="border: none;">
+        <li class="list-group-item p-3 d-flex flex-column mb-3">
                 {% if chat_background.has_image %}
+                <span class="themed-text">Image:</span>
                 <img class="img-fluid"  src="{{ chat_background.image.url }}" alt="Chats background couldn't load." 
-                style="max-width: 200px; max-height: 200px; width: 200px; height: 200px;">
+                style="width: 200px; height: 200px;">
                 {% endif %}
         </li>
-        <li class="list-group-item p-1 d-flex flex-inline align-items-center w-100" style="border: none;">
-                <ul class="list-group list-group-flush w-100">
-                    <li class="list-group-item d-flex flex-column">
-                        <span class="themed-text">Image:</span>
-                        <span>{{ chat_background.image }}</span>
-                    </li>
-                    <li class="list-group-item d-flex flex-column">
-                        <span class="themed-text">Color:</span>
-                        <input type="color" disabled class="form-control form-control-color" 
-                        id="exampleColorInput" value="{{request.user.chatbackground.color}}"> 
-                    </li>
-                    <li class="list-group-item d-flex flex-column">
-                        <span class="themed-text">Preferred background:</span>
-                        <span>{{ chat_background.preferred_background }}</span>
-                    </li>
-
-                </ul>
+        <li class="list-group-item d-flex flex-column mb-3">
+            <span class="themed-text">Color:</span>
+            <input type="color" disabled class="form-control form-control-color" 
+            id="exampleColorInput" value="{{request.user.chatbackground.color}}"> 
         </li>
+        <li class="list-group-item d-flex flex-column">
+            <span class="themed-text">Preferred background:</span>
+            <span>{{ chat_background.preferred_background }}</span>
+        </li>
+
     </ul>
     <button class="btn m-3 d-flex themed-button" hx-get="{% url 'edit_chats_background' %}" hx-target="#chats-and-more">Edit</button>
 </div>
