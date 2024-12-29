@@ -130,6 +130,7 @@ class Status(models.Model):
     text = models.TextField(blank=True)
     image = models.ImageField(blank=True, null=True, upload_to="status/")
     upload_date = models.DateTimeField(default=timezone.now)
+    color = ColorField(default="#ffffff")
 
     def __str__(self) -> str:
         return self.text

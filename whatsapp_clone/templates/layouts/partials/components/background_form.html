@@ -12,7 +12,6 @@
 </nav>
 
 
-{{ background_form.media }}
 <form hx-encoding="multipart/form-data" hx-post="{% url 'edit_chats_background' %}" hx-target="#chats-and-more" 
     hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
     {{ background_form.non_field_errors }}
