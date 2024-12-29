@@ -7,7 +7,6 @@
 and then the auth user sends a message, all the unread messages will be displayed.
 - Add chat wallpapers user CSS url for images and a JS color selector for colors.
   - [USE THIS](https://getbootstrap.com/docs/5.3/forms/form-control#color).
-  - Add a disabled color picker for showing whats the current chat background color.
   - Rewrite the the css and html to show the background color, only show the color if
   it isn't the default color.
 - Add status complex status creation (like Whatsapp).

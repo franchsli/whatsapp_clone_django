@@ -158,17 +158,14 @@ class ChatBackground(models.Model):
 
     def __str__(self) -> str:
         return f"{self.user.username}'s background"
-    
-    @property
-    def selected_background(self) -> str:
-        if self.preferred_background == "CLR":
-            return self.color
-        else:
-            return self.image.url if self.has_image else self.color
 
     @property
     def has_image(self) -> bool:
         return True if self.image else False
+
+    @property
+    def default_color_set(self) -> bool:
+        return self.color == "#0dcaf0"
 
 
     

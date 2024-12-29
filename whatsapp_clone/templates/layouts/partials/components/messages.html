@@ -1,6 +1,15 @@
 {% load static %}
 {% load filters %}
 
-<ul onscroll="load_more_messages(this)" class="scroll-section list-unstyled flex-column overflow-y-scroll" id="chat-messages">
-  {% include "layouts/partials/components/append_messages.html" %}
+{% if request.user.chatbackground.preferred_background == "CLR" and not request.user.chatbackground.default_color_set %}
+<ul onscroll="load_more_messages(this)" class="scroll-section list-unstyled flex-column overflow-y-scroll" 
+  id="chat-messages" style="background-color: {{request.user.chatbackground.color}};">
+{% elif request.user.chatbackground.preferred_background == "IMG" and request.user.chatbackground.has_image %}
+<ul onscroll="load_more_messages(this)" class="scroll-section list-unstyled flex-column overflow-y-scroll" 
+  id="chat-messages" style="background-image: url('{{request.user.chatbackground.image.url}}');">
+{% else %}
+<ul onscroll="load_more_messages(this)" class="scroll-section list-unstyled flex-column overflow-y-scroll" 
+  id="chat-messages">
+{% endif %}
+{% include "layouts/partials/components/append_messages.html" %}
 </ul>
