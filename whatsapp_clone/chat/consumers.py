@@ -286,12 +286,13 @@ class StatusConsumer(AsyncWebsocketConsumer):
     async def receive(self, text_data):
         # transform the text_data (status received [json])
         # to a python dictionary
-        self.text_data_json = json.loads(text_data)
+        self.text_data_json: dict = json.loads(text_data)
         logger.debug("STATUS DATA", self.text_data_json)
 
         if self.text_data_json["type"] == "CREATE":
             await self.create_status(
-                self.text_data_json["text"], self.text_data_json["image"]
+                self.text_data_json["text"], self.text_data_json["image"],
+                self.text_data_json["color"],
             )
             await self.channel_layer.group_send(
                 self.room_group_name,
@@ -328,6 +329,7 @@ class StatusConsumer(AsyncWebsocketConsumer):
         self,
         text: Optional[str] = None,
         image: Optional[str] = None,
+        color: Optional[str] = None,
     ) -> None:
         status_creator = self.scope["user"]
         if text or image:
@@ -342,6 +344,10 @@ class StatusConsumer(AsyncWebsocketConsumer):
             if image:
                 image_file = encoded_image_to_file(image, "user_status")
                 new_status.image = image_file
+                new_status.save()
+            
+            if color:
+                new_status.color = color
                 new_status.save()
 
     @database_sync_to_async

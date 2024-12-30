@@ -747,8 +747,7 @@ async function validate_contact_form(contact_form, error_audio, notification_aud
  * Creates a status via websocket if and only if
  * the stauts form is valid,
  * @param {HTMLAudioElement} error_audio 
- * @param {WebSocket} status_websocket 
- * @param {String} user_id
+ * @param {WebSocket} status_websocket
  */
 async function validate_status_form(error_audio, status_websocket){
     debugger
