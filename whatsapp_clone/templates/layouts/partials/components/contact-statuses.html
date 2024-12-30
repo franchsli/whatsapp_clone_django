@@ -18,7 +18,7 @@
             <!--Statuses-->
             {% for status in statuses %}
                 {% if forloop.first %}
-                    <div class="carousel-item active">
+                    <div class="carousel-item active" style="background-color: {{status.color}};">
                         <!-- Header with progress and user info -->
                         <div class="status-header pb-2">
                             <!-- User info -->
@@ -36,7 +36,7 @@
                                 </button>
                             </div>
                         </div>
-                        <div class="status-content-wrapper">
+                        <div class="status-content-wrapper" style="background-color: {{status.color}};">
                             {% if status.has_image and status.has_text %}
                                 <img src="{{status.image.url}}" alt="Status {{forloop.counter}}" class="status-content">
                                 <div class="status-text-overlay">
@@ -52,7 +52,7 @@
                         </div>
                     </div>
                 {% else %}
-                    <div class="carousel-item">
+                    <div class="carousel-item" style="background-color: {{status.color}};">
                         <!-- Header with progress and user info -->
                         <div class="status-header pb-2">
                             <!-- User info -->
@@ -70,7 +70,7 @@
                                 </button>
                             </div>
                         </div>
-                        <div class="status-content-wrapper">
+                        <div class="status-content-wrapper" style="background-color: {{status.color}};">
                             {% if status.has_image and status.has_text %}
                                 <img src="{{status.image.url}}" alt="Status {{forloop.counter}}" class="status-content">
                                 <div class="status-text-overlay">
