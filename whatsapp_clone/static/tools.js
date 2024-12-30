@@ -751,18 +751,20 @@ async function validate_contact_form(contact_form, error_audio, notification_aud
  * @param {String} user_id
  */
 async function validate_status_form(error_audio, status_websocket){
+    debugger
     console.log(not_empty(status_form))
     if (not_empty(status_form)){
         const status_input = document.getElementById('id_text')
         const image_container = document.getElementById('status-imagePreview')
         const image = image_container.firstElementChild
-        status_websocket.websocket_client.send(JSON.stringify({
+        const color_field = document.getElementById('id_color')
+        status_websocket.send(JSON.stringify({
             'type': 'CREATE',
             'user_id': user_id,
             'sender_phone_number': user_phone_number,
             'text': status_input.value,
             'image': image !== null ? image.src : null,
-
+            'color': color_field.value,
         }))
     }
     else {

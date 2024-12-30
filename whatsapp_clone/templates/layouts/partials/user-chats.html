@@ -74,6 +74,9 @@
           </div>
           <div class"fieldWrapper">
             {{ status_form.image|as_crispy_field }}
+            <div class="d-flex flex-column w-100">
+              <div id="status-imagePreview" class="d-flex align-items-center justify-content-center"></div>
+            </div>
             {{ status_form.image.errors }}
           </div>
           <div class"fieldWrapper">
@@ -85,9 +88,6 @@
             {{ status_form.color.errors }}
             <input oninput="change_input_color(this.value, document.getElementById('id_color'));"  
                   type="color" class="form-control form-control-color" id="StatusColorInput">
-          </div>
-          <div class="d-flex flex-column w-100">
-            <div id="status-imagePreview" class="d-flex align-items-center justify-content-center"></div>
           </div>
           
           <button id="status-submit" class="btn themed-button">Create status</button>

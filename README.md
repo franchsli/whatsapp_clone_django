@@ -3,12 +3,13 @@
 
 ## DO RIGHT NOW
 
+- Check if the ColorWidget works in production.
+  - If so, add static root to debug as well.
+- Add colorfield to requeriments.txt
 - **BUG** When a Chat is displayed and one of the Users sends a message
 and then the auth user sends a message, all the unread messages will be displayed.
 - Add status complex status creation (like Whatsapp).
-  - Users could select the color of the background for
-    statuses.
-    - [Useful library for that](https://github.com/fabiocaccamo/django-colorfield)
+  - Fix Status entire validation (image preview and so on)
 - Implement a dynamic status length:
   - If its a photo 5 secs.
   - if its a long text (more than 200 chars) 10 secs. (THE MAXIMUM LENGTH IS NO IMAGE AND 450 CHARS)

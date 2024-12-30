@@ -177,12 +177,12 @@ class Chat_Web_Socket{
 
 class Status_Web_Socket {
     constructor({url = '', parent_app_class = null}){
-        this.websocket_client = new WebSocket(url)
+        this.client_websocket = new WebSocket(url)
         this.app = parent_app_class
-        this.websocket_client.onopen = () => {
+        this.client_websocket.onopen = () => {
             console.log('CONNECTION OPENED WITH STATUS WEBSOCKET')
             window.delete_status = (button) => {
-                this.websocket_client.send(JSON.stringify({
+                this.client_websocket.send(JSON.stringify({
                     'type':'DELETE',
                     'user_id': button.dataset.creator,
                     'status_id': button.dataset.status
@@ -192,7 +192,7 @@ class Status_Web_Socket {
                 }
             }
         }
-        this.websocket_client.onmessage = async (event) => {
+        this.client_websocket.onmessage = async (event) => {
             let status_event_data = event.data.replace('status_notification-','')
             status_event_data = status_event_data.split('-')
             if (status_event_data.includes('CREATE')){
@@ -248,12 +248,12 @@ class Status_Web_Socket {
                 } 
             }
         }
-        this.websocket_client.onerror = (error) => {
+        this.client_websocket.onerror = (error) => {
             console.log('WS State:', this.readyState);
             console.log('WS Error:', error)
         };
 
-        this.websocket_client.onclose = (event) => {
+        this.client_websocket.onclose = (event) => {
             console.log('WS Closed. Code:', event.code, 'Reason:', event.reason);
             console.log('Was clean?:', event.wasClean);
         }
@@ -283,7 +283,7 @@ class App {
         this.status_form = document.getElementById('status_form')
         this.status_modal = document.getElementById('CreateStatusModal')
         this.status_submit_button = document.getElementById('status-submit')
-        this.stauts_image_preview = document.getElementById('status-imagePreview')
+        this.status_image_preview = document.getElementById('status-imagePreview')
         this.status_image_input = document.getElementById('id_image')
         this.notification_audio = new Audio('static/Audio/app/notification.mp3')
         this.message_received_audio = new Audio('static/Audio/app/message_received.mp3')
@@ -313,8 +313,8 @@ class App {
 
         }
         // gets the image preview div and updated it over time.
-        this.status_image_input.onchange = () => {
-            tools.previewImage(status_image_input, stauts_image_preview)
+        this.status_image_input.oninput = () => {
+            tools.previewImage(this.status_image_input, this.status_image_preview)
         }
 
         // resets the contact form values and validation errors when the modal is closed.
