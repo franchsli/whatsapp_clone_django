@@ -49,6 +49,7 @@ class StatusForm(ModelForm):
             "uploaded_by": HiddenInput(),
             "text": Textarea(attrs={"cols": 1, "rows": 1}),
             "upload_date": HiddenInput(),
+            "color": ColorWidget(),
         }
 
 class ChatBackgroundForm(ModelForm):

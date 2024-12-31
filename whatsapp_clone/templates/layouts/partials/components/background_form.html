@@ -11,30 +11,9 @@
     </div>
 </nav>
 
-
 <form hx-encoding="multipart/form-data" hx-post="{% url 'edit_chats_background' %}" hx-target="#chats-and-more" 
     hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
-    {{ background_form.non_field_errors }}
-    <div class"fieldWrapper">
-        {{ background_form.user|as_crispy_field }}
-        {{ background_form.user.errors }}
-    </div>
-    <div class"fieldWrapper">
-        {{ background_form.image|as_crispy_field }}
-        {{ background_form.image.errors }}
-        <p>* A picture with a size of 1000x650 is recommended.</p>
-    </div>
-    <div class"fieldWrapper">
-        {{ background_form.color|as_crispy_field }}
-        <input type="color" class="form-control form-control-color"
-        oninput="change_input_color(this.value, document.getElementById('id_color'));" 
-                id="ColorInputSelector" value="{{request.user.chatbackground.color}}" title="Choose your desired color">
-        {{ background_form.color.errors }}
-    </div>
-    <div class"fieldWrapper">
-        {{ background_form.preferred_background|as_crispy_field }}
-        {{ background_form.preferred_background.errors }}
-    </div>
-    <button id="submit-user-form" class="btn" type="submit">Submit</button>
-    <button class="btn" hx-get="{% url 'chats_background' %}">Cancel</button>
+    {{ background_form|crispy }}
+    <button id="submit-user-form" class="btn btn-success" type="submit">Submit</button>
+    <button class="btn btn-danger" hx-get="{% url 'chats_background' %}">Cancel</button>
 </form>
