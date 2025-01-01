@@ -932,11 +932,25 @@ function load_global_doc_functions(){
     }
 
     window.init_status_carousel = function(status_carousel){
+        debugger
         carousel = status_carousel
-        carousel_instance = new bootstrap.Carousel(carousel, {
+        const container = carousel.parentElement.parentElement
+        const carousel_instance = new bootstrap.Carousel(carousel, {
         interval: 5000,
-        touch: false,
+        touch: true,
+        pause: false,
+        ride: true,
         })
+
+        container.addEventListener('mouseenter', () => {
+            console.log("ENTERED")
+            carousel_instance.pause();
+        });
+
+        container.addEventListener('mouseleave', () => {
+            console.log("LEAVED")
+            carousel_instance.cycle();
+        });
         const status_bars = carousel.querySelectorAll('.status-progress')
         const statuses_len = status_bars.length
         status_bars[0].classList.add('viewed')

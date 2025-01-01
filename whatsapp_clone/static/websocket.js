@@ -187,9 +187,7 @@ class Status_Web_Socket {
                     'user_id': button.dataset.creator,
                     'status_id': button.dataset.status
                 }))
-                if (carousel_instance !== null){
-                    carousel_instance.next()
-                }
+
             }
         }
         this.client_websocket.onmessage = async (event) => {
@@ -535,7 +533,6 @@ document.addEventListener('DOMContentLoaded', () => {
             window.status_deletion_buttons = document.querySelectorAll('.status-deletion')
             window.contacts_with_statuses_caller = document.querySelectorAll('.contact-status-caller')
             window.carousel = null
-            window.carousel_instance = null
         }
         // loads the default emojis
         if (event.detail.pathInfo.requestPath.includes('display_chat')){
