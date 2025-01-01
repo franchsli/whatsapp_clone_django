@@ -351,6 +351,12 @@ class App {
             }
             validation_message.innerText = ''
         })
+
+        window.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                tools.close_chat()
+            }
+        })
     }
 
 }
@@ -547,7 +553,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     })
     htmx.on('htmx:beforeRequest', (event) => {
-        debugger
         // cancel the request if the requested chats is already displayed.
         if(event.detail.pathInfo.requestPath.includes('display_chat')){
             if(main.new_message){
