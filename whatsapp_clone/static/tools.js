@@ -189,7 +189,7 @@ function checked_checkbox_id(form){
     const checkboxes = form.querySelector('input[type="checkbox"]')
     for (let index = 0; index < checkboxes.length; index++) {
         const checkbox = checkboxes[index];
-        if (checkbox.cheked){
+        if (checkbox.checked){
             return checkbox.id
         }
     }
@@ -276,7 +276,11 @@ function switch_emojis(button){
     load_emojis(button.dataset.emojiPack, emoji_container)
 }
 
-
+/**
+ * Switchs the purpose of a form
+ * @param {HTMLFormElement} form 
+ * @param {HTMLElement} form_header The title of the form 
+ */
 function switch_purpose(form, form_header){
     const checked_checkboxes = form.querySelectorAll('input:checked')
     const chat_name = form.querySelector('input[type="text"]')
@@ -663,7 +667,7 @@ async function validate_chat_form(chat_form, error_audio, websocket){
 
         }
         else{
-            const contact_phone_number = checked_checkbox_id(chat_form)
+            const contact_phone_number = document.querySelector('input:checked').id
             const contact_user_object = await get(`/api/users/?phone_number=${contact_phone_number}`)
             const contact_user_id = contact_user_object[0].id
             // do an API request and check if the user already have a chat with the
@@ -750,8 +754,6 @@ async function validate_contact_form(contact_form, error_audio, notification_aud
  * @param {WebSocket} status_websocket
  */
 async function validate_status_form(error_audio, status_websocket){
-    debugger
-    console.log(not_empty(status_form))
     if (not_empty(status_form)){
         const status_input = document.getElementById('id_text')
         const image_container = document.getElementById('status-imagePreview')
@@ -829,12 +831,11 @@ function clear_status_progress(progress_bar){
 }
 
 /**
- * 
+ * Validates the form for archiving chats.
  * @param {HTMLFormElement} form 
  */
 async function validate_archive_form(form){
     if(checked(form)){
-        debugger
         for (let index = 0; index < form.elements.length; index++) {
             const chat = form.elements[index];
             if (chat.checked){
@@ -933,10 +934,21 @@ function load_global_doc_functions(){
 
     window.init_status_carousel = function(status_carousel){
         carousel = status_carousel
-        carousel_instance = new bootstrap.Carousel(carousel, {
+        const container = carousel.parentElement.parentElement
+        const carousel_instance = new bootstrap.Carousel(carousel, {
         interval: 5000,
-        touch: false,
+        touch: true,
+        pause: false,
+        ride: true,
         })
+
+        container.addEventListener('mouseenter', () => {
+            carousel_instance.pause();
+        });
+
+        container.addEventListener('mouseleave', () => {
+            carousel_instance.cycle();
+        });
         const status_bars = carousel.querySelectorAll('.status-progress')
         const statuses_len = status_bars.length
         status_bars[0].classList.add('viewed')
@@ -1005,6 +1017,11 @@ function load_global_doc_functions(){
 
 }
 
+function close_chat(){
+    const chat_parent_container = document.getElementById('chat-display')
+    chat_parent_container.innerHTML = ''
+}
+
 export {
     get, post, modifyNotification,
     scroll_to_bottom, toggleReadMore, showDropdown, 
@@ -1016,5 +1033,6 @@ export {
     remove_duplicates, change_input_color, filter_by_value, 
     space_text, split_word, trigger_tooltips, 
     create_instance_via_consumer, validate_chat_form, validate_contact_form,
-    validate_status_form, cand_send_messages, load_global_doc_functions
+    validate_status_form, cand_send_messages, load_global_doc_functions,
+    close_chat
 }
