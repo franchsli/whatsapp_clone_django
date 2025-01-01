@@ -189,7 +189,7 @@ function checked_checkbox_id(form){
     const checkboxes = form.querySelector('input[type="checkbox"]')
     for (let index = 0; index < checkboxes.length; index++) {
         const checkbox = checkboxes[index];
-        if (checkbox.cheked){
+        if (checkbox.checked){
             return checkbox.id
         }
     }
@@ -663,7 +663,8 @@ async function validate_chat_form(chat_form, error_audio, websocket){
 
         }
         else{
-            const contact_phone_number = checked_checkbox_id(chat_form)
+            debugger
+            const contact_phone_number = document.querySelector('input:checked').id
             const contact_user_object = await get(`/api/users/?phone_number=${contact_phone_number}`)
             const contact_user_id = contact_user_object[0].id
             // do an API request and check if the user already have a chat with the

@@ -331,7 +331,7 @@ def append_message(request, chat_id):
         chat = Chat.objects.get(id=chat_id)
         # gets the latest messaege
         chat_message = chat.message_set.order_by("-date").first()
-        chat_message.read = True
+        chat_message.read_by.add(request.user)
         chat_message.save()
         # storing it into a iterable to avoid errors
         # in django template for-loop

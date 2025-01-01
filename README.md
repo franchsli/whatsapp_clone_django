@@ -1,11 +1,6 @@
 
 # Whatsapp clone
 
-## DO RIGHT NOW
-
-- **BUG** When a Chat is displayed and one of the Users sends a message
-and then the auth user sends a message, all the unread messages will be displayed.
-
 ## SCREENSHOTS
 
 ![chats and opened chat](https://github.com/user-attachments/assets/afc004af-5634-4ed7-9a3e-dce90b94e799)
