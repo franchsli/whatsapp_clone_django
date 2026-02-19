@@ -125,7 +125,7 @@ WSGI_APPLICATION = "whatsapp_clone.wsgi.application"
 DATABASES = {
     "default": dj_database_url.config(
         default=(
-            "postgres://postgres:nosequeponer@123-52@:5432/django_whatsapp"
+            "postgres://postgres:Fran%40<>907X$%.@:5432/django_whatsapp"
             if DEBUG
             else os.environ.get("DATABASE_URL")
         ),
