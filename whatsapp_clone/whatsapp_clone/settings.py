@@ -3,6 +3,9 @@ import os
 import dj_database_url
 import logging
 from urllib.parse import urlparse
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -125,9 +128,7 @@ WSGI_APPLICATION = "whatsapp_clone.wsgi.application"
 DATABASES = {
     "default": dj_database_url.config(
         default=(
-            "postgres://postgres:Fran%40<>907X$%.@:5432/django_whatsapp"
-            if DEBUG
-            else os.environ.get("DATABASE_URL")
+            os.environ.get("DATABASE_URL")
         ),
         conn_max_age=600,
     )
