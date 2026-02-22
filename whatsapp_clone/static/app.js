@@ -20,19 +20,19 @@ class Chat_Web_Socket{
             this.sender_username = data.sender_username
             this.chat_is_archived = data.chat_is_archived === 'True' ? true : false
             if (data.type === 'chat_message'){
-                this.handle_chat_message(data)
+                this.handle_chat_message()
             }
         
             else if (data.type === 'chat_notification'){
-                this.handle_chat_notification(data)
+                this.handle_chat_notification()
             }
         
             else if (data.type === 'message_deletion'){
-                this.handle_message_deletion(data)
+                this.handle_message_deletion()
             }
         
             else if (data.type === 'message_edition'){
-                this.handle_message_edition(data)
+                this.handle_message_edition()
             }
 
         }
