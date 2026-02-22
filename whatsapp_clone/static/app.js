@@ -18,7 +18,7 @@ class Chat_Web_Socket{
             this.chat_id = data.chat_id
             this.image = data.image
             this.sender_username = data.sender_username
-            this.chat_is_archived = data.chat_is_archived
+            this.chat_is_archived = data.chat_is_archived === 'True' ? true : false
             if (data.type === 'chat_message'){
                 this.handle_chat_message(data)
             }
@@ -69,12 +69,7 @@ class Chat_Web_Socket{
         sessionStorage.removeItem('reply_to')
     }
 
-    handle_chat_message(event){
-        this.message = event.data.replace('chat_message', '')
-        this.message_data = this.message.split('-')
-        this.sender_id = this.message_data[0]
-        this.text = this.message_data[1]
-        this.image = this.message_data[2]
+    handle_chat_message(){
         // if the message was sent by the auth user, play a sound and update the chat list
         // only append the message's HTML otherwise
         if (user_id === this.sender_id){
@@ -96,14 +91,7 @@ class Chat_Web_Socket{
         }
     }
 
-    handle_chat_notification(event){
-        this.message = event.data.replace('chat_notification', '')
-        this.message = this.message.split('-')
-        this.sender_id = this.message[0]
-        this.text = this.message[1]
-        this.sender_username = this.message[2]
-        this.chat_is_archived = this.message[3] === 'True' ? true : false
-
+    handle_chat_notification(){
         const displayed_chat_contact_info = document.getElementById('contact-name')
         let noti_from_opened_chat = false
         // if a chat is opened
@@ -122,12 +110,7 @@ class Chat_Web_Socket{
         }
     }
 
-    handle_message_deletion(event){
-        this.message = event.data.replace('message_deletion', '')
-        this.message = this.message.split('-')
-        this.sender_id = this.message[0]
-        this.sender_username = this.message[1]
-        this.chat_id = this.message[2]
+    handle_message_deletion(){
         /**
         * the JS code (receiver) analises the websocket message
         * and then decides whether or not to update the UI using
@@ -148,12 +131,7 @@ class Chat_Web_Socket{
         }
     }
 
-    handle_message_edition(event){
-        this.message = event.data.replace('message_edition', '')
-        this.message = this.message.split('-')
-        this.sender_id = this.message[0]
-        this.sender_username = this.message[1]
-        this.chat_id = this.message[2]
+    handle_message_edition(){
         /**
         * the JS code (receiver) analises the websocket message
         * and then decides whether or not to update the UI using
