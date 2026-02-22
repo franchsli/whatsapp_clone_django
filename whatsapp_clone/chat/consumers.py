@@ -111,7 +111,7 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
             content={
                 "type": "chat_message_edition",
                 "sender_id": event['sender_user_id'],
-                "sender_contact_name": f"{self.sender_contact_name}",
+                "sender_contact_name": self.sender_contact_name,
                 "chat_id": event['chat_id'],
             },
         )
@@ -146,10 +146,10 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
                 f"user_group_{message_receiver_phone}",
                 {
                     "type": "chat_notification",
-                    "sender_id": f"{websocket_message_data['sender_user_id']}",
+                    "sender_id": websocket_message_data["sender_user_id"],
                     "message": f"{websocket_message_data['message'] if len(websocket_message_data['message']) > 0 else 'Photo 📷'}",
                     "sender_contact_name": f"{sender_contact_instance.name if sender_contact_instance else self.user_instance.phone_number}",
-                    "chat_is_archived": f"{chat_is_archived}",
+                    "chat_is_archived": chat_is_archived,
                 },
             )
 
@@ -173,9 +173,9 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
             self.room_group_name,
             {
                 "type": "chat_message_edition",
-                "sender_id": f"{websocket_message_data['sender_user_id']}",
-                "sender_contact_name": f"{self.sender_contact_name}",
-                "chat_id": f"{websocket_message_data['chat_id']}",
+                "sender_id": websocket_message_data["sender_user_id"],
+                "sender_contact_name": self.sender_contact_name,
+                "chat_id": websocket_message_data["chat_id"],
             },
         )
 
@@ -199,9 +199,9 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
             self.room_group_name,
             {
                 "type": "chat_message_edition",
-                "sender_id": f"{websocket_message_data['sender_user_id']}",
-                "sender_contact_name": f"{self.sender_contact_name}",
-                "chat_id": f"{websocket_message_data['chat_id']}",
+                "sender_id": websocket_message_data["sender_user_id"],
+                "sender_contact_name": self.sender_contact_name,
+                "chat_id": websocket_message_data['chat_id'],
             },
         )
 
@@ -285,7 +285,7 @@ class StatusConsumer(AsyncWebsocketConsumer):
         self.user_phone_number = self.scope["user"].phone_number.as_e164.replace(
             "+", ""
         )
-        self.room_group_name = f"{self.user_phone_number}"
+        self.room_group_name = self.user_phone_number
         user_contacts = await database_sync_to_async(get_user_contacts)(
             self.scope["user"].id, "phone_number"
         )
