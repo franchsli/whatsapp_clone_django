@@ -11,28 +11,28 @@ class Chat_Web_Socket{
         }
 
         this.client_websocket.onmessage = async (event) => {
-            this.message = null
-            this.sender_id = null
-            this.chat_id = null
-            this.message_data = null
-            this.text = null
-            this.image = null
-            this.sender_username = null
-            this.chat_is_archived = null
-            if (event.data.includes('chat_message')){
-                this.handle_chat_message(event)
+            const data = JSON.parse(event.data)
+            debugger
+            this.message = data.message
+            this.sender_id = data.sender_id
+            this.chat_id = data.chat_id
+            this.image = data.image
+            this.sender_username = data.sender_username
+            this.chat_is_archived = data.chat_is_archived
+            if (data.type === 'chat_message'){
+                this.handle_chat_message(data)
             }
         
-            else if (event.data.includes('chat_notification')){
-                this.handle_chat_notification(event)
+            else if (data.type === 'chat_notification'){
+                this.handle_chat_notification(data)
             }
         
-            else if (event.data.includes('message_deletion')){
-                this.handle_message_deletion(event)
+            else if (data.type === 'message_deletion'){
+                this.handle_message_deletion(data)
             }
         
-            else if (event.data.includes('message_edition')){
-                this.handle_message_edition(event)
+            else if (data.type === 'message_edition'){
+                this.handle_message_edition(data)
             }
 
         }
