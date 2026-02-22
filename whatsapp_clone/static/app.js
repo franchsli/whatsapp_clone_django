@@ -27,11 +27,11 @@ class Chat_Web_Socket{
                 this.handle_chat_notification()
             }
         
-            else if (data.type === 'message_deletion'){
+            else if (data.type === 'chat_message_deletion'){
                 this.handle_message_deletion()
             }
         
-            else if (data.type === 'message_edition'){
+            else if (data.type === 'chat_message_edition'){
                 this.handle_message_edition()
             }
 
