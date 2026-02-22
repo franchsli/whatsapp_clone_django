@@ -38,7 +38,9 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
                 self.room_group_name,
                 {
                     "type": "chat_message",
-                    "text": f"{content['sender_user_id']}-{content['message']}-{content['image']}",
+                    "sender_user_id": content["sender_user_id"],
+                    "message": content["message"],
+                    "image": content["image"],
                 },
             )
             self.chat_instance = await database_sync_to_async(get_object_by_id)(
@@ -92,7 +94,12 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
             await self.send_message_edition(content)
 
     async def chat_message(self, event):
-        await self.send_json(content=f"chat_message{event['text']}")
+        await self.send_json(content={
+                    "type": "chat_message",
+                    "sender_user_id": event["sender_user_id"],
+                    "message": event["message"],
+                    "image": event["image"],
+                })
 
     async def chat_message_deletion(self, event):
         await self.send_json(
@@ -101,12 +108,23 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
 
     async def chat_message_edition(self, event):
         await self.send_json(
-            content=f"message_edition{event['sender_id'] + event['sender_contact_name'] + event['chat_id']}"
+            content={
+                "type": "chat_message_edition",
+                "sender_id": event['sender_user_id'],
+                "sender_contact_name": f"{self.sender_contact_name}",
+                "chat_id": event['chat_id'],
+            },
         )
 
     async def chat_notification(self, event):
-        await self.send_json(
-            content=f"chat_notification{event['sender_id'] + event['text']  + event['sender_contact_name'] + event['chat_is_archived']}"
+        await self.send_json(content=
+            {
+                "type": "chat_notification",
+                "sender_id": event["sender_id"],
+                "message": event["message"],
+                "sender_contact_name": event["sender_contact_name"],
+                "chat_is_archived": event["chat_is_archived"],
+            }
         )
 
     async def send_message_notifications(self, websocket_message_data: dict):
@@ -129,9 +147,9 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
                 {
                     "type": "chat_notification",
                     "sender_id": f"{websocket_message_data['sender_user_id']}",
-                    "text": f"-{websocket_message_data['message'] if len(websocket_message_data['message']) > 0 else 'Photo 📷'}",
-                    "sender_contact_name": f"-{sender_contact_instance.name if sender_contact_instance else self.user_instance.phone_number}",
-                    "chat_is_archived": f"-{chat_is_archived}",
+                    "message": f"{websocket_message_data['message'] if len(websocket_message_data['message']) > 0 else 'Photo 📷'}",
+                    "sender_contact_name": f"{sender_contact_instance.name if sender_contact_instance else self.user_instance.phone_number}",
+                    "chat_is_archived": f"{chat_is_archived}",
                 },
             )
 
@@ -156,8 +174,8 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
             {
                 "type": "chat_message_edition",
                 "sender_id": f"{websocket_message_data['sender_user_id']}",
-                "sender_contact_name": f"-{self.sender_contact_name}",
-                "chat_id": f"-{websocket_message_data['chat_id']}",
+                "sender_contact_name": f"{self.sender_contact_name}",
+                "chat_id": f"{websocket_message_data['chat_id']}",
             },
         )
 
@@ -182,8 +200,8 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
             {
                 "type": "chat_message_edition",
                 "sender_id": f"{websocket_message_data['sender_user_id']}",
-                "sender_contact_name": f"-{self.sender_contact_name}",
-                "chat_id": f"-{websocket_message_data['chat_id']}",
+                "sender_contact_name": f"{self.sender_contact_name}",
+                "chat_id": f"{websocket_message_data['chat_id']}",
             },
         )
 
