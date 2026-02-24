@@ -1,11 +1,11 @@
-from channels.generic.websocket import AsyncJsonWebsocketConsumer, AsyncWebsocketConsumer
+from channels.generic.websocket import AsyncJsonWebsocketConsumer
 from channels.db import database_sync_to_async
 from .models import User, Chat, Message, Status
 from .tools import *
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils import timezone
 from typing import Union, Optional
-import json, logging
+import logging
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -283,7 +283,7 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
         await self.channel_layer.group_discard(self.room_group_name, self.channel_name)
 
 
-class StatusConsumer(AsyncWebsocketConsumer):
+class StatusConsumer(AsyncJsonWebsocketConsumer):
 
     async def connect(self):
         # user broadcast for statuses
@@ -304,46 +304,54 @@ class StatusConsumer(AsyncWebsocketConsumer):
 
         await self.accept()
 
-    async def receive(self, text_data):
-        # transform the text_data (status received [json])
-        # to a python dictionary
-        self.text_data_json: dict = json.loads(text_data)
-        logger.debug("STATUS DATA", self.text_data_json)
+    async def receive_json(self, content):
+        logger.debug("STATUS DATA", content)
+        content_type = content["type"]
 
-        if self.text_data_json["type"] == "CREATE":
+        if content_type == "CREATE":
             await self.create_status(
-                self.text_data_json["text"], self.text_data_json["image"],
-                self.text_data_json["color"],
+                content["text"], content["image"],
+                content["color"],
             )
             await self.channel_layer.group_send(
                 self.room_group_name,
                 {
                     "type": "status_notification",
-                    "text": "-".join(
-                        [
-                            value
-                            for value in self.text_data_json.values()
-                            if value != None
-                        ]
-                    ),
+                    "user_id": content["user_id"],
+                    "sender_phone_number": content["sender_phone_number"],
+                    "text": content["text"],
+                    "image": content["image"],
+                    "color": content["color"],
                 },
             )
 
-        elif self.text_data_json["type"] == "DELETE":
-            await self.delete_status(self.text_data_json["status_id"])
+        elif content_type == "DELETE":
+            await self.delete_status(content["status_id"])
             await self.channel_layer.group_send(
                 self.room_group_name,
                 {
                     "type": "status_deletion",
-                    "text": self.text_data_json["status_id"],
+                    "user_id": content["user_id"],
+                    "status_id": content["status_id"],
                 },
             )
 
     async def status_deletion(self, event):
-        await self.send(text_data=f"status_deletion-{event['text']}")
+        await self.send_json(content={
+                    "type": "status_deletion",
+                    "user_id": event["user_id"],
+                    "status_id": event["status_id"],
+                })
 
     async def status_notification(self, event):
-        await self.send(text_data=f"status_notification-{event['text']}")
+        await self.send_json(content={
+                    "type": "status_notification",
+                    "user_id": event["user_id"],
+                    "sender_phone_number": event["sender_phone_number"],
+                    "text": event["text"],
+                    "image": event["image"],
+                    "color": event["color"],
+                })
 
     @database_sync_to_async
     def create_status(

@@ -169,13 +169,12 @@ class Status_Web_Socket {
             }
         }
         this.client_websocket.onmessage = async (event) => {
-            let status_event_data = event.data.replace('status_notification-','')
-            status_event_data = status_event_data.split('-')
-            if (status_event_data.includes('CREATE')){
+            const status_data = JSON.parse(event.data)
+            if (status_data.type === 'CREATE'){
                 // if the user_id of the user who triggered the message is not the same
                 // as the auth user, think displaying a notification.
-                if (status_event_data[1] !== user_id){
-                    const status_sender_data = await tools.get(`/api/contacts/?phone_number=${status_event_data[2]}&created_by=${user_id}`)
+                if (status_data.sender_id !== user_id){
+                    const status_sender_data = await tools.get(`/api/contacts/?phone_number=${status_data.sender_phone_number}&created_by=${user_id}`)
                     // if the contacts IS NOT muted from statuses
                     // display a notification
                     if (!status_sender_data[0].statuses_muted){
