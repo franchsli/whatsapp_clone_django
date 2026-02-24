@@ -192,11 +192,12 @@ class Status_Web_Socket {
                     const status_form_text = document.getElementById('id_text')
                     const status_form_image = document.getElementById('id_image')
                     const image_preview_container = document.getElementById('status-imagePreview')
+                    const image_preview = image_preview_container !== null ? image_preview_container.firstElementChild : null
                     status_form_text.value = ''
                     status_form_image.value = ''
                     // if the image preview exists, delete it.
-                    if (image_preview_container.firstElementChild !== null){
-                        image_preview_container.firstElementChild.src = ''
+                    if (image_preview !== null){
+                        image_preview.src = ''
                     }
                     //notify the user
                     const toastNotification = document.getElementById('liveToast')
@@ -320,7 +321,7 @@ class App {
             const inputs = status_form.elements
             const validation_message = document.getElementById('status-validation-message')
             const image_container = document.getElementById('status-imagePreview')
-            const image = image_container.firstElementChild
+            const image = image_container !== null ? image_container.firstElementChild : null
             inputs[2].value = ''
             inputs[3].value = ''
             if (image){
