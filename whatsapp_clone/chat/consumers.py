@@ -314,12 +314,11 @@ class StatusConsumer(AsyncJsonWebsocketConsumer):
                 content["color"],
             )
             await self.channel_layer.group_send(
-                # TODO: Check if this is all the data
-                # and check if its really necesary to send
-                # all of this
                 self.room_group_name,
                 {
                     "type": "status_notification",
+                    "user_id": content["user_id"],
+                    "sender_phone_number": content["sender_phone_number"],
                     "text": content["text"],
                     "image": content["image"],
                     "color": content["color"],
@@ -345,6 +344,8 @@ class StatusConsumer(AsyncJsonWebsocketConsumer):
     async def status_notification(self, event):
         await self.send_json(content={
                     "type": "status_notification",
+                    "user_id": event["user_id"],
+                    "sender_phone_number": event["sender_phone_number"],
                     "text": event["text"],
                     "image": event["image"],
                     "color": event["color"],
