@@ -1,8 +1,14 @@
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
 from channels.db import database_sync_to_async
 from .models import User, Chat, Message, Status
-from .tools import (get_object_by_id, get_user_by_phone, create_contact,
-                     contact_from_user, encoded_image_to_file, get_user_contacts)
+from .tools import (
+    get_object_by_id,
+    get_user_by_phone,
+    create_contact,
+    contact_from_user,
+    encoded_image_to_file,
+    get_user_contacts,
+)
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils import timezone
 from typing import Union, Optional
@@ -10,6 +16,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
+
 
 class ChatConsumer(AsyncJsonWebsocketConsumer):
     async def connect(self):
@@ -76,10 +83,13 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
                 content["contact_phone_number"]
             )
             await self.create_chat([self.user_instance, contact])
-        
+
         elif content_type == "create_group":
-            await self.create_group(self.user_instance, content["contacts_phone_numbers"],
-                                     content["group_name"])
+            await self.create_group(
+                self.user_instance,
+                content["contacts_phone_numbers"],
+                content["group_name"],
+            )
 
         elif content_type == "create_contact":
             await database_sync_to_async(create_contact)(
@@ -95,20 +105,22 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
             await self.send_message_edition(content)
 
     async def chat_message(self, event):
-        await self.send_json(content={
-                    "type": "chat_message",
-                    "sender_user_id": event["sender_user_id"],
-                    "message": event["message"],
-                    "image": event["image"],
-                })
+        await self.send_json(
+            content={
+                "type": "chat_message",
+                "sender_user_id": event["sender_user_id"],
+                "message": event["message"],
+                "image": event["image"],
+            }
+        )
 
     async def chat_message_deletion(self, event):
         await self.send_json(
             content={
                 "type": "chat_message_deletion",
-                "sender_id": event['sender_user_id'],
+                "sender_id": event["sender_user_id"],
                 "sender_contact_name": self.sender_contact_name,
-                "chat_id": event['chat_id'],
+                "chat_id": event["chat_id"],
             },
         )
 
@@ -116,15 +128,15 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
         await self.send_json(
             content={
                 "type": "chat_message_edition",
-                "sender_id": event['sender_user_id'],
+                "sender_id": event["sender_user_id"],
                 "sender_contact_name": self.sender_contact_name,
-                "chat_id": event['chat_id'],
+                "chat_id": event["chat_id"],
             },
         )
 
     async def chat_notification(self, event):
-        await self.send_json(content=
-            {
+        await self.send_json(
+            content={
                 "type": "chat_notification",
                 "sender_id": event["sender_id"],
                 "message": event["message"],
@@ -207,7 +219,7 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
                 "type": "chat_message_deletion",
                 "sender_id": websocket_message_data["sender_user_id"],
                 "sender_contact_name": self.sender_contact_name,
-                "chat_id": websocket_message_data['chat_id'],
+                "chat_id": websocket_message_data["chat_id"]
             },
         )
 
@@ -263,9 +275,11 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
         new_chat = Chat.objects.create()
         new_chat.users.set(users)
         new_chat.save()
-    
+
     @database_sync_to_async
-    def create_group(self, creator:User, contacts_phones:list[str], name:str) -> None:
+    def create_group(
+        self, creator: User, contacts_phones: list[str], name: str
+    ) -> None:
         """Creates a group (Chat)
 
         Args:
@@ -285,7 +299,6 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
 
 
 class StatusConsumer(AsyncJsonWebsocketConsumer):
-
     async def connect(self):
         # user broadcast for statuses
         self.user_phone_number = self.scope["user"].phone_number.as_e164.replace(
@@ -311,7 +324,8 @@ class StatusConsumer(AsyncJsonWebsocketConsumer):
 
         if content_type == "CREATE":
             await self.create_status(
-                content["text"], content["image"],
+                content["text"],
+                content["image"],
                 content["color"],
             )
             await self.channel_layer.group_send(
@@ -338,21 +352,25 @@ class StatusConsumer(AsyncJsonWebsocketConsumer):
             )
 
     async def status_deletion(self, event):
-        await self.send_json(content={
-                    "type": "status_deletion",
-                    "user_id": event["user_id"],
-                    "status_id": event["status_id"],
-                })
+        await self.send_json(
+            content={
+                "type": "status_deletion",
+                "user_id": event["user_id"],
+                "status_id": event["status_id"],
+            }
+        )
 
     async def status_notification(self, event):
-        await self.send_json(content={
-                    "type": "status_notification",
-                    "user_id": event["user_id"],
-                    "sender_phone_number": event["sender_phone_number"],
-                    "text": event["text"],
-                    "image": event["image"],
-                    "color": event["color"],
-                })
+        await self.send_json(
+            content={
+                "type": "status_notification",
+                "user_id": event["user_id"],
+                "sender_phone_number": event["sender_phone_number"],
+                "text": event["text"],
+                "image": event["image"],
+                "color": event["color"],
+            }
+        )
 
     @database_sync_to_async
     def create_status(
@@ -375,7 +393,7 @@ class StatusConsumer(AsyncJsonWebsocketConsumer):
                 image_file = encoded_image_to_file(image, "user_status")
                 new_status.image = image_file
                 new_status.save()
-            
+
             if color:
                 new_status.color = color
                 new_status.save()
