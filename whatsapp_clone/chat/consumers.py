@@ -331,13 +331,15 @@ class StatusConsumer(AsyncJsonWebsocketConsumer):
                 self.room_group_name,
                 {
                     "type": "status_deletion",
-                    "text": content["status_id"],
+                    "user_id": content["user_id"],
+                    "status_id": content["status_id"],
                 },
             )
 
     async def status_deletion(self, event):
         await self.send_json(content={
                     "type": "status_deletion",
+                    "user_id": event["user_id"],
                     "status_id": event["status_id"],
                 })
 
