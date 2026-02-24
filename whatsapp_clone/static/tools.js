@@ -757,7 +757,7 @@ async function validate_status_form(error_audio, status_websocket){
     if (not_empty(status_form)){
         const status_input = document.getElementById('id_text')
         const image_container = document.getElementById('status-imagePreview')
-        const image = image_container.firstElementChild
+        const image = image_container !== null ? image_container.firstElementChild : null
         const color_field = document.getElementById('id_color')
         status_websocket.send(JSON.stringify({
             'type': 'CREATE',
