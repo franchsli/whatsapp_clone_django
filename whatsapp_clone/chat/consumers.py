@@ -1,7 +1,8 @@
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
 from channels.db import database_sync_to_async
 from .models import User, Chat, Message, Status
-from .tools import *
+from .tools import (get_object_by_id, get_user_by_phone, create_contact,
+                     contact_from_user, encoded_image_to_file, get_user_contacts)
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils import timezone
 from typing import Union, Optional
