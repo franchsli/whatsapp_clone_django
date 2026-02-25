@@ -1,6 +1,6 @@
 import * as tools from  './tools.js';
 
-class Chat_Web_Socket{
+class ChatWebSocket{
     constructor({url = '', parent_app_class = null}){
         this.client_websocket = new WebSocket(url)
         this.client_websocket.onopen = async (event) => {
@@ -153,7 +153,7 @@ class Chat_Web_Socket{
 
 }
 
-class Status_Web_Socket {
+class StatusWebSocket {
     constructor({url = '', parent_app_class = null}){
         this.client_websocket = new WebSocket(url)
         this.app = parent_app_class
@@ -246,9 +246,9 @@ class App {
         window.user_phone_number = user.getAttribute('data-phone')
         // sets the Websocket protocol depending on the WEB protocol
         this.protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-        this.chat_websocket = new Chat_Web_Socket({url: `${this.protocol}//${window.location.host}/`,
+        this.chat_websocket = new ChatWebSocket({url: `${this.protocol}//${window.location.host}/`,
                                                     parent_app_class: this})
-        this.status_websocket = new Status_Web_Socket({url: `${this.protocol}//${window.location.host}/status/`,
+        this.status_websocket = new StatusWebSocket({url: `${this.protocol}//${window.location.host}/status/`,
                                                     parent_app_class: this})
         this.chats_and_more = document.getElementById("chats-and-more")
         this.chat_form = document.getElementById("chat-creation-form")
