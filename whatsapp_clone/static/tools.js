@@ -626,7 +626,7 @@ function create_instance_via_consumer(form, instance_type, websocket, group_name
     }
 
     else {
-        console.error('THE GIVEN WEBSOCKET IS NOT OPEN')
+        console.error(`THE GIVEN WEBSOCKET AT ${websocket.url} IS NOT OPEN`)
     }
     return false
 }
