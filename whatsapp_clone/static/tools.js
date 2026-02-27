@@ -555,9 +555,10 @@ function space_text(text_id){
 }
 
 /**
- * Returns true only if only all the inputs in the given form are filled.
+ * Returns whether if all the inputs in the given form are filled.
  * @param {HTMLFormElement} form
- * @return {Boolean}
+ * @return {Boolean} true if all the inputs in the given form are filled,
+ * false otherwise
  */
 function fully_filled(form){
     const inputs = form.elements
