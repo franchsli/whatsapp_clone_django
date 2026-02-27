@@ -288,7 +288,7 @@ class App {
             }
 
         }
-        // gets the image preview div and updated it over time.
+        // gets the image preview div and updates it on input.
         this.status_image_input.oninput = () => {
             tools.previewImage(this.status_image_input, this.status_image_preview)
         }
