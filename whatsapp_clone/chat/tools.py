@@ -5,7 +5,8 @@ from typing import Union, List
 from .models import User, Chat, Contact, Status, Message
 from phonenumber_field.phonenumber import PhoneNumber
 from django.core.exceptions import ObjectDoesNotExist
-import base64, logging
+from base64 import b64decode
+import logging
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -184,7 +185,7 @@ def encoded_image_to_file(
     file_format, image_string_data = image_encoded_data.split(";base64,")
     # Get the file format extension (png, jpg, jpeg, etc.)
     file_extension = file_format.split("/")[-1]
-    image_bytes_data = base64.b64decode(image_string_data)
+    image_bytes_data = b64decode(image_string_data)
     image_file = ContentFile(image_bytes_data, f"{file_name}.{file_extension}")
     return image_file
 
