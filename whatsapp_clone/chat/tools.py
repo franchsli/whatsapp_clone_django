@@ -5,6 +5,7 @@ from typing import Union, List
 from .models import User, Chat, Contact, Status, Message
 from phonenumber_field.phonenumber import PhoneNumber
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Model
 from base64 import b64decode
 import logging
 
@@ -12,7 +13,7 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
 
-def get_user_by_id(user_id: str | int) -> object:
+def get_user_by_id(user_id: str | int) -> User:
     """Returns the user in the database found with the given id,
     raises an exception if not found
     Args:
@@ -20,12 +21,12 @@ def get_user_by_id(user_id: str | int) -> object:
     Raises:
         ObjectDoesNotExist: Raised when there's no user with the given id.
     Returns:
-        object: The user object in the database if found.
+        User: The user object in the database if found.
     """
     return get_object_by_id(User, user_id)
 
 
-def get_user_by_phone(phone_number: str) -> object:
+def get_user_by_phone(phone_number: str) -> User:
     """Returns the user in the database found with the given phone_number,
     raises an exception if not found
     Args:
@@ -33,7 +34,7 @@ def get_user_by_phone(phone_number: str) -> object:
     Raises:
         ObjectDoesNotExist: Raised when there's no user with such phone
     Returns:
-        object: The user object in the database if found.
+        User: The user object in the database if found.
     """
     try:
         return User.objects.get(phone_number=phone_number)
@@ -162,8 +163,8 @@ def object_photo(object: User | Chat) -> str:
 
 
 def get_object_by_id(
-    object_class: object, id: str | int
-) -> object:
+    object_class: Model, id: str | int
+) -> Model:
     try:
         return object_class.objects.get(id=id)
     except object_class.DoesNotExist:
