@@ -2,7 +2,6 @@ from django import template
 from django.db.models import QuerySet, Q
 from chat.models import User, Chat, Message, Contact
 from chat.tools import get_contact_in_chat, object_photo
-from typing import Union, List
 import re, logging
 
 logger = logging.getLogger(__name__)

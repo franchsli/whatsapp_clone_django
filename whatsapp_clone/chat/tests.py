@@ -1,6 +1,5 @@
 from django.test import TestCase
 from .models import User, Status, Message, Chat
-from typing import Optional
 from django.utils import timezone
 from django.core.files.base import ContentFile
 from .tools import ENCODED_IMAGE

@@ -11,7 +11,6 @@ from .tools import (
 )
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils import timezone
-from typing import Union, Optional
 import logging
 
 logger = logging.getLogger(__name__)

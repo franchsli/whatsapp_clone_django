@@ -1,7 +1,6 @@
 """Functions and variables for global use."""
 
 from django.core.files.base import ContentFile
-from typing import Union, List
 from .models import User, Chat, Contact, Status, Message
 from phonenumber_field.phonenumber import PhoneNumber
 from django.core.exceptions import ObjectDoesNotExist

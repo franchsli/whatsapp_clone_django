@@ -6,7 +6,6 @@ from django.db.models import Max
 from django.http import HttpResponseNotAllowed
 from .models import Chat, Contact, Message, Status, ChatBackground
 from .forms import UserForm, ChatForm, ContactForm, MessageForm, StatusForm, ChatBackgroundForm
-from typing import Union
 from .tools import get_contacts_statuses, chat_is_unread_by_user
 
 
