@@ -110,8 +110,8 @@ class StatusTest(TestCase):
         self,
         id: int,
         status_creator: User,
-        text: Optional[str] = None,
-        image: Optional[str] = None,
+        text: str | None = None,
+        image: str | None = None,
     ) -> None:
         if text or image:
             new_status = Status.objects.create(

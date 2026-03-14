@@ -12,11 +12,11 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
 
-def get_user_by_id(user_id: Union[str, int]) -> Union[object, Exception]:
+def get_user_by_id(user_id: str | int) -> Union[object, Exception]:
     """Returns the user in the database found with the given id,
     raises an exception if not found
     Args:
-        user_id (Union[str, int]): A numeric (integer) value that identify the user.
+        user_id (str | int): A numeric (integer) value that identify the user.
     Raises:
         ObjectDoesNotExist: Raised when there's no user with the given id.
     Returns:
@@ -54,15 +54,15 @@ def create_contact(contact_name: str, contact_phone_number: str, creator: User) 
     )
 
 
-def get_user_contacts(user_id: Union[str, int], desired_value: str) -> List[Contact]:
+def get_user_contacts(user_id: str | int, desired_value: str) -> list[Contact]:
     """Returns all the contacts desired values (fields) of the User with the given id.
 
     Args:
-        user_id (Union[str, int]): The id of the User.
+        user_id (str | int): The id of the User.
         desired_value (str): The desired field of the contacts objects.
 
     Returns:
-        List[Contact]: The list of the contacts values.
+        list[Contact]: The list of the contacts values.
     """
     user_instance = User.objects.get(id=user_id)
     return list(user_instance.contacts.values_list(desired_value, flat=True))
@@ -147,12 +147,12 @@ def get_contacts_statuses(user: User, muted: bool) -> dict:
     return contacts_with_statuses
 
 
-def object_photo(object: Union[User, Chat]) -> str:
+def object_photo(object: User | Chat) -> str:
     """Returns the object photo field url if exists,
     returns a default photo url otherwise.
 
     Args:
-        object (Union[User, Chat]): Either a User or a Chat.
+        object (User | Chat): Either a User or a Chat.
 
     Returns:
         str: The url of the photo in the object (if found) or
@@ -162,7 +162,7 @@ def object_photo(object: Union[User, Chat]) -> str:
 
 
 def get_object_by_id(
-    object_class: object, id: Union[str, int]
+    object_class: object, id: str | int
 ) -> Union[object, Exception]:
     try:
         return object_class.objects.get(id=id)
@@ -171,12 +171,12 @@ def get_object_by_id(
 
 
 def encoded_image_to_file(
-    image_encoded_data: Union[bytes, str], file_name: str
+    image_encoded_data: bytes | str, file_name: str
 ) -> ContentFile:
     """Converts a encoded image data to a ContentFile object.
 
     Args:
-        image_encoded_data (Union[bytes, str]): The encoded image data.
+        image_encoded_data (bytes | str): The encoded image data.
         file_name (str): The name that will be given to the file.
 
     Returns:

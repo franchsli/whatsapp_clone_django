@@ -384,7 +384,7 @@ def get_statuses(request):
     )
 
 
-def mute_contact_statuses(request, contact_id: Union[str, int], mute: bool):
+def mute_contact_statuses(request, contact_id: str | int, mute: bool):
     if request.method == "PATCH":
         try:
             contact_to_mute = Contact.objects.get(id=contact_id)
