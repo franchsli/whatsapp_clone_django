@@ -11,7 +11,6 @@ from .tools import (
 )
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils import timezone
-from typing import Union, Optional
 import logging
 
 logger = logging.getLogger(__name__)
@@ -226,20 +225,20 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
     @database_sync_to_async
     def create_message(
         self,
-        sender_user_id: Union[str, int],
-        chat_id: Union[str, int],
-        text: Optional[str] = None,
-        image: Optional[str] = None,
-        replies_to: Optional[str] = None,
+        sender_user_id: str | int,
+        chat_id: str | int,
+        text: str | None = None,
+        image: str | None = None,
+        replies_to: str | None = None,
     ) -> None:
         """Creates and stores a new message object in the database.
 
         Args:
-            sender_user_id (Union[str, int]): The id (numeric value) of the user that sent the message.
-            chat_id (Union[str, int]): The id (numeric value) of the chat that the sender sent this message on.
-            text (str): What the message says.
-            image (str): The image encoded base64  image data.
-            replies_to (str): The id of the message that is being replied.
+            sender_user_id (str | int): The id (numeric value) of the user that sent the message.
+            chat_id (str | int): The id (numeric value) of the chat that the sender sent this message on.
+            text (str | None): What the message says.
+            image (str | None): The image encoded base64  image data.
+            replies_to (str | None): The id of the message that is being replied.
         """
         sender_user_instance = User.objects.get(id=sender_user_id)
         chat_instance = Chat.objects.get(id=chat_id)
@@ -375,9 +374,9 @@ class StatusConsumer(AsyncJsonWebsocketConsumer):
     @database_sync_to_async
     def create_status(
         self,
-        text: Optional[str] = None,
-        image: Optional[str] = None,
-        color: Optional[str] = None,
+        text: str | None = None,
+        image: str | None = None,
+        color: str | None = None,
     ) -> None:
         status_creator = self.scope["user"]
         if text or image:
@@ -399,12 +398,12 @@ class StatusConsumer(AsyncJsonWebsocketConsumer):
                 new_status.save()
 
     @database_sync_to_async
-    def delete_status(self, status_id: Union[str, int]) -> None:
+    def delete_status(self, status_id: str | int) -> None:
         """Deletes the status with the given id if exists,
         raise an error exception.
 
         Args:
-            status_id (Union[str, int]): The id of the status to be deleted.
+            status_id (str | int): The id of the status to be deleted.
         """
         try:
             status = Status.objects.get(id=status_id)

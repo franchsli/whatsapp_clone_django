@@ -1,6 +1,5 @@
 from django.test import TestCase
 from .models import User, Status, Message, Chat
-from typing import Optional
 from django.utils import timezone
 from django.core.files.base import ContentFile
 from .tools import ENCODED_IMAGE
@@ -110,8 +109,8 @@ class StatusTest(TestCase):
         self,
         id: int,
         status_creator: User,
-        text: Optional[str] = None,
-        image: Optional[str] = None,
+        text: str | None = None,
+        image: str | None = None,
     ) -> None:
         if text or image:
             new_status = Status.objects.create(

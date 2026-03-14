@@ -6,7 +6,6 @@ from django.db.models import Max
 from django.http import HttpResponseNotAllowed
 from .models import Chat, Contact, Message, Status, ChatBackground
 from .forms import UserForm, ChatForm, ContactForm, MessageForm, StatusForm, ChatBackgroundForm
-from typing import Union
 from .tools import get_contacts_statuses, chat_is_unread_by_user
 
 
@@ -384,7 +383,7 @@ def get_statuses(request):
     )
 
 
-def mute_contact_statuses(request, contact_id: Union[str, int], mute: bool):
+def mute_contact_statuses(request, contact_id: str | int, mute: bool):
     if request.method == "PATCH":
         try:
             contact_to_mute = Contact.objects.get(id=contact_id)

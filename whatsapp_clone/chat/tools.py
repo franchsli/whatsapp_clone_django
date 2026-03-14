@@ -1,10 +1,10 @@
 """Functions and variables for global use."""
 
 from django.core.files.base import ContentFile
-from typing import Union, List
 from .models import User, Chat, Contact, Status, Message
 from phonenumber_field.phonenumber import PhoneNumber
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Model
 from base64 import b64decode
 import logging
 
@@ -12,20 +12,20 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
 
-def get_user_by_id(user_id: Union[str, int]) -> Union[object, Exception]:
+def get_user_by_id(user_id: str | int) -> User:
     """Returns the user in the database found with the given id,
     raises an exception if not found
     Args:
-        user_id (Union[str, int]): A numeric (integer) value that identify the user.
+        user_id (str | int): A numeric (integer) value that identify the user.
     Raises:
         ObjectDoesNotExist: Raised when there's no user with the given id.
     Returns:
-        Union[object, Exception]: The user object in the database or an exception if not found.
+        User: The user object in the database if found.
     """
     return get_object_by_id(User, user_id)
 
 
-def get_user_by_phone(phone_number: str) -> Union[object, Exception]:
+def get_user_by_phone(phone_number: str) -> User:
     """Returns the user in the database found with the given phone_number,
     raises an exception if not found
     Args:
@@ -33,7 +33,7 @@ def get_user_by_phone(phone_number: str) -> Union[object, Exception]:
     Raises:
         ObjectDoesNotExist: Raised when there's no user with such phone
     Returns:
-        Union[object, Exception]: The user object in the database or an exception if not found.
+        User: The user object in the database if found.
     """
     try:
         return User.objects.get(phone_number=phone_number)
@@ -54,21 +54,21 @@ def create_contact(contact_name: str, contact_phone_number: str, creator: User) 
     )
 
 
-def get_user_contacts(user_id: Union[str, int], desired_value: str) -> List[Contact]:
+def get_user_contacts(user_id: str | int, desired_value: str) -> list[Contact]:
     """Returns all the contacts desired values (fields) of the User with the given id.
 
     Args:
-        user_id (Union[str, int]): The id of the User.
+        user_id (str | int): The id of the User.
         desired_value (str): The desired field of the contacts objects.
 
     Returns:
-        List[Contact]: The list of the contacts values.
+        list[Contact]: The list of the contacts values.
     """
     user_instance = User.objects.get(id=user_id)
     return list(user_instance.contacts.values_list(desired_value, flat=True))
 
 
-def contact_from_user(user: User, contact_phone_number: str) -> Union[Contact, None]:
+def contact_from_user(user: User, contact_phone_number: str) -> Contact:
     """Returns the contact with the provided phone number from the given User.
 
     Args:
@@ -76,12 +76,12 @@ def contact_from_user(user: User, contact_phone_number: str) -> Union[Contact, N
         contact_phone_number (str): The phone-number of the contact that we're looking for.
 
     Returns:
-        Union[Contact, None]: The found Contact or None if no Contact is found.
+        Contact: The found Contact or None if no Contact is found.
     """
     return user.contacts.filter(phone_number=contact_phone_number).first()
 
 
-def get_contact_in_chat(chat: Chat, logged_user: User) -> Union[Contact, None]:
+def get_contact_in_chat(chat: Chat, logged_user: User) -> Contact:
     """Returns the contact object in the chat among all the users.
 
     Args:
@@ -147,12 +147,12 @@ def get_contacts_statuses(user: User, muted: bool) -> dict:
     return contacts_with_statuses
 
 
-def object_photo(object: Union[User, Chat]) -> str:
+def object_photo(object: User | Chat) -> str:
     """Returns the object photo field url if exists,
     returns a default photo url otherwise.
 
     Args:
-        object (Union[User, Chat]): Either a User or a Chat.
+        object (User | Chat): Either a User or a Chat.
 
     Returns:
         str: The url of the photo in the object (if found) or
@@ -162,8 +162,8 @@ def object_photo(object: Union[User, Chat]) -> str:
 
 
 def get_object_by_id(
-    object_class: object, id: Union[str, int]
-) -> Union[object, Exception]:
+    object_class: Model, id: str | int
+) -> Model:
     try:
         return object_class.objects.get(id=id)
     except object_class.DoesNotExist:
@@ -171,12 +171,12 @@ def get_object_by_id(
 
 
 def encoded_image_to_file(
-    image_encoded_data: Union[bytes, str], file_name: str
+    image_encoded_data: bytes | str, file_name: str
 ) -> ContentFile:
     """Converts a encoded image data to a ContentFile object.
 
     Args:
-        image_encoded_data (Union[bytes, str]): The encoded image data.
+        image_encoded_data (bytes | str): The encoded image data.
         file_name (str): The name that will be given to the file.
 
     Returns:

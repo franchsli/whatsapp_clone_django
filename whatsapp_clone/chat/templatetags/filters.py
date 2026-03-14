@@ -2,7 +2,6 @@ from django import template
 from django.db.models import QuerySet, Q
 from chat.models import User, Chat, Message, Contact
 from chat.tools import get_contact_in_chat, object_photo
-from typing import Union, List
 import re, logging
 
 logger = logging.getLogger(__name__)
@@ -126,7 +125,7 @@ def user_is_admin(chat:Chat, user:User) -> bool:
 
 @register.simple_tag(takes_context=True)
 def get_chat_users_data(context, chat: Chat, desired_data_field: str
-) -> Union[str, List[str]]:
+) -> str | list[str]:
     """Return the desired data from the Users in the Chat excluding
     the auth user (aka logged user).
 
@@ -137,7 +136,7 @@ def get_chat_users_data(context, chat: Chat, desired_data_field: str
         the desired data.
 
     Returns:
-        Union[str, List[str]]: The desired data of the Users excluding
+        str | list[str]: The desired data of the Users excluding
         the logged one.
     """
     user_list = chat.users.exclude(id=context["request"].user.id)
@@ -167,7 +166,7 @@ def get_chat_users_data(context, chat: Chat, desired_data_field: str
 @register.simple_tag
 def chat_desired_data(
     chat: Chat, auth_user: User, desired_value: str
-) -> Union[str, bool, int]:
+) -> str | bool | int:
     """Returns the chat desired data if exists,
     returns the contact in the chat desired data otherwise.
 
@@ -177,7 +176,7 @@ def chat_desired_data(
         desired_value (str): The desired field of the Chat model or the Contact model.
 
     Returns:
-        Union[str, bool, int]: Either a value from Chat model field or Contact model field.
+        str | bool | int: Either a value from Chat model field or Contact model field.
     """
     # check if it's a group-like chat or not
     if chat.admins.count() > 0:
