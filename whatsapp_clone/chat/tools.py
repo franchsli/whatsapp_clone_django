@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
 
-def get_user_by_id(user_id: str | int) -> Union[object, Exception]:
+def get_user_by_id(user_id: str | int) -> object:
     """Returns the user in the database found with the given id,
     raises an exception if not found
     Args:
@@ -20,12 +20,12 @@ def get_user_by_id(user_id: str | int) -> Union[object, Exception]:
     Raises:
         ObjectDoesNotExist: Raised when there's no user with the given id.
     Returns:
-        Union[object, Exception]: The user object in the database or an exception if not found.
+        object: The user object in the database if found.
     """
     return get_object_by_id(User, user_id)
 
 
-def get_user_by_phone(phone_number: str) -> Union[object, Exception]:
+def get_user_by_phone(phone_number: str) -> object:
     """Returns the user in the database found with the given phone_number,
     raises an exception if not found
     Args:
@@ -33,7 +33,7 @@ def get_user_by_phone(phone_number: str) -> Union[object, Exception]:
     Raises:
         ObjectDoesNotExist: Raised when there's no user with such phone
     Returns:
-        Union[object, Exception]: The user object in the database or an exception if not found.
+        object: The user object in the database if found.
     """
     try:
         return User.objects.get(phone_number=phone_number)
@@ -68,7 +68,7 @@ def get_user_contacts(user_id: str | int, desired_value: str) -> list[Contact]:
     return list(user_instance.contacts.values_list(desired_value, flat=True))
 
 
-def contact_from_user(user: User, contact_phone_number: str) -> Union[Contact, None]:
+def contact_from_user(user: User, contact_phone_number: str) -> Contact:
     """Returns the contact with the provided phone number from the given User.
 
     Args:
@@ -76,12 +76,12 @@ def contact_from_user(user: User, contact_phone_number: str) -> Union[Contact, N
         contact_phone_number (str): The phone-number of the contact that we're looking for.
 
     Returns:
-        Union[Contact, None]: The found Contact or None if no Contact is found.
+        Contact: The found Contact or None if no Contact is found.
     """
     return user.contacts.filter(phone_number=contact_phone_number).first()
 
 
-def get_contact_in_chat(chat: Chat, logged_user: User) -> Union[Contact, None]:
+def get_contact_in_chat(chat: Chat, logged_user: User) -> Contact:
     """Returns the contact object in the chat among all the users.
 
     Args:
@@ -163,7 +163,7 @@ def object_photo(object: User | Chat) -> str:
 
 def get_object_by_id(
     object_class: object, id: str | int
-) -> Union[object, Exception]:
+) -> object:
     try:
         return object_class.objects.get(id=id)
     except object_class.DoesNotExist:
