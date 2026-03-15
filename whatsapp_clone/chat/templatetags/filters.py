@@ -2,7 +2,8 @@ from django import template
 from django.db.models import QuerySet, Q
 from chat.models import User, Chat, Message, Contact
 from chat.tools import get_contact_in_chat, object_photo
-import re, logging
+from re import match
+import logging
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -244,7 +245,7 @@ def only_emoji(text: str) -> bool:
     Returns:
         bool: True if it's only a emoji, False otherwise.
     """
-    return bool(re.match(r"\W+", text))
+    return bool(match(r"\W+", text))
 
 
 @register.simple_tag

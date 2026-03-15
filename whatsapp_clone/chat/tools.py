@@ -49,7 +49,7 @@ def create_contact(contact_name: str, contact_phone_number: str, creator: User) 
         user_id Union[str, int]: The id of the user who is creating the contact.
     """
     phone = PhoneNumber.from_string(contact_phone_number)
-    new_contact = Contact.objects.create(
+    Contact.objects.create(
         name=contact_name, phone_number=phone.as_e164, created_by=creator
     )
 
