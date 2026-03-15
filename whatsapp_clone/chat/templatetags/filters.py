@@ -2,7 +2,8 @@ from django import template
 from django.db.models import QuerySet, Q
 from chat.models import User, Chat, Message, Contact
 from chat.tools import get_contact_in_chat, object_photo
-import re, logging
+from re import match
+import logging
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -141,14 +142,14 @@ def get_chat_users_data(context, chat: Chat, desired_data_field: str
     """
     user_list = chat.users.exclude(id=context["request"].user.id)
     users_data = list(user_list.values_list(desired_data_field, flat=True))
-    # only shows relevant data fomr the phone numbers, because that field
+    # only shows relevant data from the phone numbers, because that field
     # stores an object and not a string.
     if desired_data_field == "phone_number":
         return list(
             map(
                 lambda user_phone: (
                     f"{user_phone.country_code}{user_phone.national_number}"
-                    if type(user_phone) != str
+                    if not isinstance(user_phone, str)
                     else None
                 ),
                 users_data,
@@ -244,7 +245,7 @@ def only_emoji(text: str) -> bool:
     Returns:
         bool: True if it's only a emoji, False otherwise.
     """
-    return bool(re.match(r"\W+", text))
+    return bool(match(r"\W+", text))
 
 
 @register.simple_tag

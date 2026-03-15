@@ -113,7 +113,7 @@ def archive_chat(request, chat_id, archive):
         archive = True if archive == "True" else False
         chat = Chat.objects.get(id=chat_id)
         # returns all the desired chats depending on archive arg value
-        if archive == True:
+        if archive:
             request.user.archived_chats.add(chat)
             return redirect("chats", archived="False")
         else:
