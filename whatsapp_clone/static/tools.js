@@ -277,11 +277,12 @@ function switch_emojis(button){
 }
 
 /**
- * Switchs the purpose of a form
+ * Switches the purpose of the chat form
+ * from creating chats to groups or vice versa
  * @param {HTMLFormElement} form 
  * @param {HTMLElement} form_header The title of the form 
  */
-function switch_purpose(form, form_header){
+function switch_chat_form_purpose(form, form_header){
     const checked_checkboxes = form.querySelectorAll('input:checked')
     const chat_name = form.querySelector('input[type="text"]')
     if(checked_checkboxes.length <= 1){
@@ -878,8 +879,8 @@ function load_global_doc_functions(){
         switch_emojis(button)
     }
 
-    window.switch_purpose = function(form, form_header){
-        switch_purpose(form, form_header)
+    window.switch_chat_form_purpose = function(form, form_header){
+        switch_chat_form_purpose(form, form_header)
     }
 
     window.toggle_element_inner_text = function(HTML_element, text_a, text_b){
@@ -1028,7 +1029,7 @@ export {
     scroll_to_bottom, toggleReadMore, showDropdown, 
     run_element_animation, checked, not_empty, 
     toggle_element_inner_text, load_emojis, switch_emojis, 
-    switch_purpose, toggle_element_display, previewImage, 
+    switch_chat_form_purpose, toggle_element_display, previewImage, 
     update_chat_list, at_least_one_attr, exchange_elements_class, 
     switch_element_visibility, load_more_messages, load_older_messages, 
     remove_duplicates, change_input_color, filter_by_value, 
