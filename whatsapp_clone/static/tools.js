@@ -181,19 +181,6 @@ function checked(form){
     }
 }
 
-/**
- * Returns the ID of the first checked checkbox in the given form.
- * @param {HTMLFormElement} form 
- */
-function checked_checkbox_id(form){
-    const checkboxes = form.querySelector('input[type="checkbox"]')
-    for (let index = 0; index < checkboxes.length; index++) {
-        const checkbox = checkboxes[index];
-        if (checkbox.checked){
-            return checkbox.id
-        }
-    }
-}
 
 /**
  * Returns true if any input in the provided form is not empty, false otherwise.
@@ -555,22 +542,6 @@ function space_text(text_id){
     text_container.textContent = words.join(' ')
 }
 
-/**
- * Returns whether if all the inputs in the given form are filled.
- * @param {HTMLFormElement} form
- * @return {Boolean} true if all the inputs in the given form are filled,
- * false otherwise
- */
-function fully_filled(form){
-    const inputs = form.elements
-    for (let index = 0; index < inputs.length; index++) {
-        const element = inputs[index];
-        if (element.value.trim() === ''){
-            return false
-        }
-    }
-    return true;
-}
 
 /**
  * Activates all the tooltipis in the document.
