@@ -35,8 +35,10 @@ class MessageForm(ModelForm):
             "sender_user": HiddenInput(),
             "text": Textarea(attrs={"cols": 1, "rows": 1}),
             "date": HiddenInput(),
+            "read_by": HiddenInput(),
             "chat": HiddenInput(),
             "edited": HiddenInput(),
+            "reply_to": HiddenInput(),
         }
 
 
