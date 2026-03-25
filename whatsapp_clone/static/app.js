@@ -60,7 +60,7 @@ class ChatWebSocket{
             'message': message_text,
             'image': message_image,
             'receiver_username': sessionStorage.getItem('receiver_username'),
-            'sender_user_id': message_sender_id,
+            'sender_id': message_sender_id,
             'chat_id': sessionStorage.getItem('chat_id'),
             'chat_members_phones': sessionStorage.getItem('chat_members_phones'),
             'reply_to': sessionStorage.getItem('reply_to')

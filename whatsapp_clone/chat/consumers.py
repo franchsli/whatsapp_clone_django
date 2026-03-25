@@ -45,7 +45,7 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
                 self.room_group_name,
                 {
                     "type": "chat_message",
-                    "sender_user_id": content["sender_user_id"],
+                    "sender_id": content["sender_id"],
                     "message": content["message"],
                     "image": content["image"],
                 },
@@ -57,7 +57,7 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
             logger.debug(type(content["chat_members_phones"]))
             await self.send_message_notifications(content)
             await self.create_message(
-                content["sender_user_id"],
+                content["sender_id"],
                 content["chat_id"],
                 content["message"],
                 content["image"],
@@ -107,7 +107,7 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
         await self.send_json(
             content={
                 "type": "chat_message",
-                "sender_user_id": event["sender_user_id"],
+                "sender_id": event["sender_id"],
                 "message": event["message"],
                 "image": event["image"],
             }
@@ -117,7 +117,7 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
         await self.send_json(
             content={
                 "type": "chat_message_deletion",
-                "sender_id": event["sender_user_id"],
+                "sender_id": event["sender_id"],
                 "sender_contact_name": self.sender_contact_name,
                 "chat_id": event["chat_id"],
             },
@@ -127,7 +127,7 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
         await self.send_json(
             content={
                 "type": "chat_message_edition",
-                "sender_id": event["sender_user_id"],
+                "sender_id": event["sender_id"],
                 "sender_contact_name": self.sender_contact_name,
                 "chat_id": event["chat_id"],
             },
@@ -163,7 +163,7 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
                 f"user_group_{message_receiver_phone}",
                 {
                     "type": "chat_notification",
-                    "sender_id": websocket_message_data["sender_user_id"],
+                    "sender_id": websocket_message_data["sender_id"],
                     "message": f"{websocket_message_data['message'] if len(websocket_message_data['message']) > 0 else 'Photo 📷'}",
                     "sender_contact_name": f"{sender_contact_instance.name if sender_contact_instance else self.user_instance.phone_number}",
                     "chat_is_archived": chat_is_archived,
@@ -190,7 +190,7 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
             self.room_group_name,
             {
                 "type": "chat_message_edition",
-                "sender_id": websocket_message_data["sender_user_id"],
+                "sender_id": websocket_message_data["sender_id"],
                 "sender_contact_name": self.sender_contact_name,
                 "chat_id": websocket_message_data["chat_id"],
             },
@@ -216,7 +216,7 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
             self.room_group_name,
             {
                 "type": "chat_message_deletion",
-                "sender_id": websocket_message_data["sender_user_id"],
+                "sender_id": websocket_message_data["sender_id"],
                 "sender_contact_name": self.sender_contact_name,
                 "chat_id": websocket_message_data["chat_id"]
             },
@@ -225,7 +225,7 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
     @database_sync_to_async
     def create_message(
         self,
-        sender_user_id: str | int,
+        sender_id: str | int,
         chat_id: str | int,
         text: str | None = None,
         image: str | None = None,
@@ -234,13 +234,13 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
         """Creates and stores a new message object in the database.
 
         Args:
-            sender_user_id (str | int): The id (numeric value) of the user that sent the message.
+            sender_id (str | int): The id (numeric value) of the user that sent the message.
             chat_id (str | int): The id (numeric value) of the chat that the sender sent this message on.
             text (str | None): What the message says.
             image (str | None): The image encoded base64  image data.
             replies_to (str | None): The id of the message that is being replied.
         """
-        sender_user_instance = User.objects.get(id=sender_user_id)
+        sender_user_instance = User.objects.get(id=sender_id)
         chat_instance = Chat.objects.get(id=chat_id)
         new_message = Message.objects.create(
             sender_user=sender_user_instance,
