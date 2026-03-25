@@ -6,6 +6,9 @@ from phonenumber_field.phonenumber import PhoneNumber
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Model
 from base64 import b64decode
+from django.http import QueryDict
+from django.http.multipartparser import MultiPartParser
+from django.utils.datastructures import MultiValueDict
 import logging
 
 logger = logging.getLogger(__name__)
@@ -189,6 +192,23 @@ def encoded_image_to_file(
     image_file = ContentFile(image_bytes_data, f"{file_name}.{file_extension}")
     return image_file
 
+
+def get_patch_data(request) -> tuple[QueryDict, MultiValueDict]:
+    """Parse multipart PATCH request body into (POST-like dict, FILES-like dict).
+
+    Args:
+        request: The PATCH request.
+
+    Returns:
+        tuple[QueryDict, MultiValueDict]: The PATCH request data.
+    """
+    content_type = request.META.get("CONTENT_TYPE", "")
+    if "multipart" in content_type:
+        parser = MultiPartParser(
+            request.META, request, request.upload_handlers
+        )
+        return parser.parse()
+    return QueryDict(request.body), {}
 
 # CONSTANT VARIABLES
 DEFAULT_USER_PHOTO_URL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNBNdcMDNS2r9df1IWFVc8AY0QNtfNhEJv7fGS5TdhUWrlBqfGu1PCCn9lKpL-FqF9dWc&usqp=CAU"

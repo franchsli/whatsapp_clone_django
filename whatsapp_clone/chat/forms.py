@@ -26,19 +26,13 @@ class ContactForm(ModelForm):
 class MessageForm(ModelForm):
     class Meta:
         model = Message
-        exclude = (
-            "read",
-            "starred_by",
+        fields = (
+            "text",
+            "image",
         )
 
         widgets = {
-            "sender_user": HiddenInput(),
             "text": Textarea(attrs={"cols": 1, "rows": 1}),
-            "date": HiddenInput(),
-            "read_by": HiddenInput(),
-            "chat": HiddenInput(),
-            "edited": HiddenInput(),
-            "reply_to": HiddenInput(),
         }
 
 

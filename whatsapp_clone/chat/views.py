@@ -6,7 +6,7 @@ from django.db.models import Max
 from django.http import HttpResponseNotAllowed
 from .models import Chat, Contact, Message, Status, ChatBackground
 from .forms import UserForm, ChatForm, ContactForm, MessageForm, StatusForm, ChatBackgroundForm
-from .tools import get_contacts_statuses, chat_is_unread_by_user
+from .tools import get_contacts_statuses, chat_is_unread_by_user, get_patch_data
 
 
 @login_required
@@ -241,7 +241,7 @@ def get_message(request, pk):
 def edit_message(request, pk):
     if request.method == "GET":
         message_instance = Message.objects.get(id=pk)
-        message_form = MessageForm(instance=message_instance, initial={"edited": True})
+        message_form = MessageForm(instance=message_instance)
         return render(
             request,
             "layouts/partials/components/edit_message.html",
@@ -250,18 +250,21 @@ def edit_message(request, pk):
                 "message_form": message_form,
             },
         )
-    elif request.method == "POST":
+    elif request.method == "PATCH":
         message_instance = Message.objects.get(id=pk)
-        message_form = MessageForm(request.POST, instance=message_instance)
+        message_data, message_files = get_patch_data(request)
+        message_form = MessageForm(data=message_data, files=message_files, instance=message_instance)
         if message_form.is_valid():
-            message_form.save()
+            message: Message = message_form.save(commit=False)
+            message.edited = True
+            message.save()
         return render(
             request,
             "layouts/partials/components/message.html",
             {"message": message_instance},
         )
     else:
-        return HttpResponseNotAllowed(["GET", "POST"])
+        return HttpResponseNotAllowed(["GET", "PATCH"])
 
 
 def delete_message(request, chat_id, message_id):
