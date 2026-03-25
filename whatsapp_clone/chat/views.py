@@ -5,7 +5,14 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Max
 from django.http import HttpResponseNotAllowed
 from .models import Chat, Contact, Message, Status, ChatBackground
-from .forms import UserForm, ChatForm, ContactForm, MessageForm, StatusForm, ChatBackgroundForm
+from .forms import (
+    UserForm,
+    ChatForm,
+    ContactForm,
+    MessageForm,
+    StatusForm,
+    ChatBackgroundForm,
+)
 from .tools import get_contacts_statuses, chat_is_unread_by_user, get_patch_data
 
 
@@ -40,8 +47,7 @@ def chats(request, archived: str):
 
     if not archived:
         user_chats = (
-            request.user.chats
-            .exclude(archived_by=request.user)
+            request.user.chats.exclude(archived_by=request.user)
             .annotate(last_message_date=Max("message__date"))
             .order_by("-last_message_date")
         )
@@ -50,8 +56,7 @@ def chats(request, archived: str):
         )
     else:
         user_chats = (
-            request.user.chats
-            .filter(archived_by=request.user)
+            request.user.chats.filter(archived_by=request.user)
             .annotate(last_message_date=Max("message__date"))
             .order_by("-last_message_date")
         )
@@ -68,15 +73,13 @@ def unread_chats(request, archived: str):
     # returns the user chats ordered by the date of the latest message in the chat.
     if not archived:
         chats = (
-            request.user.chats
-            .exclude(archived_by=request.user)
+            request.user.chats.exclude(archived_by=request.user)
             .annotate(last_message_date=Max("message__date"))
             .order_by("-last_message_date")
         )
     else:
         chats = (
-            request.user.chats
-            .filter(archived_by=request.user)
+            request.user.chats.filter(archived_by=request.user)
             .annotate(last_message_date=Max("message__date"))
             .order_by("-last_message_date")
         )
@@ -160,7 +163,10 @@ def display_chat(request, pk):
             # retrieves the last 20 messages in the chat
             chat_messages = chat.message_set.order_by("-date")[:20:-1]
             for message in chat_messages:
-                if not message.read_by.contains(request.user) and message.sender_user.pk != request.user.id:
+                if (
+                    not message.read_by.contains(request.user)
+                    and message.sender_user.pk != request.user.id
+                ):
                     message.read_by.add(request.user)
                     message.save()
 
@@ -171,6 +177,7 @@ def display_chat(request, pk):
         )
     else:
         return HttpResponseNotAllowed(["GET"])
+
 
 def get_contacts(request):
     if request.method == "GET":
@@ -253,7 +260,9 @@ def edit_message(request, pk):
     elif request.method == "PATCH":
         message_instance = Message.objects.get(id=pk)
         message_data, message_files = get_patch_data(request)
-        message_form = MessageForm(data=message_data, files=message_files, instance=message_instance)
+        message_form = MessageForm(
+            data=message_data, files=message_files, instance=message_instance
+        )
         if message_form.is_valid():
             message: Message = message_form.save(commit=False)
             message.edited = True
@@ -461,6 +470,7 @@ def chats_selection(request):
     else:
         return HttpResponseNotAllowed(["GET"])
 
+
 def leave_group(request, pk, archived):
     if request.method == "PATCH":
         group = Chat.objects.get(id=pk)
@@ -474,6 +484,7 @@ def leave_group(request, pk, archived):
     else:
         return HttpResponseNotAllowed(["PATCH"])
 
+
 def delete_group(request, pk, archived):
     if request.method == "DELETE":
         group = Chat.objects.get(id=pk)
@@ -483,28 +494,38 @@ def delete_group(request, pk, archived):
     else:
         return HttpResponseNotAllowed(["DELETE"])
 
+
 def chats_background(request):
     chat_background, _ = ChatBackground.objects.get_or_create(user=request.user)
-    return render(request, "layouts/partials/chats_background.html", {
-            "chat_background": chat_background
-        })
-
+    return render(
+        request,
+        "layouts/partials/chats_background.html",
+        {"chat_background": chat_background},
+    )
 
 
 def edit_chats_background(request):
     chat_background, _ = ChatBackground.objects.get_or_create(user=request.user)
     if request.method == "GET":
-        chats_background_form = ChatBackgroundForm(instance=chat_background, initial={"user":request.user})
-        return render(request, "layouts/partials/components/background_form.html", 
-                      {"background_form": chats_background_form})
-    
+        chats_background_form = ChatBackgroundForm(
+            instance=chat_background, initial={"user": request.user}
+        )
+        return render(
+            request,
+            "layouts/partials/components/background_form.html",
+            {"background_form": chats_background_form},
+        )
+
     elif request.method == "POST":
-        chats_background_form = ChatBackgroundForm(request.POST, request.FILES, instance=chat_background, initial={"user":request.user})
+        chats_background_form = ChatBackgroundForm(
+            request.POST,
+            request.FILES,
+            instance=chat_background,
+            initial={"user": request.user},
+        )
         if chats_background_form.is_valid():
             chats_background_form.save()
         return redirect("chats_background")
 
-
     else:
         return HttpResponseNotAllowed(["GET", "POST"])
-

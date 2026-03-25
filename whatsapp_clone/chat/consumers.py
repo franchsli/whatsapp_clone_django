@@ -218,7 +218,7 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
                 "type": "chat_message_deletion",
                 "sender_id": websocket_message_data["sender_id"],
                 "sender_contact_name": self.sender_contact_name,
-                "chat_id": websocket_message_data["chat_id"]
+                "chat_id": websocket_message_data["chat_id"],
             },
         )
 

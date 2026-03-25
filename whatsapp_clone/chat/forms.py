@@ -48,6 +48,7 @@ class StatusForm(ModelForm):
             "color": ColorWidget(),
         }
 
+
 class ChatBackgroundForm(ModelForm):
     class Meta:
         model = ChatBackground

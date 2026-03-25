@@ -122,7 +122,6 @@ class Message(models.Model):
 
     def starred_by_user(self, user: User) -> bool:
         return self.pk in user.starred_messages.values_list("id", flat=True)
-  
 
 
 class Status(models.Model):
@@ -146,16 +145,15 @@ class Status(models.Model):
     class Meta:
         verbose_name_plural = "statuses"
 
+
 class ChatBackground(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(blank=True, null=True, upload_to="backgrounds/")
     color = ColorField(default="#ffffff")
-    BACKGROUNDS = [
-        ("IMG", "IMAGE"),
-        ("CLR", "COLOR")
-    ]
-    preferred_background = models.CharField(blank=False, null=False, max_length=3, default="CLR", choices=BACKGROUNDS)
-
+    BACKGROUNDS = [("IMG", "IMAGE"), ("CLR", "COLOR")]
+    preferred_background = models.CharField(
+        blank=False, null=False, max_length=3, default="CLR", choices=BACKGROUNDS
+    )
 
     def __str__(self) -> str:
         return f"{self.user.username}'s background"
@@ -167,6 +165,3 @@ class ChatBackground(models.Model):
     @property
     def default_color_set(self) -> bool:
         return self.color == "#ffffff"
-
-
-    

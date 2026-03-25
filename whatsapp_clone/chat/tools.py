@@ -14,6 +14,11 @@ import logging
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
+# CONSTANT VARIABLES
+DEFAULT_USER_PHOTO_URL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNBNdcMDNS2r9df1IWFVc8AY0QNtfNhEJv7fGS5TdhUWrlBqfGu1PCCn9lKpL-FqF9dWc&usqp=CAU"
+
+ENCODED_IMAGE = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAQMAAAD+wSzIAAAABlBMVEX///+/v7+jQ3Y5AAAADklEQVQI12P4AIX8EAgALgAD/aNpbtEAAAAASUVORK5CYII"
+
 
 def get_user_by_id(user_id: str | int) -> User:
     """Returns the user in the database found with the given id,
@@ -122,16 +127,16 @@ def chat_is_unread_by_user(chat: Chat, user: User) -> bool:
         isn't read and it wasn't sent by the user,
         False otherwise.
     """
-    latest_message:Message = chat.last_message
+    latest_message: Message = chat.last_message
     if latest_message:
-        if latest_message.sender_user != user and not latest_message.read_by.contains(user):
+        if latest_message.sender_user != user and not latest_message.read_by.contains(
+            user
+        ):
             return True
         else:
             return False
     else:
         return False
-        
-
 
 
 def get_contacts_statuses(user: User, muted: bool) -> dict:
@@ -164,9 +169,7 @@ def object_photo(object: User | Chat) -> str:
     return object.photo.url if object.has_photo else DEFAULT_USER_PHOTO_URL
 
 
-def get_object_by_id(
-    object_class: Model, id: str | int
-) -> Model:
+def get_object_by_id(object_class: Model, id: str | int) -> Model:
     try:
         return object_class.objects.get(id=id)
     except object_class.DoesNotExist:
@@ -204,13 +207,6 @@ def get_patch_data(request) -> tuple[QueryDict, MultiValueDict]:
     """
     content_type = request.META.get("CONTENT_TYPE", "")
     if "multipart" in content_type:
-        parser = MultiPartParser(
-            request.META, request, request.upload_handlers
-        )
+        parser = MultiPartParser(request.META, request, request.upload_handlers)
         return parser.parse()
     return QueryDict(request.body), {}
-
-# CONSTANT VARIABLES
-DEFAULT_USER_PHOTO_URL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNBNdcMDNS2r9df1IWFVc8AY0QNtfNhEJv7fGS5TdhUWrlBqfGu1PCCn9lKpL-FqF9dWc&usqp=CAU"
-
-ENCODED_IMAGE = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAQMAAAD+wSzIAAAABlBMVEX///+/v7+jQ3Y5AAAADklEQVQI12P4AIX8EAgALgAD/aNpbtEAAAAASUVORK5CYII"
