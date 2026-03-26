@@ -111,6 +111,14 @@ class ChatWebSocket{
     }
 
     handle_message_deletion(){
+        this.handle_ui_update()
+    }
+
+    handle_message_edition(){
+        this.handle_ui_update()
+    }
+
+    handle_ui_update(){
         /**
         * the JS code (receiver) analises the websocket message
         * and then decides whether or not to update the UI using
@@ -128,26 +136,6 @@ class ChatWebSocket{
                 })
                 
             } 
-        }
-    }
-
-    handle_message_edition(){
-        /**
-        * the JS code (receiver) analises the websocket message
-        * and then decides whether or not to update the UI using
-        * a HTMX.ajax request.
-        */
-        tools.update_chat_list()
-       if (this.sender_id === user_id){
-            return
-       }
-       this.app.new_message = true
-        if (document.getElementById('contact-name') !== null){
-            if (sessionStorage.getItem('chat_id') === this.chat_id) {
-                htmx.ajax('GET', `/display_chat/${sessionStorage.getItem('chat_id')}`, '#chat-display').then(() => {
-                    tools.scroll_to_bottom()
-                })
-            }
         }
     }
 
