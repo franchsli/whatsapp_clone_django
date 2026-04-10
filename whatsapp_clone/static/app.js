@@ -159,11 +159,12 @@ class StatusWebSocket {
         }
         this.client_websocket.onmessage = async (event) => {
             const status_data = JSON.parse(event.data)
-            if (status_data.type === 'CREATE'){
+            if (status_data.type === 'status_notification'){
                 // if the user_id of the user who triggered the message is not the same
                 // as the auth user, think displaying a notification.
-                if (status_data.sender_id !== user_id){
+                if (status_data.user_id !== user_id){
                     const status_sender_data = await tools.get(`/api/contacts/?phone_number=${status_data.sender_phone_number}&created_by=${user_id}`)
+                    debugger
                     // if the contacts IS NOT muted from statuses
                     // display a notification
                     if (!status_sender_data[0].statuses_muted){
@@ -178,6 +179,7 @@ class StatusWebSocket {
                 // otherwise, it means that the user
                 // used the form, so clean it and display a success notification
                 else {
+                    debugger
                     const status_form_text = document.getElementById('id_text')
                     const status_form_image = document.getElementById('id_image')
                     const image_preview_container = document.getElementById('status-imagePreview')
@@ -270,8 +272,9 @@ class App {
             tools.validate_contact_form(this.contact_form, this.error_audio, this.notification_audio, this.chat_websocket.client_websocket)
         }
 
-        this.status_submit_button.onclick = (event) => {
-            event.preventDefault()
+        this.status_form.onsubmit = (event) => {
+            debugger
+            event.preventDefault();
             if(tools.cand_send_messages(this.status_websocket.client_websocket)){
                 tools.validate_status_form(this.error_audio, this.status_websocket.client_websocket, user_id, user_phone_number)
             }
