@@ -96,7 +96,7 @@ function toggleReadMore(text_id) {
 
 /**
  * Shows the dropdown  in the same place where it was called.
- * @param {Event} event The event.
+ * @param {MouseEvent} event The mouse event (right click).
  * @param {String} dropdown_id The id of the dropdown that was called.
  */
 function showDropdown(event, dropdown_id) {
