@@ -17,7 +17,7 @@ class ChatWebSocket{
             this.sender_id = data.sender_id
             this.chat_id = data.chat_id
             this.image = data.image
-            this.sender_username = data.sender_username
+            this.sender_contact_name = data.sender_contact_name
             this.chat_is_archived = data.chat_is_archived === 'True' ? true : false
             if (data.type === 'chat_message'){
                 this.handle_chat_message()
@@ -92,6 +92,7 @@ class ChatWebSocket{
     }
 
     handle_chat_notification(){
+        debugger
         const displayed_chat_contact_info = document.getElementById('contact-name')
         let noti_from_opened_chat = false
         // if a chat is opened
@@ -101,7 +102,7 @@ class ChatWebSocket{
         }
         if(!this.chat_is_archived && !noti_from_opened_chat){
             const toastNotification = document.getElementById('liveToast')
-            tools.modifyNotification(this.sender_username, this.text)
+            tools.modifyNotification(this.sender_contact_name, this.message)
             const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
             this.app.message_received_audio.play()
             toastBootstrap.show()
