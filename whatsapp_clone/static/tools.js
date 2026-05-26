@@ -680,6 +680,37 @@ async function validate_chat_form(chat_form, error_audio, websocket){
 }
 
 /**
+ * Returns an Object with the validation results for the contact form, example:
+ * {is_valid : false, message: "User not in this app"}
+ * @param {HTMLFormElement} contact_form
+ * @returns {Object} An object containing whether or not the form is valid 
+ * and corresponding message. 
+ */
+async function is_contact_form_valid(contact_form){
+    let is_valid = true
+    let message
+    const inputs = contact_form.getElementsByTagName('input')
+    // gets the 'list' of Users who have the provided phone_number
+    // in the form
+    const users = await get(`/api/users/?phone_number=${inputs[2].value}`)
+    // gets a list of Contacts created by the User
+    // with the provided phone_number
+    const contacts = await get(`/api/contacts/?phone_number=${inputs[2].value}&created_by=${user_id}`)
+    // if no User created has the introduced phone_number
+    // notify the user
+    if (users.length === 0){
+        is_valid = false
+        message = 'No User with provided Phone, the Phone is not registered in this app.'
+    }
+    // if the User already created a Contact with such phone, notify the user
+    else if (contacts.length > 0){
+        is_valid = false
+        message = 'You already created a Contact with that Phone'
+    }
+    return {is_valid: is_valid, message: message}
+}
+
+/**
  * Creates a contact via websocket with the given form data if and
  * only if the form is valid.
  * @param {HTMLFormElement} contact_form 
