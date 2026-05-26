@@ -608,7 +608,7 @@ function create_instance_via_consumer(form, instance_type, websocket, group_name
  * {is_valid : false, message: "Please select a contact"}
  * @param {HTMLFormElement} chat_form
  * @returns {Object} An object containing whether or not the form is valid 
- * and corresponding message. 
+ * and a corresponding message. 
  */
 function is_chat_form_valid(chat_form){
     let is_valid = true
@@ -692,7 +692,7 @@ async function validate_chat_form(chat_form, error_audio, websocket){
  * {is_valid : false, message: "User not in this app"}
  * @param {HTMLFormElement} contact_form
  * @returns {Object} An object containing whether or not the form is valid 
- * and corresponding message. 
+ * and a corresponding message. 
  */
 async function is_contact_form_valid(contact_form){
     let is_valid = true
@@ -769,11 +769,20 @@ async function validate_contact_form(contact_form, error_audio, notification_aud
 }
 
 /**
- * Returns whether if the status form is valid or not.
+ * Returns an Object with the validation results for the status form, example:
+ * {is_valid : false, message: "Insert data"}
  * @param {HTMLFormElement} status_form
+ * @returns {Object} An object containing whether or not the form is valid 
+ * and a corresponding message.
  */
 function is_status_form_valid(status_form){
-    return not_empty(status_form)
+    let is_valid = true
+    let message
+    if (!not_empty(status_form)) {
+        is_valid = false
+        message = 'Please insert data!!!'
+    }
+    return {is_valid: is_valid, message: message}
 }
 
 
@@ -861,11 +870,20 @@ function clear_status_progress(progress_bar){
 }
 
 /**
- * Returns whether or not the archive_form is valid.
- * @param {HTMLFormElement} archive_form 
+ * Returns an Object with the validation results for the status form, example:
+ * {is_valid : false, message: "Insert data"}
+ * @param {HTMLFormElement} archive_form
+ * @returns {Object} An object containing whether or not the form is valid 
+ * and a corresponding message.
  */
 function is_archive_form_valid(archive_form){
-    return checked(archive_form)
+    let is_valid = true
+    let message
+    if (!checked(archive_form)) {
+        is_valid = false
+        message = 'INVALID, PLEASE SELECT ONE CHAT AT LEAST'
+    }
+    return {is_valid: is_valid, message: message}
 }
 
 /**
