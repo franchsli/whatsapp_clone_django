@@ -604,12 +604,20 @@ function create_instance_via_consumer(form, instance_type, websocket, group_name
 }
 
 /**
- * Returns if the chat form is valid.
- * @param {HTMLFormElement} chat_form 
- * @returns {boolean} Whether or not the chat form is valid.
+ * Returns an Object with the validation results for the chat form, example:
+ * {is_valid : false, message: "Please select a contact"}
+ * @param {HTMLFormElement} chat_form
+ * @returns {Object} An object containing whether or not the form is valid 
+ * and corresponding message. 
  */
 function is_chat_form_valid(chat_form){
-    return checked(chat_form)
+    let is_valid = true
+    let message
+    if (!checked(chat_form)){
+        is_valid = false
+        message = 'Please select a contact to create chat with'
+    }
+    return {is_valid: is_valid, message: message}
 }
 
 /**
