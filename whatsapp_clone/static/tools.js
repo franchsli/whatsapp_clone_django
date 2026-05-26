@@ -761,6 +761,15 @@ async function validate_contact_form(contact_form, error_audio, notification_aud
 }
 
 /**
+ * Returns whether if the status form is valid or not.
+ * @param {HTMLFormElement} status_form
+ */
+function is_status_form_valid(status_form){
+    return not_empty(status_form)
+}
+
+
+/**
  * Creates a status via websocket if and only if
  * the stauts form is valid,
  * @param {HTMLAudioElement} error_audio 
