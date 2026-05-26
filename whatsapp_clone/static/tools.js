@@ -853,6 +853,14 @@ function clear_status_progress(progress_bar){
 }
 
 /**
+ * Returns whether or not the archive_form is valid.
+ * @param {HTMLFormElement} archive_form 
+ */
+function is_archive_form_valid(archive_form){
+    return checked(archive_form)
+}
+
+/**
  * Validates the form for archiving chats.
  * @param {HTMLFormElement} form 
  */
