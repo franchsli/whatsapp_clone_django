@@ -617,6 +617,17 @@ function is_chat_form_valid(chat_form){
         is_valid = false
         message = 'Please select a contact to create chat with'
     }
+    else{
+        const checked_checkboxes = chat_form.querySelectorAll('input:checked')
+        if (checked_checkboxes.length >= 2){
+            const group_name_container = chat_form.querySelector('input[type="text"]')
+            const group_name = group_name_container.value.trim()
+            if (group_name === ''){
+                is_valid = false
+                message = 'You must give the group a name!'
+            }
+        }
+    }
     return {is_valid: is_valid, message: message}
 }
 
