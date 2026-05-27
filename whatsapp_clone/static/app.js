@@ -266,7 +266,32 @@ class App {
     load_event_listeners(){
         this.chat_form.onsubmit = async (event) => {
             event.preventDefault()
-            tools.validate_chat_form(this.chat_form, this.error_audio, this.chat_websocket.client_websocket)
+            // TODO: ERASE THIS COMMENT AFTER TESTING
+            //tools.validate_chat_form(this.chat_form, this.error_audio, this.chat_websocket.client_websocket)
+            const chat_form_validation = tools.is_chat_form_valid(this.chat_form)
+            const validation_message = this.chat_form.getElementById('chat-validation-message')
+            if (!chat_form_validation.is_valid){
+                this.error_audio.play()
+                validation_message.textContent = chat_form_validation.message
+            }
+            else{
+                if (chat_form_validation.intention === 'create_chat') {
+                    tools.create_instance_via_consumer(this.chat_form, 'create_chat', this.chat_websocket.client_websocket)
+                    tools.showNotification('Server', 
+                    'The chat was created successfully!! Update your chat list by clicking the "chats" button.')
+                    tools.update_chat_list()
+                }
+                else {
+                    const group_name_container = chat_form.querySelector('input[type="text"]')
+                    const group_name = group_name_container.value.trim()
+                    tools.create_instance_via_consumer(this.chat_form, 'create_group', 
+                        this.chat_websocket.client_websocket, group_name)
+                    tools.showNotification('Server', 
+                    'The group was created successfully!! Update your chat list by clicking the "chats" button.')
+                    tools.update_chat_list()
+                    
+                }
+            }
         }
         this.contact_form.onsubmit = async () => {
             tools.validate_contact_form(this.contact_form, this.error_audio, this.notification_audio, this.chat_websocket.client_websocket)
