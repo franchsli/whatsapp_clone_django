@@ -951,13 +951,15 @@ async function validate_archive_form(form){
  * Shows a notification showing who sent it 
  * and what does it say
  * @param {String} sender_name The one who sent the notification
- * @param {String} text 
+ * @param {String} text
+ * @param {HTMLAudioElement} notification_audio 
  */
-function showNotification(sender, text){
+function showNotification(sender, text, notification_audio){
     const toastNotification = document.getElementById('liveToast')
     modifyNotification(sender, text)
     const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
     toastBootstrap.show()
+    notification_audio.play()
 }
 
 
