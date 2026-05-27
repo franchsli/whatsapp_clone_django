@@ -560,10 +560,12 @@ function cand_send_messages(websocket){
 }
 
 /**
+ * TODO: REFACTOR THIS, wdym group_name as an arg?
  * Sends a message to the websocket for creating the desired instance using the given form data.
  * @param {HTMLFormElement} form The HTML form element that contains all the inputs data to be set to the websocket.
  * @param {String} instance_type A string telling the websocket consumer what type of instance it should create.
  * @param {WebSocket} websocket The Websocket that has the desired consumer.
+ * @param {String} group_name The group name if it applies.
  * @returns {false} To avoid form submission.
  */
 function create_instance_via_consumer(form, instance_type, websocket, group_name){
