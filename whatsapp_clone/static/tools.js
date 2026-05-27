@@ -945,6 +945,19 @@ async function validate_archive_form(form){
     }
 }
 
+/**
+ * Shows a notification showing who sent it 
+ * and what does it say
+ * @param {String} sender_name The one who sent the notification
+ * @param {String} text 
+ */
+function showNotification(sender, text){
+    const toastNotification = document.getElementById('liveToast')
+    modifyNotification(sender, text)
+    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
+    toastBootstrap.show()
+}
+
 
 /**
  * Loads many functions so they can be used
@@ -1125,5 +1138,5 @@ export {
     create_instance_via_consumer, is_chat_form_valid, validate_chat_form, 
     is_contact_form_valid, validate_contact_form, is_status_form_valid, 
     validate_status_form, cand_send_messages, load_global_doc_functions,
-    close_chat
+    showNotification, close_chat
 }
