@@ -278,7 +278,8 @@ class App {
                 if (chat_form_validation.intention === 'create_chat') {
                     tools.create_instance_via_consumer(this.chat_form, 'create_chat', this.chat_websocket.client_websocket)
                     tools.showNotification('Server', 
-                    'The chat was created successfully!! Update your chat list by clicking the "chats" button.')
+                        'The chat was created successfully!! Update your chat list by clicking the "chats" button.',
+                        this.notification_audio)
                     tools.update_chat_list()
                 }
                 else {
@@ -287,14 +288,29 @@ class App {
                     tools.create_instance_via_consumer(this.chat_form, 'create_group', 
                         this.chat_websocket.client_websocket, group_name)
                     tools.showNotification('Server', 
-                    'The group was created successfully!! Update your chat list by clicking the "chats" button.')
+                        'The group was created successfully!! Update your chat list by clicking the "chats" button.',
+                        this.notification_audio)
                     tools.update_chat_list()
                     
                 }
             }
         }
         this.contact_form.onsubmit = async () => {
-            tools.validate_contact_form(this.contact_form, this.error_audio, this.notification_audio, this.chat_websocket.client_websocket)
+            // TODO: REMOVE THIS COMMENT WHEN TESTED
+            //tools.validate_contact_form(this.contact_form, this.error_audio, this.notification_audio, this.chat_websocket.client_websocket)
+            const contact_form_validation = tools.is_contact_form_valid(this.contact_form)
+            if (contact_form_validation.is_valid) {
+                tools.create_instance_via_consumer(this.contact_form, 'create_contact', this.chat_websocket.client_websocket)
+                tools.showNotification('Server', 
+                    'The contact was created successfully! Update your contacts list by clicking the "contacts" button.',
+                    this.notification_audio)
+                tools.update_chat_list()
+            }
+            else {
+                const validation_message = document.getElementById('contact-validation-message')
+                validation_message.textContent = 'No User with provided Phone, the Phone is not registered in this app.'
+                this.error_audio.play()
+            }
         }
 
         this.status_form.onsubmit = (event) => {
