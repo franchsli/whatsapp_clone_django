@@ -317,7 +317,32 @@ class App {
             debugger
             event.preventDefault();
             if(tools.cand_send_messages(this.status_websocket.client_websocket)){
-                tools.validate_status_form(this.error_audio, this.status_websocket.client_websocket, user_id, user_phone_number)
+                // TODO: DELETE THIS WHEN TESTED
+                //tools.validate_status_form(this.error_audio, this.status_websocket.client_websocket, user_id, user_phone_number)
+                
+                const status_form_validaton = tools.is_status_form_valid(this.status_form)
+                if (status_form_validaton.is_valid) {
+                    const status_input = document.getElementById('id_text')
+                    const image_container = document.getElementById('status-imagePreview')
+                    const image = image_container !== null ? image_container.firstElementChild : null
+                    const color_field = document.getElementById('id_color')
+                    status_websocket.send(JSON.stringify({
+                        'type': 'CREATE',
+                        'user_id': user_id,
+                        'sender_phone_number': user_phone_number,
+                        'text': status_input.value,
+                        'image': image !== null ? image.src : null,
+                        'color': color_field.value,
+                    }))
+                } 
+                else {
+                    const validation_message = document.getElementById('status-validation-message')
+                    validation_message.innerText = 'Please insert data!!!'
+                    setTimeout(() => {
+                        validation_message.textContent = ''
+                    }, 5000)
+                    this.error_audio.play()
+                }
             }
 
         }
