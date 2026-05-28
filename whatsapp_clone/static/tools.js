@@ -612,7 +612,7 @@ function create_instance_via_consumer(form, instance_type, websocket, group_name
  * @returns {Object} An object containing whether or not the form is valid, 
  * a corresponding message and the intention of the form. 
  */
-async function is_chat_form_valid(chat_form){
+async function validate_chat_form(chat_form){
     let is_valid = true
     let message
     // keep track of what's the form being used to
@@ -656,72 +656,6 @@ async function is_chat_form_valid(chat_form){
     return {is_valid: is_valid, message: message, intention: intention}
 }
 
-/**
- * Validates a chat form.
- * @param {HTMLFormElement} chat_form 
- * @param {HTMLAudioElement} error_audio 
- * @param {WebSocket} websocket 
- * @returns {false} false to stop normal form submission
- */
-async function validate_chat_form(chat_form, error_audio, websocket){
-    if (!checked(chat_form)){
-        error_audio.play()
-        const validation_message = document.getElementById('chat-validation-message')
-        validation_message.innerText = 'Please select a contact to create chat with'
-    }
-    else{
-        
-        const checked_checkboxes = chat_form.querySelectorAll('input:checked')
-        if (checked_checkboxes.length >= 2){
-            const group_name_container = chat_form.querySelector('input[type="text"]')
-            const group_name = group_name_container.value.trim()
-            if (group_name !== ''){
-                create_instance_via_consumer(chat_form, 'create_group', websocket, group_name)
-                const toastNotification = document.getElementById('liveToast')
-                modifyNotification('Server', 
-                'The group was created successfully!! Update your chat list by clicking the "chats" button.')
-                const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
-                toastBootstrap.show()
-                update_chat_list()
-            }
-
-            else{
-                error_audio.play()
-                const validation_message = document.getElementById('chat-validation-message')
-                validation_message.innerText = 'You must give the group a name!'
-            }
-
-        }
-        else{
-            const contact_phone_number = document.querySelector('input:checked').id
-            const contact_user_object = await get(`/api/users/?phone_number=${contact_phone_number}`)
-            const contact_user_id = contact_user_object[0].id
-            // do an API request and check if the user already have a chat with the
-            // said contact (User object id)
-            const already_created_chats_with_contact = await get(`/api/chats/?user_id=${user_id}&user_id=${contact_user_id}`)
-            // exclude all the groups
-            const actual_chats = already_created_chats_with_contact.filter((chat) => {chat.admins.length === 0})
-            
-            // if the user has already a chat with the contact, display an error
-            if(actual_chats.length > 0){
-                error_audio.play()
-                const validation_message = document.getElementById('chat-validation-message')
-                validation_message.innerText = 'You already have a chat with this contact, check your chat list.'
-            }
-            // create the chat otherwise
-            else {
-                create_instance_via_consumer(chat_form, 'create_chat', websocket)
-                const toastNotification = document.getElementById('liveToast')
-                modifyNotification('Server', 
-                'The chat was created successfully!! Update your chat list by clicking the "chats" button.')
-                const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
-                toastBootstrap.show()
-                update_chat_list()
-            }
-        }
-    }
-    return false;   
-}
 
 /**
  * Returns an Object with the validation results for the contact form, example:
@@ -1139,7 +1073,7 @@ export {
     switch_element_visibility, load_more_messages, load_older_messages, 
     remove_duplicates, change_input_color, filter_by_value, 
     space_text, split_word, trigger_tooltips, 
-    create_instance_via_consumer, is_chat_form_valid, validate_chat_form, 
+    create_instance_via_consumer, validate_chat_form, 
     is_contact_form_valid, validate_contact_form, is_status_form_valid, 
     validate_status_form, cand_send_messages, load_global_doc_functions,
     showNotification, close_chat

@@ -266,9 +266,7 @@ class App {
     load_event_listeners(){
         this.chat_form.onsubmit = async (event) => {
             event.preventDefault()
-            // TODO: ERASE THIS COMMENT AFTER TESTING
-            //tools.validate_chat_form(this.chat_form, this.error_audio, this.chat_websocket.client_websocket)
-            const chat_form_validation = tools.is_chat_form_valid(this.chat_form)
+            const chat_form_validation = tools.validate_chat_form(this.chat_form)
             const validation_message = this.chat_form.getElementById('chat-validation-message')
             if (!chat_form_validation.is_valid){
                 this.error_audio.play()
