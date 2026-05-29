@@ -267,10 +267,11 @@ class App {
         this.chat_form.onsubmit = async (event) => {
             event.preventDefault()
             const chat_form_validation = tools.validate_chat_form(this.chat_form)
-            const validation_message = this.chat_form.getElementById('chat-validation-message')
+            const validation_message = document.getElementById('chat-validation-message')
             if (!chat_form_validation.is_valid){
                 this.error_audio.play()
                 validation_message.textContent = chat_form_validation.message
+                console.log(chat_form_validation.message, chat_form_validation.intention)
             }
             else{
                 if (chat_form_validation.intention === 'create_chat') {
@@ -294,8 +295,6 @@ class App {
             }
         }
         this.contact_form.onsubmit = async () => {
-            // TODO: REMOVE THIS COMMENT WHEN TESTED
-            //tools.validate_contact_form(this.contact_form, this.error_audio, this.notification_audio, this.chat_websocket.client_websocket)
             const contact_form_validation = tools.is_contact_form_valid(this.contact_form)
             if (contact_form_validation.is_valid) {
                 tools.create_instance_via_consumer(this.contact_form, 'create_contact', this.chat_websocket.client_websocket)
