@@ -347,28 +347,19 @@ class App {
         this.chat_modal.addEventListener('hidden.bs.modal', function (event) {
             const form_title = document.getElementById('NewChatLabel')
             const validation_message = document.getElementById('chat-validation-message')
-            const chat_form = document.getElementById("chat-creation-form")
-            const checked_cheboxes = chat_form.querySelectorAll('input:checked')
-            for (let index = 0; index < checked_cheboxes.length; index++) {
-                checked_cheboxes[index].checked = false 
-            }
             validation_message.innerText = ''
             form_title.innerText = 'Start new chat'
+            this.chat_form.reset()
         })
         // resets the contact form values and validation errors when the modal is closed.
         this.contact_modal.addEventListener('hidden.bs.modal', function (event) {
-            const inputs = document.getElementById("contact-creation-form").getElementsByTagName('input')
             const validation_message = document.getElementById('contact-validation-message')
-            inputs[1].value = ''
-            inputs[2].value = ''
-            inputs[3].checked = false
-            inputs[4].checked = false
             validation_message.innerText = ''
+            this.contact_form.reset()
         })
 
         // same for the status modal.
         this.status_modal.addEventListener('hidden.bs.modal', function (event) {
-            const inputs = status_form.elements
             const validation_message = document.getElementById('status-validation-message')
             const image_container = document.getElementById('status-imagePreview')
             const image = image_container !== null ? image_container.firstElementChild : null
@@ -378,6 +369,7 @@ class App {
                 image.remove()
             }
             validation_message.innerText = ''
+            this.status_form.reset()
         })
 
         window.addEventListener('keydown', (event) => {
