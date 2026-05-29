@@ -321,7 +321,7 @@ class App {
                     const image_container = document.getElementById('status-imagePreview')
                     const image = image_container !== null ? image_container.firstElementChild : null
                     const color_field = document.getElementById('id_color')
-                    status_websocket.send(JSON.stringify({
+                    this.status_websocket.client_websocket.send(JSON.stringify({
                         'type': 'CREATE',
                         'user_id': user_id,
                         'sender_phone_number': user_phone_number,
