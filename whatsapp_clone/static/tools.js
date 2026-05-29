@@ -816,6 +816,15 @@ function showNotification(sender, text, notification_audio){
     notification_audio.play()
 }
 
+/**
+ * Shows the validation error message in the given container.
+ * @param {HTMLElement} container 
+ * @param {String} message 
+ */
+function showValidationErrorMessage(container, message){
+    container.innerText = message
+}
+
 
 /**
  * Loads many functions so they can be used
@@ -995,6 +1004,6 @@ export {
     space_text, split_word, trigger_tooltips, 
     create_instance_via_consumer, validate_chat_form, 
     validate_contact_form, validate_status_form, 
-    cand_send_messages, load_global_doc_functions,
-    showNotification, close_chat
+    cand_send_messages, showValidationErrorMessage, 
+    load_global_doc_functions, showNotification, close_chat
 }
