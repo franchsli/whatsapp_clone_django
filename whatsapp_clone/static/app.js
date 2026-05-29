@@ -267,11 +267,10 @@ class App {
         this.chat_form.onsubmit = async (event) => {
             event.preventDefault()
             const chat_form_validation = tools.validate_chat_form(this.chat_form)
-            const validation_message = document.getElementById('chat-validation-message')
+            const validation_message_container = document.getElementById('chat-validation-message')
             if (!chat_form_validation.is_valid){
                 this.error_audio.play()
-                validation_message.textContent = chat_form_validation.message
-                console.log(chat_form_validation.message, chat_form_validation.intention)
+                tools.showValidationErrorMessage(validation_message_container, chat_form_validation.message)
             }
             else{
                 if (chat_form_validation.intention === 'create_chat') {
@@ -304,8 +303,8 @@ class App {
                 tools.update_chat_list()
             }
             else {
-                const validation_message = document.getElementById('contact-validation-message')
-                validation_message.textContent = contact_form_validation.message
+                const validation_message_container = document.getElementById('contact-validation-message')
+                tools.showValidationErrorMessage(validation_message_container, contact_form_validation.message)
                 this.error_audio.play()
             }
         }
@@ -330,10 +329,10 @@ class App {
                     }))
                 } 
                 else {
-                    const validation_message = document.getElementById('status-validation-message')
-                    validation_message.innerText = status_form_validaton.message
+                    const validation_message_container = document.getElementById('status-validation-message')
+                    tools.showValidationErrorMessage(validation_message_container, status_form_validaton.message)
                     setTimeout(() => {
-                        validation_message.textContent = ''
+                        validation_message_container.innerHTML = ''
                     }, 5000)
                     this.error_audio.play()
                 }
