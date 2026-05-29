@@ -613,6 +613,7 @@ function create_instance_via_consumer(form, instance_type, websocket, group_name
  * a corresponding message and the intention of the form. 
  */
 async function validate_chat_form(chat_form){
+    debugger
     let is_valid = true
     let message
     // keep track of what's the form being used to
@@ -644,7 +645,7 @@ async function validate_chat_form(chat_form){
             // said contact (User object id)
             const already_created_chats_with_contact = await get(`/api/chats/?user_id=${user_id}&user_id=${contact_user_id}`)
             // exclude all the groups
-            const actual_chats = already_created_chats_with_contact.filter((chat) => {chat.admins.length === 0})
+            const actual_chats = already_created_chats_with_contact.filter((chat) => chat.admins.length === 0)
             
             // if the user has already a chat with the contact, return error
             if(actual_chats.length > 0){

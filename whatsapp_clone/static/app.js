@@ -266,7 +266,8 @@ class App {
     load_event_listeners(){
         this.chat_form.onsubmit = async (event) => {
             event.preventDefault()
-            const chat_form_validation = tools.validate_chat_form(this.chat_form)
+            debugger
+            const chat_form_validation = await tools.validate_chat_form(this.chat_form)
             const validation_message_container = document.getElementById('chat-validation-message')
             if (!chat_form_validation.is_valid){
                 this.error_audio.play()
@@ -294,7 +295,8 @@ class App {
             }
         }
         this.contact_form.onsubmit = async () => {
-            const contact_form_validation = tools.validate_contact_form(this.contact_form)
+            debugger
+            const contact_form_validation = await tools.validate_contact_form(this.contact_form)
             if (contact_form_validation.is_valid) {
                 tools.create_instance_via_consumer(this.contact_form, 'create_contact', this.chat_websocket.client_websocket)
                 tools.showNotification('Server', 
