@@ -266,17 +266,75 @@ class App {
     load_event_listeners(){
         this.chat_form.onsubmit = async (event) => {
             event.preventDefault()
-            tools.validate_chat_form(this.chat_form, this.error_audio, this.chat_websocket.client_websocket)
+            debugger
+            const chat_form_validation = await tools.validate_chat_form(this.chat_form)
+            const validation_message_container = document.getElementById('chat-validation-message')
+            if (!chat_form_validation.is_valid){
+                this.error_audio.play()
+                tools.showValidationErrorMessage(validation_message_container, chat_form_validation.message)
+            }
+            else{
+                if (chat_form_validation.intention === 'create_chat') {
+                    tools.create_instance_via_consumer(this.chat_form, 'create_chat', this.chat_websocket.client_websocket)
+                    tools.showNotification('Server', 
+                        'The chat was created successfully!! Update your chat list by clicking the "chats" button.',
+                        this.notification_audio)
+                    tools.update_chat_list()
+                }
+                else {
+                    const group_name_container = chat_form.querySelector('input[type="text"]')
+                    const group_name = group_name_container.value.trim()
+                    tools.create_instance_via_consumer(this.chat_form, 'create_group', 
+                        this.chat_websocket.client_websocket, group_name)
+                    tools.showNotification('Server', 
+                        'The group was created successfully!! Update your chat list by clicking the "chats" button.',
+                        this.notification_audio)
+                    tools.update_chat_list()
+                    
+                }
+            }
         }
         this.contact_form.onsubmit = async () => {
-            tools.validate_contact_form(this.contact_form, this.error_audio, this.notification_audio, this.chat_websocket.client_websocket)
+            debugger
+            const contact_form_validation = await tools.validate_contact_form(this.contact_form)
+            if (contact_form_validation.is_valid) {
+                tools.create_instance_via_consumer(this.contact_form, 'create_contact', this.chat_websocket.client_websocket)
+                tools.showNotification('Server', 
+                    'The contact was created successfully! Update your contacts list by clicking the "contacts" button.',
+                    this.notification_audio)
+                tools.update_chat_list()
+            }
+            else {
+                const validation_message_container = document.getElementById('contact-validation-message')
+                tools.showValidationErrorMessage(validation_message_container, contact_form_validation.message)
+                this.error_audio.play()
+            }
         }
 
         this.status_form.onsubmit = (event) => {
             debugger
             event.preventDefault();
             if(tools.cand_send_messages(this.status_websocket.client_websocket)){
-                tools.validate_status_form(this.error_audio, this.status_websocket.client_websocket, user_id, user_phone_number)
+                const status_form_validaton = tools.validate_status_form(this.status_form)
+                if (status_form_validaton.is_valid) {
+                    const status_input = document.getElementById('id_text')
+                    const image_container = document.getElementById('status-imagePreview')
+                    const image = image_container !== null ? image_container.firstElementChild : null
+                    const color_field = document.getElementById('id_color')
+                    this.status_websocket.client_websocket.send(JSON.stringify({
+                        'type': 'CREATE',
+                        'user_id': user_id,
+                        'sender_phone_number': user_phone_number,
+                        'text': status_input.value,
+                        'image': image !== null ? image.src : null,
+                        'color': color_field.value,
+                    }))
+                } 
+                else {
+                    const validation_message_container = document.getElementById('status-validation-message')
+                    tools.showValidationErrorMessage(validation_message_container, status_form_validaton.message)
+                    this.error_audio.play()
+                }
             }
 
         }

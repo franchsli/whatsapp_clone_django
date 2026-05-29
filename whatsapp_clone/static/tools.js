@@ -560,10 +560,12 @@ function cand_send_messages(websocket){
 }
 
 /**
+ * TODO: REFACTOR THIS, wdym group_name as an arg?
  * Sends a message to the websocket for creating the desired instance using the given form data.
  * @param {HTMLFormElement} form The HTML form element that contains all the inputs data to be set to the websocket.
  * @param {String} instance_type A string telling the websocket consumer what type of instance it should create.
  * @param {WebSocket} websocket The Websocket that has the desired consumer.
+ * @param {String} group_name The group name if it applies.
  * @returns {false} To avoid form submission.
  */
 function create_instance_via_consumer(form, instance_type, websocket, group_name){
@@ -604,42 +606,38 @@ function create_instance_via_consumer(form, instance_type, websocket, group_name
 }
 
 /**
- * Validates a chat form.
- * @param {HTMLFormElement} chat_form 
- * @param {HTMLAudioElement} error_audio 
- * @param {WebSocket} websocket 
- * @returns {false} false to stop normal form submission
+ * Returns an Object with the validation results for the chat form, example:
+ * {is_valid : false, message: "Please select a contact"}
+ * @param {HTMLFormElement} chat_form
+ * @returns {Object} An object containing whether or not the form is valid, 
+ * a corresponding message and the intention of the form. 
  */
-async function validate_chat_form(chat_form, error_audio, websocket){
+async function validate_chat_form(chat_form){
+    debugger
+    let is_valid = true
+    let message
+    // keep track of what's the form being used to
+    let intention = 'create_chat'
     if (!checked(chat_form)){
-        error_audio.play()
-        const validation_message = document.getElementById('chat-validation-message')
-        validation_message.innerText = 'Please select a contact to create chat with'
+        is_valid = false
+        message = 'Please select a contact to create chat with'
     }
     else{
-        
         const checked_checkboxes = chat_form.querySelectorAll('input:checked')
         if (checked_checkboxes.length >= 2){
             const group_name_container = chat_form.querySelector('input[type="text"]')
             const group_name = group_name_container.value.trim()
-            if (group_name !== ''){
-                create_instance_via_consumer(chat_form, 'create_group', websocket, group_name)
-                const toastNotification = document.getElementById('liveToast')
-                modifyNotification('Server', 
-                'The group was created successfully!! Update your chat list by clicking the "chats" button.')
-                const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
-                toastBootstrap.show()
-                update_chat_list()
+            if (group_name === ''){
+                is_valid = false
+                message = 'You must give the group a name!'
             }
-
-            else{
-                error_audio.play()
-                const validation_message = document.getElementById('chat-validation-message')
-                validation_message.innerText = 'You must give the group a name!'
+            else {
+                intention = 'create_group'
             }
-
         }
-        else{
+
+        else {
+            // TODO: PACK THIS IN A FUNCTION
             const contact_phone_number = document.querySelector('input:checked').id
             const contact_user_object = await get(`/api/users/?phone_number=${contact_phone_number}`)
             const contact_user_id = contact_user_object[0].id
@@ -647,39 +645,29 @@ async function validate_chat_form(chat_form, error_audio, websocket){
             // said contact (User object id)
             const already_created_chats_with_contact = await get(`/api/chats/?user_id=${user_id}&user_id=${contact_user_id}`)
             // exclude all the groups
-            const actual_chats = already_created_chats_with_contact.filter((chat) => {chat.admins.length === 0})
+            const actual_chats = already_created_chats_with_contact.filter((chat) => chat.admins.length === 0)
             
-            // if the user has already a chat with the contact, display an error
+            // if the user has already a chat with the contact, return error
             if(actual_chats.length > 0){
-                error_audio.play()
-                const validation_message = document.getElementById('chat-validation-message')
-                validation_message.innerText = 'You already have a chat with this contact, check your chat list.'
-            }
-            // create the chat otherwise
-            else {
-                create_instance_via_consumer(chat_form, 'create_chat', websocket)
-                const toastNotification = document.getElementById('liveToast')
-                modifyNotification('Server', 
-                'The chat was created successfully!! Update your chat list by clicking the "chats" button.')
-                const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
-                toastBootstrap.show()
-                update_chat_list()
+                is_valid = false
+                message = 'You already have a chat with this contact, check your chat list.'
             }
         }
     }
-    return false;   
+    return {is_valid: is_valid, message: message, intention: intention}
 }
 
+
 /**
- * Creates a contact via websocket with the given form data if and
- * only if the form is valid.
- * @param {HTMLFormElement} contact_form 
- * @param {HTMLAudioElement} error_audio 
- * @param {HTMLAudioElement} notification_audio 
- * @param {Websocket} websocket 
- * @returns {false}
+ * Returns an Object with the validation results for the contact form, example:
+ * {is_valid : false, message: "User not in this app"}
+ * @param {HTMLFormElement} contact_form
+ * @returns {Object} An object containing whether or not the form is valid 
+ * and a corresponding message. 
  */
-async function validate_contact_form(contact_form, error_audio, notification_audio, websocket){
+async function validate_contact_form(contact_form){
+    let is_valid = true
+    let message
     const inputs = contact_form.getElementsByTagName('input')
     // gets the 'list' of Users who have the provided phone_number
     // in the form
@@ -690,66 +678,35 @@ async function validate_contact_form(contact_form, error_audio, notification_aud
     // if no User created has the introduced phone_number
     // notify the user
     if (users.length === 0){
-        const validation_message = document.getElementById('contact-validation-message')
-        validation_message.innerText = 'No User with provided Phone, the Phone is not registered in this app.'
-        error_audio.play()
+        is_valid = false
+        message = 'No User with provided Phone, the Phone is not registered in this app.'
     }
     // if the User already created a Contact with such phone, notify the user
     else if (contacts.length > 0){
-        const validation_message = document.getElementById('contact-validation-message')
-        validation_message.innerText = 'You already created a Contact with that Phone'
-        error_audio.play()
+        is_valid = false
+        message = 'You already created a Contact with that Phone'
     }
-    // if nothing happens, create the contact
-    else {
-        create_instance_via_consumer(contact_form, 'create_contact', websocket)
-        const toastNotification = document.getElementById('liveToast')
-        modifyNotification('Server', 
-        'The contact was created successfully! Update your contacts list by clicking the "contacts" button.')
-        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
-        notification_audio.play()            
-        toastBootstrap.show()
-        // clears phonenumber and contact name fields.
-        inputs[1].value = ''
-        inputs[2].value = ''
-        // clears the checkboxes
-        inputs[3].checked = false
-        inputs[4].checked = false
-        update_chat_list()
-    }
-    return false;
+    return {is_valid: is_valid, message: message}
 }
 
+
 /**
- * Creates a status via websocket if and only if
- * the stauts form is valid,
- * @param {HTMLAudioElement} error_audio 
- * @param {WebSocket} status_websocket
+ * Returns an Object with the validation results for the status form, example:
+ * {is_valid : false, message: "Insert data"}
+ * @param {HTMLFormElement} status_form
+ * @returns {Object} An object containing whether or not the form is valid 
+ * and a corresponding message.
  */
-async function validate_status_form(error_audio, status_websocket){
-    if (not_empty(status_form)){
-        const status_input = document.getElementById('id_text')
-        const image_container = document.getElementById('status-imagePreview')
-        const image = image_container !== null ? image_container.firstElementChild : null
-        const color_field = document.getElementById('id_color')
-        status_websocket.send(JSON.stringify({
-            'type': 'CREATE',
-            'user_id': user_id,
-            'sender_phone_number': user_phone_number,
-            'text': status_input.value,
-            'image': image !== null ? image.src : null,
-            'color': color_field.value,
-        }))
+function validate_status_form(status_form){
+    let is_valid = true
+    let message
+    if (!not_empty(status_form)) {
+        is_valid = false
+        message = 'Please insert data!!!'
     }
-    else {
-        error_audio.play()
-        const validation_message = document.getElementById('status-validation-message')
-        validation_message.innerText = 'Please insert data!!!'
-        setTimeout(() => {
-            validation_message.textContent = ''
-        }, 5000)
-    }
+    return {is_valid: is_valid, message: message}
 }
+
 
 /**
  * Loads the reply preview HTML to the desired message
@@ -804,6 +761,23 @@ function clear_status_progress(progress_bar){
 }
 
 /**
+ * Returns an Object with the validation results for the status form, example:
+ * {is_valid : false, message: "Insert data"}
+ * @param {HTMLFormElement} archive_form
+ * @returns {Object} An object containing whether or not the form is valid 
+ * and a corresponding message.
+ */
+function is_archive_form_valid(archive_form){
+    let is_valid = true
+    let message
+    if (!checked(archive_form)) {
+        is_valid = false
+        message = 'INVALID, PLEASE SELECT ONE CHAT AT LEAST'
+    }
+    return {is_valid: is_valid, message: message}
+}
+
+/**
  * Validates the form for archiving chats.
  * @param {HTMLFormElement} form 
  */
@@ -826,6 +800,30 @@ async function validate_archive_form(form){
         const message_container = form.querySelector('.validation-error')
         message_container.innerText = 'INVALID, PLEASE SELECT ONE CHAT AT LEAST'
     }
+}
+
+/**
+ * Shows a notification showing who sent it 
+ * and what does it say
+ * @param {String} sender_name The one who sent the notification
+ * @param {String} text
+ * @param {HTMLAudioElement} notification_audio 
+ */
+function showNotification(sender, text, notification_audio){
+    const toastNotification = document.getElementById('liveToast')
+    modifyNotification(sender, text)
+    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
+    toastBootstrap.show()
+    notification_audio.play()
+}
+
+/**
+ * Shows the validation error message in the given container.
+ * @param {HTMLElement} container 
+ * @param {String} message 
+ */
+function showValidationErrorMessage(container, message){
+    container.innerText = message
 }
 
 
@@ -1005,7 +1003,8 @@ export {
     switch_element_visibility, load_more_messages, load_older_messages, 
     remove_duplicates, change_input_color, filter_by_value, 
     space_text, split_word, trigger_tooltips, 
-    create_instance_via_consumer, validate_chat_form, validate_contact_form,
-    validate_status_form, cand_send_messages, load_global_doc_functions,
-    close_chat
+    create_instance_via_consumer, validate_chat_form, 
+    validate_contact_form, validate_status_form, 
+    cand_send_messages, showValidationErrorMessage, 
+    load_global_doc_functions, showNotification, close_chat
 }
