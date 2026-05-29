@@ -344,7 +344,7 @@ class App {
         }
 
         // resets the contact form values and validation errors when the modal is closed.
-        this.chat_modal.addEventListener('hidden.bs.modal', function (event) {
+        this.chat_modal.addEventListener('hidden.bs.modal', () => {
             const form_title = document.getElementById('NewChatLabel')
             const validation_message = document.getElementById('chat-validation-message')
             validation_message.innerText = ''
@@ -352,19 +352,17 @@ class App {
             this.chat_form.reset()
         })
         // resets the contact form values and validation errors when the modal is closed.
-        this.contact_modal.addEventListener('hidden.bs.modal', function (event) {
+        this.contact_modal.addEventListener('hidden.bs.modal', () => {
             const validation_message = document.getElementById('contact-validation-message')
             validation_message.innerText = ''
             this.contact_form.reset()
         })
 
         // same for the status modal.
-        this.status_modal.addEventListener('hidden.bs.modal', function (event) {
+        this.status_modal.addEventListener('hidden.bs.modal', () => {
             const validation_message = document.getElementById('status-validation-message')
             const image_container = document.getElementById('status-imagePreview')
             const image = image_container !== null ? image_container.firstElementChild : null
-            inputs[2].value = ''
-            inputs[3].value = ''
             if (image){
                 image.remove()
             }
