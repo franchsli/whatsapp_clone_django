@@ -295,7 +295,7 @@ class App {
             }
         }
         this.contact_form.onsubmit = async () => {
-            const contact_form_validation = tools.is_contact_form_valid(this.contact_form)
+            const contact_form_validation = tools.validate_contact_form(this.contact_form)
             if (contact_form_validation.is_valid) {
                 tools.create_instance_via_consumer(this.contact_form, 'create_contact', this.chat_websocket.client_websocket)
                 tools.showNotification('Server', 
@@ -314,10 +314,7 @@ class App {
             debugger
             event.preventDefault();
             if(tools.cand_send_messages(this.status_websocket.client_websocket)){
-                // TODO: DELETE THIS WHEN TESTED
-                //tools.validate_status_form(this.error_audio, this.status_websocket.client_websocket, user_id, user_phone_number)
-                
-                const status_form_validaton = tools.is_status_form_valid(this.status_form)
+                const status_form_validaton = tools.validate_status_form(this.status_form)
                 if (status_form_validaton.is_valid) {
                     const status_input = document.getElementById('id_text')
                     const image_container = document.getElementById('status-imagePreview')
