@@ -664,7 +664,7 @@ async function validate_chat_form(chat_form){
  * @returns {Object} An object containing whether or not the form is valid 
  * and a corresponding message. 
  */
-async function is_contact_form_valid(contact_form){
+async function validate_contact_form(contact_form){
     let is_valid = true
     let message
     const inputs = contact_form.getElementsByTagName('input')
@@ -688,55 +688,6 @@ async function is_contact_form_valid(contact_form){
     return {is_valid: is_valid, message: message}
 }
 
-/**
- * Creates a contact via websocket with the given form data if and
- * only if the form is valid.
- * @param {HTMLFormElement} contact_form 
- * @param {HTMLAudioElement} error_audio 
- * @param {HTMLAudioElement} notification_audio 
- * @param {Websocket} websocket 
- * @returns {false}
- */
-async function validate_contact_form(contact_form, error_audio, notification_audio, websocket){
-    const inputs = contact_form.getElementsByTagName('input')
-    // gets the 'list' of Users who have the provided phone_number
-    // in the form
-    const users = await get(`/api/users/?phone_number=${inputs[2].value}`)
-    // gets a list of Contacts created by the User
-    // with the provided phone_number
-    const contacts = await get(`/api/contacts/?phone_number=${inputs[2].value}&created_by=${user_id}`)
-    // if no User created has the introduced phone_number
-    // notify the user
-    if (users.length === 0){
-        const validation_message = document.getElementById('contact-validation-message')
-        validation_message.innerText = 'No User with provided Phone, the Phone is not registered in this app.'
-        error_audio.play()
-    }
-    // if the User already created a Contact with such phone, notify the user
-    else if (contacts.length > 0){
-        const validation_message = document.getElementById('contact-validation-message')
-        validation_message.innerText = 'You already created a Contact with that Phone'
-        error_audio.play()
-    }
-    // if nothing happens, create the contact
-    else {
-        create_instance_via_consumer(contact_form, 'create_contact', websocket)
-        const toastNotification = document.getElementById('liveToast')
-        modifyNotification('Server', 
-        'The contact was created successfully! Update your contacts list by clicking the "contacts" button.')
-        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
-        notification_audio.play()            
-        toastBootstrap.show()
-        // clears phonenumber and contact name fields.
-        inputs[1].value = ''
-        inputs[2].value = ''
-        // clears the checkboxes
-        inputs[3].checked = false
-        inputs[4].checked = false
-        update_chat_list()
-    }
-    return false;
-}
 
 /**
  * Returns an Object with the validation results for the status form, example:
@@ -745,7 +696,7 @@ async function validate_contact_form(contact_form, error_audio, notification_aud
  * @returns {Object} An object containing whether or not the form is valid 
  * and a corresponding message.
  */
-function is_status_form_valid(status_form){
+function validate_status_form(status_form){
     let is_valid = true
     let message
     if (!not_empty(status_form)) {
@@ -755,37 +706,6 @@ function is_status_form_valid(status_form){
     return {is_valid: is_valid, message: message}
 }
 
-
-/**
- * Creates a status via websocket if and only if
- * the stauts form is valid,
- * @param {HTMLAudioElement} error_audio 
- * @param {WebSocket} status_websocket
- */
-async function validate_status_form(error_audio, status_websocket){
-    if (not_empty(status_form)){
-        const status_input = document.getElementById('id_text')
-        const image_container = document.getElementById('status-imagePreview')
-        const image = image_container !== null ? image_container.firstElementChild : null
-        const color_field = document.getElementById('id_color')
-        status_websocket.send(JSON.stringify({
-            'type': 'CREATE',
-            'user_id': user_id,
-            'sender_phone_number': user_phone_number,
-            'text': status_input.value,
-            'image': image !== null ? image.src : null,
-            'color': color_field.value,
-        }))
-    }
-    else {
-        error_audio.play()
-        const validation_message = document.getElementById('status-validation-message')
-        validation_message.innerText = 'Please insert data!!!'
-        setTimeout(() => {
-            validation_message.textContent = ''
-        }, 5000)
-    }
-}
 
 /**
  * Loads the reply preview HTML to the desired message
@@ -1074,7 +994,7 @@ export {
     remove_duplicates, change_input_color, filter_by_value, 
     space_text, split_word, trigger_tooltips, 
     create_instance_via_consumer, validate_chat_form, 
-    is_contact_form_valid, validate_contact_form, is_status_form_valid, 
-    validate_status_form, cand_send_messages, load_global_doc_functions,
+    validate_contact_form, validate_status_form, 
+    cand_send_messages, load_global_doc_functions,
     showNotification, close_chat
 }
