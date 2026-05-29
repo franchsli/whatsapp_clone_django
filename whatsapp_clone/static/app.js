@@ -306,7 +306,7 @@ class App {
             }
             else {
                 const validation_message = document.getElementById('contact-validation-message')
-                validation_message.textContent = 'No User with provided Phone, the Phone is not registered in this app.'
+                validation_message.textContent = contact_form_validation.message
                 this.error_audio.play()
             }
         }
