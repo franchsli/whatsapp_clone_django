@@ -331,9 +331,6 @@ class App {
                 else {
                     const validation_message_container = document.getElementById('status-validation-message')
                     tools.showValidationErrorMessage(validation_message_container, status_form_validaton.message)
-                    setTimeout(() => {
-                        validation_message_container.innerHTML = ''
-                    }, 5000)
                     this.error_audio.play()
                 }
             }
