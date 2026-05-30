@@ -603,6 +603,24 @@ function create_instance_via_consumer(form, instance_type, websocket, group_name
 }
 
 /**
+ * Returns if the user has at least one chat with the contact
+ * with the given phone number.
+ * @precondition The contact must exist in the database.
+ * This function doesn't handle cases where it doesn't.
+ * @param {String} contact_phone_number
+ * @returns {boolean} 
+ */
+async function hasChatWithContact(contact_phone_number){
+    const contact_user_object = await get(`/api/users/?phone_number=${contact_phone_number}`)
+    const contact_user_id = contact_user_object[0].id
+    // do an API request and check if the user already have a chat with the
+    // said contact (User object id)
+    const already_created_chats_with_contact = await get(`/api/chats/?user_id=${user_id}&user_id=${contact_user_id}`)
+    // exclude all the groups
+    return already_created_chats_with_contact.some((chat) => chat.admins.length === 0)
+}
+
+/**
  * Returns an Object with the validation results for the chat form, example:
  * {is_valid : false, message: "Please select a contact"}
  * @param {HTMLFormElement} chat_form
@@ -634,18 +652,10 @@ async function validate_chat_form(chat_form){
         }
 
         else {
-            // TODO: PACK THIS IN A FUNCTION
             const contact_phone_number = document.querySelector('input:checked').id
-            const contact_user_object = await get(`/api/users/?phone_number=${contact_phone_number}`)
-            const contact_user_id = contact_user_object[0].id
-            // do an API request and check if the user already have a chat with the
-            // said contact (User object id)
-            const already_created_chats_with_contact = await get(`/api/chats/?user_id=${user_id}&user_id=${contact_user_id}`)
-            // exclude all the groups
-            const actual_chats = already_created_chats_with_contact.filter((chat) => chat.admins.length === 0)
-            
-            // if the user has already a chat with the contact, return error
-            if(actual_chats.length > 0){
+            const userHasChatWithContact = await hasChatWithContact(contact_phone_number)
+
+            if(userHasChatWithContact){
                 is_valid = false
                 message = 'You already have a chat with this contact, check your chat list.'
             }
