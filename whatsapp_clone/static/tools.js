@@ -314,6 +314,7 @@ function previewImage(image_input=null, image_preview=null) {
     // creates default preview HTML element
     if (image_preview === null){
         image_preview = document.createElement('div')
+        image_preview.id = 'status-imagePreview'
         image_input.insertAdjacentElement('afterend', image_preview)
 
     }
