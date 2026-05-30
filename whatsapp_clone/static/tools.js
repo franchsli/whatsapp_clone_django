@@ -652,18 +652,10 @@ async function validate_chat_form(chat_form){
         }
 
         else {
-            // TODO: PACK THIS IN A FUNCTION
             const contact_phone_number = document.querySelector('input:checked').id
-            const contact_user_object = await get(`/api/users/?phone_number=${contact_phone_number}`)
-            const contact_user_id = contact_user_object[0].id
-            // do an API request and check if the user already have a chat with the
-            // said contact (User object id)
-            const already_created_chats_with_contact = await get(`/api/chats/?user_id=${user_id}&user_id=${contact_user_id}`)
-            // exclude all the groups
-            const actual_chats = already_created_chats_with_contact.filter((chat) => chat.admins.length === 0)
-            
-            // if the user has already a chat with the contact, return error
-            if(actual_chats.length > 0){
+            const userHasChatWithContact = hasChatWithContact(contact_phone_number)
+
+            if(userHasChatWithContact){
                 is_valid = false
                 message = 'You already have a chat with this contact, check your chat list.'
             }
