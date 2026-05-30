@@ -603,6 +603,24 @@ function create_instance_via_consumer(form, instance_type, websocket, group_name
 }
 
 /**
+ * Returns if the user has at least one chat with the contact
+ * with the given phone number.
+ * @precondition The contact must exist in the database.
+ * This function doesn't handle cases where it doesn't.
+ * @param {String} contact_phone_number
+ * @returns {boolean} 
+ */
+async function hasChatWithContact(contact_phone_number){
+    const contact_user_object = await get(`/api/users/?phone_number=${contact_phone_number}`)
+    const contact_user_id = contact_user_object[0].id
+    // do an API request and check if the user already have a chat with the
+    // said contact (User object id)
+    const already_created_chats_with_contact = await get(`/api/chats/?user_id=${user_id}&user_id=${contact_user_id}`)
+    // exclude all the groups
+    return already_created_chats_with_contact.some((chat) => chat.admins.length === 0)
+}
+
+/**
  * Returns an Object with the validation results for the chat form, example:
  * {is_valid : false, message: "Please select a contact"}
  * @param {HTMLFormElement} chat_form
