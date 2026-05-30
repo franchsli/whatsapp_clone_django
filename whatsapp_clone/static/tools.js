@@ -194,9 +194,6 @@ function not_empty(form){
         if (element.value.trim() != '' && element.type !== 'hidden' && element.id !== 'id_color'){
             return true
         }
-        else{
-            run_element_animation(element, 'shake-horizontal')
-        }
     }
     return false
 }
