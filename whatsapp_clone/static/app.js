@@ -343,7 +343,7 @@ class App {
             tools.previewImage(this.status_image_input, this.status_image_preview)
         }
 
-        // resets the contact form values and validation errors when the modal is closed.
+        // resets the chat form values and validation errors when the modal is closed.
         this.chat_modal.addEventListener('hidden.bs.modal', () => {
             const form_title = document.getElementById('NewChatLabel')
             const validation_message = document.getElementById('chat-validation-message')
@@ -360,6 +360,7 @@ class App {
 
         // same for the status modal.
         this.status_modal.addEventListener('hidden.bs.modal', () => {
+            const color_input = document.getElementById('id_color')
             const validation_message = document.getElementById('status-validation-message')
             const image_container = document.getElementById('status-imagePreview')
             const image = image_container !== null ? image_container.firstElementChild : null
@@ -367,6 +368,9 @@ class App {
                 image.remove()
             }
             validation_message.innerText = ''
+            if (color_input.jscolor) {
+                color_input.jscolor.fromString('#000000');
+            }
             this.status_form.reset()
         })
 
