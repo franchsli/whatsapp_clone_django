@@ -185,18 +185,14 @@ function checked(form){
 /**
  * Returns true if any input in the provided form is not empty, false otherwise.
  * @param {HTMLFormElement} form 
- * @param {String} excluded_type The type of input that will be excluded from the
- * verification
  * @returns {Boolean}
  */
-function not_empty(form, excluded_type='color'){
+function not_empty(form){
     for (let index = 0; index < form.elements.length; index++) {
         const element = form.elements[index];
-        if (element.value.trim() != '' && element.type !== 'hidden' && element.type !== excluded_type){
+        // exclude the color input by excluding the id itself
+        if (element.value.trim() != '' && element.type !== 'hidden' && element.id !== 'id_color'){
             return true
-        }
-        else{
-            run_element_animation(element, 'shake-horizontal')
         }
     }
     return false
