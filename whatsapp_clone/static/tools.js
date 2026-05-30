@@ -653,7 +653,7 @@ async function validate_chat_form(chat_form){
 
         else {
             const contact_phone_number = document.querySelector('input:checked').id
-            const userHasChatWithContact = hasChatWithContact(contact_phone_number)
+            const userHasChatWithContact = await hasChatWithContact(contact_phone_number)
 
             if(userHasChatWithContact){
                 is_valid = false
