@@ -552,54 +552,68 @@ function trigger_tooltips(){
  * Checks whether or not a WebSocket is ready to send and receive messages.
  * @param {WebSocket} websocket 
  */
-function cand_send_messages(websocket){
+function can_send_messages(websocket){
     return websocket.readyState === websocket.OPEN
 }
 
 /**
- * TODO: REFACTOR THIS, wdym group_name as an arg?
- * Sends a message to the websocket for creating the desired instance using the given form data.
- * @param {HTMLFormElement} form The HTML form element that contains all the inputs data to be set to the websocket.
- * @param {String} instance_type A string telling the websocket consumer what type of instance it should create.
- * @param {WebSocket} websocket The Websocket that has the desired consumer.
- * @param {String} group_name The group name if it applies.
- * @returns {false} To avoid form submission.
+ * Sends the given data to the given websocket
+ * @param {WebSocket} websocket 
+ * @param {Object} data 
  */
-function create_instance_via_consumer(form, instance_type, websocket, group_name){
-    if (cand_send_messages(websocket)){
-        const form_elements = form.elements
-        if (instance_type === 'create_chat'){
-            const checked_input = form.querySelector('input:checked')
-            websocket.send(JSON.stringify({
-                'type': instance_type,
-                'contact_name': checked_input.dataset.contactName,
-                'contact_phone_number': checked_input.id
-            }))
-        }
-        else if(instance_type === 'create_group'){
-            const checked_inputs = form.querySelectorAll('input:checked')
-            let phone_numbers = [...checked_inputs].map((input) => input.id)
-
-            websocket.send(JSON.stringify({
-                'type': instance_type,
-                'group_name': group_name,
-                'contacts_phone_numbers': phone_numbers
-            }))
-        }
-
-        else if(instance_type === 'create_contact'){
-            websocket.send(JSON.stringify({
-                'type': instance_type,
-                'contact_name': form_elements[1].value,
-                'contact_phone_number': form_elements[2].value
-            }))
-        }
+function send_to_websocket(websocket, data){
+    if (can_send_messages(websocket)){
+        websocket.send(JSON.stringify(data))
     }
-
     else {
         console.error(`THE GIVEN WEBSOCKET AT ${websocket.url} IS NOT OPEN`)
     }
-    return false
+}
+
+
+/**
+ * Sends a message to the given websocket to create a chat
+ * using the form's data.
+ * @param {HTMLFormElement} form 
+ * @param {WebSocket} websocket 
+ */
+function create_chat_via_consumer(form, websocket){
+    const checked_input = form.querySelector('input:checked')
+    send_to_websocket(websocket, {
+        'type': 'create_chat',
+        'contact_name': checked_input.dataset.contactName,
+        'contact_phone_number': checked_input.id
+    })
+}
+
+/**
+ * Sends a message to the given websocket to create a group
+ * using the form's data and the given name for the group.
+ * @param {HTMLFormElement} form 
+ * @param {WebSocket} websocket 
+ */
+function create_group_via_consumer(form, websocket, group_name){
+    const checked_inputs = form.querySelectorAll('input:checked')
+    let phone_numbers = [...checked_inputs].map((input) => input.id)
+    send_to_websocket(websocket, {
+        'type': 'create_group',
+        'group_name': group_name,
+        'contacts_phone_numbers': phone_numbers
+    })
+}
+
+/**
+ * Sends a message to the given websocket to create a contact
+ * using the form's data.
+ * @param {HTMLFormElement} form 
+ * @param {WebSocket} websocket 
+ */
+function create_contact_via_consumer(form, websocket){
+    send_to_websocket(websocket, {
+        'type': 'create_contact',
+        'contact_name': form.elements[1].value,
+        'contact_phone_number': form.elements[2].value
+    })
 }
 
 /**
@@ -1010,8 +1024,9 @@ export {
     switch_element_visibility, load_more_messages, load_older_messages, 
     remove_duplicates, change_input_color, filter_by_value, 
     space_text, split_word, trigger_tooltips, 
-    create_instance_via_consumer, validate_chat_form, 
+    create_chat_via_consumer, create_group_via_consumer, 
+    create_contact_via_consumer, validate_chat_form, 
     validate_contact_form, validate_status_form, 
-    cand_send_messages, showValidationErrorMessage, 
+    can_send_messages, showValidationErrorMessage, 
     load_global_doc_functions, showNotification, close_chat
 }
