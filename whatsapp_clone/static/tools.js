@@ -611,8 +611,8 @@ function create_group_via_consumer(form, websocket, group_name){
 function create_contact_via_consumer(form, websocket){
     send_to_websocket(websocket, {
         'type': 'create_contact',
-        'contact_name': form_elements[1].value,
-        'contact_phone_number': form_elements[2].value
+        'contact_name': form.elements[1].value,
+        'contact_phone_number': form.elements[2].value
     })
 }
 
