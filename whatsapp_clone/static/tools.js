@@ -557,6 +557,20 @@ function can_send_messages(websocket){
 }
 
 /**
+ * Sends the given data to the given websocket
+ * @param {WebSocket} websocket 
+ * @param {Object} data 
+ */
+function send_to_websocket(websocket, data){
+    if (can_send_messages(websocket)){
+        websocket.send(JSON.stringify(data))
+    }
+    else {
+        console.error(`THE GIVEN WEBSOCKET AT ${websocket.url} IS NOT OPEN`)
+    }
+}
+
+/**
  * TODO: REFACTOR THIS, wdym group_name as an arg?
  * Sends a message to the websocket for creating the desired instance using the given form data.
  * @param {HTMLFormElement} form The HTML form element that contains all the inputs data to be set to the websocket.
