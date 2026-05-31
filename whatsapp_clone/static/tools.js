@@ -624,11 +624,11 @@ function create_instance_via_consumer(form, instance_type, websocket, group_name
  */
 function create_chat_via_consumer(form, websocket){
     const checked_input = form.querySelector('input:checked')
-    websocket.send(JSON.stringify({
+    send_to_websocket(websocket, {
         'type': 'create_chat',
         'contact_name': checked_input.dataset.contactName,
         'contact_phone_number': checked_input.id
-    }))
+    })
 }
 
 /**
@@ -640,11 +640,11 @@ function create_chat_via_consumer(form, websocket){
 function create_group_via_consumer(form, websocket, group_name){
     const checked_inputs = form.querySelectorAll('input:checked')
     let phone_numbers = [...checked_inputs].map((input) => input.id)
-    websocket.send(JSON.stringify({
+    send_to_websocket(websocket, {
         'type': 'create_group',
         'group_name': group_name,
         'contacts_phone_numbers': phone_numbers
-    }))
+    })
 }
 
 /**
@@ -654,11 +654,11 @@ function create_group_via_consumer(form, websocket, group_name){
  * @param {WebSocket} websocket 
  */
 function create_contact_via_consumer(form, websocket){
-    websocket.send(JSON.stringify({
+    send_to_websocket(websocket, {
         'type': 'create_contact',
         'contact_name': form_elements[1].value,
         'contact_phone_number': form_elements[2].value
-    }))
+    })
 }
 
 /**
