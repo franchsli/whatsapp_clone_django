@@ -603,6 +603,51 @@ function create_instance_via_consumer(form, instance_type, websocket, group_name
 }
 
 /**
+ * Sends a message to the given websocket to create a chat
+ * using the form's data.
+ * @param {HTMLFormElement} form 
+ * @param {WebSocket} websocket 
+ */
+function create_chat_via_consumer(form, websocket){
+    const checked_input = form.querySelector('input:checked')
+    websocket.send(JSON.stringify({
+        'type': 'create_chat',
+        'contact_name': checked_input.dataset.contactName,
+        'contact_phone_number': checked_input.id
+    }))
+}
+
+/**
+ * Sends a message to the given websocket to create a group
+ * using the form's data and the given name for the group.
+ * @param {HTMLFormElement} form 
+ * @param {WebSocket} websocket 
+ */
+function create_group_via_consumer(form, websocket, group_name){
+    const checked_inputs = form.querySelectorAll('input:checked')
+    let phone_numbers = [...checked_inputs].map((input) => input.id)
+    websocket.send(JSON.stringify({
+        'type': 'create_group',
+        'group_name': group_name,
+        'contacts_phone_numbers': phone_numbers
+    }))
+}
+
+/**
+ * Sends a message to the given websocket to create a contact
+ * using the form's data.
+ * @param {HTMLFormElement} form 
+ * @param {WebSocket} websocket 
+ */
+function create_contact_via_consumer(form, websocket){
+    websocket.send(JSON.stringify({
+        'type': 'create_contact',
+        'contact_name': form_elements[1].value,
+        'contact_phone_number': form_elements[2].value
+    }))
+}
+
+/**
  * Returns if the user has at least one chat with the contact
  * with the given phone number.
  * @precondition The contact must exist in the database.
