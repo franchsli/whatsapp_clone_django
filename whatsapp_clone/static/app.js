@@ -314,7 +314,7 @@ class App {
         this.status_form.onsubmit = (event) => {
             debugger
             event.preventDefault();
-            if(tools.cand_send_messages(this.status_websocket.client_websocket)){
+            if(tools.can_send_messages(this.status_websocket.client_websocket)){
                 const status_form_validaton = tools.validate_status_form(this.status_form)
                 if (status_form_validaton.is_valid) {
                     const status_input = document.getElementById('id_text')

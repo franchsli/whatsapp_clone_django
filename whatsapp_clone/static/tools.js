@@ -552,7 +552,7 @@ function trigger_tooltips(){
  * Checks whether or not a WebSocket is ready to send and receive messages.
  * @param {WebSocket} websocket 
  */
-function cand_send_messages(websocket){
+function can_send_messages(websocket){
     return websocket.readyState === websocket.OPEN
 }
 
@@ -566,7 +566,7 @@ function cand_send_messages(websocket){
  * @returns {false} To avoid form submission.
  */
 function create_instance_via_consumer(form, instance_type, websocket, group_name){
-    if (cand_send_messages(websocket)){
+    if (can_send_messages(websocket)){
         const form_elements = form.elements
         if (instance_type === 'create_chat'){
             const checked_input = form.querySelector('input:checked')
@@ -1057,6 +1057,6 @@ export {
     space_text, split_word, trigger_tooltips, 
     create_instance_via_consumer, validate_chat_form, 
     validate_contact_form, validate_status_form, 
-    cand_send_messages, showValidationErrorMessage, 
+    can_send_messages, showValidationErrorMessage, 
     load_global_doc_functions, showNotification, close_chat
 }
