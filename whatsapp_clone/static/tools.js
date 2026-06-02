@@ -345,9 +345,11 @@ function previewImage(image_input=null, image_preview=null) {
  */
 function update_chat_list(){
     if (document.getElementById('chat-list') !== null){
+        // if the archived chats list is present, reload it
         if (document.getElementById('archived-chats') !== null) {
             htmx.ajax('GET', '/chats/True', {target:'#chats-and-more', swap:'innerHTML'})
             scroll_to_bottom()
+        // else, reload the non archived chats list
         } else {
             htmx.ajax('GET', '/chats/False', {target:'#chat-list', swap:'outerHTML'})
             scroll_to_bottom()
