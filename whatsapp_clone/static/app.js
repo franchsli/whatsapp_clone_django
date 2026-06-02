@@ -409,10 +409,10 @@ class App {
 window.summon_chat = function(chat, chat_websocket){
     const chat_members_phones_container = document.getElementById(chat.dataset.chatMembersPhonesDataId)
     const chat_members_phones = JSON.parse(chat_members_phones_container.firstChild.textContent)
-    chat_websocket.send(JSON.stringify({
+    tools.send_to_websocket(chat_websocket, {
         'type':'reconnect',
         'reconnect_to': chat.dataset.chat
-    }))
+    })
     sessionStorage.setItem('receiver_username', chat.dataset.contact)
     sessionStorage.setItem('chat_id', chat.dataset.chat)
     sessionStorage.setItem('chat_members_phones', chat_members_phones)
