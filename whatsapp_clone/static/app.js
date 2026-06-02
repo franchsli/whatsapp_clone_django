@@ -55,7 +55,7 @@ class ChatWebSocket{
      * @param {String} message_sender_id The id of who sent the chat message.
      */
     send_message (message_type, message_text, message_image, message_sender_id){
-        this.client_websocket.send(JSON.stringify({
+        tools.send_to_websocket(this.client_websocket, {
             'type': message_type,
             'message': message_text,
             'image': message_image,
@@ -64,7 +64,7 @@ class ChatWebSocket{
             'chat_id': sessionStorage.getItem('chat_id'),
             'chat_members_phones': sessionStorage.getItem('chat_members_phones'),
             'reply_to': sessionStorage.getItem('reply_to')
-        }))
+        })
         // removes the item to avoid bugs
         sessionStorage.removeItem('reply_to')
     }
@@ -149,11 +149,12 @@ class StatusWebSocket {
         this.client_websocket.onopen = () => {
             console.log('CONNECTION OPENED WITH STATUS WEBSOCKET')
             window.delete_status = (button) => {
-                this.client_websocket.send(JSON.stringify({
+                tools.send_to_websocket(this.client_websocket, {
                     'type':'DELETE',
                     'user_id': button.dataset.creator,
                     'status_id': button.dataset.status
-                }))
+                })
+                console.log("DELETED")
 
             }
         }
@@ -224,6 +225,25 @@ class StatusWebSocket {
             console.log('WS Closed. Code:', event.code, 'Reason:', event.reason);
             console.log('Was clean?:', event.wasClean);
         }
+    }
+
+    /**
+     * Send the status' data to the websocket to create a new status.
+     * @param {String} user_id 
+     * @param {String} user_phone_number 
+     * @param {String} text 
+     * @param {String} image_src 
+     * @param {String} color 
+     */
+    send_status(user_id, user_phone_number, text, image_src, color){
+        tools.send_to_websocket(this.client_websocket, {
+            'type': 'CREATE',
+            'user_id': user_id,
+            'sender_phone_number': user_phone_number,
+            'text': text,
+            'image': image_src,
+            'color': color,
+        })
     }
 
 }
@@ -314,28 +334,26 @@ class App {
         this.status_form.onsubmit = (event) => {
             debugger
             event.preventDefault();
-            if(tools.can_send_messages(this.status_websocket.client_websocket)){
-                const status_form_validaton = tools.validate_status_form(this.status_form)
-                if (status_form_validaton.is_valid) {
-                    const status_input = document.getElementById('id_text')
-                    const image_container = document.getElementById('status-imagePreview')
-                    const image = image_container !== null ? image_container.firstElementChild : null
-                    const color_field = document.getElementById('id_color')
-                    this.status_websocket.client_websocket.send(JSON.stringify({
-                        'type': 'CREATE',
-                        'user_id': user_id,
-                        'sender_phone_number': user_phone_number,
-                        'text': status_input.value,
-                        'image': image !== null ? image.src : null,
-                        'color': color_field.value,
-                    }))
-                } 
-                else {
-                    const validation_message_container = document.getElementById('status-validation-message')
-                    tools.showValidationErrorMessage(validation_message_container, status_form_validaton.message)
-                    this.error_audio.play()
-                }
+            const status_form_validaton = tools.validate_status_form(this.status_form)
+            if (status_form_validaton.is_valid) {
+                const status_input = document.getElementById('id_text')
+                const image_container = document.getElementById('status-imagePreview')
+                const image = image_container !== null ? image_container.firstElementChild : null
+                const color_field = document.getElementById('id_color')
+                this.status_websocket.send_status(
+                    user_id,
+                    user_phone_number,
+                    status_input.value,
+                    image !== null ? image.src : null,
+                    color_field.value
+                )
+            } 
+            else {
+                const validation_message_container = document.getElementById('status-validation-message')
+                tools.showValidationErrorMessage(validation_message_container, status_form_validaton.message)
+                this.error_audio.play()
             }
+            
 
         }
         // gets the image preview div and updates it on input.
@@ -391,10 +409,10 @@ class App {
 window.summon_chat = function(chat, chat_websocket){
     const chat_members_phones_container = document.getElementById(chat.dataset.chatMembersPhonesDataId)
     const chat_members_phones = JSON.parse(chat_members_phones_container.firstChild.textContent)
-    chat_websocket.send(JSON.stringify({
+    tools.send_to_websocket(chat_websocket, {
         'type':'reconnect',
         'reconnect_to': chat.dataset.chat
-    }))
+    })
     sessionStorage.setItem('receiver_username', chat.dataset.contact)
     sessionStorage.setItem('chat_id', chat.dataset.chat)
     sessionStorage.setItem('chat_members_phones', chat_members_phones)

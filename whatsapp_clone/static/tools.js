@@ -1027,6 +1027,7 @@ export {
     create_chat_via_consumer, create_group_via_consumer, 
     create_contact_via_consumer, validate_chat_form, 
     validate_contact_form, validate_status_form, 
-    can_send_messages, showValidationErrorMessage, 
-    load_global_doc_functions, showNotification, close_chat
+    can_send_messages, send_to_websocket, 
+    showValidationErrorMessage, load_global_doc_functions, 
+    showNotification, close_chat
 }
