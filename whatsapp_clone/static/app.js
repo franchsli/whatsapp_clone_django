@@ -334,28 +334,26 @@ class App {
         this.status_form.onsubmit = (event) => {
             debugger
             event.preventDefault();
-            if(tools.can_send_messages(this.status_websocket.client_websocket)){
-                const status_form_validaton = tools.validate_status_form(this.status_form)
-                if (status_form_validaton.is_valid) {
-                    const status_input = document.getElementById('id_text')
-                    const image_container = document.getElementById('status-imagePreview')
-                    const image = image_container !== null ? image_container.firstElementChild : null
-                    const color_field = document.getElementById('id_color')
-                    this.status_websocket.client_websocket.send(JSON.stringify({
-                        'type': 'CREATE',
-                        'user_id': user_id,
-                        'sender_phone_number': user_phone_number,
-                        'text': status_input.value,
-                        'image': image !== null ? image.src : null,
-                        'color': color_field.value,
-                    }))
-                } 
-                else {
-                    const validation_message_container = document.getElementById('status-validation-message')
-                    tools.showValidationErrorMessage(validation_message_container, status_form_validaton.message)
-                    this.error_audio.play()
-                }
+            const status_form_validaton = tools.validate_status_form(this.status_form)
+            if (status_form_validaton.is_valid) {
+                const status_input = document.getElementById('id_text')
+                const image_container = document.getElementById('status-imagePreview')
+                const image = image_container !== null ? image_container.firstElementChild : null
+                const color_field = document.getElementById('id_color')
+                this.status_websocket.send_status(
+                    user_id,
+                    user_phone_number,
+                    status_input.value,
+                    image !== null ? image.src : null,
+                    color_field.value
+                )
+            } 
+            else {
+                const validation_message_container = document.getElementById('status-validation-message')
+                tools.showValidationErrorMessage(validation_message_container, status_form_validaton.message)
+                this.error_audio.play()
             }
+            
 
         }
         // gets the image preview div and updates it on input.
