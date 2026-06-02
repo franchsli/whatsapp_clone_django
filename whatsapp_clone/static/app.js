@@ -227,6 +227,25 @@ class StatusWebSocket {
         }
     }
 
+    /**
+     * Send the status' data to the websocket to create a new status.
+     * @param {String} user_id 
+     * @param {String} user_phone_number 
+     * @param {String} text 
+     * @param {String} image_src 
+     * @param {String} color 
+     */
+    send_status(user_id, user_phone_number, text, image_src, color){
+        tools.send_to_websocket(this.client_websocket, {
+            'type': 'CREATE',
+            'user_id': user_id,
+            'sender_phone_number': user_phone_number,
+            'text': text,
+            'image': image_src,
+            'color': color,
+        })
+    }
+
 }
 
 
