@@ -55,7 +55,7 @@ class ChatWebSocket{
      * @param {String} message_sender_id The id of who sent the chat message.
      */
     send_message (message_type, message_text, message_image, message_sender_id){
-        this.client_websocket.send(JSON.stringify({
+        tools.send_to_websocket(this.client_websocket, {
             'type': message_type,
             'message': message_text,
             'image': message_image,
@@ -64,7 +64,7 @@ class ChatWebSocket{
             'chat_id': sessionStorage.getItem('chat_id'),
             'chat_members_phones': sessionStorage.getItem('chat_members_phones'),
             'reply_to': sessionStorage.getItem('reply_to')
-        }))
+        })
         // removes the item to avoid bugs
         sessionStorage.removeItem('reply_to')
     }
