@@ -827,12 +827,13 @@ async function validate_archive_form(form){
 
 /**
  * Shows a notification showing who sent it 
- * and what does it say
+ * and what does it say and plays the given audio
+ * for the notification
  * @param {String} sender_name The one who sent the notification
  * @param {String} text
  * @param {HTMLAudioElement} notification_audio 
  */
-function showNotification(sender, text, notification_audio){
+function triggerNotification(sender, text, notification_audio){
     const toastNotification = document.getElementById('liveToast')
     modifyNotification(sender, text)
     const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
@@ -1031,5 +1032,5 @@ export {
     validate_contact_form, validate_status_form, 
     can_send_messages, send_to_websocket, 
     showValidationErrorMessage, load_global_doc_functions, 
-    showNotification, close_chat
+    triggerNotification, close_chat
 }

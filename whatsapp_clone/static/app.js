@@ -296,7 +296,7 @@ class App {
             else{
                 if (chat_form_validation.intention === 'create_chat') {
                     tools.create_chat_via_consumer(this.chat_form, this.chat_websocket.client_websocket)
-                    tools.showNotification('Server', 
+                    tools.triggerNotification('Server', 
                         'The chat was created successfully!! Update your chat list by clicking the "chats" button.',
                         this.notification_audio)
                     tools.update_chat_list()
@@ -306,7 +306,7 @@ class App {
                     const group_name = group_name_container.value.trim()
                     tools.create_group_via_consumer(this.chat_form, 
                         this.chat_websocket.client_websocket, group_name)
-                    tools.showNotification('Server', 
+                    tools.triggerNotification('Server', 
                         'The group was created successfully!! Update your chat list by clicking the "chats" button.',
                         this.notification_audio)
                     tools.update_chat_list()
@@ -319,7 +319,7 @@ class App {
             const contact_form_validation = await tools.validate_contact_form(this.contact_form)
             if (contact_form_validation.is_valid) {
                 tools.create_contact_via_consumer(this.contact_form, this.chat_websocket.client_websocket)
-                tools.showNotification('Server', 
+                tools.triggerNotification('Server', 
                     'The contact was created successfully! Update your contacts list by clicking the "contacts" button.',
                     this.notification_audio)
                 tools.update_chat_list()
