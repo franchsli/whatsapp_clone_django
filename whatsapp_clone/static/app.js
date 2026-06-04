@@ -101,11 +101,7 @@ class ChatWebSocket{
             noti_from_opened_chat = displayed_chat_contact_info.dataset.userObjectId === this.sender_id
         }
         if(!this.chat_is_archived && !noti_from_opened_chat){
-            const toastNotification = document.getElementById('liveToast')
-            tools.modifyNotification(this.sender_contact_name, this.message)
-            const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
-            this.app.message_received_audio.play()
-            toastBootstrap.show()
+            tools.triggerNotification(this.sender_contact_name, this.message, this.app.message_received_audio)
             tools.update_chat_list()
 
         }
@@ -162,18 +158,15 @@ class StatusWebSocket {
             const status_data = JSON.parse(event.data)
             if (status_data.type === 'status_notification'){
                 // if the user_id of the user who triggered the message is not the same
-                // as the auth user, think displaying a notification.
+                // as the auth user, think about displaying a notification.
                 if (status_data.user_id !== user_id){
                     const status_sender_data = await tools.get(`/api/contacts/?phone_number=${status_data.sender_phone_number}&created_by=${user_id}`)
                     debugger
                     // if the contacts IS NOT muted from statuses
                     // display a notification
                     if (!status_sender_data[0].statuses_muted){
-                        const toastNotification = document.getElementById('liveToast')
-                        tools.modifyNotification('Server', `${status_sender_data[0].name} uploaded a status!!!`)
-                        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
-                        this.app.status_notification_audio.play()                
-                        toastBootstrap.show()
+                        tools.triggerNotification('Server', `${status_sender_data[0].name} uploaded a status!!!`, 
+                            this.app.status_notification_audio)
         
                     }
                 }
@@ -192,11 +185,9 @@ class StatusWebSocket {
                         image_preview.src = ''
                     }
                     //notify the user
-                    const toastNotification = document.getElementById('liveToast')
-                    tools.modifyNotification('Server', 'Status uploaded successfully!')
-                    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
-                    this.app.notification_audio.play()
-                    toastBootstrap.show()
+                    tools.triggerNotification('Server', 'Status uploaded successfully!',
+                        this.app.notification_audio
+                    )
                 }
         
             }
