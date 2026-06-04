@@ -101,11 +101,7 @@ class ChatWebSocket{
             noti_from_opened_chat = displayed_chat_contact_info.dataset.userObjectId === this.sender_id
         }
         if(!this.chat_is_archived && !noti_from_opened_chat){
-            const toastNotification = document.getElementById('liveToast')
-            tools.modifyNotification(this.sender_contact_name, this.message)
-            const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
-            this.app.message_received_audio.play()
-            toastBootstrap.show()
+            tools.triggerNotification(this.sender_contact_name, this.message, this.app.message_received_audio)
             tools.update_chat_list()
 
         }
