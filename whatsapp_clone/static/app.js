@@ -183,7 +183,7 @@ class StatusWebSocket {
                     debugger
                     const status_form_text = document.getElementById('id_text')
                     const status_form_image = document.getElementById('id_image')
-                    const image_preview_container = document.getElementById('status-imagePreview')
+                    const image_preview_container = this.app.status_image_preview_container
                     const image_preview = image_preview_container !== null ? image_preview_container.firstElementChild : null
                     status_form_text.value = ''
                     status_form_image.value = ''
@@ -270,7 +270,7 @@ class App {
         this.status_form = document.getElementById('status_form')
         this.status_modal = document.getElementById('CreateStatusModal')
         this.status_submit_button = document.getElementById('status-submit')
-        this.status_image_preview = document.getElementById('status-imagePreview')
+        this.status_image_preview_container = null
         this.status_image_input = document.getElementById('id_image')
         this.notification_audio = new Audio('static/Audio/app/notification.mp3')
         this.message_received_audio = new Audio('static/Audio/app/message_received.mp3')
@@ -337,7 +337,7 @@ class App {
             const status_form_validaton = tools.validate_status_form(this.status_form)
             if (status_form_validaton.is_valid) {
                 const status_input = document.getElementById('id_text')
-                const image_container = document.getElementById('status-imagePreview')
+                const image_container = this.status_image_preview_container
                 const image = image_container !== null ? image_container.firstElementChild : null
                 const color_field = document.getElementById('id_color')
                 this.status_websocket.send_status(
@@ -358,7 +358,9 @@ class App {
         }
         // gets the image preview div and updates it on input.
         this.status_image_input.oninput = () => {
-            tools.previewImage(this.status_image_input, this.status_image_preview)
+            debugger
+            this.status_image_preview_container = document.getElementById('status-imagePreview')
+            tools.previewImage(this.status_image_input, this.status_image_preview_container)
         }
 
         // resets the chat form values and validation errors when the modal is closed.
@@ -380,7 +382,7 @@ class App {
         this.status_modal.addEventListener('hidden.bs.modal', () => {
             const color_input = document.getElementById('id_color')
             const validation_message = document.getElementById('status-validation-message')
-            const image_container = document.getElementById('status-imagePreview')
+            const image_container = this.status_image_preview_container
             const image = image_container !== null ? image_container.firstElementChild : null
             if (image){
                 image.remove()
