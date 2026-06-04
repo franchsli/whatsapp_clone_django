@@ -185,11 +185,9 @@ class StatusWebSocket {
                         image_preview.src = ''
                     }
                     //notify the user
-                    const toastNotification = document.getElementById('liveToast')
-                    tools.modifyNotification('Server', 'Status uploaded successfully!')
-                    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
-                    this.app.notification_audio.play()
-                    toastBootstrap.show()
+                    tools.triggerNotification('Server', 'Status uploaded successfully!',
+                        this.app.notification_audio
+                    )
                 }
         
             }
