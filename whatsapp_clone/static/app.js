@@ -351,7 +351,15 @@ class App {
         this.status_image_input.oninput = () => {
             debugger
             this.status_image_preview_container = document.getElementById('status-imagePreview')
-            tools.previewImage(this.status_image_input, this.status_image_preview_container)
+            const input_was_cleaned = this.status_image_input.files.length === 0
+            if (input_was_cleaned) {
+                const image = this.status_image_preview_container
+                image.remove()
+                this.status_image_preview_container = null
+            }
+            else {
+                tools.previewImage(this.status_image_input, this.status_image_preview_container)
+            }
         }
 
         // resets the chat form values and validation errors when the modal is closed.
