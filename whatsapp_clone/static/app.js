@@ -360,8 +360,8 @@ class App {
                 this.status_image_preview_container = null
             }
             else {
-                this.status_image_preview_container = document.getElementById('status-imagePreview')
                 tools.previewImage(this.status_image_input, this.status_image_preview_container)
+                this.status_image_preview_container = document.getElementById('status-imagePreview')
             }
         }
 
