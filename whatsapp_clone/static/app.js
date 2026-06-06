@@ -174,15 +174,18 @@ class StatusWebSocket {
                 // used the form, so clean it and display a success notification
                 else {
                     debugger
-                    const status_form_text = document.getElementById('id_text')
-                    const status_form_image = document.getElementById('id_image')
-                    const image_preview_container = this.app.status_image_preview_container
-                    const image_preview = image_preview_container !== null ? image_preview_container.firstElementChild : null
-                    status_form_text.value = ''
-                    status_form_image.value = ''
+                    this.app.status_form.reset()
                     // if the image preview exists, delete it.
-                    if (image_preview !== null){
-                        image_preview.src = ''
+                    const image_container = this.app.status_image_preview_container
+                    if (image_container) {
+                        image_container.remove()
+                        this.app.status_image_preview_container = null
+                    }
+                    const validation_message = document.getElementById('status-validation-message')
+                    validation_message.innerText = ''
+                    const color_input = document.getElementById('id_color')
+                    if (color_input.jscolor) {
+                        color_input.jscolor.fromString('#000000');
                     }
                     //notify the user
                     tools.triggerNotification('Server', 'Status uploaded successfully!',
