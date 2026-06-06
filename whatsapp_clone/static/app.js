@@ -273,7 +273,7 @@ class App {
         this.status_notification_audio = new Audio('static/Audio/app/new_status.mp3')
         this.new_message = false
         this.debug_logs = 'relevant'
-        this.debugging_mode = false
+        this.debugging_mode = true
         
     }
 
@@ -534,7 +534,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
             }
-            else if (debug_logs === 'relevant'){
+            else if (main.debug_logs === 'relevant'){
                 console.log('EVENT CALLED:', event)
                 console.log('ELEMENT THAT ISSUED THE REQUEST:', elt)
                 if(data.pathInfo){
