@@ -78,10 +78,12 @@
                     hx-swap="innerHTML" hx-target="#chats-and-more" hx-confirm="Are you sure about deleting this group PERMANENTLY?"
                     hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'><i class="bi bi-trash"></i> Delete group</span></li>
             {% endif %}
+            {% if chat.is_group and chat.admins.count > 1 %}
             <li onclick="event.stopPropagation();">
               <span class="dropdown-item edit-action" hx-patch="{% url 'leave_group' chat.id are_archived %}" 
                     hx-swap="innerHTML" hx-target="#chats-and-more"  
                     hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'><i class="bi bi-escape"></i> Leave group</span></li>
+            {% endif %}
           {% else %}
             <li onclick="event.stopPropagation();">
               <span class="dropdown-item edit-action" hx-patch="{% url 'archive_chat' chat.id True %}" 
@@ -93,10 +95,12 @@
                     hx-swap="outerHTML" hx-target="#chat-list"  hx-confirm="Are you sure about deleting this group PERMANENTLY?"
                     hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'><i class="bi bi-trash"></i> Delete group</span></li>
             {% endif %}
+            {% if chat.is_group and chat.admins.count > 1 %}
             <li onclick="event.stopPropagation();">
               <span class="dropdown-item edit-action" hx-patch="{% url 'leave_group' chat.id are_archived %}" 
                     hx-swap="outerHTML" hx-target="#chat-list" 
                     hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'><i class="bi bi-escape"></i> Leave group</span></li>
+            {% endif %}
           {% endif %}
      
         </ul>
