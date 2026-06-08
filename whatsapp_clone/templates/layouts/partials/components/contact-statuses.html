@@ -30,10 +30,6 @@
                                     <p class="username">{{contact.name}}</p>
                                     <p class="timestamp">{{ status.upload_date|timesince }} ago</p>
                                 </div>
-                                <button onclick="delete_status(this)" type="button" class="btn delete-action mx-1 status-deletion"
-                                data-status="{{status.id}}" data-creator="{{contact.id}}">
-                                <i class="bi bi-trash"></i>
-                                </button>
                             </div>
                         </div>
                         <div class="status-content-wrapper" style="background-color: {{status.color}};">
@@ -64,10 +60,6 @@
                                     <p class="username">{{contact.name}}</p>
                                     <p class="timestamp">{{ status.upload_date|timesince }} ago</p>
                                 </div>
-                                <button onclick="delete_status(this)" type="button" class="btn delete-action mx-1 status-deletion"
-                                data-status="{{status.id}}" data-creator="{{contact.id}}">
-                                <i class="bi bi-trash"></i>
-                                </button>
                             </div>
                         </div>
                         <div class="status-content-wrapper" style="background-color: {{status.color}};">
