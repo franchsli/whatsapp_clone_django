@@ -358,6 +358,12 @@ function update_chat_list(){
     }
 }
 
+function update_contact_list(){
+    if (document.getElementById('contact-list') !== null) {
+        htmx.ajax('GET', '/contacts/', {target: '#contact-list', swap:'innerHTML'})
+    }
+}
+
 /**
  * Uses HTMX and loads older messages in the displayed chat.
  */
@@ -689,6 +695,7 @@ async function validate_chat_form(chat_form){
  * and a corresponding message. 
  */
 async function validate_contact_form(contact_form){
+    debugger
     let is_valid = true
     let message
     const inputs = contact_form.getElementsByTagName('input')
@@ -1023,10 +1030,10 @@ export {
     run_element_animation, checked, not_empty, 
     toggle_element_inner_text, load_emojis, switch_emojis, 
     switch_chat_form_purpose, toggle_element_display, previewImage, 
-    update_chat_list, at_least_one_attr, exchange_elements_class, 
-    switch_element_visibility, load_more_messages, load_older_messages, 
-    remove_duplicates, change_input_color, filter_by_value, 
-    space_text, split_word, trigger_tooltips, 
+    update_chat_list, update_contact_list, at_least_one_attr, 
+    exchange_elements_class, switch_element_visibility, load_more_messages, 
+    load_older_messages, remove_duplicates, change_input_color, 
+    filter_by_value, space_text, split_word, trigger_tooltips, 
     create_chat_via_consumer, create_group_via_consumer, 
     create_contact_via_consumer, validate_chat_form, 
     validate_contact_form, validate_status_form, 
