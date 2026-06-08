@@ -273,7 +273,7 @@ class App {
         this.status_notification_audio = new Audio('static/Audio/app/new_status.mp3')
         this.new_message = false
         this.debug_logs = 'relevant'
-        this.debugging_mode = false
+        this.debugging_mode = true
         
     }
 
@@ -308,15 +308,16 @@ class App {
                 }
             }
         }
-        this.contact_form.onsubmit = async () => {
+        this.contact_form.onsubmit = async (event) => {
             debugger
+            event.preventDefault()
             const contact_form_validation = await tools.validate_contact_form(this.contact_form)
             if (contact_form_validation.is_valid) {
                 tools.create_contact_via_consumer(this.contact_form, this.chat_websocket.client_websocket)
                 tools.triggerNotification('Server', 
                     'The contact was created successfully! Update your contacts list by clicking the "contacts" button.',
                     this.notification_audio)
-                tools.update_chat_list()
+                tools.update_contact_list()
             }
             else {
                 const validation_message_container = document.getElementById('contact-validation-message')
@@ -534,7 +535,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
             }
-            else if (debug_logs === 'relevant'){
+            else if (main.debug_logs === 'relevant'){
                 console.log('EVENT CALLED:', event)
                 console.log('ELEMENT THAT ISSUED THE REQUEST:', elt)
                 if(data.pathInfo){
