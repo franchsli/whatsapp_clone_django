@@ -308,15 +308,16 @@ class App {
                 }
             }
         }
-        this.contact_form.onsubmit = async () => {
+        this.contact_form.onsubmit = async (event) => {
             debugger
+            event.preventDefault()
             const contact_form_validation = await tools.validate_contact_form(this.contact_form)
             if (contact_form_validation.is_valid) {
                 tools.create_contact_via_consumer(this.contact_form, this.chat_websocket.client_websocket)
                 tools.triggerNotification('Server', 
                     'The contact was created successfully! Update your contacts list by clicking the "contacts" button.',
                     this.notification_audio)
-                tools.update_chat_list()
+                tools.update_contact_list()
             }
             else {
                 const validation_message_container = document.getElementById('contact-validation-message')
