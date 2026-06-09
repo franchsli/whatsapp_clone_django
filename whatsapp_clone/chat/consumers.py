@@ -96,6 +96,7 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
                 content["contact_phone_number"],
                 self.user_instance,
             )
+            await self.send_contact_creation(content["contact_name"])
 
         elif content_type == "message_deletion":
             await self.send_message_deletion(content)
@@ -220,6 +221,15 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
                 "sender_contact_name": self.sender_contact_name,
                 "chat_id": websocket_message_data["chat_id"],
             },
+        )
+
+    async def send_contact_creation(self, contact_name: str):
+        await self.send_json(
+            content={
+                "type": "contact_creation",
+                "user_id": self.user_instance.pk,
+                "contact_name": contact_name,
+            }
         )
 
     @database_sync_to_async
