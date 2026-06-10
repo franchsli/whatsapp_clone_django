@@ -737,6 +737,26 @@ function validate_status_form(status_form){
     return {is_valid: is_valid, message: message}
 }
 
+/**
+ * Resets the chat form to its default values.
+ * @param {HTMLFormElement} chat_form 
+ */
+function reset_chat_form(chat_form){}
+
+/**
+ * Resets the contact form to its default values.
+ * @param {HTMLFormElement} contact_form 
+ */
+function reset_contact_form(contact_form){}
+
+/**
+ * Resets the status form to its default values.
+ * @param {HTMLFormElement} status_form 
+ */
+function reset_status_form(status_form){}
+
+
+
 
 /**
  * Loads the reply preview HTML to the desired message
