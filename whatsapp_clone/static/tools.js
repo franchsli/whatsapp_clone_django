@@ -746,6 +746,10 @@ function reset_chat_form(chat_form){
     const validation_message = document.getElementById('chat-validation-message')
     validation_message.innerText = ''
     form_title.innerText = 'Start new chat'
+    const group_name_input = document.getElementById('group-name')
+    if (!group_name_input.hidden) {
+        group_name_input.hidden = true
+    }
     chat_form.reset()
 }
 
