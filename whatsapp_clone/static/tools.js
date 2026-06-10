@@ -741,19 +741,43 @@ function validate_status_form(status_form){
  * Resets the chat form to its default values.
  * @param {HTMLFormElement} chat_form 
  */
-function reset_chat_form(chat_form){}
+function reset_chat_form(chat_form){
+    const form_title = document.getElementById('NewChatLabel')
+    const validation_message = document.getElementById('chat-validation-message')
+    validation_message.innerText = ''
+    form_title.innerText = 'Start new chat'
+    chat_form.reset()
+}
 
 /**
  * Resets the contact form to its default values.
  * @param {HTMLFormElement} contact_form 
  */
-function reset_contact_form(contact_form){}
+function reset_contact_form(contact_form){
+    const validation_message = document.getElementById('contact-validation-message')
+    validation_message.innerText = ''
+    contact_form.reset()
+}
 
 /**
  * Resets the status form to its default values.
- * @param {HTMLFormElement} status_form 
+ * @param {HTMLFormElement} status_form
+ * @param {HTMLDivElement} image_preview_container The image preview container in the form.
  */
-function reset_status_form(status_form){}
+function reset_status_form(status_form, image_preview_container){
+    const color_input = document.getElementById('id_color')
+    const validation_message = document.getElementById('status-validation-message')
+    const image_container = image_preview_container
+    const image = image_container !== null ? image_container.firstElementChild : null
+    if (image){
+        image.remove()
+    }
+    validation_message.innerText = ''
+    if (color_input.jscolor) {
+        color_input.jscolor.fromString('#000000');
+    }
+    status_form.reset()
+}
 
 
 
