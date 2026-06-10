@@ -155,7 +155,7 @@ class ChatWebSocket{
     handle_chat_creation(contact_name){
         tools.triggerNotification('Server', 
             `The chat with ${contact_name} was created successfully!! Update your chat list by clicking the "chats" button.`,
-            this.notification_audio)
+            this.app.notification_audio)
         tools.update_chat_list()
     }
 
@@ -178,7 +178,7 @@ class ChatWebSocket{
     handle_group_creation(group_name){
         tools.triggerNotification('Server', 
             `The group ${group_name} was created successfully!! Update your chat list by clicking the "chats" button.`,
-            this.notification_audio)
+            this.app.notification_audio)
         tools.update_chat_list()
     }
 
