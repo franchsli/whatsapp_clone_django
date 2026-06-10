@@ -82,6 +82,7 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
                 content["contact_phone_number"]
             )
             await self.create_chat([self.user_instance, contact])
+            await self.send_chat_creation(content["contact_name"])
 
         elif content_type == "create_group":
             await self.create_group(
@@ -222,6 +223,15 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
                 "sender_contact_name": self.sender_contact_name,
                 "chat_id": websocket_message_data["chat_id"],
             },
+        )
+
+    async def send_chat_creation(self, contact_name: str):
+        await self.send_json(
+            content={
+                "type": "chat_creation",
+                "user_id": self.user_instance.pk,
+                "contact_name": contact_name,
+            }
         )
 
     async def send_contact_creation(self, contact_name: str):
