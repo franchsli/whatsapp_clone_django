@@ -39,6 +39,10 @@ class ChatWebSocket{
                 this.handle_contact_creation(data.contact_name)
             }
 
+            else if (data.type === 'group_creation') {
+                this.handle_group_creation(data.group_name)
+            }
+
         }
 
         this.client_websocket.onerror = (error) => {
@@ -150,6 +154,17 @@ class ChatWebSocket{
             Update your contacts list by clicking the "contacts" button.`,
             this.app.notification_audio)
         tools.update_contact_list()
+    }
+
+    /**
+     * 
+     * @param {String} group_name 
+     */
+    handle_group_creation(group_name){
+        tools.triggerNotification('Server', 
+            `The group ${group_name} was created successfully!! Update your chat list by clicking the "chats" button.`,
+            this.notification_audio)
+        tools.update_chat_list()
     }
 
 }
@@ -316,10 +331,6 @@ class App {
                     const group_name = group_name_container.value.trim()
                     tools.create_group_via_consumer(this.chat_form, 
                         this.chat_websocket.client_websocket, group_name)
-                    tools.triggerNotification('Server', 
-                        'The group was created successfully!! Update your chat list by clicking the "chats" button.',
-                        this.notification_audio)
-                    tools.update_chat_list()
                     
                 }
             }
