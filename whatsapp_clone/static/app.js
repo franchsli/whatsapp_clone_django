@@ -35,6 +35,10 @@ class ChatWebSocket{
                 this.handle_message_edition()
             }
 
+            else if (data.type === 'chat_creation'){
+                this.handle_chat_creation(data.contact_name)
+            }
+
             else if (data.type === 'contact_creation'){
                 this.handle_contact_creation(data.contact_name)
             }
@@ -142,6 +146,17 @@ class ChatWebSocket{
                 
             } 
         }
+    }
+
+    /**
+     * 
+     * @param {String} contact_name 
+     */
+    handle_chat_creation(contact_name){
+        tools.triggerNotification('Server', 
+            `The chat with ${contact_name} was created successfully!! Update your chat list by clicking the "chats" button.`,
+            this.notification_audio)
+        tools.update_chat_list()
     }
 
     /**
@@ -321,10 +336,6 @@ class App {
             else{
                 if (chat_form_validation.intention === 'create_chat') {
                     tools.create_chat_via_consumer(this.chat_form, this.chat_websocket.client_websocket)
-                    tools.triggerNotification('Server', 
-                        'The chat was created successfully!! Update your chat list by clicking the "chats" button.',
-                        this.notification_audio)
-                    tools.update_chat_list()
                 }
                 else {
                     const group_name_container = chat_form.querySelector('input[type="text"]')
