@@ -338,7 +338,7 @@ class App {
                     tools.create_chat_via_consumer(this.chat_form, this.chat_websocket.client_websocket)
                 }
                 else {
-                    const group_name_container = chat_form.querySelector('input[type="text"]')
+                    const group_name_container = this.chat_form.querySelector('input[type="text"]')
                     const group_name = group_name_container.value.trim()
                     tools.create_group_via_consumer(this.chat_form, 
                         this.chat_websocket.client_websocket, group_name)
