@@ -153,6 +153,7 @@ class ChatWebSocket{
      * @param {String} contact_name 
      */
     handle_chat_creation(contact_name){
+        tools.reset_chat_form(this.app.chat_form)
         tools.triggerNotification('Server', 
             `The chat with ${contact_name} was created successfully!! Update your chat list by clicking the "chats" button.`,
             this.app.notification_audio)
@@ -164,6 +165,7 @@ class ChatWebSocket{
      * @param {String} contact_name 
      */
     handle_contact_creation(contact_name){
+        tools.reset_contact_form(this.app.contact_form)
         tools.triggerNotification('Server', 
             `The contact ${contact_name} was created successfully! 
             Update your contacts list by clicking the "contacts" button.`,
@@ -176,6 +178,7 @@ class ChatWebSocket{
      * @param {String} group_name 
      */
     handle_group_creation(group_name){
+        tools.reset_chat_form(this.app.chat_form)
         tools.triggerNotification('Server', 
             `The group ${group_name} was created successfully!! Update your chat list by clicking the "chats" button.`,
             this.app.notification_audio)
@@ -220,18 +223,11 @@ class StatusWebSocket {
                 // used the form, so clean it and display a success notification
                 else {
                     debugger
-                    this.app.status_form.reset()
-                    // if the image preview exists, delete it.
                     const image_container = this.app.status_image_preview_container
+                    tools.reset_status_form(this.app.status_form, image_container)
+                    // if the image preview exists in memory, delete it.
                     if (image_container) {
-                        image_container.remove()
                         this.app.status_image_preview_container = null
-                    }
-                    const validation_message = document.getElementById('status-validation-message')
-                    validation_message.innerText = ''
-                    const color_input = document.getElementById('id_color')
-                    if (color_input.jscolor) {
-                        color_input.jscolor.fromString('#000000');
                     }
                     //notify the user
                     tools.triggerNotification('Server', 'Status uploaded successfully!',
