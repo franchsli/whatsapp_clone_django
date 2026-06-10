@@ -148,7 +148,7 @@ class ChatWebSocket{
         tools.triggerNotification('Server', 
             `The contact ${contact_name} was created successfully! 
             Update your contacts list by clicking the "contacts" button.`,
-            this.notification_audio)
+            this.app.notification_audio)
         tools.update_contact_list()
     }
 
