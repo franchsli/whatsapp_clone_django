@@ -229,7 +229,6 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
         await self.send_json(
             content={
                 "type": "chat_creation",
-                "user_id": self.user_instance.pk,
                 "contact_name": contact_name,
             }
         )
@@ -238,7 +237,6 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
         await self.send_json(
             content={
                 "type": "contact_creation",
-                "user_id": self.user_instance.pk,
                 "contact_name": contact_name,
             }
         )
@@ -247,7 +245,6 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
         await self.send_json(
             content={
                 "type": "group_creation",
-                "user_id": self.user_instance.pk,
                 "group_name": group_name,
             }
         )
