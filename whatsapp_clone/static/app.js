@@ -402,33 +402,16 @@ class App {
 
         // resets the chat form values and validation errors when the modal is closed.
         this.chat_modal.addEventListener('hidden.bs.modal', () => {
-            const form_title = document.getElementById('NewChatLabel')
-            const validation_message = document.getElementById('chat-validation-message')
-            validation_message.innerText = ''
-            form_title.innerText = 'Start new chat'
-            this.chat_form.reset()
+            tools.reset_chat_form(this.chat_form)
         })
         // resets the contact form values and validation errors when the modal is closed.
         this.contact_modal.addEventListener('hidden.bs.modal', () => {
-            const validation_message = document.getElementById('contact-validation-message')
-            validation_message.innerText = ''
-            this.contact_form.reset()
+            tools.reset_contact_form(this.contact_form)
         })
 
         // same for the status modal.
         this.status_modal.addEventListener('hidden.bs.modal', () => {
-            const color_input = document.getElementById('id_color')
-            const validation_message = document.getElementById('status-validation-message')
-            const image_container = this.status_image_preview_container
-            const image = image_container !== null ? image_container.firstElementChild : null
-            if (image){
-                image.remove()
-            }
-            validation_message.innerText = ''
-            if (color_input.jscolor) {
-                color_input.jscolor.fromString('#000000');
-            }
-            this.status_form.reset()
+            tools.reset_status_form(this.status_form, this.status_image_preview_container)
         })
 
         window.addEventListener('keydown', (event) => {

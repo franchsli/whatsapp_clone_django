@@ -1079,8 +1079,9 @@ export {
     load_older_messages, remove_duplicates, change_input_color, 
     filter_by_value, space_text, split_word, trigger_tooltips, 
     create_chat_via_consumer, create_group_via_consumer, 
-    create_contact_via_consumer, validate_chat_form, 
-    validate_contact_form, validate_status_form, 
+    create_contact_via_consumer, validate_chat_form,
+    validate_contact_form, validate_status_form,
+    reset_chat_form, reset_contact_form, reset_status_form, 
     can_send_messages, send_to_websocket, 
     showValidationErrorMessage, load_global_doc_functions, 
     triggerNotification, close_chat
