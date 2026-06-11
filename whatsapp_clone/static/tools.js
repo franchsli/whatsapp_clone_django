@@ -783,7 +783,31 @@ function reset_status_form(status_form, image_preview_container){
     status_form.reset()
 }
 
+/**
+ * Sets the state of the given button to a loading one
+ * preventing from further use.
+ * @param {HTMLButtonElement} button The submit button in the form. 
+ */
+function set_button_loading(button){
+    button.setAttribute('disabled')
+    const button_submit_text_container = button.querySelector('.submit-btn-text')
+    button_submit_text_container.setAttribute('hidden')
+    const loading_status_container = button.querySelector('.loading-status-container')
+    loading_status_container.removeAttribute('hidden')
+}
 
+/**
+ * Sets the state of the given button to a ready one
+ * allowing further use.
+ * @param {HTMLButtonElement} button The submit button in the form. 
+ */
+function set_button_ready(button){
+    button.removeAttribute('disabled')
+    const button_submit_text_container = button.querySelector('.submit-btn-text')
+    button_submit_text_container.removeAttribute('hidden')
+    const loading_status_container = button.querySelector('.loading-status-container')
+    loading_status_container.setAttribute('hidden')
+}
 
 
 /**
@@ -1085,7 +1109,8 @@ export {
     create_chat_via_consumer, create_group_via_consumer, 
     create_contact_via_consumer, validate_chat_form,
     validate_contact_form, validate_status_form,
-    reset_chat_form, reset_contact_form, reset_status_form, 
+    reset_chat_form, reset_contact_form, reset_status_form,
+    set_button_loading, set_button_ready,
     can_send_messages, send_to_websocket, 
     showValidationErrorMessage, load_global_doc_functions, 
     triggerNotification, close_chat
