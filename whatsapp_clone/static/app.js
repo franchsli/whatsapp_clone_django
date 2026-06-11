@@ -331,6 +331,7 @@ class App {
             if (!chat_form_validation.is_valid){
                 this.error_audio.play()
                 tools.showValidationErrorMessage(validation_message_container, chat_form_validation.message)
+                tools.set_button_ready(this.chat_submit_button)
             }
             else{
                 if (chat_form_validation.intention === 'create_chat') {
@@ -357,6 +358,7 @@ class App {
                 const validation_message_container = document.getElementById('contact-validation-message')
                 tools.showValidationErrorMessage(validation_message_container, contact_form_validation.message)
                 this.error_audio.play()
+                tools.set_button_ready(this.contact_submit_button)
             }
         }
 
@@ -382,6 +384,7 @@ class App {
                 const validation_message_container = document.getElementById('status-validation-message')
                 tools.showValidationErrorMessage(validation_message_container, status_form_validaton.message)
                 this.error_audio.play()
+                tools.set_button_ready(this.status_submit_button)
             }
             
 
