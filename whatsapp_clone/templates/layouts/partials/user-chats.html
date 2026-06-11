@@ -40,7 +40,7 @@
           <div id="contact-validation-message" class="validation-error"></div>
           {% csrf_token %}
           {{ contact_form | crispy }}
-          <button class="btn themed-button float-end" type="submit">Create contact</button>
+          <button id="contact-submit-btn" class="btn themed-button float-end" type="submit">Create contact</button>
           <button type="button" class="btn btn-secondary float-end me-3" data-bs-dismiss="modal">Close</button>
         </form>
       </div>
@@ -64,7 +64,7 @@
           <div id="status-validation-message" class="validation-error"></div>
           {% csrf_token %}
           {{ status_form|crispy }}
-          <button id="status-submit" class="btn themed-button">Create status</button>
+          <button id="status-submit-btn" class="btn themed-button">Create status</button>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
         </form>
       </div>
