@@ -738,7 +738,7 @@ function validate_status_form(status_form){
 }
 
 /**
- * Resets the chat form to its default values.
+ * Resets the chat form to its default values and state.
  * @param {HTMLFormElement} chat_form 
  */
 function reset_chat_form(chat_form){
@@ -751,20 +751,24 @@ function reset_chat_form(chat_form){
         group_name_input.hidden = true
     }
     chat_form.reset()
+    const chat_submit_button = document.getElementById('chat-submit-btn')
+    set_button_ready(chat_submit_button)
 }
 
 /**
- * Resets the contact form to its default values.
+ * Resets the contact form to its default values and state.
  * @param {HTMLFormElement} contact_form 
  */
 function reset_contact_form(contact_form){
     const validation_message = document.getElementById('contact-validation-message')
     validation_message.innerText = ''
     contact_form.reset()
+    const contact_submit_button = document.getElementById('contact-submit-btn')
+    set_button_ready(contact_submit_button)
 }
 
 /**
- * Resets the status form to its default values.
+ * Resets the status form to its default values and state.
  * @param {HTMLFormElement} status_form
  * @param {HTMLDivElement} image_preview_container The image preview container in the form.
  */
@@ -781,6 +785,8 @@ function reset_status_form(status_form, image_preview_container){
         color_input.jscolor.fromString('#000000');
     }
     status_form.reset()
+    const status_submit_button = document.getElementById('status-submit-btn')
+    set_button_ready(status_submit_button)
 }
 
 /**
