@@ -323,8 +323,9 @@ class App {
 
     load_event_listeners(){
         this.chat_form.onsubmit = async (event) => {
-            event.preventDefault()
             debugger
+            event.preventDefault()
+            tools.set_button_loading(this.chat_submit_button)
             const chat_form_validation = await tools.validate_chat_form(this.chat_form)
             const validation_message_container = document.getElementById('chat-validation-message')
             if (!chat_form_validation.is_valid){
@@ -347,6 +348,7 @@ class App {
         this.contact_form.onsubmit = async (event) => {
             debugger
             event.preventDefault()
+            tools.set_button_loading(this.contact_submit_button)
             const contact_form_validation = await tools.validate_contact_form(this.contact_form)
             if (contact_form_validation.is_valid) {
                 tools.create_contact_via_consumer(this.contact_form, this.chat_websocket.client_websocket)
@@ -361,6 +363,7 @@ class App {
         this.status_form.onsubmit = (event) => {
             debugger
             event.preventDefault();
+            tools.set_button_loading(this.status_submit_button)
             const status_form_validaton = tools.validate_status_form(this.status_form)
             if (status_form_validaton.is_valid) {
                 const status_input = document.getElementById('id_text')
