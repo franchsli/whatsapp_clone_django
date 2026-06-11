@@ -795,9 +795,9 @@ function reset_status_form(status_form, image_preview_container){
  * @param {HTMLButtonElement} button The submit button in the form. 
  */
 function set_button_loading(button){
-    button.setAttribute('disabled')
+    button.setAttribute('disabled', 'true')
     const button_submit_text_container = button.querySelector('.submit-btn-text')
-    button_submit_text_container.setAttribute('hidden')
+    button_submit_text_container.setAttribute('hidden', 'true')
     const loading_status_container = button.querySelector('.loading-status-container')
     loading_status_container.removeAttribute('hidden')
 }
@@ -812,7 +812,7 @@ function set_button_ready(button){
     const button_submit_text_container = button.querySelector('.submit-btn-text')
     button_submit_text_container.removeAttribute('hidden')
     const loading_status_container = button.querySelector('.loading-status-container')
-    loading_status_container.setAttribute('hidden')
+    loading_status_container.setAttribute('hidden', 'true')
 }
 
 
