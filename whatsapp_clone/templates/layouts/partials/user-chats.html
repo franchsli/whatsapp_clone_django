@@ -41,7 +41,7 @@
           {% csrf_token %}
           {{ contact_form | crispy }}
           <button id="contact-submit-btn" class="btn themed-button float-end" type="submit">
-            <span id="contact-submit-btn-text">Create contact</span>
+            <span class="submit-btn-text">Create contact</span>
             <div class="loading-status-container" hidden>
               <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
               <span role="status">Loading...</span>
@@ -71,7 +71,7 @@
           {% csrf_token %}
           {{ status_form|crispy }}
           <button id="status-submit-btn" class="btn themed-button">
-            <span id="status-submit-btn-text">Create status</span>
+            <span class="submit-btn-text">Create status</span>
             <div class="loading-status-container" hidden>
               <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
               <span role="status">Loading...</span>
