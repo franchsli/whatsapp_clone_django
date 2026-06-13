@@ -316,6 +316,8 @@ class App {
         this.error_audio = new Audio('static/Audio/app/error_sound.mp3')
         this.status_notification_audio = new Audio('static/Audio/app/new_status.mp3')
         this.new_message = false
+        this.timeout_id = null
+        this.timeout_length = 5000
         this.debug_logs = 'relevant'
         this.debugging_mode = true
         
@@ -336,12 +338,18 @@ class App {
             else{
                 if (chat_form_validation.intention === 'create_chat') {
                     tools.create_chat_via_consumer(this.chat_form, this.chat_websocket.client_websocket)
+                    this.timeout_id = setTimeout (() => {
+                        tools.notify_form_submission_timeout(this.chat_submit_button, this.error_audio)
+                    }, this.timeout_length)
                 }
                 else {
                     const group_name_container = this.chat_form.querySelector('input[type="text"]')
                     const group_name = group_name_container.value.trim()
                     tools.create_group_via_consumer(this.chat_form, 
                         this.chat_websocket.client_websocket, group_name)
+                    this.timeout_id = setTimeout (() => {
+                        tools.notify_form_submission_timeout(this.chat_submit_button, this.error_audio)
+                    }, this.timeout_length)
                     
                 }
             }
@@ -353,6 +361,9 @@ class App {
             const contact_form_validation = await tools.validate_contact_form(this.contact_form)
             if (contact_form_validation.is_valid) {
                 tools.create_contact_via_consumer(this.contact_form, this.chat_websocket.client_websocket)
+                this.timeout_id = setTimeout (() => {
+                    tools.notify_form_submission_timeout(this.contact_submit_button, this.error_audio)
+                }, this.timeout_length)
             }
             else {
                 const validation_message_container = document.getElementById('contact-validation-message')
@@ -379,6 +390,9 @@ class App {
                     image !== null ? image.src : null,
                     color_field.value
                 )
+                this.timeout_id = setTimeout (() => {
+                    tools.notify_form_submission_timeout(this.status_submit_button, this.error_audio)
+                }, this.timeout_length)
             } 
             else {
                 const validation_message_container = document.getElementById('status-validation-message')
