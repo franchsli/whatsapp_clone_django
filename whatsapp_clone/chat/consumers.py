@@ -82,6 +82,7 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
                 content["contact_phone_number"]
             )
             await self.create_chat([self.user_instance, contact])
+            await self.send_chat_creation(content["contact_name"])
 
         elif content_type == "create_group":
             await self.create_group(
@@ -89,6 +90,7 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
                 content["contacts_phone_numbers"],
                 content["group_name"],
             )
+            await self.send_group_creation(content["group_name"])
 
         elif content_type == "create_contact":
             await database_sync_to_async(create_contact)(
@@ -96,6 +98,7 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
                 content["contact_phone_number"],
                 self.user_instance,
             )
+            await self.send_contact_creation(content["contact_name"])
 
         elif content_type == "message_deletion":
             await self.send_message_deletion(content)
@@ -220,6 +223,30 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
                 "sender_contact_name": self.sender_contact_name,
                 "chat_id": websocket_message_data["chat_id"],
             },
+        )
+
+    async def send_chat_creation(self, contact_name: str):
+        await self.send_json(
+            content={
+                "type": "chat_creation",
+                "contact_name": contact_name,
+            }
+        )
+
+    async def send_contact_creation(self, contact_name: str):
+        await self.send_json(
+            content={
+                "type": "contact_creation",
+                "contact_name": contact_name,
+            }
+        )
+
+    async def send_group_creation(self, group_name: str):
+        await self.send_json(
+            content={
+                "type": "group_creation",
+                "group_name": group_name,
+            }
         )
 
     @database_sync_to_async

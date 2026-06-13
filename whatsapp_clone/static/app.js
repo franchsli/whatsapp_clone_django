@@ -35,6 +35,18 @@ class ChatWebSocket{
                 this.handle_message_edition()
             }
 
+            else if (data.type === 'chat_creation'){
+                this.handle_chat_creation(data.contact_name)
+            }
+
+            else if (data.type === 'contact_creation'){
+                this.handle_contact_creation(data.contact_name)
+            }
+
+            else if (data.type === 'group_creation') {
+                this.handle_group_creation(data.group_name)
+            }
+
         }
 
         this.client_websocket.onerror = (error) => {
@@ -136,6 +148,55 @@ class ChatWebSocket{
         }
     }
 
+    /**
+     * 
+     * @param {String} contact_name 
+     */
+    handle_chat_creation(contact_name){
+        if (this.app.timeout_id) {
+            clearTimeout(this.app.timeout_id)
+            this.app.timeout_id = null
+        }
+        tools.reset_chat_form(this.app.chat_form)
+        tools.triggerNotification('Server', 
+            `The chat with ${contact_name} was created successfully!! Update your chat list by clicking the "chats" button.`,
+            this.app.notification_audio)
+        tools.update_chat_list()
+    }
+
+    /**
+     * 
+     * @param {String} contact_name 
+     */
+    handle_contact_creation(contact_name){
+        if (this.app.timeout_id) {
+            clearTimeout(this.app.timeout_id)
+            this.app.timeout_id = null
+        }
+        tools.reset_contact_form(this.app.contact_form)
+        tools.triggerNotification('Server', 
+            `The contact ${contact_name} was created successfully! 
+            Update your contacts list by clicking the "contacts" button.`,
+            this.app.notification_audio)
+        tools.update_contact_list()
+    }
+
+    /**
+     * 
+     * @param {String} group_name 
+     */
+    handle_group_creation(group_name){
+        if (this.app.timeout_id) {
+            clearTimeout(this.app.timeout_id)
+            this.app.timeout_id = null
+        }
+        tools.reset_chat_form(this.app.chat_form)
+        tools.triggerNotification('Server', 
+            `The group ${group_name} was created successfully!! Update your chat list by clicking the "chats" button.`,
+            this.app.notification_audio)
+        tools.update_chat_list()
+    }
+
 }
 
 class StatusWebSocket {
@@ -174,18 +235,15 @@ class StatusWebSocket {
                 // used the form, so clean it and display a success notification
                 else {
                     debugger
-                    this.app.status_form.reset()
-                    // if the image preview exists, delete it.
-                    const image_container = this.app.status_image_preview_container
-                    if (image_container) {
-                        image_container.remove()
-                        this.app.status_image_preview_container = null
+                    if (this.app.timeout_id) {
+                        clearTimeout(this.app.timeout_id)
+                        this.app.timeout_id = null
                     }
-                    const validation_message = document.getElementById('status-validation-message')
-                    validation_message.innerText = ''
-                    const color_input = document.getElementById('id_color')
-                    if (color_input.jscolor) {
-                        color_input.jscolor.fromString('#000000');
+                    const image_container = this.app.status_image_preview_container
+                    tools.reset_status_form(this.app.status_form, image_container)
+                    // if the image preview exists in memory, delete it.
+                    if (image_container) {
+                        this.app.status_image_preview_container = null
                     }
                     //notify the user
                     tools.triggerNotification('Server', 'Status uploaded successfully!',
@@ -257,13 +315,15 @@ class App {
                                                     parent_app_class: this})
         this.chats_and_more = document.getElementById("chats-and-more")
         this.chat_form = document.getElementById("chat-creation-form")
+        this.chat_submit_button = document.getElementById('chat-submit-btn')
         this.chat_modal = document.getElementById('NewChat')
         this.chat_display = document.getElementById('chat-display')
         this.contact_form = document.getElementById("contact-creation-form")
+        this.contact_submit_button = document.getElementById('contact-submit-btn')
         this.contact_modal = document.getElementById('NewContact')
         this.status_form = document.getElementById('status_form')
         this.status_modal = document.getElementById('CreateStatusModal')
-        this.status_submit_button = document.getElementById('status-submit')
+        this.status_submit_button = document.getElementById('status-submit-btn')
         this.status_image_preview_container = null
         this.status_image_input = document.getElementById('id_image')
         this.notification_audio = new Audio('static/Audio/app/notification.mp3')
@@ -272,6 +332,8 @@ class App {
         this.error_audio = new Audio('static/Audio/app/error_sound.mp3')
         this.status_notification_audio = new Audio('static/Audio/app/new_status.mp3')
         this.new_message = false
+        this.timeout_id = null
+        this.timeout_length = 5000
         this.debug_logs = 'relevant'
         this.debugging_mode = true
         
@@ -279,31 +341,31 @@ class App {
 
     load_event_listeners(){
         this.chat_form.onsubmit = async (event) => {
-            event.preventDefault()
             debugger
+            event.preventDefault()
+            tools.set_button_loading(this.chat_submit_button)
             const chat_form_validation = await tools.validate_chat_form(this.chat_form)
             const validation_message_container = document.getElementById('chat-validation-message')
             if (!chat_form_validation.is_valid){
                 this.error_audio.play()
                 tools.showValidationErrorMessage(validation_message_container, chat_form_validation.message)
+                tools.set_button_ready(this.chat_submit_button)
             }
             else{
                 if (chat_form_validation.intention === 'create_chat') {
                     tools.create_chat_via_consumer(this.chat_form, this.chat_websocket.client_websocket)
-                    tools.triggerNotification('Server', 
-                        'The chat was created successfully!! Update your chat list by clicking the "chats" button.',
-                        this.notification_audio)
-                    tools.update_chat_list()
+                    this.timeout_id = setTimeout (() => {
+                        tools.notify_form_submission_timeout(this.chat_submit_button, this.error_audio)
+                    }, this.timeout_length)
                 }
                 else {
-                    const group_name_container = chat_form.querySelector('input[type="text"]')
+                    const group_name_container = this.chat_form.querySelector('input[type="text"]')
                     const group_name = group_name_container.value.trim()
                     tools.create_group_via_consumer(this.chat_form, 
                         this.chat_websocket.client_websocket, group_name)
-                    tools.triggerNotification('Server', 
-                        'The group was created successfully!! Update your chat list by clicking the "chats" button.',
-                        this.notification_audio)
-                    tools.update_chat_list()
+                    this.timeout_id = setTimeout (() => {
+                        tools.notify_form_submission_timeout(this.chat_submit_button, this.error_audio)
+                    }, this.timeout_length)
                     
                 }
             }
@@ -311,24 +373,26 @@ class App {
         this.contact_form.onsubmit = async (event) => {
             debugger
             event.preventDefault()
+            tools.set_button_loading(this.contact_submit_button)
             const contact_form_validation = await tools.validate_contact_form(this.contact_form)
             if (contact_form_validation.is_valid) {
                 tools.create_contact_via_consumer(this.contact_form, this.chat_websocket.client_websocket)
-                tools.triggerNotification('Server', 
-                    'The contact was created successfully! Update your contacts list by clicking the "contacts" button.',
-                    this.notification_audio)
-                tools.update_contact_list()
+                this.timeout_id = setTimeout (() => {
+                    tools.notify_form_submission_timeout(this.contact_submit_button, this.error_audio)
+                }, this.timeout_length)
             }
             else {
                 const validation_message_container = document.getElementById('contact-validation-message')
                 tools.showValidationErrorMessage(validation_message_container, contact_form_validation.message)
                 this.error_audio.play()
+                tools.set_button_ready(this.contact_submit_button)
             }
         }
 
         this.status_form.onsubmit = (event) => {
             debugger
             event.preventDefault();
+            tools.set_button_loading(this.status_submit_button)
             const status_form_validaton = tools.validate_status_form(this.status_form)
             if (status_form_validaton.is_valid) {
                 const status_input = document.getElementById('id_text')
@@ -342,11 +406,15 @@ class App {
                     image !== null ? image.src : null,
                     color_field.value
                 )
+                this.timeout_id = setTimeout (() => {
+                    tools.notify_form_submission_timeout(this.status_submit_button, this.error_audio)
+                }, this.timeout_length)
             } 
             else {
                 const validation_message_container = document.getElementById('status-validation-message')
                 tools.showValidationErrorMessage(validation_message_container, status_form_validaton.message)
                 this.error_audio.play()
+                tools.set_button_ready(this.status_submit_button)
             }
             
 
@@ -368,33 +436,16 @@ class App {
 
         // resets the chat form values and validation errors when the modal is closed.
         this.chat_modal.addEventListener('hidden.bs.modal', () => {
-            const form_title = document.getElementById('NewChatLabel')
-            const validation_message = document.getElementById('chat-validation-message')
-            validation_message.innerText = ''
-            form_title.innerText = 'Start new chat'
-            this.chat_form.reset()
+            tools.reset_chat_form(this.chat_form)
         })
         // resets the contact form values and validation errors when the modal is closed.
         this.contact_modal.addEventListener('hidden.bs.modal', () => {
-            const validation_message = document.getElementById('contact-validation-message')
-            validation_message.innerText = ''
-            this.contact_form.reset()
+            tools.reset_contact_form(this.contact_form)
         })
 
         // same for the status modal.
         this.status_modal.addEventListener('hidden.bs.modal', () => {
-            const color_input = document.getElementById('id_color')
-            const validation_message = document.getElementById('status-validation-message')
-            const image_container = this.status_image_preview_container
-            const image = image_container !== null ? image_container.firstElementChild : null
-            if (image){
-                image.remove()
-            }
-            validation_message.innerText = ''
-            if (color_input.jscolor) {
-                color_input.jscolor.fromString('#000000');
-            }
-            this.status_form.reset()
+            tools.reset_status_form(this.status_form, this.status_image_preview_container)
         })
 
         window.addEventListener('keydown', (event) => {

@@ -1,5 +1,5 @@
 <div id="chat-validation-message" class="validation-error"></div>
-<input  class="form-control" type="text" hidden="true" placeholder="Insert group name....">
+<input id="group-name" class="form-control" type="text" hidden="true" placeholder="Insert group name....">
 <ul id="new-chat-contact-select-inputs" class="scroll-section list-group list-group-flush overflow-y-scroll"
   style="max-height: 615px;">
   {% for contact in contacts %}
@@ -13,5 +13,11 @@
   <h1 class="text-white-50">No contacts <i class="bi bi-emoji-frown"></i></h1>
   {% endfor %}
 </ul>
-<button type="submit" class="btn themed-button float-end mt-3">Create chat</button>
+<button id="chat-submit-btn" type="submit" class="btn themed-button float-end mt-3">
+    <span class="submit-btn-text">Create chat</span>
+    <div class="loading-status-container" hidden>
+      <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+      <span role="status">Loading...</span>
+    </div>
+</button>
 <button type="button" class="btn btn-secondary float-end mt-3 me-3" data-bs-dismiss="modal">Close</button>

@@ -737,6 +737,94 @@ function validate_status_form(status_form){
     return {is_valid: is_valid, message: message}
 }
 
+/**
+ * Resets the chat form to its default values and state.
+ * @param {HTMLFormElement} chat_form 
+ */
+function reset_chat_form(chat_form){
+    const form_title = document.getElementById('NewChatLabel')
+    const validation_message = document.getElementById('chat-validation-message')
+    validation_message.innerText = ''
+    form_title.innerText = 'Start new chat'
+    const group_name_input = document.getElementById('group-name')
+    if (!group_name_input.hidden) {
+        group_name_input.hidden = true
+    }
+    chat_form.reset()
+    const chat_submit_button = document.getElementById('chat-submit-btn')
+    set_button_ready(chat_submit_button)
+}
+
+/**
+ * Resets the contact form to its default values and state.
+ * @param {HTMLFormElement} contact_form 
+ */
+function reset_contact_form(contact_form){
+    const validation_message = document.getElementById('contact-validation-message')
+    validation_message.innerText = ''
+    contact_form.reset()
+    const contact_submit_button = document.getElementById('contact-submit-btn')
+    set_button_ready(contact_submit_button)
+}
+
+/**
+ * Resets the status form to its default values and state.
+ * @param {HTMLFormElement} status_form
+ * @param {HTMLDivElement} image_preview_container The image preview container in the form.
+ */
+function reset_status_form(status_form, image_preview_container){
+    const color_input = document.getElementById('id_color')
+    const validation_message = document.getElementById('status-validation-message')
+    const image_container = image_preview_container
+    const image = image_container !== null ? image_container.firstElementChild : null
+    if (image){
+        image.remove()
+    }
+    validation_message.innerText = ''
+    if (color_input.jscolor) {
+        color_input.jscolor.fromString('#000000');
+    }
+    status_form.reset()
+    const status_submit_button = document.getElementById('status-submit-btn')
+    set_button_ready(status_submit_button)
+}
+
+/**
+ * Sets the state of the given button to a loading one
+ * preventing from further use.
+ * @param {HTMLButtonElement} button The submit button in the form. 
+ */
+function set_button_loading(button){
+    button.setAttribute('disabled', 'true')
+    const button_submit_text_container = button.querySelector('.submit-btn-text')
+    button_submit_text_container.setAttribute('hidden', 'true')
+    const loading_status_container = button.querySelector('.loading-status-container')
+    loading_status_container.removeAttribute('hidden')
+}
+
+/**
+ * Sets the state of the given button to a ready one
+ * allowing further use.
+ * @param {HTMLButtonElement} button The submit button in the form. 
+ */
+function set_button_ready(button){
+    button.removeAttribute('disabled')
+    const button_submit_text_container = button.querySelector('.submit-btn-text')
+    button_submit_text_container.removeAttribute('hidden')
+    const loading_status_container = button.querySelector('.loading-status-container')
+    loading_status_container.setAttribute('hidden', 'true')
+}
+
+/**
+ * Notifies the user a form timeout and prepares
+ * the submit button to try again.
+ * @param {HTMLButtonElement} submit_button 
+ * @param {HTMLAudioElement} notification_audio 
+ */
+function notify_form_submission_timeout(submit_button, notification_audio){
+    triggerNotification('Server', 'Something went wrong, please try again.', notification_audio)
+    set_button_ready(submit_button)
+}
 
 /**
  * Loads the reply preview HTML to the desired message
@@ -1035,8 +1123,10 @@ export {
     load_older_messages, remove_duplicates, change_input_color, 
     filter_by_value, space_text, split_word, trigger_tooltips, 
     create_chat_via_consumer, create_group_via_consumer, 
-    create_contact_via_consumer, validate_chat_form, 
-    validate_contact_form, validate_status_form, 
+    create_contact_via_consumer, validate_chat_form,
+    validate_contact_form, validate_status_form,
+    reset_chat_form, reset_contact_form, reset_status_form,
+    set_button_loading, set_button_ready, notify_form_submission_timeout,
     can_send_messages, send_to_websocket, 
     showValidationErrorMessage, load_global_doc_functions, 
     triggerNotification, close_chat
