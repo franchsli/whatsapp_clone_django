@@ -815,6 +815,16 @@ function set_button_ready(button){
     loading_status_container.setAttribute('hidden', 'true')
 }
 
+/**
+ * Notifies the user a form timeout and prepares
+ * the submit button to try again.
+ * @param {HTMLButtonElement} submit_button 
+ * @param {HTMLAudioElement} notification_audio 
+ */
+function notify_form_submission_timeout(submit_button, notification_audio){
+    triggerNotification('Server', 'Something went wrong, please try again.', notification_audio)
+    set_button_ready(submit_button)
+}
 
 /**
  * Loads the reply preview HTML to the desired message
@@ -1116,7 +1126,7 @@ export {
     create_contact_via_consumer, validate_chat_form,
     validate_contact_form, validate_status_form,
     reset_chat_form, reset_contact_form, reset_status_form,
-    set_button_loading, set_button_ready,
+    set_button_loading, set_button_ready, notify_form_submission_timeout,
     can_send_messages, send_to_websocket, 
     showValidationErrorMessage, load_global_doc_functions, 
     triggerNotification, close_chat
