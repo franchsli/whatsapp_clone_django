@@ -57,34 +57,39 @@
 <ul id="contact-statuses-list" class="scroll-section list-group list-group-flush overflow-y-scroll mt-3"
   style="max-height: 459px;">
   {% for contact, statuses in contacts_with_statuses.items %}
-  <li class="list-group-item p-3  d-flex flex-inline align-items-center contact contact-pic" role="button"
-    data-contact="{{contact.id}}">
-    {% comment "status profile photo" %}{% endcomment %}
-    <img
-      onclick="show_modal(document.querySelector(`#status-modal{{ contact.id }}`)); init_status_carousel(document.querySelector(`#contact{{contact.id}}status`));"
-      class="ms-1 rounded-circle img-fluid contact-status-caller" src="{% get_contact_photo contact.phone_number %}"
-      alt="Profile photo couldn't load." data-contact="{{contact.id}}" type="button" data-bs-toggle="modal"
-      data-bs-target="#status-modal{{ contact.id }}">
-    <div class="d-flex flex-column ms-3 w-100">
-      <div class="d-flex justify-content-between">
-        <span>{{ contact.name }}</span>
-        <button class="btn" hx-patch="{% url 'mute_contact_statuses' contact.id 'True' %}"
-        hx-target="#chats-and-more" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'><i
-          class="bi bi-volume-mute"></i></button>
+    {% if statuses|length >= 1 %}
+    <li class="list-group-item p-3  d-flex flex-inline align-items-center contact contact-pic" role="button"
+      data-contact="{{contact.id}}">
+      {% comment "status profile photo" %}{% endcomment %}
+      <img
+        onclick="show_modal(document.querySelector(`#status-modal{{ contact.id }}`)); init_status_carousel(document.querySelector(`#contact{{contact.id}}status`));"
+        class="ms-1 rounded-circle img-fluid contact-status-caller" src="{% get_contact_photo contact.phone_number %}"
+        alt="Profile photo couldn't load." data-contact="{{contact.id}}" type="button" data-bs-toggle="modal"
+        data-bs-target="#status-modal{{ contact.id }}">
+      <div class="d-flex flex-column ms-3 w-100">
+        <div class="d-flex justify-content-between">
+          <div class="d-flex flex-column">
+            <span>{{ contact.name }}</span>
+            <span>{{ statuses|latest_data:"upload_date"|timesince }} ago</span>
+          </div>
+          <button class="btn" hx-patch="{% url 'mute_contact_statuses' contact.id 'True' %}"
+          hx-target="#chats-and-more" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'><i
+            class="bi bi-volume-mute"></i></button>
+        </div>
       </div>
-    </div>
-  </li>
+    </li>
 
-  <!--Status Modal -->
-  <div class="modal fade contact-status-modal status-modal" id="status-modal{{ contact.id }}" data-bs-backdrop="static"
-    data-bs-keyboard="false" tabindex="-1" aria-labelledby="status-modal{{ contact.id }}Label" aria-hidden="true"
-    status>
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        {% include "layouts/partials/components/contact-statuses.html" %}
+    <!--Status Modal -->
+    <div class="modal fade contact-status-modal status-modal" id="status-modal{{ contact.id }}" data-bs-backdrop="static"
+      data-bs-keyboard="false" tabindex="-1" aria-labelledby="status-modal{{ contact.id }}Label" aria-hidden="true"
+      status>
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          {% include "layouts/partials/components/contact-statuses.html" %}
+        </div>
       </div>
     </div>
-  </div>
+    {% endif %}
   {% empty %}
   <li class="d-flex align-items-center justify-content-center"><span>No statuses.</span></li>
   {% endfor %}

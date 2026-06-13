@@ -5,32 +5,34 @@
 <ul id="muted-statuses-contact-list" class="scroll-section list-group list-group-flush animated-list"
     style="display: none;">
     {% for contact, statuses in muted_contacts_with_statuses.items %}
-    <li class="list-group-item p-3  d-flex flex-inline align-items-center contact contact-pic" role="button"
-        data-status={{status.id}}>
-        {% comment "status profile photo" %}{% endcomment %}
-        <img class="ms-1 rounded-circle img-fluid" src="{% get_contact_photo contact.phone_number %}" alt="Contact photo couldn't load."
-            type="button" data-bs-toggle="modal"
-            data-bs-target="#status-modal{{ contact.id }}"
-            onclick="init_status_carousel(document.querySelector(`#contact{{contact.id}}status`))">
-        <div class="d-flex flex-column ms-3 w-100">
-            <div class="d-flex justify-content-between">
-                <span>{{ contact.name }}</span>
-                <button class="btn"
-                            hx-patch="{% url 'mute_contact_statuses' contact.id 'False' %}" hx-target="#chats-and-more"
-                            hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'><i class="bi bi-volume-off"></i></button>
+        {% if statuses|length >= 1 %}
+        <li class="list-group-item p-3  d-flex flex-inline align-items-center contact contact-pic" role="button"
+            data-status={{status.id}}>
+            {% comment "status profile photo" %}{% endcomment %}
+            <img class="ms-1 rounded-circle img-fluid" src="{% get_contact_photo contact.phone_number %}" alt="Contact photo couldn't load."
+                type="button" data-bs-toggle="modal"
+                data-bs-target="#status-modal{{ contact.id }}"
+                onclick="init_status_carousel(document.querySelector(`#contact{{contact.id}}status`))">
+            <div class="d-flex flex-column ms-3 w-100">
+                <div class="d-flex justify-content-between">
+                    <span>{{ contact.name }}</span>
+                    <button class="btn"
+                                hx-patch="{% url 'mute_contact_statuses' contact.id 'False' %}" hx-target="#chats-and-more"
+                                hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'><i class="bi bi-volume-off"></i></button>
+                </div>
             </div>
-        </div>
-    </li>
+        </li>
 
-    <!--Status Modal -->
-    <div class="modal fade" id="status-modal{{ contact.id }}" data-bs-backdrop="static" data-bs-keyboard="false"
-        tabindex="-1" aria-labelledby="status-modal{{ contact.id }}Label" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                    {% include "layouts/partials/components/contact-statuses.html" %}
+        <!--Status Modal -->
+        <div class="modal fade" id="status-modal{{ contact.id }}" data-bs-backdrop="static" data-bs-keyboard="false"
+            tabindex="-1" aria-labelledby="status-modal{{ contact.id }}Label" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                        {% include "layouts/partials/components/contact-statuses.html" %}
+                </div>
             </div>
         </div>
-    </div>
+        {% endif %}
     {% empty %}
     <li class="d-flex align-items-center justify-content-center"><span>No statuses.</span></li>
     {% endfor %}
