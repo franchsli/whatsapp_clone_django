@@ -153,6 +153,10 @@ class ChatWebSocket{
      * @param {String} contact_name 
      */
     handle_chat_creation(contact_name){
+        if (this.app.timeout_id) {
+            clearTimeout(this.app.timeout_id)
+            this.app.timeout_id = null
+        }
         tools.reset_chat_form(this.app.chat_form)
         tools.triggerNotification('Server', 
             `The chat with ${contact_name} was created successfully!! Update your chat list by clicking the "chats" button.`,
@@ -165,6 +169,10 @@ class ChatWebSocket{
      * @param {String} contact_name 
      */
     handle_contact_creation(contact_name){
+        if (this.app.timeout_id) {
+            clearTimeout(this.app.timeout_id)
+            this.app.timeout_id = null
+        }
         tools.reset_contact_form(this.app.contact_form)
         tools.triggerNotification('Server', 
             `The contact ${contact_name} was created successfully! 
@@ -178,6 +186,10 @@ class ChatWebSocket{
      * @param {String} group_name 
      */
     handle_group_creation(group_name){
+        if (this.app.timeout_id) {
+            clearTimeout(this.app.timeout_id)
+            this.app.timeout_id = null
+        }
         tools.reset_chat_form(this.app.chat_form)
         tools.triggerNotification('Server', 
             `The group ${group_name} was created successfully!! Update your chat list by clicking the "chats" button.`,
@@ -223,6 +235,10 @@ class StatusWebSocket {
                 // used the form, so clean it and display a success notification
                 else {
                     debugger
+                    if (this.app.timeout_id) {
+                        clearTimeout(this.app.timeout_id)
+                        this.app.timeout_id = null
+                    }
                     const image_container = this.app.status_image_preview_container
                     tools.reset_status_form(this.app.status_form, image_container)
                     // if the image preview exists in memory, delete it.
