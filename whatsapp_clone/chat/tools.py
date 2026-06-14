@@ -140,19 +140,26 @@ def chat_is_unread_by_user(chat: Chat, user: User) -> bool:
 
 
 def get_contacts_statuses(user: User, muted: bool) -> dict:
-    contacts = user.contacts.filter(statuses_muted=muted)
-    # Query for statuses uploaded by the user or the user's contacts
-    contact_phone_numbers = contacts.values_list("phone_number", flat=True)
-    statuses_with_contacts = Status.objects.filter(
-        uploaded_by__phone_number__in=contact_phone_numbers
-    ).order_by("upload_date")
+    """Returns a dict containing the statuses from the user contacts.
+
+    Args:
+        user (User): The logged user instance.
+        muted (bool): Whether if the contact are status-muted or no.
+
+    Returns:
+        dict: A dict containing contacts (keys) and their statuses (values).
+    """
     contacts_with_statuses = {}
-    for status in statuses_with_contacts:
-        contact = contacts.filter(phone_number=status.uploaded_by.phone_number).first()
-        if contact:
-            contacts_with_statuses.setdefault(contact, []).append(status)
+    contacts = user.contacts.filter(statuses_muted=muted)
+
+    for contact in contacts:
+        contact_statuses = Status.objects.filter(
+            uploaded_by__phone_number=contact.phone_number
+        ).order_by("upload_date")
+        contacts_with_statuses[contact] = contact_statuses
 
     return contacts_with_statuses
+
 
 
 def object_photo(object: User | Chat) -> str:
