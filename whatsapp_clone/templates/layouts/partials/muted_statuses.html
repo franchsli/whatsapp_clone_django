@@ -15,7 +15,10 @@
                 onclick="init_status_carousel(document.querySelector(`#contact{{contact.id}}status`))">
             <div class="d-flex flex-column ms-3 w-100">
                 <div class="d-flex justify-content-between">
-                    <span>{{ contact.name }}</span>
+                    <div class="d-flex flex-column">
+                        <span>{{ contact.name }}</span>
+                        <span>{{ statuses|latest_data:"upload_date"|timesince }} ago</span>
+                    </div>
                     <button class="btn"
                                 hx-patch="{% url 'mute_contact_statuses' contact.id 'False' %}" hx-target="#chats-and-more"
                                 hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'><i class="bi bi-volume-off"></i></button>
