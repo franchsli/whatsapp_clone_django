@@ -218,7 +218,7 @@ class StatusWebSocket {
         this.client_websocket.onmessage = async (event) => {
             const status_data = JSON.parse(event.data)
             if (status_data.type === 'status_notification'){
-                this.handle_status_notification(status_data.user_id, status_data.phone_number)
+                await this.handle_status_notification(status_data.user_id, status_data.phone_number)
             }
             // if the status UI is already displayed and the user status modal is hidden, reload the view
             // to be able to see the brand new contact status....
@@ -285,7 +285,7 @@ class StatusWebSocket {
      * @param {String} sender_id
      * @param {String} sender_phone_number
      */
-    handle_status_notification(sender_id, sender_phone_number){
+    async handle_status_notification(sender_id, sender_phone_number){
         // if the user_id of the user who triggered the message is not the same
         // as the auth user, think about displaying a notification.
         if (sender_id !== user_id){
