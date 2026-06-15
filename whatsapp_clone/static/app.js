@@ -218,39 +218,7 @@ class StatusWebSocket {
         this.client_websocket.onmessage = async (event) => {
             const status_data = JSON.parse(event.data)
             if (status_data.type === 'status_notification'){
-                // if the user_id of the user who triggered the message is not the same
-                // as the auth user, think about displaying a notification.
-                if (status_data.user_id !== user_id){
-                    const status_sender_data = await tools.get(`/api/contacts/?phone_number=${status_data.sender_phone_number}&created_by=${user_id}`)
-                    debugger
-                    // if the contacts IS NOT muted from statuses
-                    // display a notification
-                    if (!status_sender_data[0].statuses_muted){
-                        tools.triggerNotification('Server', `${status_sender_data[0].name} uploaded a status!!!`, 
-                            this.app.status_notification_audio)
-        
-                    }
-                }
-                // otherwise, it means that the user
-                // used the form, so clean it and display a success notification
-                else {
-                    debugger
-                    if (this.app.timeout_id) {
-                        clearTimeout(this.app.timeout_id)
-                        this.app.timeout_id = null
-                    }
-                    const image_container = this.app.status_image_preview_container
-                    tools.reset_status_form(this.app.status_form, image_container)
-                    // if the image preview exists in memory, delete it.
-                    if (image_container) {
-                        this.app.status_image_preview_container = null
-                    }
-                    //notify the user
-                    tools.triggerNotification('Server', 'Status uploaded successfully!',
-                        this.app.notification_audio
-                    )
-                }
-        
+                await this.handle_status_notification(status_data.user_id, status_data.sender_phone_number)
             }
             // if the status UI is already displayed and the user status modal is hidden, reload the view
             // to be able to see the brand new contact status....
@@ -296,6 +264,54 @@ class StatusWebSocket {
             'image': image_src,
             'color': color,
         })
+    }
+
+    /**
+     * 
+     * @param {Object} status_sender_data The data
+     * of the one who uploaded the status.
+     */
+    display_status_notification(status_sender_data){
+        // if the contacts IS NOT muted from statuses
+        // display a notification
+        if (!status_sender_data[0].statuses_muted){
+            tools.triggerNotification('Server', `${status_sender_data[0].name} uploaded a status!!!`, 
+                this.app.status_notification_audio)
+        }
+    }
+
+    /**
+     * 
+     * @param {String} sender_id
+     * @param {String} sender_phone_number
+     */
+    async handle_status_notification(sender_id, sender_phone_number){
+        // if the user_id of the user who triggered the message is not the same
+        // as the auth user, think about displaying a notification.
+        if (sender_id !== user_id){
+            const status_sender_data = await tools.get(`/api/contacts/?phone_number=${sender_phone_number}&created_by=${user_id}`)
+            debugger
+            this.display_status_notification(status_sender_data)
+        }
+        // otherwise, it means that the user
+        // used the form, so clean it and display a success notification
+        else {
+            debugger
+            if (this.app.timeout_id) {
+                clearTimeout(this.app.timeout_id)
+                this.app.timeout_id = null
+            }
+            const image_container = this.app.status_image_preview_container
+            tools.reset_status_form(this.app.status_form, image_container)
+            // if the image preview exists in memory, delete it.
+            if (image_container) {
+                this.app.status_image_preview_container = null
+            }
+            //notify the user
+            tools.triggerNotification('Server', 'Status uploaded successfully!',
+                this.app.notification_audio
+            )
+        }   
     }
 
 }
