@@ -218,7 +218,7 @@ class StatusWebSocket {
         this.client_websocket.onmessage = async (event) => {
             const status_data = JSON.parse(event.data)
             if (status_data.type === 'status_notification'){
-                await this.handle_status_notification(status_data.user_id, status_data.phone_number)
+                await this.handle_status_notification(status_data.user_id, status_data.sender_phone_number)
             }
             // if the status UI is already displayed and the user status modal is hidden, reload the view
             // to be able to see the brand new contact status....
