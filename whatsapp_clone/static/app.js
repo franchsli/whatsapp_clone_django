@@ -223,13 +223,7 @@ class StatusWebSocket {
                 if (status_data.user_id !== user_id){
                     const status_sender_data = await tools.get(`/api/contacts/?phone_number=${status_data.sender_phone_number}&created_by=${user_id}`)
                     debugger
-                    // if the contacts IS NOT muted from statuses
-                    // display a notification
-                    if (!status_sender_data[0].statuses_muted){
-                        tools.triggerNotification('Server', `${status_sender_data[0].name} uploaded a status!!!`, 
-                            this.app.status_notification_audio)
-        
-                    }
+                    this.display_status_notification(status_sender_data)
                 }
                 // otherwise, it means that the user
                 // used the form, so clean it and display a success notification
@@ -296,6 +290,20 @@ class StatusWebSocket {
             'image': image_src,
             'color': color,
         })
+    }
+
+    /**
+     * 
+     * @param {Object} status_sender_data The data
+     * of the one who uploaded the status.
+     */
+    display_status_notification(status_sender_data){
+        // if the contacts IS NOT muted from statuses
+        // display a notification
+        if (!status_sender_data[0].statuses_muted){
+            tools.triggerNotification('Server', `${status_sender_data[0].name} uploaded a status!!!`, 
+                this.app.status_notification_audio)
+        }
     }
 
 }
