@@ -106,6 +106,9 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
         elif content_type == "message_edition":
             await self.send_message_edition(content)
 
+        elif content_type == "chat_opening":
+            await self.send_chat_opening(content)
+
     async def chat_message(self, event):
         await self.send_json(
             content={
@@ -246,6 +249,15 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
             content={
                 "type": "group_creation",
                 "group_name": group_name,
+            }
+        )
+
+    async def send_chat_opening(self, content: dict):
+        await self.send_json(
+            content={
+                "type": "chat_opening",
+                "chat_opener_id": content["chat_opener_id"],
+                "chat_id": content["chat_id"],
             }
         )
 
