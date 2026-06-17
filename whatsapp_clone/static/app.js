@@ -493,6 +493,19 @@ window.summon_chat = function(chat, chat_websocket){
 
 }
 
+/**
+ * Notifies to the websocket that the user is opening a chat.
+ * @param {HTMLElement} chat 
+ * @param {WebSocket} chat_websocket 
+ */
+window.notifyChatOpening = function(chat, chat_websocket){
+    tools.send_to_websocket(chat_websocket, {
+        'type': 'chat_opening',
+        'chat_opener_id': user_id,
+        'chat_id': chat.id
+    })
+}
+
 
 tools.load_global_doc_functions()
 
