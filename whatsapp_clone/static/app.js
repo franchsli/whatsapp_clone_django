@@ -39,6 +39,10 @@ class ChatWebSocket{
                 this.handle_chat_creation(data.contact_name)
             }
 
+            else if (data.type === 'chat_opening'){
+                this.handle_chat_opening(data.chat_opener_id, data.chat_id)
+            }
+
             else if (data.type === 'contact_creation'){
                 this.handle_contact_creation(data.contact_name)
             }
@@ -195,6 +199,17 @@ class ChatWebSocket{
             `The group ${group_name} was created successfully!! Update your chat list by clicking the "chats" button.`,
             this.app.notification_audio)
         tools.update_chat_list()
+    }
+
+    /**
+     * 
+     * @param {String} chat_opener_id 
+     * @param {String} chat_id 
+     */
+    handle_chat_opening(chat_opener_id, chat_id){
+        if (chat_opener_id !== user_id && document.getElementById(chat_id)) {
+            tools.update_chat_list()
+        }
     }
 
 }
