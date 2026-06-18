@@ -253,13 +253,17 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
         )
 
     async def send_chat_opening(self, content: dict):
-        await self.send_json(
-            content={
-                "type": "chat_opening",
-                "chat_opener_id": content["chat_opener_id"],
-                "chat_id": content["chat_id"],
-            }
-        )
+        for message_receiver_phone in content[
+            "chat_members_phones"
+        ].split(","):
+            await self.channel_layer.group_send(
+                f"user_group_{message_receiver_phone}",
+                {
+                    "type": "chat_opening",
+                    "chat_opener_id": content["chat_opener_id"],
+                    "chat_id": content["chat_id"],
+                }
+            )
 
     @database_sync_to_async
     def create_message(
