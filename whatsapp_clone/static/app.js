@@ -514,10 +514,12 @@ window.summon_chat = function(chat, chat_websocket){
  * @param {WebSocket} chat_websocket 
  */
 window.notifyChatOpening = function(chat, chat_websocket){
+    debugger
     tools.send_to_websocket(chat_websocket, {
         'type': 'chat_opening',
         'chat_opener_id': user_id,
-        'chat_id': chat.id
+        'chat_id': chat.id,
+        'chat_members_phones': sessionStorage.getItem('chat_members_phones'),
     })
 }
 
