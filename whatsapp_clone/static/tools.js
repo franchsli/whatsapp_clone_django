@@ -890,7 +890,7 @@ function is_archive_form_valid(archive_form){
     let message
     if (!checked(archive_form)) {
         is_valid = false
-        message = 'INVALID, PLEASE SELECT ONE CHAT AT LEAST'
+        message = 'INVALID, PLEASE SELECT AT LEAST ONE CHAT'
     }
     return {is_valid: is_valid, message: message}
 }
