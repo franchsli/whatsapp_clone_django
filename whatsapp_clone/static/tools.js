@@ -896,10 +896,11 @@ function is_archive_form_valid(archive_form){
 }
 
 /**
- * Validates the form for archiving chats.
+ * Handles the submission of the archive form
+ * and checks it's valid before proceeding with the operations.
  * @param {HTMLFormElement} form 
  */
-async function validate_archive_form(form){
+async function handleArchiveFormSubmission(form){
     const archive_form_validation = is_archive_form_valid(form)
     if(archive_form_validation.is_valid){
         for (let index = 0; index < form.elements.length; index++) {
@@ -1102,8 +1103,8 @@ function load_global_doc_functions(){
         reply_to_message(message_id, from_request_user, request_user_id)
     }
 
-    window.validate_archive_form = function(form){
-        validate_archive_form(form)
+    window.handleArchiveFormSubmission = function(form){
+        handleArchiveFormSubmission(form)
     }
 
 }

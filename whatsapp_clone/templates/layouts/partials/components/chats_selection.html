@@ -18,7 +18,7 @@
       <h1 class="text-white-50">No chats <i class="bi bi-emoji-frown"></i></h1>
     {% endfor %}
     {% endwith %}
-    <button type="button" class="btn themed-button float-end mt-3" onclick="validate_archive_form(this.parentElement.parentElement);"
+    <button type="button" class="btn themed-button float-end mt-3" onclick="handleArchiveFormSubmission(this.parentElement.parentElement);"
     >Archive chats</button>
     <button type="button" class="btn btn-secondary float-end mt-3 me-3" hx-get="{% url 'chats' False %}" hx-swap="outerHTML">Cancel</button>
   </ul>
