@@ -713,19 +713,5 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     })
-    
 
 })
-
-// status_websocket.send(JSON.stringify({
-//     'type': 'CREATE',
-//     'user_id': 'THE ID OF THE USER WHO TRIGGERED THE ACTION',
-//     'text': 'SOME TEXT HERE',
-//     'image': 'IMAGE ENCODED DATA (GET IT FROM THE FORM)',
-// }))
-
-// status_websocket.send(JSON.stringify({
-//     'type':'DELETE',
-//     'user_id': 'THE ID OF THE USER WHO TRIGGERED THE ACTION',
-//     'status_id': 'status_id given from dataset'
-// }))
