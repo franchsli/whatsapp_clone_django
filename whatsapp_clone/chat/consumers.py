@@ -150,6 +150,15 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
             }
         )
 
+    async def chat_opening(self, event):
+        await self.send_json(
+            content={
+                "type": "chat_opening",
+                "chat_opener_id": event["chat_opener_id"],
+                "chat_id": event["chat_id"],
+            }
+        )
+
     async def send_message_notifications(self, websocket_message_data: dict):
         for message_receiver_phone in websocket_message_data[
             "chat_members_phones"
@@ -253,16 +262,14 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
         )
 
     async def send_chat_opening(self, content: dict):
-        for message_receiver_phone in content[
-            "chat_members_phones"
-        ].split(","):
+        for message_receiver_phone in content["chat_members_phones"].split(","):
             await self.channel_layer.group_send(
                 f"user_group_{message_receiver_phone}",
                 {
                     "type": "chat_opening",
                     "chat_opener_id": content["chat_opener_id"],
                     "chat_id": content["chat_id"],
-                }
+                },
             )
 
     @database_sync_to_async
