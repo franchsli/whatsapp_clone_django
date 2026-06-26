@@ -39,6 +39,10 @@ class ChatWebSocket{
                 this.handle_chat_creation(data.contact_name)
             }
 
+            else if (data.type === 'chat_opening'){
+                this.handle_chat_opening(data.chat_opener_id, data.chat_id)
+            }
+
             else if (data.type === 'contact_creation'){
                 this.handle_contact_creation(data.contact_name)
             }
@@ -195,6 +199,17 @@ class ChatWebSocket{
             `The group ${group_name} was created successfully!! Update your chat list by clicking the "chats" button.`,
             this.app.notification_audio)
         tools.update_chat_list()
+    }
+
+    /**
+     * 
+     * @param {String} chat_opener_id 
+     * @param {String} chat_id 
+     */
+    handle_chat_opening(chat_opener_id, chat_id){
+        if (chat_opener_id !== user_id && document.getElementById(chat_id)) {
+            tools.update_chat_list()
+        }
     }
 
 }
@@ -491,6 +506,21 @@ window.summon_chat = function(chat, chat_websocket){
     // clears this key to avoid bugs
     sessionStorage.removeItem('reply_to')
 
+}
+
+/**
+ * Notifies to the websocket that the user is opening a chat.
+ * @param {HTMLElement} chat 
+ * @param {WebSocket} chat_websocket 
+ */
+window.notifyChatOpening = function(chat, chat_websocket){
+    debugger
+    tools.send_to_websocket(chat_websocket, {
+        'type': 'chat_opening',
+        'chat_opener_id': user_id,
+        'chat_id': chat.id,
+        'chat_members_phones': sessionStorage.getItem('chat_members_phones'),
+    })
 }
 
 

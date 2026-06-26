@@ -106,6 +106,9 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
         elif content_type == "message_edition":
             await self.send_message_edition(content)
 
+        elif content_type == "chat_opening":
+            await self.send_chat_opening(content)
+
     async def chat_message(self, event):
         await self.send_json(
             content={
@@ -144,6 +147,15 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
                 "message": event["message"],
                 "sender_contact_name": event["sender_contact_name"],
                 "chat_is_archived": event["chat_is_archived"],
+            }
+        )
+
+    async def chat_opening(self, event):
+        await self.send_json(
+            content={
+                "type": "chat_opening",
+                "chat_opener_id": event["chat_opener_id"],
+                "chat_id": event["chat_id"],
             }
         )
 
@@ -248,6 +260,17 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
                 "group_name": group_name,
             }
         )
+
+    async def send_chat_opening(self, content: dict):
+        for message_receiver_phone in content["chat_members_phones"].split(","):
+            await self.channel_layer.group_send(
+                f"user_group_{message_receiver_phone}",
+                {
+                    "type": "chat_opening",
+                    "chat_opener_id": content["chat_opener_id"],
+                    "chat_id": content["chat_id"],
+                },
+            )
 
     @database_sync_to_async
     def create_message(
