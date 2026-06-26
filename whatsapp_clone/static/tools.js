@@ -900,7 +900,8 @@ function is_archive_form_valid(archive_form){
  * @param {HTMLFormElement} form 
  */
 async function validate_archive_form(form){
-    if(checked(form)){
+    const archive_form_validation = is_archive_form_valid(form)
+    if(archive_form_validation.is_valid){
         for (let index = 0; index < form.elements.length; index++) {
             const chat = form.elements[index];
             if (chat.checked){
@@ -916,7 +917,7 @@ async function validate_archive_form(form){
     }
     else{
         const message_container = form.querySelector('.validation-error')
-        message_container.innerText = 'INVALID, PLEASE SELECT ONE CHAT AT LEAST'
+        message_container.innerText = archive_form_validation.message
     }
 }
 
