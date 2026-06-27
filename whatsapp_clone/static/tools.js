@@ -398,7 +398,7 @@ function exchangeElementsClass(elementA, elementB, classA, classB){
 function loadMoreMessages(messageList){
     if (messageList.scrollTop === 0){
         const oldestMessage = document.querySelector('.message')
-        sessionStorage.setItem('oldestMessageDate', oldest_message.dataset.date)
+        sessionStorage.setItem('oldestMessageDate', oldestMessage.dataset.date)
         loadOlderMessages()
     }
 }
@@ -552,11 +552,11 @@ function sendToWebsocket(websocket, data){
  * @param {WebSocket} websocket 
  */
 function createChatViaConsumer(form, websocket){
-    const checked_input = form.querySelector('input:checked')
+    const checkedInput = form.querySelector('input:checked')
     sendToWebsocket(websocket, {
         'type': 'create_chat',
-        'contact_name': checked_input.dataset.contactName,
-        'contact_phone_number': checked_input.id
+        'contact_name': checkedInput.dataset.contactName,
+        'contact_phone_number': checkedInput.id
     })
 }
 
@@ -665,13 +665,13 @@ async function validateContactForm(contactForm){
     let isValid = true
     let message
     const inputs = contactForm.getElementsByTagName('input')
-    // gets the 'list' of Users who have the provided phone_number
+    // gets the 'list' of Users who have the provided phone number
     // in the form
     const users = await get(`/api/users/?phone_number=${inputs[2].value}`)
     // gets a list of Contacts created by the User
-    // with the provided phone_number
+    // with the provided phone number
     const contacts = await get(`/api/contacts/?phone_number=${inputs[2].value}&created_by=${userId}`)
-    // if no User created has the introduced phone_number
+    // if no User created has the introduced phone number
     // notify the user
     if (users.length === 0){
         isValid = false
