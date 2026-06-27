@@ -493,10 +493,10 @@ class App {
  * Tells the websocket to reconnect to the provided chat channel.
  * @param {HTMLElement} chat 
  */
-window.summonChat = function(chat, chatWebsocket){
+window.summonChat = function(chat, chatWebSocket){
     const chatMembersPhonesContainer = document.getElementById(chat.dataset.chatMembersPhonesDataId)
     const chatMembersPhones = JSON.parse(chatMembersPhonesContainer.firstChild.textContent)
-    tools.send_to_websocket(chatWebsocket, {
+    tools.send_to_websocket(chatWebSocket, {
         'type':'reconnect',
         'reconnect_to': chat.dataset.chat
     })
@@ -511,11 +511,11 @@ window.summonChat = function(chat, chatWebsocket){
 /**
  * Notifies to the websocket that the user is opening a chat.
  * @param {HTMLElement} chat 
- * @param {WebSocket} chatWebsocket 
+ * @param {WebSocket} chatWebSocket 
  */
-window.notifyChatOpening = function(chat, chatWebsocket){
+window.notifyChatOpening = function(chat, chatWebSocket){
     debugger
-    tools.sendToWebsocket(chatWebsocket, {
+    tools.sendToWebsocket(chatWebSocket, {
         'type': 'chat_opening',
         'chat_opener_id': userId,
         'chat_id': chat.id,
@@ -530,7 +530,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const main = new App()
     window.cleanupFunctions = new Map();
     main.loadEventListeners()
-    window.chatWebsocket = main.chatWebsocket.clientWebSocket
+    window.chatWebSocket = main.chatWebSocket.clientWebSocket
     // Callback function to execute when mutations are observed
     const chatMutationCallback = function(mutationsList, observer) {
         for (const mutation of mutationsList) {
@@ -566,7 +566,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         newMessageInput.addEventListener('keypress', (event) => {
                             if (event.key === 'Enter' && (newMessageInput.value !== '' || imageInput.value !== '')){
                                 let image = document.getElementById('imagePreview').firstElementChild
-                                main.chatWebsocket.sendMessage('message', newMessageInput.value, imageInput.value !== '' ? image.src : '', userId)
+                                main.chatWebSocket.sendMessage('message', newMessageInput.value, imageInput.value !== '' ? image.src : '', userId)
                                 
                                 newMessageInput.value = ''
                                 //deletes the selected image
@@ -580,7 +580,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         newMessageButton.onclick = () => {
                             if (newMessageInput.value !== '' || imageInput.value !== ''){
                                 let image = document.getElementById('imagePreview').firstElementChild    
-                                main.chatWebsocket.sendMessage('message', newMessageInput.value, imageInput.value !== '' ? image.src : '', userId)
+                                main.chatWebSocket.sendMessage('message', newMessageInput.value, imageInput.value !== '' ? image.src : '', userId)
                                 
                                 newMessageInput.value = ''
                                 //deletes the selected image
@@ -662,7 +662,7 @@ document.addEventListener('DOMContentLoaded', () => {
         else if(event.detail.pathInfo.requestPath.includes('edit_message') && event.detail.requestConfig.verb !== 'get'){
             // same logic as real-time message deletion
             // but this is due to a message edition
-            main.chatWebsocket.sendMessage('message_edition', '', '', userId)
+            main.chatWebSocket.sendMessage('message_edition', '', '', userId)
         }
         else if(event.detail.pathInfo.requestPath.includes('delete_message')){
             /**
@@ -672,7 +672,7 @@ document.addEventListener('DOMContentLoaded', () => {
              * and then decides whether or not to update the UI using
              * a HTMX.ajax request.
              */
-            main.chatWebsocket.sendMessage('message_deletion', '', '', userId)
+            main.chatWebSocket.sendMessage('message_deletion', '', '', userId)
         }
         else if (event.detail.pathInfo.requestPath === '/statuses/'){
             window.userStatusesCaller = document.querySelector('#user-status-caller')
