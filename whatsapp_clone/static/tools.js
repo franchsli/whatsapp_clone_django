@@ -10,26 +10,6 @@ async function get(url){
 }
 
 /**
- * Does a POST request to the specified URL and returns the response in  JSON format
- * if the response is succesful, logs an error otherwise.
- * @param {String} url The url to which the request will be made.
- * @param {Object} data The object containing all the data to be sent to the endpoint.
- * @param {String} token The csrf token.
- */
-async function post(url, data, token){
-    const response = await fetch(url, {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: {'Accept': 'application/json, text/plain',
-        'Content-Type': 'application/json;charset=UTF-8', 
-        'X-CSRFToken': token
-        }
-    })
-    const returned_data = response.json()
-    return returned_data
-}
-
-/**
  * Does a PUT request to the specified URL and returns the response in  JSON format
  * if the response is succesful, logs an error otherwise.
  * @param {String} url The url to which the request will be made.
@@ -409,20 +389,6 @@ function exchange_elements_class(element_a, element_b, class_a, class_b){
     element_a.classList.replace(class_a, class_b)
     element_b.classList.replace(class_b, class_a)
 
-}
-
-/**
- * Hides or displays a HTML element
- * @param {HTMLElement} element The element to be manipulated.
- * @param {String} display_type The desired display type for the element.
- */
-function switch_element_visibility(element, display_type='block'){
-    if(element.style.display !== 'none'){
-        element.style.display = 'none'
-    }
-    else{
-        element.style.display = display_type
-    }
 }
 
 /**
@@ -1115,13 +1081,13 @@ function close_chat(){
 }
 
 export {
-    get, post, modifyNotification,
+    get, modifyNotification,
     scroll_to_bottom, toggleReadMore, showDropdown, 
     run_element_animation, checked, not_empty, 
     toggle_element_inner_text, load_emojis, switch_emojis, 
     switch_chat_form_purpose, toggle_element_display, previewImage, 
     update_chat_list, update_contact_list, at_least_one_attr, 
-    exchange_elements_class, switch_element_visibility, load_more_messages, 
+    exchange_elements_class, load_more_messages, 
     load_older_messages, remove_duplicates, change_input_color, 
     filter_by_value, space_text, split_word, trigger_tooltips, 
     create_chat_via_consumer, create_group_via_consumer, 
