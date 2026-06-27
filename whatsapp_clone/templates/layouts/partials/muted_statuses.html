@@ -12,7 +12,7 @@
             <img class="ms-1 rounded-circle img-fluid" src="{% get_contact_photo contact.phone_number %}" alt="Contact photo couldn't load."
                 type="button" data-bs-toggle="modal"
                 data-bs-target="#status-modal{{ contact.id }}"
-                onclick="init_status_carousel(document.querySelector(`#contact{{contact.id}}status`))">
+                onclick="initStatusCarousel(document.querySelector(`#contact{{contact.id}}status`))">
             <div class="d-flex flex-column ms-3 w-100">
                 <div class="d-flex justify-content-between">
                     <div class="d-flex flex-column">

@@ -7,7 +7,7 @@
   {% with are_archived=chat|archived_by_user_filter:request.user %}
   {% get_chat_users_data chat 'phone_number' as chat_members_phones %}
   <div style="display: none;" id="chat-{{chat.id}}-members-phones">{{ chat_members_phones|json_script }}</div>
-  <li onclick="summon_chat(this, chat_websocket); notifyChatOpening(this, chat_websocket);" oncontextmenu="showDropdown(event, 'chat-dropdown{{chat.id}}')"
+  <li onclick="summonChat(this, chat_websocket); notifyChatOpening(this, chat_websocket);" oncontextmenu="showDropdown(event, 'chat-dropdown{{chat.id}}')"
    hx-get="{% url 'display_chat' chat.id %}" hx-target="#chat-display"  
    hx-swap="innerHTML transition:true" id="chat-{{chat.id}}" 
    class="list-group-item p-3 d-flex flex-inline align-items-center chat chat-pic" 
