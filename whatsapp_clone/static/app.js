@@ -177,7 +177,7 @@ class ChatWebSocket{
             clearTimeout(this.app.timeoutId)
             this.app.timeoutId = null
         }
-        tools.reset_contact_form(this.app.contactForm)
+        tools.resetContactForm(this.app.contactForm)
         tools.triggerNotification('Server', 
             `The contact ${contactName} was created successfully! 
             Update your contacts list by clicking the "contacts" button.`,
@@ -270,7 +270,7 @@ class StatusWebSocket {
      * @param {String} imageSrc 
      * @param {String} color 
      */
-    send_status(userId, userPhoneNumber, text, imageSrc, color){
+    sendStatus(userId, userPhoneNumber, text, imageSrc, color){
         tools.sendToWebsocket(this.clientWebSocket, {
             'type': 'CREATE',
             'user_id': userId,
@@ -405,7 +405,7 @@ class App {
             debugger
             event.preventDefault()
             tools.setButtonLoading(this.contactSubmitButton)
-            const contactFormValidation = await tools.validate_contact_form(this.contactForm)
+            const contactFormValidation = await tools.validateContactForm(this.contactForm)
             if (contactFormValidation.isValid) {
                 tools.createContactViaConsumer(this.contactForm, this.chatWebSocket.clientWebSocket)
                 this.timeoutId = setTimeout (() => {
@@ -424,7 +424,7 @@ class App {
             debugger
             event.preventDefault();
             tools.setButtonLoading(this.statusSubmitButton)
-            const statusFormValidaton = tools.validate_status_form(this.statusForm)
+            const statusFormValidaton = tools.validateStatusForm(this.statusForm)
             if (statusFormValidaton.isValid) {
                 const statusInput = document.getElementById('id_text')
                 const imageContainer = this.statusImagePreviewContainer
@@ -496,7 +496,7 @@ class App {
 window.summonChat = function(chat, chatWebSocket){
     const chatMembersPhonesContainer = document.getElementById(chat.dataset.chatMembersPhonesDataId)
     const chatMembersPhones = JSON.parse(chatMembersPhonesContainer.firstChild.textContent)
-    tools.send_to_websocket(chatWebSocket, {
+    tools.sendToWebsocket(chatWebSocket, {
         'type':'reconnect',
         'reconnect_to': chat.dataset.chat
     })
