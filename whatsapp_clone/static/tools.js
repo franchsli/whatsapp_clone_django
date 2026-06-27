@@ -25,14 +25,14 @@ async function patch(url, data, token){
         'X-CSRFToken': token
         }
     })
-    const returned_data = response.json()
-    return returned_data
+    const returnedData = response.json()
+    return returnedData
 }
 
 /**
  * Moves the scrollbar  at the bottom of the messages in chat.
  */
-function scroll_to_bottom(){
+function scrollToBottom(){
     const messages = document.getElementById('chat-messages')
     if (messages){
         messages.scroll(0, messages.scrollHeight - messages.clientHeight)
@@ -41,49 +41,49 @@ function scroll_to_bottom(){
 
 /**
  * Manipulates the notification toast in the HTML
- * @param {String} contact_name The name of the contact who sent the message.
+ * @param {String} contactName The name of the contact who sent the message.
  * @param {String} message The text of the message that was sent.
  */
-function modifyNotification(contact_name, message){
+function modifyNotification(contactName, message){
     const toastNotification = document.getElementById('liveToast')
-    let contact_name_display = toastNotification.querySelector('strong')
-    let message_display = toastNotification.querySelector('.toast-body')
-    contact_name_display.innerHTML = contact_name
-    message_display.innerHTML = message
+    let contactNameDisplay = toastNotification.querySelector('strong')
+    let messageDisplay = toastNotification.querySelector('.toast-body')
+    contactNameDisplay.innerHTML = contactName
+    messageDisplay.innerHTML = message
 
 }
 
 /**
  * Adds a button that show more or less of the specified text content.
- * @param {String} text_id The id of the HTML element that contains the text.
+ * @param {String} textId The id of the HTML element that contains the text.
  */
-function toggleReadMore(text_id) {
-    const content_html = document.getElementById(`text-${text_id}`)
-    if (content_html.clientHeight === 200){
-        const toggle_button = document.createElement('button')
-        toggle_button.innerText = 'Show more'
-        toggle_button.classList.add('btn' ,'btn-link')
-        toggle_button.style.color = "var(--bs-link-color)"
-        toggle_button.style.justifySelf = "end"
+function toggleReadMore(textId) {
+    const contentHtml = document.getElementById(`text-${textId}`)
+    if (contentHtml.clientHeight === 200){
+        const toggleButton = document.createElement('button')
+        toggleButton.innerText = 'Show more'
+        toggleButton.classList.add('btn' ,'btn-link')
+        toggleButton.style.color = "var(--bs-link-color)"
+        toggleButton.style.justifySelf = "end"
     
-        toggle_button.onclick = function(){
-            content_html.style.maxHeight = content_html.style.maxHeight === '200px' ? 'none' : '200px'
-            toggle_button.textContent = content_html.style.maxHeight === '200px' ? 'Show more' : 'Show less'
+        toggleButton.onclick = function(){
+            contentHtml.style.maxHeight = contentHtml.style.maxHeight === '200px' ? 'none' : '200px'
+            toggleButton.textContent = contentHtml.style.maxHeight === '200px' ? 'Show more' : 'Show less'
         }
-        content_html.insertAdjacentElement('afterend', toggle_button)
+        contentHtml.insertAdjacentElement('afterend', toggleButton)
     }
 }
 
 /**
  * Shows the dropdown  in the same place where it was called.
  * @param {MouseEvent} event The mouse event (right click).
- * @param {String} dropdown_id The id of the dropdown that was called.
+ * @param {String} dropdownId The id of the dropdown that was called.
  */
-function showDropdown(event, dropdown_id) {
+function showDropdown(event, dropdownId) {
     event.preventDefault();
 
     // Set the position of the dropdown
-    const dropdown = document.getElementById(dropdown_id);
+    const dropdown = document.getElementById(dropdownId);
     dropdown.style.position = 'fixed';
     dropdown.style.left = `${event.clientX}px`;
     dropdown.style.top = `${event.clientY}px`;
@@ -91,7 +91,7 @@ function showDropdown(event, dropdown_id) {
     // Display the dropdown
     dropdown.classList.toggle('show')
     // runs the dropdown animation
-    run_element_animation(dropdown)
+    runElementAnimation(dropdown)
     
 
     // Close the dropdown when clicking outside
@@ -106,20 +106,20 @@ function showDropdown(event, dropdown_id) {
  *  in a HTMLelement, if no class name is provided, 
  * the element animation will run.
  * @param {HTMLElement} element
- * @param {String} animation_class_name
+ * @param {String} animationClassName
  */
-function run_element_animation(element, animation_class_name=''){
+function runElementAnimation(element, animationClassName=''){
     try {
-        if (animation_class_name === ''){
+        if (animationClassName === ''){
             element.style.animationPlayState = 'running';
             element.addEventListener('animationend', () => {
                 element.style.animationPlayState = 'paused';
             })
         }
         else{
-            element.classList.add(animation_class_name)
+            element.classList.add(animationClassName)
             element.addEventListener('animationend', () => {
-                element.classList.remove(animation_class_name)
+                element.classList.remove(animationClassName)
             })
         }
 
@@ -131,16 +131,16 @@ function run_element_animation(element, animation_class_name=''){
 
 /**
  * Toggles the provided html element inner text between the provided texts.
- * @param {HTMLElement} HTML_element 
- * @param {String} text_a 
- * @param {String} text_b 
+ * @param {HTMLElement} HTMLElement 
+ * @param {String} textA 
+ * @param {String} textB 
  */
-function toggle_element_inner_text(HTML_element, text_a, text_b){
-    if (HTML_element.innerText === text_a){
-        HTML_element.innerText = text_b
+function toggleElementInnerText(HTMLElement, textA, textB){
+    if (HTMLElement.innerText === textA){
+        HTMLElement.innerText = textB
     }
     else{
-        HTML_element.innerText = text_a
+        HTMLElement.innerText = textA
     }
 
 }
@@ -152,8 +152,8 @@ function toggle_element_inner_text(HTML_element, text_a, text_b){
  * @returns {Boolean} Returns true if at least a checkbox in the form was checked, false otherwise.
  */
 function checked(form){
-    const checked_checkboxes = form.querySelectorAll('input:checked')
-    if (checked_checkboxes.length >= 1){
+    const checkedCheckboxes = form.querySelectorAll('input:checked')
+    if (checkedCheckboxes.length >= 1){
         return true;
     }
     else{
@@ -167,7 +167,7 @@ function checked(form){
  * @param {HTMLFormElement} form 
  * @returns {Boolean}
  */
-function not_empty(form){
+function notEmpty(form){
     for (let index = 0; index < form.elements.length; index++) {
         const element = form.elements[index];
         // exclude the color input by excluding the id itself
@@ -183,42 +183,42 @@ function not_empty(form){
  * @param {HTMLButtonElement} button 
  * @param {HTMLInputElement} input 
  */
-function display_button_inner_text(button, input){
-    const previous_value = input.value
-    input.value = `${previous_value}${button.innerText}`
+function displayButtonInnerText(button, input){
+    const previousValue = input.value
+    input.value = `${previousValue}${button.innerText}`
 }
 
 /**
  * loads the emojis in the array name provided in new buttons (HTML elements)
  * placed in the provided parent.
- * @param {String} emoji_list_name The name of the emoji category.
- * @param {HTMLElement} parent_element The container of the emojis.
+ * @param {String} emojiListName The name of the emoji category.
+ * @param {HTMLElement} parentElement The container of the emojis.
  */
-function load_emojis(emoji_list_name, parent_element){
+function loadEmojis(emojiListName, parentElement){
     const input = document.getElementById('new-message')
-    const emoji_category_header = document.createElement('span')
-    const access_key = '0ab43ec7529b0728fb908ef31e968f5df77d0b5d'
-    emoji_category_header.classList.add('p-3')
-    emoji_category_header.style.display = "block"
-    emoji_category_header.style.width = "100%"
-    emoji_category_header.innerText = emoji_list_name.split('-').join(' ')
-    parent_element.appendChild(emoji_category_header)
+    const emojiCategoryHeader = document.createElement('span')
+    const accessKey = '0ab43ec7529b0728fb908ef31e968f5df77d0b5d'
+    emojiCategoryHeader.classList.add('p-3')
+    emojiCategoryHeader.style.display = "block"
+    emojiCategoryHeader.style.width = "100%"
+    emojiCategoryHeader.innerText = emojiListName.split('-').join(' ')
+    parentElement.appendChild(emojiCategoryHeader)
 
-    fetch(`https://emoji-api.com/categories/${emoji_list_name}?access_key=${access_key}`)
+    fetch(`https://emoji-api.com/categories/${emojiListName}?access_key=${accessKey}`)
     .then( (response) => {
         return response.json()
     })
     .then( (emojis) => {
         for (let index = 0; index < emojis.length; index++) {
-            let new_button = document.createElement('button')
-            new_button.innerHTML = emojis[index].character
-            new_button.classList.add('btn', 'm-1', 'action')
-            new_button.style.fontSize = '30px'
-            new_button.onclick = (event) => {
+            let newButton = document.createElement('button')
+            newButton.innerHTML = emojis[index].character
+            newButton.classList.add('btn', 'm-1', 'action')
+            newButton.style.fontSize = '30px'
+            newButton.onclick = (event) => {
                 event.stopPropagation();
-                display_button_inner_text(new_button, input)
+                displayButtonInnerText(newButton, input)
             }
-            parent_element.appendChild(new_button)
+            parentElement.appendChild(newButton)
         }
     })
     .catch((error) => {console.log(error.message)})
@@ -230,37 +230,37 @@ function load_emojis(emoji_list_name, parent_element){
  * @param {HTMLButtonElement} button The button with the dataset containing
  * the emoji category name.
  */
-function switch_emojis(button){
-    const previous_emoji_class = document.querySelector('.emoji-class-active')
-    const emoji_container = document.getElementById('emojis-container')
-    previous_emoji_class.classList.remove('emoji-class-active')
-    emoji_container.innerHTML = ''
+function switchEmojis(button){
+    const previousEmojiClass = document.querySelector('.emoji-class-active')
+    const emojiContainer = document.getElementById('emojis-container')
+    previousEmojiClass.classList.remove('emoji-class-active')
+    emojiContainer.innerHTML = ''
     button.classList.add('emoji-class-active')
-    load_emojis(button.dataset.emojiPack, emoji_container)
+    loadEmojis(button.dataset.emojiPack, emojiContainer)
 }
 
 /**
  * Switches the purpose of the chat form
  * from creating chats to groups or vice versa
  * @param {HTMLFormElement} form 
- * @param {HTMLElement} form_header The title of the form 
+ * @param {HTMLElement} formHeader The title of the form 
  */
-function switch_chat_form_purpose(form, form_header){
-    const checked_checkboxes = form.querySelectorAll('input:checked')
-    const chat_name = form.querySelector('input[type="text"]')
-    if(checked_checkboxes.length <= 1){
+function switchChatFormPurpose(form, formHeader){
+    const checkedCheckboxes = form.querySelectorAll('input:checked')
+    const chatName = form.querySelector('input[type="text"]')
+    if(checkedCheckboxes.length <= 1){
         form.dataset.creating = 'chat'
-        chat_name.hidden = true
-        chat_name.value = ''
-        if (form_header){
-            form_header.innerText = 'Start new chat'
+        chatName.hidden = true
+        chatName.value = ''
+        if (formHeader){
+            formHeader.innerText = 'Start new chat'
         }
     }
     else{
         form.dataset.creating = 'group'
-        chat_name.hidden = false
-        if (form_header){
-            form_header.innerText = 'Start new group'
+        chatName.hidden = false
+        if (formHeader){
+            formHeader.innerText = 'Start new group'
         }
     }
 }
@@ -268,34 +268,34 @@ function switch_chat_form_purpose(form, form_header){
 /**
  * If the given element is already displayed,
  * hides it and vice versa.
- * @param {HTMLElement} HTML_element 
+ * @param {HTMLElement} HTMLElement 
  */
-function toggle_element_display(HTML_element){
-    if(HTML_element.style.display === 'none'){
-        HTML_element.style.display = 'flex'
+function toggleElementDisplay(HTMLElement){
+    if(HTMLElement.style.display === 'none'){
+        HTMLElement.style.display = 'flex'
     }
     else {
-        HTML_element.style.display = 'none'
+        HTMLElement.style.display = 'none'
     }
-    run_element_animation(HTML_element)
+    runElementAnimation(HTMLElement)
 }
 
 /**
  * Displays a preview of the image provided image input element in the provided HTML div element..
- * @param {HTMLInputElement} image_input The element that contains the image.
- * @param {HTMLDivElement} image_preview The element that will contain the image preview.
+ * @param {HTMLInputElement} imageInput The element that contains the image.
+ * @param {HTMLDivElement} imagePreview The element that will contain the image preview.
  */
-function previewImage(image_input=null, image_preview=null) {
+function previewImage(imageInput=null, imagePreview=null) {
     // if no image preview element have been provided
     // creates default preview HTML element
-    if (image_preview === null){
-        image_preview = document.createElement('div')
-        image_preview.id = 'status-imagePreview'
-        image_input.insertAdjacentElement('afterend', image_preview)
+    if (imagePreview === null){
+        imagePreview = document.createElement('div')
+        imagePreview.id = 'status-imagePreview'
+        imageInput.insertAdjacentElement('afterend', imagePreview)
 
     }
 
-    let file = image_input.files[0];
+    let file = imageInput.files[0];
 
     if (file) {
         let reader = new FileReader();
@@ -310,11 +310,11 @@ function previewImage(image_input=null, image_preview=null) {
             preview.alt = 'Image Preview';
 
             // Clear previous previews
-            while (image_preview.firstChild) {
-                image_preview.removeChild(image_preview.firstChild);
+            while (imagePreview.firstChild) {
+                imagePreview.removeChild(imagePreview.firstChild);
             }
 
-            image_preview.appendChild(preview);
+            imagePreview.appendChild(preview);
         };
         reader.readAsDataURL(file);
     }
@@ -323,22 +323,22 @@ function previewImage(image_input=null, image_preview=null) {
 /**
  * Updates the chat list (if displayed)
  */
-function update_chat_list(){
+function updateChatList(){
     if (document.getElementById('chat-list') !== null){
         // if the archived chats list is present, reload it
         if (document.getElementById('archived-chats') !== null) {
             htmx.ajax('GET', '/chats/True', {target:'#chats-and-more', swap:'innerHTML'})
-            scroll_to_bottom()
+            scrollToBottom()
         // else, reload the non archived chats list
         } else {
             htmx.ajax('GET', '/chats/False', {target:'#chat-list', swap:'outerHTML'})
-            scroll_to_bottom()
+            scrollToBottom()
         }
         
     }
 }
 
-function update_contact_list(){
+function updateContactList(){
     if (document.getElementById('contact-list') !== null) {
         htmx.ajax('GET', '/contacts/', {target: '#contact-list', swap:'innerHTML'})
     }
@@ -347,9 +347,9 @@ function update_contact_list(){
 /**
  * Uses HTMX and loads older messages in the displayed chat.
  */
-function load_older_messages(){
+function loadOlderMessages(){
     if (document.getElementById('chat-messages') !== null){
-        htmx.ajax('GET', `/previous_messages/${sessionStorage.getItem('chat_id')}/${sessionStorage.getItem('oldest_message_date')}/`,
+        htmx.ajax('GET', `/previous_messages/${sessionStorage.getItem('chatId')}/${sessionStorage.getItem('oldestMessageDate')}/`,
          {target:'#chat-messages', swap:'afterbegin'})
         
     }
@@ -357,18 +357,18 @@ function load_older_messages(){
 
 /**
  * Returns if at least one HTML
- * element in html_elements have the given
+ * element in htmlElements have the given
  * attribute with the desired value
- * @param {Array} html_elements 
+ * @param {Array} htmlElements 
  * @param {String} attribute 
  * @param {String} value
  * @return {Boolean} True if at least
  * one html element meet the requirements.
  */
-function at_least_one_attr(html_elements, attribute, value){
+function atLeastOneAttr(htmlElements, attribute, value){
     let found = false
-    for (let index = 0; index < html_elements.length; index++) {
-        const element = html_elements[index];
+    for (let index = 0; index < htmlElements.length; index++) {
+        const element = htmlElements[index];
         if (element.getAttribute(attribute) === value){
             found = true
             break
@@ -380,36 +380,36 @@ function at_least_one_attr(html_elements, attribute, value){
 /**
  * Removes the given class from their respective element
  * and adds the class b to element a and so.
- * @param {HTMLElement} element_a The element that has the class A.
- * @param {HTMLElement} element_b The element that has the class B.
- * @param {String} class_a The class name of the element A.
- * @param {String} class_b The class name of the element B.
+ * @param {HTMLElement} elementA The element that has the class A.
+ * @param {HTMLElement} elementB The element that has the class B.
+ * @param {String} classA The class name of the element A.
+ * @param {String} classB The class name of the element B.
  */
-function exchange_elements_class(element_a, element_b, class_a, class_b){
-    element_a.classList.replace(class_a, class_b)
-    element_b.classList.replace(class_b, class_a)
+function exchangeElementsClass(elementA, elementB, classA, classB){
+    elementA.classList.replace(classA, classB)
+    elementB.classList.replace(classB, classA)
 
 }
 
 /**
  * Decides whether or not to load more messages in the given message list
- * @param {HTMLElement} message_list 
+ * @param {HTMLElement} messageList 
  */
-function load_more_messages(message_list){
-    if (message_list.scrollTop === 0){
-        const oldest_message = document.querySelector('.message')
-        sessionStorage.setItem('oldest_message_date', oldest_message.dataset.date)
-        load_older_messages()
+function loadMoreMessages(messageList){
+    if (messageList.scrollTop === 0){
+        const oldestMessage = document.querySelector('.message')
+        sessionStorage.setItem('oldestMessageDate', oldest_message.dataset.date)
+        loadOlderMessages()
     }
 }
 
 /**
  * Removes all the found HTML elements with the given class
  * name but the first one
- * @param {String} class_name 
+ * @param {String} className 
  */
-function remove_duplicates(class_name){
-    const duplicates = document.querySelectorAll(`.${class_name}`)
+function removeDuplicates(className){
+    const duplicates = document.querySelectorAll(`.${className}`)
     for (let index = 0; index < duplicates.length; index++) {
         if(index !== 0){
             const element = duplicates[index];
@@ -420,11 +420,11 @@ function remove_duplicates(class_name){
 
 /**
  * Changes the color (hex value) of the given input with the desired one.
- * @param {String} desired_color The new color (hex value) for the the input.
+ * @param {String} desiredColor The new color (hex value) for the the input.
  * @param {HTMLInputElement} input The input that will be altered.
  */
-function change_input_color(desired_color, input){
-    input.value = desired_color
+function changeInputColor(desiredColor, input){
+    input.value = desiredColor
 }
 
 /**
@@ -432,32 +432,32 @@ function change_input_color(desired_color, input){
  * that don't contain the given value.
  * @param {String} value Value to search for in the
  * list items.
- * @param {HTMLUListElement | HTMLOListElement} element_list
+ * @param {HTMLUListElement | HTMLOListElement} elementList
  */
-function filter_by_value(value, element_list){
-    let list_items = element_list.children
+function filterByValue(value, elementList){
+    let listItems = elementList.children
     // determines what will be filtered
     // either contacts, chats or settings
-    let filter_by = '.chat-name' 
-    if (list_items[0].id === "contact-list"){
-        list_items = list_items[0].children
-        filter_by = '.contact-name'
+    let filterBy = '.chat-name' 
+    if (listItems[0].id === "contact-list"){
+        listItems = listItems[0].children
+        filterBy = '.contact-name'
     }
     else{
-        filter_by = ''
+        filterBy = ''
     }
-    for (let index = 0; index < list_items.length; index++){
-        const element = list_items[index]
+    for (let index = 0; index < listItems.length; index++){
+        const element = listItems[index]
         if(element){
-            let element_text
-            if (filter_by !== ''){
-                element_text = element.querySelector(filter_by).textContent
+            let elementText
+            if (filterBy !== ''){
+                elementText = element.querySelector(filterBy).textContent
             }
             else {
-                element_text = element.textContent
+                elementText = element.textContent
             }
             // if it doesn't contain the value, make it invisible
-            if(!element_text.toLowerCase().includes(value.toLowerCase())){
+            if(!elementText.toLowerCase().includes(value.toLowerCase())){
                 element.classList.remove('d-flex')
                 element.style.display = "none"
             }
@@ -478,11 +478,11 @@ function filter_by_value(value, element_list){
  * @param {Number} length The number of characters each sub-word sould have.
  * @returns {Array} A list containing all the sub-words from word.
  */
-function split_word(word, length){
-    const original_len = word.length
+function splitWord(word, length){
+    const originaLen = word.length
     let words = []
     let counter = 0
-    while (original_len !== words.join('').length && counter < original_len){
+    while (originaLen !== words.join('').length && counter < originaLen){
         words.push(word.slice(counter, length + counter - 1))
         counter += length
     }
@@ -492,32 +492,32 @@ function split_word(word, length){
 
 /**
  * Adds spaces in every word inside a text if the word it's too long.
- * @param {String} text_id The id of the HTML element that contains the text.
+ * @param {String} textId The id of the HTML element that contains the text.
  * @returns {String} The spaced text.
  */
-function space_text(text_id){
-    const text_container = document.getElementById(`text-${text_id}`)
-    const container_text = text_container.textContent
-    const words = container_text.split(' ')
+function spaceText(textId){
+    const textContainer = document.getElementById(`text-${textId}`)
+    const containerText = textContainer.textContent
+    const words = containerText.split(' ')
     for (let index = 0; index < words.length; index++){
         const word = words[index];
         // If a word in the text has more than 33 chars
         if (word.length > 33){
             // split the word into different words
             // until each one have less than 33 chars
-            words[index] = split_word(word, 33).join('-')
+            words[index] = splitWord(word, 33).join('-')
         }
     }
     // returns a text with trailing spaces
     // in every word to display it properly
-    text_container.textContent = words.join(' ')
+    textContainer.textContent = words.join(' ')
 }
 
 
 /**
  * Activates all the tooltipis in the document.
  */
-function trigger_tooltips(){
+function triggerTooltips(){
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 }
@@ -526,7 +526,7 @@ function trigger_tooltips(){
  * Checks whether or not a WebSocket is ready to send and receive messages.
  * @param {WebSocket} websocket 
  */
-function can_send_messages(websocket){
+function canSendMessages(websocket){
     return websocket.readyState === websocket.OPEN
 }
 
@@ -535,8 +535,8 @@ function can_send_messages(websocket){
  * @param {WebSocket} websocket 
  * @param {Object} data 
  */
-function send_to_websocket(websocket, data){
-    if (can_send_messages(websocket)){
+function sendToWebsocket(websocket, data){
+    if (canSendMessages(websocket)){
         websocket.send(JSON.stringify(data))
     }
     else {
@@ -551,9 +551,9 @@ function send_to_websocket(websocket, data){
  * @param {HTMLFormElement} form 
  * @param {WebSocket} websocket 
  */
-function create_chat_via_consumer(form, websocket){
+function createChatViaConsumer(form, websocket){
     const checked_input = form.querySelector('input:checked')
-    send_to_websocket(websocket, {
+    sendToWebsocket(websocket, {
         'type': 'create_chat',
         'contact_name': checked_input.dataset.contactName,
         'contact_phone_number': checked_input.id
@@ -566,13 +566,13 @@ function create_chat_via_consumer(form, websocket){
  * @param {HTMLFormElement} form 
  * @param {WebSocket} websocket 
  */
-function create_group_via_consumer(form, websocket, group_name){
-    const checked_inputs = form.querySelectorAll('input:checked')
-    let phone_numbers = [...checked_inputs].map((input) => input.id)
-    send_to_websocket(websocket, {
+function createGroupViaConsumer(form, websocket, groupName){
+    const checkedInputs = form.querySelectorAll('input:checked')
+    let phoneNumbers = [...checkedInputs].map((input) => input.id)
+    sendToWebsocket(websocket, {
         'type': 'create_group',
-        'group_name': group_name,
-        'contacts_phone_numbers': phone_numbers
+        'group_name': groupName,
+        'contacts_phone_numbers': phoneNumbers
     })
 }
 
@@ -582,8 +582,8 @@ function create_group_via_consumer(form, websocket, group_name){
  * @param {HTMLFormElement} form 
  * @param {WebSocket} websocket 
  */
-function create_contact_via_consumer(form, websocket){
-    send_to_websocket(websocket, {
+function createContactViaConsumer(form, websocket){
+    sendToWebsocket(websocket, {
         'type': 'create_contact',
         'contact_name': form.elements[1].value,
         'contact_phone_number': form.elements[2].value
@@ -595,43 +595,43 @@ function create_contact_via_consumer(form, websocket){
  * with the given phone number.
  * @precondition The contact must exist in the database.
  * This function doesn't handle cases where it doesn't.
- * @param {String} contact_phone_number
+ * @param {String} contactPhoneNumber
  * @returns {boolean} 
  */
-async function hasChatWithContact(contact_phone_number){
-    const contact_user_object = await get(`/api/users/?phone_number=${contact_phone_number}`)
-    const contact_user_id = contact_user_object[0].id
+async function hasChatWithContact(contactPhoneNumber){
+    const contactUserObject = await get(`/api/users/?phone_number=${contactPhoneNumber}`)
+    const contactUserId = contactUserObject[0].id
     // do an API request and check if the user already have a chat with the
     // said contact (User object id)
-    const already_created_chats_with_contact = await get(`/api/chats/?user_id=${user_id}&user_id=${contact_user_id}`)
+    const alreadyCreatedChatsWithContact = await get(`/api/chats/?user_id=${userId}&user_id=${contactUserId}`)
     // exclude all the groups
-    return already_created_chats_with_contact.some((chat) => chat.admins.length === 0)
+    return alreadyCreatedChatsWithContact.some((chat) => chat.admins.length === 0)
 }
 
 /**
  * Returns an Object with the validation results for the chat form, example:
- * {is_valid : false, message: "Please select a contact"}
- * @param {HTMLFormElement} chat_form
+ * {isValid : false, message: "Please select a contact"}
+ * @param {HTMLFormElement} chatForm
  * @returns {Object} An object containing whether or not the form is valid, 
  * a corresponding message and the intention of the form. 
  */
-async function validate_chat_form(chat_form){
+async function validateChatForm(chatForm){
     debugger
-    let is_valid = true
+    let isValid = true
     let message
     // keep track of what's the form being used to
     let intention = 'create_chat'
-    if (!checked(chat_form)){
-        is_valid = false
+    if (!checked(chatForm)){
+        isValid = false
         message = 'Please select a contact to create chat with'
     }
     else{
-        const checked_checkboxes = chat_form.querySelectorAll('input:checked')
-        if (checked_checkboxes.length >= 2){
-            const group_name_container = chat_form.querySelector('input[type="text"]')
-            const group_name = group_name_container.value.trim()
-            if (group_name === ''){
-                is_valid = false
+        const checkedCheckboxes = chatForm.querySelectorAll('input:checked')
+        if (checkedCheckboxes.length >= 2){
+            const groupNameContainer = chatForm.querySelector('input[type="text"]')
+            const groupName = groupNameContainer.value.trim()
+            if (groupName === ''){
+                isValid = false
                 message = 'You must give the group a name!'
             }
             else {
@@ -640,119 +640,119 @@ async function validate_chat_form(chat_form){
         }
 
         else {
-            const contact_phone_number = document.querySelector('input:checked').id
-            const userHasChatWithContact = await hasChatWithContact(contact_phone_number)
+            const contactPhoneNumber = document.querySelector('input:checked').id
+            const userHasChatWithContact = await hasChatWithContact(contactPhoneNumber)
 
             if(userHasChatWithContact){
-                is_valid = false
+                isValid = false
                 message = 'You already have a chat with this contact, check your chat list.'
             }
         }
     }
-    return {is_valid: is_valid, message: message, intention: intention}
+    return {isValid: isValid, message: message, intention: intention}
 }
 
 
 /**
  * Returns an Object with the validation results for the contact form, example:
- * {is_valid : false, message: "User not in this app"}
- * @param {HTMLFormElement} contact_form
+ * {isValid : false, message: "User not in this app"}
+ * @param {HTMLFormElement} contactForm
  * @returns {Object} An object containing whether or not the form is valid 
  * and a corresponding message. 
  */
-async function validate_contact_form(contact_form){
+async function validateContactForm(contactForm){
     debugger
-    let is_valid = true
+    let isValid = true
     let message
-    const inputs = contact_form.getElementsByTagName('input')
+    const inputs = contactForm.getElementsByTagName('input')
     // gets the 'list' of Users who have the provided phone_number
     // in the form
     const users = await get(`/api/users/?phone_number=${inputs[2].value}`)
     // gets a list of Contacts created by the User
     // with the provided phone_number
-    const contacts = await get(`/api/contacts/?phone_number=${inputs[2].value}&created_by=${user_id}`)
+    const contacts = await get(`/api/contacts/?phone_number=${inputs[2].value}&created_by=${userId}`)
     // if no User created has the introduced phone_number
     // notify the user
     if (users.length === 0){
-        is_valid = false
+        isValid = false
         message = 'No User with provided Phone, the Phone is not registered in this app.'
     }
     // if the User already created a Contact with such phone, notify the user
     else if (contacts.length > 0){
-        is_valid = false
+        isValid = false
         message = 'You already created a Contact with that Phone'
     }
-    return {is_valid: is_valid, message: message}
+    return {isValid: isValid, message: message}
 }
 
 
 /**
  * Returns an Object with the validation results for the status form, example:
- * {is_valid : false, message: "Insert data"}
- * @param {HTMLFormElement} status_form
+ * {isValid : false, message: "Insert data"}
+ * @param {HTMLFormElement} statusForm
  * @returns {Object} An object containing whether or not the form is valid 
  * and a corresponding message.
  */
-function validate_status_form(status_form){
-    let is_valid = true
+function validateStatusForm(statusForm){
+    let isValid = true
     let message
-    if (!not_empty(status_form)) {
-        is_valid = false
+    if (!notEmpty(statusForm)) {
+        isValid = false
         message = 'Please insert data!!!'
     }
-    return {is_valid: is_valid, message: message}
+    return {isValid: isValid, message: message}
 }
 
 /**
  * Resets the chat form to its default values and state.
- * @param {HTMLFormElement} chat_form 
+ * @param {HTMLFormElement} chatForm 
  */
-function reset_chat_form(chat_form){
-    const form_title = document.getElementById('NewChatLabel')
-    const validation_message = document.getElementById('chat-validation-message')
-    validation_message.innerText = ''
-    form_title.innerText = 'Start new chat'
-    const group_name_input = document.getElementById('group-name')
-    if (!group_name_input.hidden) {
-        group_name_input.hidden = true
+function resetChatForm(chatForm){
+    const formTitle = document.getElementById('NewChatLabel')
+    const validationMessage = document.getElementById('chat-validation-message')
+    validationMessage.innerText = ''
+    formTitle.innerText = 'Start new chat'
+    const groupNameInput = document.getElementById('group-name')
+    if (!groupNameInput.hidden) {
+        groupNameInput.hidden = true
     }
-    chat_form.reset()
-    const chat_submit_button = document.getElementById('chat-submit-btn')
-    set_button_ready(chat_submit_button)
+    chatForm.reset()
+    const chatSubmitButton = document.getElementById('chat-submit-btn')
+    setButtonReady(chatSubmitButton)
 }
 
 /**
  * Resets the contact form to its default values and state.
- * @param {HTMLFormElement} contact_form 
+ * @param {HTMLFormElement} contactForm 
  */
-function reset_contact_form(contact_form){
-    const validation_message = document.getElementById('contact-validation-message')
-    validation_message.innerText = ''
-    contact_form.reset()
-    const contact_submit_button = document.getElementById('contact-submit-btn')
-    set_button_ready(contact_submit_button)
+function resetContactForm(contactForm){
+    const validationMessage = document.getElementById('contact-validation-message')
+    validationMessage.innerText = ''
+    contactForm.reset()
+    const contactSubmitButton = document.getElementById('contact-submit-btn')
+    setButtonReady(contactSubmitButton)
 }
 
 /**
  * Resets the status form to its default values and state.
- * @param {HTMLFormElement} status_form
- * @param {HTMLDivElement} image_preview_container The image preview container in the form.
+ * @param {HTMLFormElement} statusForm
+ * @param {HTMLDivElement} imagePreviewContainer The image preview container in the form.
  */
-function reset_status_form(status_form, image_preview_container){
-    const color_input = document.getElementById('id_color')
-    const validation_message = document.getElementById('status-validation-message')
-    const image_container = image_preview_container
-    const image = image_container !== null ? image_container.firstElementChild : null
+function resetStatusForm(statusForm, imagePreviewContainer){
+    const colorInput = document.getElementById('id_color')
+    const validationMessage = document.getElementById('status-validation-message')
+    const imageContainer = imagePreviewContainer
+    const image = imageContainer !== null ? imageContainer.firstElementChild : null
     if (image){
         image.remove()
     }
-    validation_message.innerText = ''
-    if (color_input.jscolor) {
-        color_input.jscolor.fromString('#000000');
+    validationMessage.innerText = ''
+    if (colorInput.jscolor) {
+        colorInput.jscolor.fromString('#000000');
     }
-    status_form.reset()
-    const status_submit_button = document.getElementById('status-submit-btn')
-    set_button_ready(status_submit_button)
+    statusForm.reset()
+    const statusSubmitButton = document.getElementById('status-submit-btn')
+    setButtonReady(statusSubmitButton)
 }
 
 /**
@@ -760,12 +760,12 @@ function reset_status_form(status_form, image_preview_container){
  * preventing from further use.
  * @param {HTMLButtonElement} button The submit button in the form. 
  */
-function set_button_loading(button){
+function setButtonLoading(button){
     button.setAttribute('disabled', 'true')
-    const button_submit_text_container = button.querySelector('.submit-btn-text')
-    button_submit_text_container.setAttribute('hidden', 'true')
-    const loading_status_container = button.querySelector('.loading-status-container')
-    loading_status_container.removeAttribute('hidden')
+    const buttonSubmitTextContainer = button.querySelector('.submit-btn-text')
+    buttonSubmitTextContainer.setAttribute('hidden', 'true')
+    const loadingStatusContainer = button.querySelector('.loading-status-container')
+    loadingStatusContainer.removeAttribute('hidden')
 }
 
 /**
@@ -773,64 +773,64 @@ function set_button_loading(button){
  * allowing further use.
  * @param {HTMLButtonElement} button The submit button in the form. 
  */
-function set_button_ready(button){
+function setButtonReady(button){
     button.removeAttribute('disabled')
-    const button_submit_text_container = button.querySelector('.submit-btn-text')
-    button_submit_text_container.removeAttribute('hidden')
-    const loading_status_container = button.querySelector('.loading-status-container')
-    loading_status_container.setAttribute('hidden', 'true')
+    const buttonSubmitTextContainer = button.querySelector('.submit-btn-text')
+    buttonSubmitTextContainer.removeAttribute('hidden')
+    const loadingStatusContainer = button.querySelector('.loading-status-container')
+    loadingStatusContainer.setAttribute('hidden', 'true')
 }
 
 /**
  * Notifies the user a form timeout and prepares
  * the submit button to try again.
- * @param {HTMLButtonElement} submit_button 
- * @param {HTMLAudioElement} notification_audio 
+ * @param {HTMLButtonElement} submitButton 
+ * @param {HTMLAudioElement} notificationAudio 
  */
-function notify_form_submission_timeout(submit_button, notification_audio){
-    triggerNotification('Server', 'Something went wrong, please try again.', notification_audio)
-    set_button_ready(submit_button)
+function notifyFormSubmissionTimeout(submitButton, notificationAudio){
+    triggerNotification('Server', 'Something went wrong, please try again.', notificationAudio)
+    setButtonReady(submitButton)
 }
 
 /**
  * Loads the reply preview HTML to the desired message
- * @param {String} message_id 
- * @param {Boolean} from_request_user 
- * @param {String} request_user_id Required only if from_request_user is false
+ * @param {String} messageId 
+ * @param {Boolean} fromRequestUser 
+ * @param {String} requestUserId Required only if fromRequestUser is false
  */
-async function reply_to_message(message_id, from_request_user, request_user_id) {
+async function replyToMessage(messageId, fromRequestUser, requestUserId) {
     // data of the replied message
-    const message_data = await get(`/api/messages/${message_id}/`)
+    const messageData = await get(`/api/messages/${messageId}/`)
     // stores the replied message id for later
-    sessionStorage.setItem('reply_to', message_id)
-    const reply_preview = document.getElementById('reply-preview')
-    reply_preview.innerHTML = ''
+    sessionStorage.setItem('replyTo', messageId)
+    const replyPreview = document.getElementById('reply-preview')
+    replyPreview.innerHTML = ''
     // creating the html elements for the preview...
     const container = document.createElement('div')
-    const sender_name = document.createElement('span')
-    const preview_text = document.createElement('span')
+    const senderName = document.createElement('span')
+    const previewText = document.createElement('span')
     // styling with classes
     container.classList.add('p-2', 'd-flex', 'flex-column', 'w-100')
-    preview_text.id = `text-${message_id}1`
-    preview_text.classList.add('d-flex', 'text-body-tertiary')
+    previewText.id = `text-${messageId}1`
+    previewText.classList.add('d-flex', 'text-body-tertiary')
     // add them to the DOM
-    reply_preview.appendChild(container)
-    container.appendChild(sender_name)
-    container.appendChild(preview_text)
-    if (message_data.image){
-        preview_text.innerText = 'Photo 📷'
+    replyPreview.appendChild(container)
+    container.appendChild(senderName)
+    container.appendChild(previewText)
+    if (messageData.image){
+        previewText.innerText = 'Photo 📷'
     }
     else {
-        preview_text.innerText = message_data.text
+        previewText.innerText = messageData.text
     }
-    if (from_request_user){
-        const request_user = await get(`/api/users/${message_data.sender_user}/`)
-        sender_name.innerText = `${request_user.username} (You)`
+    if (fromRequestUser){
+        const requestUser = await get(`/api/users/${messageData.sender_user}/`)
+        senderName.innerText = `${requestUser.username} (You)`
     }
     else{
-        const contact = await get(`/api/users/${message_data.sender_user}/`)
-        const senders = await get(`/api/contacts/?phone_number=${contact.phone_number}&created_by=${request_user_id}`)
-        sender_name.innerText = senders[0].name
+        const contact = await get(`/api/users/${messageData.sender_user}/`)
+        const senders = await get(`/api/contacts/?phone_number=${contact.phone_number}&created_by=${requestUserId}`)
+        senderName.innerText = senders[0].name
     }
 
 
@@ -838,27 +838,27 @@ async function reply_to_message(message_id, from_request_user, request_user_id) 
 
 /**
  * Reset the given status progress bar.
- * @param {HTMLElement} progress_bar 
+ * @param {HTMLElement} progressBar 
  */
-function clear_status_progress(progress_bar){
-    progress_bar.classList.remove('viewing', 'viewed')
+function clearStatusProgress(progressBar){
+    progressBar.classList.remove('viewing', 'viewed')
 }
 
 /**
  * Returns an Object with the validation results for the status form, example:
- * {is_valid : false, message: "Insert data"}
- * @param {HTMLFormElement} archive_form
+ * {isValid : false, message: "Insert data"}
+ * @param {HTMLFormElement} archiveForm
  * @returns {Object} An object containing whether or not the form is valid 
  * and a corresponding message.
  */
-function validate_archive_form(archive_form){
-    let is_valid = true
+function validateArchiveForm(archiveForm){
+    let isValid = true
     let message
-    if (!checked(archive_form)) {
-        is_valid = false
+    if (!checked(archiveForm)) {
+        isValid = false
         message = 'INVALID, PLEASE SELECT AT LEAST ONE CHAT'
     }
-    return {is_valid: is_valid, message: message}
+    return {isValid: isValid, message: message}
 }
 
 /**
@@ -867,13 +867,13 @@ function validate_archive_form(archive_form){
  * @param {HTMLFormElement} form 
  */
 async function handleArchiveFormSubmission(form){
-    const archive_form_validation = validate_archive_form(form)
-    if(archive_form_validation.is_valid){
+    const archiveFormValidation = validateArchiveForm(form)
+    if(archiveFormValidation.isValid){
         for (let index = 0; index < form.elements.length; index++) {
             const chat = form.elements[index];
             if (chat.checked){
-                const chat_instance = await get(`/api/chats/${chat.id}/`)
-                const data = {archived_by: [...chat_instance.archived_by, form.dataset.user]}
+                const chatInstance = await get(`/api/chats/${chat.id}/`)
+                const data = {archived_by: [...chatInstance.archived_by, form.dataset.user]}
                 const response = await patch(`/api/chats/${chat.id}/`, 
                     data,
                      form.firstElementChild.value)
@@ -883,8 +883,8 @@ async function handleArchiveFormSubmission(form){
         htmx.ajax('GET', '/chats/False', {target:'#archive-chats-form', swap:'outerHTML'})
     }
     else{
-        const message_container = form.querySelector('.validation-error')
-        message_container.innerText = archive_form_validation.message
+        const messageContainer = form.querySelector('.validation-error')
+        messageContainer.innerText = archiveFormValidation.message
     }
 }
 
@@ -892,16 +892,16 @@ async function handleArchiveFormSubmission(form){
  * Shows a notification showing who sent it 
  * and what does it say and plays the given audio
  * for the notification
- * @param {String} sender_name The one who sent the notification
+ * @param {String} senderName The one who sent the notification
  * @param {String} text
- * @param {HTMLAudioElement} notification_audio 
+ * @param {HTMLAudioElement} notificationAudio 
  */
-function triggerNotification(sender, text, notification_audio){
+function triggerNotification(sender, text, notificationAudio){
     const toastNotification = document.getElementById('liveToast')
     modifyNotification(sender, text)
     const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastNotification)
     toastBootstrap.show()
-    notification_audio.play()
+    notificationAudio.play()
 }
 
 /**
@@ -918,51 +918,51 @@ function showValidationErrorMessage(container, message){
  * Loads many functions so they can be used
  * anywhere (document or js files)
  */
-function load_global_doc_functions(){
-    window.toggleReadMore = function(text_id){
-        toggleReadMore(text_id)
+function loadGlobalDocFunctions(){
+    window.toggleReadMore = function(textId){
+        toggleReadMore(textId)
     }
 
-    window.showDropdown  = function (event, dropdown_id) {
-        showDropdown(event, dropdown_id)
+    window.showDropdown  = function (event, dropdownId) {
+        showDropdown(event, dropdownId)
     }
 
-    window.run_element_animation = function(element){
-        run_element_animation(element)
+    window.runElementAnimation = function(element){
+        runElementAnimation(element)
     }
     
-    window.switch_emojis = function(button){
-        switch_emojis(button)
+    window.switchEmojis = function(button){
+        switchEmojis(button)
     }
 
-    window.switch_chat_form_purpose = function(form, form_header){
-        switch_chat_form_purpose(form, form_header)
+    window.switchChatFormPurpose = function(form, formHeader){
+        switchChatFormPurpose(form, formHeader)
     }
 
-    window.toggle_element_inner_text = function(HTML_element, text_a, text_b){
-        toggle_element_inner_text(HTML_element, text_a, text_b)
+    window.toggleElementInnerText = function(HTMLElement, textA, textB){
+        toggleElementInnerText(HTMLElement, textA, textB)
     }
 
-    window.toggle_element_display = function(HTML_element){
-        toggle_element_display(HTML_element)
+    window.toggleElementDisplay = function(HTMLElement){
+        toggleElementDisplay(HTMLElement)
     }
 
-    window.exchange_elements_class = function(element_a, element_b, class_a, class_b){
-        exchange_elements_class(element_a, element_b, class_a, class_b)
+    window.exchangeElementsClass = function(elementA, elementB, classA, classB){
+        exchangeElementsClass(elementA, elementB, classA, classB)
     }
 
-    window.load_more_messages = function(html_element){
-        load_more_messages(html_element)
+    window.loadMoreMessages = function(htmlElement){
+        loadMoreMessages(htmlElement)
     }
 
-    window.load_older_messages = function(){
-        load_older_messages()
+    window.loadOlderMessages = function(){
+        loadOlderMessages()
     }
 
-    window.date_already_displayed = function(date){
-        const similar_layers = document.querySelectorAll(`.date-${date.replaceAll(' ', '')}`)
-        const many_similar_layers = similar_layers.length > 1
-        if (many_similar_layers){
+    window.dateAlreadyDisplayed = function(date){
+        const similarLayers = document.querySelectorAll(`.date-${date.replaceAll(' ', '')}`)
+        const manySimilarLayers = similarLayers.length > 1
+        if (manySimilarLayers){
             return true
         }
         else {
@@ -970,30 +970,30 @@ function load_global_doc_functions(){
         }
     }
 
-    window.remove_duplicates = function(class_name){
-        remove_duplicates(class_name)
+    window.removeDuplicates = function(className){
+        removeDuplicates(className)
     }
 
-    window.change_input_color = function(desired_color, target_element_id){
-        change_input_color(desired_color, target_element_id)
+    window.changeInputColor = function(desiredColor, targetElementId){
+        changeInputColor(desiredColor, targetElementId)
     }
 
-    window.filter_by_value = function(value, element_list){
-        filter_by_value(value, element_list)
+    window.filterByValue = function(value, elementList){
+        filterByValue(value, elementList)
     }
 
-    window.space_text = function(text_id){
-        space_text(text_id)
+    window.spaceText = function(textId){
+        spaceText(textId)
     }
 
-    window.status_app = {
-        pending_updates : false
+    window.statusApp = {
+        pendingUpdates : false
     }
 
-    window.init_status_carousel = function(status_carousel){
-        carousel = status_carousel
+    window.initStatusCarousel = function(statusCarousel){
+        carousel = statusCarousel
         const container = carousel.parentElement.parentElement
-        const carousel_instance = new bootstrap.Carousel(carousel, {
+        const carouselInstance = new bootstrap.Carousel(carousel, {
         interval: 5000,
         touch: true,
         pause: false,
@@ -1001,56 +1001,56 @@ function load_global_doc_functions(){
         })
 
         container.addEventListener('mouseenter', () => {
-            carousel_instance.pause();
+            carouselInstance.pause();
         });
 
         container.addEventListener('mouseleave', () => {
-            carousel_instance.cycle();
+            carouselInstance.cycle();
         });
-        const status_bars = carousel.querySelectorAll('.status-progress')
-        const statuses_len = status_bars.length
-        status_bars[0].classList.add('viewed')
+        const statusBars = carousel.querySelectorAll('.status-progress')
+        const statusesLen = statusBars.length
+        statusBars[0].classList.add('viewed')
         // everytime the carousel is in a new slide
         carousel.addEventListener('slid.bs.carousel', (event) => {
             // check the current slide as viewed
-            status_bars[event.to].classList.add('viewed')
+            statusBars[event.to].classList.add('viewed')
             // sylize it depending on the content.
-            const status_content_wrapper = event.relatedTarget.querySelector('.status-content-wrapper')
-            const text_container = status_content_wrapper.querySelector('.status-text-overlay')
-            if (text_container){
-                const text = text_container.firstElementChild
+            const statusContentWrapper = event.relatedTarget.querySelector('.status-content-wrapper')
+            const textContainer = statusContentWrapper.querySelector('.status-text-overlay')
+            if (textContainer){
+                const text = textContainer.firstElementChild
                 if (text.innerText.length > 32) {
-                    text_container.classList.replace('status-text-overlay', 'status-large-text-overlay')
+                    textContainer.classList.replace('status-text-overlay', 'status-large-text-overlay')
                     if(text.innerText.length > 450){
-                        text_container.style.overflowY = 'scroll'
-                        text_container.style.height = '80%'
+                        textContainer.style.overflowY = 'scroll'
+                        textContainer.style.height = '80%'
                     }
             }
             }
-            if (statuses_len - 1 === event.to){
+            if (statusesLen - 1 === event.to){
                 setTimeout(() => {
-                    status_bars.forEach(bar => {
-                        clear_status_progress(bar)
+                    statusBars.forEach(bar => {
+                        clearStatusProgress(bar)
                     });
                     // closes the carousel instance and hides the modal containing it.
-                    const hide_button = carousel.querySelector('.btn-close')
-                    carousel_instance.dispose()
-                    hide_button.click()
+                    const hideButton = carousel.querySelector('.btn-close')
+                    carouselInstance.dispose()
+                    hideButton.click()
                 }, 5000)
             }
         })
     }
 
-    window.show_modal = function(modal){
+    window.showModal = function(modal){
         modal.setAttribute('status', 'showing')
     }
-    window.hide_modal = function(modal){
+    window.hideModal = function(modal){
         modal.setAttribute('status', 'hidden')
         // if there any pendient updates in the UI, update it
-        if(status_app.pending_updates){
+        if(statusApp.pendingUpdates){
             htmx.ajax('GET', '/statuses', '#chats-and-more')
             .then( () => {
-                status_app.pending_updates = false
+                statusApp.pendingUpdates = false
             })
         }
     }
@@ -1058,15 +1058,15 @@ function load_global_doc_functions(){
     /**
      * Loads an image source in the img element found with the given id.
      * @param {String} url 
-     * @param {String} image_html_element_id 
+     * @param {String} imageHtmlElementId 
      */
-    window.preview_chat_image = function(url, image_html_element_id){
-        const image_html = document.getElementById(image_html_element_id)
-        image_html.src = url
+    window.previewChatImage = function(url, imageHtmlElementId){
+        const imageHtml = document.getElementById(imageHtmlElementId)
+        imageHtml.src = url
     }
 
-    window.reply_to_message = function(message_id, from_request_user, request_user_id){
-        reply_to_message(message_id, from_request_user, request_user_id)
+    window.replyToMessage = function(messageId, fromRequestUser, requestUserId){
+        replyToMessage(messageId, fromRequestUser, requestUserId)
     }
 
     window.handleArchiveFormSubmission = function(form){
@@ -1075,27 +1075,27 @@ function load_global_doc_functions(){
 
 }
 
-function close_chat(){
-    const chat_parent_container = document.getElementById('chat-display')
-    chat_parent_container.innerHTML = ''
+function closeChat(){
+    const chatParentContainer = document.getElementById('chat-display')
+    chatParentContainer.innerHTML = ''
 }
 
 export {
     get, modifyNotification,
-    scroll_to_bottom, toggleReadMore, showDropdown, 
-    run_element_animation, checked, not_empty, 
-    toggle_element_inner_text, load_emojis, switch_emojis, 
-    switch_chat_form_purpose, toggle_element_display, previewImage, 
-    update_chat_list, update_contact_list, at_least_one_attr, 
-    exchange_elements_class, load_more_messages, 
-    load_older_messages, remove_duplicates, change_input_color, 
-    filter_by_value, space_text, split_word, trigger_tooltips, 
-    create_chat_via_consumer, create_group_via_consumer, 
-    create_contact_via_consumer, validate_chat_form,
-    validate_contact_form, validate_status_form,
-    reset_chat_form, reset_contact_form, reset_status_form,
-    set_button_loading, set_button_ready, notify_form_submission_timeout,
-    can_send_messages, send_to_websocket, 
-    showValidationErrorMessage, load_global_doc_functions, 
-    triggerNotification, close_chat
+    scrollToBottom, toggleReadMore, showDropdown, 
+    runElementAnimation, checked, notEmpty, 
+    toggleElementInnerText, loadEmojis, switchEmojis, 
+    switchChatFormPurpose, toggleElementDisplay, previewImage, 
+    updateChatList, updateContactList, atLeastOneAttr, 
+    exchangeElementsClass, loadMoreMessages, 
+    loadOlderMessages, removeDuplicates, changeInputColor, 
+    filterByValue, spaceText, splitWord, triggerTooltips, 
+    createChatViaConsumer, createGroupViaConsumer, 
+    createContactViaConsumer, validateChatForm,
+    validateContactForm, validateStatusForm,
+    resetChatForm, resetContactForm, resetStatusForm,
+    setButtonLoading, setButtonReady, notifyFormSubmissionTimeout,
+    canSendMessages, sendToWebsocket, 
+    showValidationErrorMessage, loadGlobalDocFunctions, 
+    triggerNotification, closeChat
 }
