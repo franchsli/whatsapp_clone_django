@@ -851,7 +851,7 @@ function clear_status_progress(progress_bar){
  * @returns {Object} An object containing whether or not the form is valid 
  * and a corresponding message.
  */
-function is_archive_form_valid(archive_form){
+function validate_archive_form(archive_form){
     let is_valid = true
     let message
     if (!checked(archive_form)) {
@@ -867,7 +867,7 @@ function is_archive_form_valid(archive_form){
  * @param {HTMLFormElement} form 
  */
 async function handleArchiveFormSubmission(form){
-    const archive_form_validation = is_archive_form_valid(form)
+    const archive_form_validation = validate_archive_form(form)
     if(archive_form_validation.is_valid){
         for (let index = 0; index < form.elements.length; index++) {
             const chat = form.elements[index];
