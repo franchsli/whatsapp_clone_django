@@ -30,7 +30,7 @@
       hx-target="#chats-and-more"><span><i class="bi bi-patch-plus" data-bs-toggle="tooltip" data-bs-title="Statuses"></i></span></button>
     <div class="dropdown">
       <button id="settings" class="action me-3 btn" data-bs-toggle="dropdown"
-        onclick="run_element_animation(this.nextElementSibling)"><span><i
+        onclick="runElementAnimation(this.nextElementSibling)"><span><i
             class="bi bi-three-dots-vertical" data-bs-toggle="tooltip" data-bs-title="Settings"></i></span></button>
       <ul class="dropdown-menu animated-dropdown">
         <li><button class="dropdown-item" hx-get="{% url 'starred_messages' %}"
@@ -51,21 +51,21 @@
   {% comment "chat search" %}Contacts and chats{% endcomment %}
   <form class="d-flex m-3" role="search">
     <input id="chat-search" class="form-control me-2" type="search" placeholder="Search chat..." aria-label="Search" 
-    oninput="filter_by_value(this.value, document.getElementById('chat-list'));" </input>
+    oninput="filterByValue(this.value, document.getElementById('chat-list'));" </input>
     <button class="btn themed-button" type="submit"><i class="bi bi-search"></i></button>
   </form>
   <div class="my-3 ms-3" id="chats-filters">
-    <button onclick="exchange_elements_class(document.getElementsByClassName('filter-selector-active').item(0),
+    <button onclick="exchangeElementsClass(document.getElementsByClassName('filter-selector-active').item(0),
      this, 'filter-selector-active', 'filter-selector');" 
      class="filter-selector-active btn rounded-pill fs-6"
      hx-get="{% url 'chats' False %}" hx-target="#chat-list" hx-swap="outerHTML">All</button>
   
-    <button onclick="exchange_elements_class(document.getElementsByClassName('filter-selector-active').item(0),
+    <button onclick="exchangeElementsClass(document.getElementsByClassName('filter-selector-active').item(0),
      this, 'filter-selector-active', 'filter-selector');" 
      class="filter-selector btn rounded-pill fs-6"
      hx-get="{% url 'unread_chats' False %}" hx-target="#chat-list" hx-swap="outerHTML">Unread</button>
   
-    <button onclick="exchange_elements_class(document.getElementsByClassName('filter-selector-active').item(0),
+    <button onclick="exchangeElementsClass(document.getElementsByClassName('filter-selector-active').item(0),
      this, 'filter-selector-active', 'filter-selector');" 
      class="filter-selector btn rounded-pill fs-6"
      hx-get="{% url 'groups' False %}" hx-target="#chat-list" hx-swap="outerHTML">Groups</button>

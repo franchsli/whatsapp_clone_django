@@ -11,17 +11,17 @@
 
 <div id="archived-chats" class="mt-4">
     <div class="my-3 ms-3" id="chats-filters">
-        <button onclick="exchange_elements_class(document.getElementsByClassName('filter-selector-active').item(0),
+        <button onclick="exchangeElementsClass(document.getElementsByClassName('filter-selector-active').item(0),
          this, 'filter-selector-active', 'filter-selector');" 
          class="filter-selector-active btn rounded-pill fs-6"
          hx-get="{% url 'chats' True %}" hx-target="#chats-and-more">All</button>
       
-        <button onclick="exchange_elements_class(document.getElementsByClassName('filter-selector-active').item(0),
+        <button onclick="exchangeElementsClass(document.getElementsByClassName('filter-selector-active').item(0),
          this, 'filter-selector-active', 'filter-selector');" 
          class="filter-selector btn rounded-pill fs-6"
          hx-get="{% url 'unread_chats' True %}" hx-target="#chat-list">Unread</button>
       
-        <button onclick="exchange_elements_class(document.getElementsByClassName('filter-selector-active').item(0),
+        <button onclick="exchangeElementsClass(document.getElementsByClassName('filter-selector-active').item(0),
          this, 'filter-selector-active', 'filter-selector');" 
          class="filter-selector btn rounded-pill fs-6"
          hx-get="{% url 'groups' True %}" hx-target="#chat-list">Groups</button>

@@ -13,7 +13,7 @@
 
 {% comment "My status" %}{% endcomment %}
 <div
-  onclick="show_modal(document.querySelector(`#user-status-modal{{ request.user.id }}`)); init_status_carousel(document.querySelector('#UserStatusesCarousel'))"
+  onclick="showModal(document.querySelector(`#user-status-modal{{ request.user.id }}`)); initStatusCarousel(document.querySelector('#UserStatusesCarousel'))"
   id="user-status-caller" class="contact mt-3 d-flex flex-row" role="button" type="button" data-bs-toggle="modal"
   data-bs-target="#user-status-modal{{ request.user.id }}">
   <div class="p-2" id="profile-pic" data-user={{request.user.id}} data-username={{request.user.username}}>
@@ -62,7 +62,7 @@
       data-contact="{{contact.id}}">
       {% comment "status profile photo" %}{% endcomment %}
       <img
-        onclick="show_modal(document.querySelector(`#status-modal{{ contact.id }}`)); init_status_carousel(document.querySelector(`#contact{{contact.id}}status`));"
+        onclick="showModal(document.querySelector(`#status-modal{{ contact.id }}`)); initStatusCarousel(document.querySelector(`#contact{{contact.id}}status`));"
         class="ms-1 rounded-circle img-fluid contact-status-caller" src="{% get_contact_photo contact.phone_number %}"
         alt="Profile photo couldn't load." data-contact="{{contact.id}}" type="button" data-bs-toggle="modal"
         data-bs-target="#status-modal{{ contact.id }}">
@@ -101,8 +101,8 @@
       toggle_muted_statuses_button = document.getElementById("show-muted-statuses")
       muted_contacts_statuses = document.getElementById("muted-statuses-contact-list")
       toggle_muted_statuses_button.onclick = function () {
-        toggle_element_inner_text(this, 'Show', 'Hide')
-        toggle_element_display(muted_contacts_statuses)
+        toggleElementInnerText(this, 'Show', 'Hide')
+        toggleElementDisplay(muted_contacts_statuses)
       }
     </script>
   </li>
