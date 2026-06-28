@@ -491,9 +491,9 @@ function splitWord(word, length){
 
 
 /**
- * Adds spaces in every word inside a text if the word it's too long.
+ * Adds spaces in every word inside a text container if the word it's too long.
+ * (more than 33 chars)
  * @param {String} textId The id of the HTML element that contains the text.
- * @returns {String} The spaced text.
  */
 function spaceText(textId){
     const textContainer = document.getElementById(`text-${textId}`)
@@ -508,7 +508,8 @@ function spaceText(textId){
             words[index] = splitWord(word, 33).join('-')
         }
     }
-    // returns a text with trailing spaces
+    // replaces the text within with a version 
+    // with trailing spaces
     // in every word to display it properly
     textContainer.textContent = words.join(' ')
 }
