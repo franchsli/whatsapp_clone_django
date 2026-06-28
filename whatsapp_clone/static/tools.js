@@ -46,8 +46,8 @@ function scrollToBottom(){
  */
 function modifyNotification(contactName, message){
     const toastNotification = document.getElementById('liveToast')
-    let contactNameDisplay = toastNotification.querySelector('strong')
-    let messageDisplay = toastNotification.querySelector('.toast-body')
+    const contactNameDisplay = toastNotification.querySelector('strong')
+    const messageDisplay = toastNotification.querySelector('.toast-body')
     contactNameDisplay.innerHTML = contactName
     messageDisplay.innerHTML = message
 
@@ -210,7 +210,7 @@ function loadEmojis(emojiListName, parentElement){
     })
     .then( (emojis) => {
         for (let index = 0; index < emojis.length; index++) {
-            let newButton = document.createElement('button')
+            const newButton = document.createElement('button')
             newButton.innerHTML = emojis[index].character
             newButton.classList.add('btn', 'm-1', 'action')
             newButton.style.fontSize = '30px'
@@ -295,14 +295,14 @@ function previewImage(imageInput=null, imagePreview=null) {
 
     }
 
-    let file = imageInput.files[0];
+    const file = imageInput.files[0];
 
     if (file) {
-        let reader = new FileReader();
+        const reader = new FileReader();
 
         reader.onload = function (event) {
             // Display image preview
-            let preview = document.createElement('img');
+            const preview = document.createElement('img');
             preview.style.maxHeight = '200px'
             preview.style.maxWidth = '200px'
             preview.classList.add('m-3')
@@ -569,7 +569,7 @@ function createChatViaConsumer(form, websocket){
  */
 function createGroupViaConsumer(form, websocket, groupName){
     const checkedInputs = form.querySelectorAll('input:checked')
-    let phoneNumbers = [...checkedInputs].map((input) => input.id)
+    const phoneNumbers = [...checkedInputs].map((input) => input.id)
     sendToWebsocket(websocket, {
         'type': 'create_group',
         'group_name': groupName,
