@@ -565,7 +565,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         
                         newMessageInput.addEventListener('keypress', (event) => {
                             if (event.key === 'Enter' && (newMessageInput.value !== '' || imageInput.value !== '')){
-                                let image = document.getElementById('imagePreview').firstElementChild
+                                const image = document.getElementById('imagePreview').firstElementChild
                                 main.chatWebSocket.sendMessage('message', newMessageInput.value, imageInput.value !== '' ? image.src : '', userId)
                                 
                                 newMessageInput.value = ''
@@ -579,7 +579,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     
                         newMessageButton.onclick = () => {
                             if (newMessageInput.value !== '' || imageInput.value !== ''){
-                                let image = document.getElementById('imagePreview').firstElementChild    
+                                const image = document.getElementById('imagePreview').firstElementChild    
                                 main.chatWebSocket.sendMessage('message', newMessageInput.value, imageInput.value !== '' ? image.src : '', userId)
                                 
                                 newMessageInput.value = ''
