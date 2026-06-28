@@ -39,7 +39,7 @@
     <!-- ========== Hour display ========== -->
     <span class="chat-message-date">{{ message.date|date:"h:i A" }}</span>
     <!-- ========== 'READ' icon ========== -->
-    {% if message.read %}
+    {% if message.was_read %}
       <i class="bi bi-check2-all text-info"></i>
     {% else %}
       <i class="bi bi-check2-all"></i>
