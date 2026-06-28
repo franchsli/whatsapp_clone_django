@@ -524,7 +524,7 @@ window.notifyChatOpening = function(chat, chatWebSocket){
 }
 
 
-tools.loadGlobalDocFunctions()
+tools.loadDomFunctions()
 
 document.addEventListener('DOMContentLoaded', () => {
     const main = new App()

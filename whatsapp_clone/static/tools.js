@@ -918,7 +918,7 @@ function showValidationErrorMessage(container, message){
  * Loads many functions so they can be used
  * anywhere (document or js files)
  */
-function loadGlobalDocFunctions(){
+function loadDomFunctions(){
     window.toggleReadMore = function(textId){
         toggleReadMore(textId)
     }
@@ -1096,6 +1096,6 @@ export {
     resetChatForm, resetContactForm, resetStatusForm,
     setButtonLoading, setButtonReady, notifyFormSubmissionTimeout,
     canSendMessages, sendToWebsocket, 
-    showValidationErrorMessage, loadGlobalDocFunctions, 
+    showValidationErrorMessage, loadDomFunctions, 
     triggerNotification, closeChat
 }
