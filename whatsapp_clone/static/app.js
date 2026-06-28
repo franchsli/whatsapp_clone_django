@@ -543,9 +543,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         window.newMessageInput = document.getElementById('new-message')
                         window.newMessageButton = document.getElementById('send-message-button')
                         window.deleteMessageOptionButtons = document.querySelectorAll('.delete-message')
-                        const imageInputCaller = document.getElementById('imageInputCaller')
-                        const imageInput = document.getElementById('imageInput')
-                        const imagePreview = document.getElementById('imagePreview')
+                        const imageInputCaller = document.getElementById('image-input-caller')
+                        const imageInput = document.getElementById('image-input')
+                        const imagePreview = document.getElementById('image-preview')
                         imageInput.addEventListener('change', () => {
                             tools.previewImage(imageInput, imagePreview)
                         });
@@ -565,7 +565,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         
                         newMessageInput.addEventListener('keypress', (event) => {
                             if (event.key === 'Enter' && (newMessageInput.value !== '' || imageInput.value !== '')){
-                                const image = document.getElementById('imagePreview').firstElementChild
+                                const image = document.getElementById('image-preview').firstElementChild
                                 main.chatWebSocket.sendMessage('message', newMessageInput.value, imageInput.value !== '' ? image.src : '', userId)
                                 
                                 newMessageInput.value = ''
@@ -579,7 +579,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     
                         newMessageButton.onclick = () => {
                             if (newMessageInput.value !== '' || imageInput.value !== ''){
-                                const image = document.getElementById('imagePreview').firstElementChild    
+                                const image = document.getElementById('image-preview').firstElementChild    
                                 main.chatWebSocket.sendMessage('message', newMessageInput.value, imageInput.value !== '' ? image.src : '', userId)
                                 
                                 newMessageInput.value = ''
