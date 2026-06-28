@@ -12,7 +12,7 @@
   <div class="d-flex align-items-center">
     <form class="d-flex me-3" role="search">
       <input id="message-searcher" class="form-control me-2" type="search" placeholder="Search message..." aria-label="Search" 
-      onkeyup="filter_by_value(this.value, document.getElementById('chat-messages'))">
+      onkeyup="filterByValue(this.value, document.getElementById('chat-messages'))">
       <button class="btn themed-button" type="submit"><i class="bi bi-search"></i></button>
     </form>
   </div>
@@ -29,34 +29,34 @@
     <ul id="emojis-ui" class="dropdown-menu scroll-section overflow-y-scroll"
       style="min-height: 350px; max-height: 350px; min-width: 1000px;">
       <div class="d-flex flex-row align-items-center mb-3">
-        <button onclick="event.stopPropagation(); switch_emojis(this);"
+        <button onclick="event.stopPropagation(); switchEmojis(this);"
           class="btn emoji-class-button emoji-class-active d-flex flex-fill justify-content-center p-1"
           data-emoji-pack="smileys-emotion">Smileys emotion😃</button>
-        <button onclick="event.stopPropagation(); switch_emojis(this);"
+        <button onclick="event.stopPropagation(); switchEmojis(this);"
           class="btn emoji-class-button emoji-class-active d-flex flex-fill justify-content-center p-1"
           data-emoji-pack="people-body">People body 🙌</button>
-        <button onclick="event.stopPropagation(); switch_emojis(this);"
+        <button onclick="event.stopPropagation(); switchEmojis(this);"
           class="btn emoji-class-button emoji-class-active d-flex flex-fill justify-content-center p-1"
           data-emoji-pack="component">Component 👦</button>
-        <button onclick="event.stopPropagation(); switch_emojis(this);"
+        <button onclick="event.stopPropagation(); switchEmojis(this);"
           class="btn emoji-class-button d-flex flex-fill justify-content-center p-1"
           data-emoji-pack="animals-nature">Animals 🐻 and nature 🌲</button>
-        <button onclick="event.stopPropagation(); switch_emojis(this);"
+        <button onclick="event.stopPropagation(); switchEmojis(this);"
           class="btn emoji-class-button d-flex flex-fill justify-content-center p-1"
           data-emoji-pack="food-drink">Food and drink 🍔☕</button>
-        <button onclick="event.stopPropagation(); switch_emojis(this);"
+        <button onclick="event.stopPropagation(); switchEmojis(this);"
           class="btn emoji-class-button d-flex flex-fill justify-content-center p-1"
           data-emoji-pack="activities">Activities ⚽</button>
-        <button onclick="event.stopPropagation(); switch_emojis(this);"
+        <button onclick="event.stopPropagation(); switchEmojis(this);"
           class="btn emoji-class-button d-flex flex-fill justify-content-center p-1"
           data-emoji-pack="travel-places">Travel and places 🚀</button>
-        <button onclick="event.stopPropagation(); switch_emojis(this);"
+        <button onclick="event.stopPropagation(); switchEmojis(this);"
           class="btn emoji-class-button d-flex flex-fill justify-content-center p-1" data-emoji-pack="objects">Objects
           💡</button>
-        <button onclick="event.stopPropagation(); switch_emojis(this);"
+        <button onclick="event.stopPropagation(); switchEmojis(this);"
           class="btn emoji-class-button d-flex flex-fill justify-content-center p-1" data-emoji-pack="symbols">Symbols
           💕</button>
-        <button onclick="event.stopPropagation(); switch_emojis(this);"
+        <button onclick="event.stopPropagation(); switchEmojis(this);"
           class="btn emoji-class-button d-flex flex-fill justify-content-center p-1" data-emoji-pack="flags">Flags
           🎌</button>
       </div>

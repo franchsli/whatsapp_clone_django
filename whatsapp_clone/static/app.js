@@ -1,151 +1,151 @@
 import * as tools from  './tools.js';
 
 class ChatWebSocket{
-    constructor({url = '', parent_app_class = null}){
-        this.client_websocket = new WebSocket(url)
-        this.client_websocket.onopen = async (event) => {
+    constructor({url = '', parentAppClass = null}){
+        this.clientWebSocket = new WebSocket(url)
+        this.clientWebSocket.onopen = async (event) => {
             console.log('CONNECTION OPENED WITH CHAT WEBSOCKET')
-            this.app = parent_app_class
-            this.app.new_message = false
+            this.app = parentAppClass
+            this.app.newMessage = false
 
         }
 
-        this.client_websocket.onmessage = async (event) => {
+        this.clientWebSocket.onmessage = async (event) => {
             const data = JSON.parse(event.data)
             debugger
             this.message = data.message
-            this.sender_id = data.sender_id
-            this.chat_id = data.chat_id
+            this.senderId = data.sender_id
+            this.chatId = data.chat_id
             this.image = data.image
-            this.sender_contact_name = data.sender_contact_name
-            this.chat_is_archived = data.chat_is_archived === 'True' ? true : false
+            this.senderContactName = data.sender_contact_name
+            this.chatIsArchived = data.chat_is_archived === 'True' ? true : false
             if (data.type === 'chat_message'){
-                this.handle_chat_message()
+                this.handleChatMessage()
             }
         
             else if (data.type === 'chat_notification'){
-                this.handle_chat_notification()
+                this.handleChatNotification()
             }
         
             else if (data.type === 'chat_message_deletion'){
-                this.handle_message_deletion()
+                this.handleMessageDeletion()
             }
         
             else if (data.type === 'chat_message_edition'){
-                this.handle_message_edition()
+                this.handleMessageEdition()
             }
 
             else if (data.type === 'chat_creation'){
-                this.handle_chat_creation(data.contact_name)
+                this.handleChatCreation(data.contact_name)
             }
 
             else if (data.type === 'chat_opening'){
-                this.handle_chat_opening(data.chat_opener_id, data.chat_id)
+                this.handleChatOpening(data.chat_opener_id, data.chat_id)
             }
 
             else if (data.type === 'contact_creation'){
-                this.handle_contact_creation(data.contact_name)
+                this.handleContactCreation(data.contact_name)
             }
 
             else if (data.type === 'group_creation') {
-                this.handle_group_creation(data.group_name)
+                this.handleGroupCreation(data.group_name)
             }
 
         }
 
-        this.client_websocket.onerror = (error) => {
-            console.log('WS State:', this.client_websocket.readyState);
+        this.clientWebSocket.onerror = (error) => {
+            console.log('WS State:', this.clientWebSocket.readyState);
             console.log('WS Error:', error)
         };
 
-        this.client_websocket.onclose = (event) => {
+        this.clientWebSocket.onclose = (event) => {
             console.log('WS Closed. Code:', event.code, 'Reason:', event.reason);
             console.log('Was clean?:', event.wasClean);
         }
     }
     /**
      * Send the chat message data to the websocket.
-     * @param {String} message_type The type of the message.
-     * @param {String} message_text The text of the message.
-     * @param {String} message_image A string of image data encoded in base64.
-     * @param {String} message_sender_id The id of who sent the chat message.
+     * @param {String} messageType The type of the message.
+     * @param {String} messageText The text of the message.
+     * @param {String} messageImage A string of image data encoded in base64.
+     * @param {String} messageSenderId The id of who sent the chat message.
      */
-    send_message (message_type, message_text, message_image, message_sender_id){
-        tools.send_to_websocket(this.client_websocket, {
-            'type': message_type,
-            'message': message_text,
-            'image': message_image,
-            'receiver_username': sessionStorage.getItem('receiver_username'),
-            'sender_id': message_sender_id,
-            'chat_id': sessionStorage.getItem('chat_id'),
-            'chat_members_phones': sessionStorage.getItem('chat_members_phones'),
-            'reply_to': sessionStorage.getItem('reply_to')
+    sendMessage (messageType, messageText, messageImage, messageSenderId){
+        tools.sendToWebsocket(this.clientWebSocket, {
+            'type': messageType,
+            'message': messageText,
+            'image': messageImage,
+            'receiver_username': sessionStorage.getItem('receiverUsername'),
+            'sender_id': messageSenderId,
+            'chat_id': sessionStorage.getItem('chatId'),
+            'chat_members_phones': sessionStorage.getItem('chatMembersPhones'),
+            'reply_to': sessionStorage.getItem('replyTo')
         })
         // removes the item to avoid bugs
-        sessionStorage.removeItem('reply_to')
+        sessionStorage.removeItem('replyTo')
     }
 
-    handle_chat_message(){
+    handleChatMessage(){
         // if the message was sent by the auth user, play a sound and update the chat list
         // only append the message's HTML otherwise
-        if (user_id === this.sender_id){
-            this.app.message_sent_audio.play()
-            this.app.new_message = true
-            htmx.ajax('GET', `/display_chat/${sessionStorage.getItem('chat_id')}`, '#chat-display').then(() => {
-                tools.update_chat_list()
-                this.app.new_message = false
+        if (userId === this.senderId){
+            this.app.messageSentAudio.play()
+            this.app.newMessage = true
+            htmx.ajax('GET', `/display_chat/${sessionStorage.getItem('chatId')}`, '#chat-display').then(() => {
+                tools.updateChatList()
+                this.app.newMessage = false
             })
         }
         else {
             // timeout to make sure the new message is already stored in the database before requesting it
             setTimeout(() => {
-                htmx.ajax('GET', `/append_message/${sessionStorage.getItem('chat_id')}`, {target:'#chat-messages', swap:'beforeend'}).then( () => {
-                    tools.update_chat_list()
+                htmx.ajax('GET', `/append_message/${sessionStorage.getItem('chatId')}`, {target:'#chat-messages', swap:'beforeend'}).then( () => {
+                    tools.updateChatList()
                 })  
             }, 500)
  
         }
     }
 
-    handle_chat_notification(){
+    handleChatNotification(){
         debugger
-        const displayed_chat_contact_info = document.getElementById('contact-name')
-        let noti_from_opened_chat = false
+        const displayedChatContactInfo = document.getElementById('contact-name')
+        let notiFromOpenedChat = false
         // if a chat is opened
-        if (displayed_chat_contact_info){
+        if (displayedChatContactInfo){
             // Tells whether or not the notification is from the currently opened chat
-            noti_from_opened_chat = displayed_chat_contact_info.dataset.userObjectId === this.sender_id
+            notiFromOpenedChat = displayedChatContactInfo.dataset.userObjectId === this.senderId
         }
-        if(!this.chat_is_archived && !noti_from_opened_chat){
-            tools.triggerNotification(this.sender_contact_name, this.message, this.app.message_received_audio)
-            tools.update_chat_list()
+        if(!this.chatIsArchived && !notiFromOpenedChat){
+            tools.triggerNotification(this.senderContactName, this.message, this.app.messageReceivedAudio)
+            tools.updateChatList()
 
         }
     }
 
-    handle_message_deletion(){
-        this.handle_ui_update()
+    handleMessageDeletion(){
+        this.handleUiUpdate()
     }
 
-    handle_message_edition(){
-        this.handle_ui_update()
+    handleMessageEdition(){
+        this.handleUiUpdate()
     }
 
-    handle_ui_update(){
+    handleUiUpdate(){
         /**
         * the JS code (receiver) analises the websocket message
         * and then decides whether or not to update the UI using
         * a HTMX.ajax request.
         */
-        tools.update_chat_list()
-        if (this.sender_id === user_id){
+        tools.updateChatList()
+        if (this.senderId === userId){
             return
         }
-        this.app.new_message = true
+        this.app.newMessage = true
         if (document.getElementById('contact-name') !== null){
-            if (sessionStorage.getItem('chat_id') === this.chat_id) {
-                htmx.ajax('GET', `/display_chat/${sessionStorage.getItem('chat_id')}`, '#chat-display').then(() => {
-                    tools.scroll_to_bottom()
+            if (sessionStorage.getItem('chatId') === this.chatId) {
+                htmx.ajax('GET', `/display_chat/${sessionStorage.getItem('chatId')}`, '#chat-display').then(() => {
+                    tools.scrollToBottom()
                 })
                 
             } 
@@ -154,74 +154,74 @@ class ChatWebSocket{
 
     /**
      * 
-     * @param {String} contact_name 
+     * @param {String} contactName 
      */
-    handle_chat_creation(contact_name){
-        if (this.app.timeout_id) {
-            clearTimeout(this.app.timeout_id)
-            this.app.timeout_id = null
+    handleChatCreation(contactName){
+        if (this.app.timeoutId) {
+            clearTimeout(this.app.timeoutId)
+            this.app.timeoutId = null
         }
-        tools.reset_chat_form(this.app.chat_form)
+        tools.resetChatForm(this.app.chatForm)
         tools.triggerNotification('Server', 
-            `The chat with ${contact_name} was created successfully!! Update your chat list by clicking the "chats" button.`,
-            this.app.notification_audio)
-        tools.update_chat_list()
+            `The chat with ${contactName} was created successfully!! Update your chat list by clicking the "chats" button.`,
+            this.app.notificationAudio)
+        tools.updateChatList()
     }
 
     /**
      * 
-     * @param {String} contact_name 
+     * @param {String} contactName 
      */
-    handle_contact_creation(contact_name){
-        if (this.app.timeout_id) {
-            clearTimeout(this.app.timeout_id)
-            this.app.timeout_id = null
+    handleContactCreation(contactName){
+        if (this.app.timeoutId) {
+            clearTimeout(this.app.timeoutId)
+            this.app.timeoutId = null
         }
-        tools.reset_contact_form(this.app.contact_form)
+        tools.resetContactForm(this.app.contactForm)
         tools.triggerNotification('Server', 
-            `The contact ${contact_name} was created successfully! 
+            `The contact ${contactName} was created successfully! 
             Update your contacts list by clicking the "contacts" button.`,
-            this.app.notification_audio)
-        tools.update_contact_list()
+            this.app.notificationAudio)
+        tools.updateContactList()
     }
 
     /**
      * 
-     * @param {String} group_name 
+     * @param {String} groupName 
      */
-    handle_group_creation(group_name){
-        if (this.app.timeout_id) {
-            clearTimeout(this.app.timeout_id)
-            this.app.timeout_id = null
+    handleGroupCreation(groupName){
+        if (this.app.timeoutId) {
+            clearTimeout(this.app.timeoutId)
+            this.app.timeoutId = null
         }
-        tools.reset_chat_form(this.app.chat_form)
+        tools.resetChatForm(this.app.chatForm)
         tools.triggerNotification('Server', 
-            `The group ${group_name} was created successfully!! Update your chat list by clicking the "chats" button.`,
-            this.app.notification_audio)
-        tools.update_chat_list()
+            `The group ${groupName} was created successfully!! Update your chat list by clicking the "chats" button.`,
+            this.app.notificationAudio)
+        tools.updateChatList()
     }
 
     /**
      * 
-     * @param {String} chat_opener_id 
-     * @param {String} chat_id 
+     * @param {String} chatOpenerId 
+     * @param {String} chatId 
      */
-    handle_chat_opening(chat_opener_id, chat_id){
-        if (chat_opener_id !== user_id && document.getElementById(chat_id)) {
-            tools.update_chat_list()
+    handleChatOpening(chatOpenerId, chatId){
+        if (chatOpenerId !== userId && document.getElementById(chatId)) {
+            tools.updateChatList()
         }
     }
 
 }
 
 class StatusWebSocket {
-    constructor({url = '', parent_app_class = null}){
-        this.client_websocket = new WebSocket(url)
-        this.app = parent_app_class
-        this.client_websocket.onopen = () => {
+    constructor({url = '', parentAppClass = null}){
+        this.clientWebSocket = new WebSocket(url)
+        this.app = parentAppClass
+        this.clientWebSocket.onopen = () => {
             console.log('CONNECTION OPENED WITH STATUS WEBSOCKET')
-            window.delete_status = (button) => {
-                tools.send_to_websocket(this.client_websocket, {
+            window.deleteStatus = (button) => {
+                tools.sendToWebsocket(this.clientWebSocket, {
                     'type':'DELETE',
                     'user_id': button.dataset.creator,
                     'status_id': button.dataset.status
@@ -230,33 +230,33 @@ class StatusWebSocket {
 
             }
         }
-        this.client_websocket.onmessage = async (event) => {
-            const status_data = JSON.parse(event.data)
-            if (status_data.type === 'status_notification'){
-                await this.handle_status_notification(status_data.user_id, status_data.sender_phone_number)
+        this.clientWebSocket.onmessage = async (event) => {
+            const statusData = JSON.parse(event.data)
+            if (statusData.type === 'status_notification'){
+                await this.handleStatusNotification(statusData.user_id, statusData.sender_phone_number)
             }
             // if the status UI is already displayed and the user status modal is hidden, reload the view
             // to be able to see the brand new contact status....
-            const status_modals = document.querySelectorAll('.status-modal')
-            const status_modals_showing = tools.at_least_one_attr(status_modals, 'status', 'showing')
+            const statusModals = document.querySelectorAll('.status-modal')
+            const statusModalsShowing = tools.atLeastOneAttr(statusModals, 'status', 'showing')
             if (document.getElementById('contact-statuses-list') !== null){
-                status_app = {
-                    pending_updates : true
+                statusApp = {
+                    pendingUpdates : true
                 }
-                if (!status_modals_showing){
+                if (!statusModalsShowing){
                     htmx.ajax('GET', '/statuses', '#chats-and-more')
                     .then( () => {
-                        status_app.pending_updates = false
+                        statusApp.pendingUpdates = false
                     })
                 } 
             }
         }
-        this.client_websocket.onerror = (error) => {
+        this.clientWebSocket.onerror = (error) => {
             console.log('WS State:', this.readyState);
             console.log('WS Error:', error)
         };
 
-        this.client_websocket.onclose = (event) => {
+        this.clientWebSocket.onclose = (event) => {
             console.log('WS Closed. Code:', event.code, 'Reason:', event.reason);
             console.log('Was clean?:', event.wasClean);
         }
@@ -264,67 +264,67 @@ class StatusWebSocket {
 
     /**
      * Send the status' data to the websocket to create a new status.
-     * @param {String} user_id 
-     * @param {String} user_phone_number 
+     * @param {String} userId 
+     * @param {String} userPhoneNumber 
      * @param {String} text 
-     * @param {String} image_src 
+     * @param {String} imageSrc 
      * @param {String} color 
      */
-    send_status(user_id, user_phone_number, text, image_src, color){
-        tools.send_to_websocket(this.client_websocket, {
+    sendStatus(userId, userPhoneNumber, text, imageSrc, color){
+        tools.sendToWebsocket(this.clientWebSocket, {
             'type': 'CREATE',
-            'user_id': user_id,
-            'sender_phone_number': user_phone_number,
+            'user_id': userId,
+            'sender_phone_number': userPhoneNumber,
             'text': text,
-            'image': image_src,
+            'image': imageSrc,
             'color': color,
         })
     }
 
     /**
      * 
-     * @param {Object} status_sender_data The data
+     * @param {Object} statusSenderData The data
      * of the one who uploaded the status.
      */
-    display_status_notification(status_sender_data){
+    displayStatusNotification(statusSenderData){
         // if the contacts IS NOT muted from statuses
         // display a notification
-        if (!status_sender_data[0].statuses_muted){
-            tools.triggerNotification('Server', `${status_sender_data[0].name} uploaded a status!!!`, 
-                this.app.status_notification_audio)
+        if (!statusSenderData[0].statuses_muted){
+            tools.triggerNotification('Server', `${statusSenderData[0].name} uploaded a status!!!`, 
+                this.app.statusNotificationAudio)
         }
     }
 
     /**
      * 
-     * @param {String} sender_id
-     * @param {String} sender_phone_number
+     * @param {String} senderId
+     * @param {String} senderPhoneNumber
      */
-    async handle_status_notification(sender_id, sender_phone_number){
-        // if the user_id of the user who triggered the message is not the same
+    async handleStatusNotification(senderId, senderPhoneNumber){
+        // if the userId of the user who triggered the message is not the same
         // as the auth user, think about displaying a notification.
-        if (sender_id !== user_id){
-            const status_sender_data = await tools.get(`/api/contacts/?phone_number=${sender_phone_number}&created_by=${user_id}`)
+        if (senderId !== userId){
+            const statusSenderData = await tools.get(`/api/contacts/?phone_number=${senderPhoneNumber}&created_by=${userId}`)
             debugger
-            this.display_status_notification(status_sender_data)
+            this.displayStatusNotification(statusSenderData)
         }
         // otherwise, it means that the user
         // used the form, so clean it and display a success notification
         else {
             debugger
-            if (this.app.timeout_id) {
-                clearTimeout(this.app.timeout_id)
-                this.app.timeout_id = null
+            if (this.app.timeoutId) {
+                clearTimeout(this.app.timeoutId)
+                this.app.timeoutId = null
             }
-            const image_container = this.app.status_image_preview_container
-            tools.reset_status_form(this.app.status_form, image_container)
+            const imageContainer = this.app.statusImagePreviewContainer
+            tools.resetStatusForm(this.app.statusForm, imageContainer)
             // if the image preview exists in memory, delete it.
-            if (image_container) {
-                this.app.status_image_preview_container = null
+            if (imageContainer) {
+                this.app.statusImagePreviewContainer = null
             }
             //notify the user
             tools.triggerNotification('Server', 'Status uploaded successfully!',
-                this.app.notification_audio
+                this.app.notificationAudio
             )
         }   
     }
@@ -336,152 +336,152 @@ class App {
     constructor(){
         // set up all the variables needed
         window.user = document.getElementById('profile-pic')
-        window.user_id = user.getAttribute('data-user')
-        window.user_phone_number = user.getAttribute('data-phone')
+        window.userId = user.getAttribute('data-user')
+        window.userPhoneNumber = user.getAttribute('data-phone')
         // sets the Websocket protocol depending on the WEB protocol
         this.protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-        this.chat_websocket = new ChatWebSocket({url: `${this.protocol}//${window.location.host}/`,
-                                                    parent_app_class: this})
-        this.status_websocket = new StatusWebSocket({url: `${this.protocol}//${window.location.host}/status/`,
-                                                    parent_app_class: this})
-        this.chats_and_more = document.getElementById("chats-and-more")
-        this.chat_form = document.getElementById("chat-creation-form")
-        this.chat_submit_button = document.getElementById('chat-submit-btn')
-        this.chat_modal = document.getElementById('NewChat')
-        this.chat_display = document.getElementById('chat-display')
-        this.contact_form = document.getElementById("contact-creation-form")
-        this.contact_submit_button = document.getElementById('contact-submit-btn')
-        this.contact_modal = document.getElementById('NewContact')
-        this.status_form = document.getElementById('status_form')
-        this.status_modal = document.getElementById('CreateStatusModal')
-        this.status_submit_button = document.getElementById('status-submit-btn')
-        this.status_image_preview_container = null
-        this.status_image_input = document.getElementById('id_image')
-        this.notification_audio = new Audio('static/Audio/app/notification.mp3')
-        this.message_received_audio = new Audio('static/Audio/app/message_received.mp3')
-        this.message_sent_audio = new Audio('static/Audio/app/message_sent.mp3')
-        this.error_audio = new Audio('static/Audio/app/error_sound.mp3')
-        this.status_notification_audio = new Audio('static/Audio/app/new_status.mp3')
-        this.new_message = false
-        this.timeout_id = null
-        this.timeout_length = 5000
-        this.debug_logs = 'relevant'
-        this.debugging_mode = true
+        this.chatWebSocket = new ChatWebSocket({url: `${this.protocol}//${window.location.host}/`,
+                                                    parentAppClass: this})
+        this.statusWebSocket = new StatusWebSocket({url: `${this.protocol}//${window.location.host}/status/`,
+                                                    parentAppClass: this})
+        this.chatsAndMore = document.getElementById("chats-and-more")
+        this.chatForm = document.getElementById("chat-creation-form")
+        this.chatSubmitButton = document.getElementById('chat-submit-btn')
+        this.chatModal = document.getElementById('NewChat')
+        this.chatDisplay = document.getElementById('chat-display')
+        this.contactForm = document.getElementById("contact-creation-form")
+        this.contactSubmitButton = document.getElementById('contact-submit-btn')
+        this.contactModal = document.getElementById('NewContact')
+        this.statusForm = document.getElementById('status_form')
+        this.statusModal = document.getElementById('CreateStatusModal')
+        this.statusSubmitButton = document.getElementById('status-submit-btn')
+        this.statusImagePreviewContainer = null
+        this.statusImageInput = document.getElementById('id_image')
+        this.notificationAudio = new Audio('static/Audio/app/notification.mp3')
+        this.messageReceivedAudio = new Audio('static/Audio/app/message_received.mp3')
+        this.messageSentAudio = new Audio('static/Audio/app/message_sent.mp3')
+        this.errorAudio = new Audio('static/Audio/app/error_sound.mp3')
+        this.statusNotificationAudio = new Audio('static/Audio/app/new_status.mp3')
+        this.newMessage = false
+        this.timeoutId = null
+        this.timeoutLength = 5000
+        this.debugLogs = 'relevant'
+        this.debuggingMode = true
         
     }
 
-    load_event_listeners(){
-        this.chat_form.onsubmit = async (event) => {
+    loadEventListeners(){
+        this.chatForm.onsubmit = async (event) => {
             debugger
             event.preventDefault()
-            tools.set_button_loading(this.chat_submit_button)
-            const chat_form_validation = await tools.validate_chat_form(this.chat_form)
-            const validation_message_container = document.getElementById('chat-validation-message')
-            if (!chat_form_validation.is_valid){
-                this.error_audio.play()
-                tools.showValidationErrorMessage(validation_message_container, chat_form_validation.message)
-                tools.set_button_ready(this.chat_submit_button)
+            tools.setButtonLoading(this.chatSubmitButton)
+            const chatFormValidation = await tools.validateChatForm(this.chatForm)
+            const validationMessageContainer = document.getElementById('chat-validation-message')
+            if (!chatFormValidation.isValid){
+                this.errorAudio.play()
+                tools.showValidationErrorMessage(validationMessageContainer, chatFormValidation.message)
+                tools.setButtonReady(this.chatSubmitButton)
             }
             else{
-                if (chat_form_validation.intention === 'create_chat') {
-                    tools.create_chat_via_consumer(this.chat_form, this.chat_websocket.client_websocket)
-                    this.timeout_id = setTimeout (() => {
-                        tools.notify_form_submission_timeout(this.chat_submit_button, this.error_audio)
-                    }, this.timeout_length)
+                if (chatFormValidation.intention === 'create_chat') {
+                    tools.createChatViaConsumer(this.chatForm, this.chatWebSocket.clientWebSocket)
+                    this.timeoutId = setTimeout (() => {
+                        tools.notifyFormSubmissionTimeout(this.chatSubmitButton, this.errorAudio)
+                    }, this.timeoutLength)
                 }
                 else {
-                    const group_name_container = this.chat_form.querySelector('input[type="text"]')
-                    const group_name = group_name_container.value.trim()
-                    tools.create_group_via_consumer(this.chat_form, 
-                        this.chat_websocket.client_websocket, group_name)
-                    this.timeout_id = setTimeout (() => {
-                        tools.notify_form_submission_timeout(this.chat_submit_button, this.error_audio)
-                    }, this.timeout_length)
+                    const groupNameContainer = this.chatForm.querySelector('input[type="text"]')
+                    const groupName = groupNameContainer.value.trim()
+                    tools.createGroupViaConsumer(this.chatForm, 
+                        this.chatWebSocket.clientWebSocket, groupName)
+                    this.timeoutId = setTimeout (() => {
+                        tools.notifyFormSubmissionTimeout(this.chatSubmitButton, this.errorAudio)
+                    }, this.timeoutLength)
                     
                 }
             }
         }
-        this.contact_form.onsubmit = async (event) => {
+        this.contactForm.onsubmit = async (event) => {
             debugger
             event.preventDefault()
-            tools.set_button_loading(this.contact_submit_button)
-            const contact_form_validation = await tools.validate_contact_form(this.contact_form)
-            if (contact_form_validation.is_valid) {
-                tools.create_contact_via_consumer(this.contact_form, this.chat_websocket.client_websocket)
-                this.timeout_id = setTimeout (() => {
-                    tools.notify_form_submission_timeout(this.contact_submit_button, this.error_audio)
-                }, this.timeout_length)
+            tools.setButtonLoading(this.contactSubmitButton)
+            const contactFormValidation = await tools.validateContactForm(this.contactForm)
+            if (contactFormValidation.isValid) {
+                tools.createContactViaConsumer(this.contactForm, this.chatWebSocket.clientWebSocket)
+                this.timeoutId = setTimeout (() => {
+                    tools.notifyFormSubmissionTimeout(this.contactSubmitButton, this.errorAudio)
+                }, this.timeoutLength)
             }
             else {
-                const validation_message_container = document.getElementById('contact-validation-message')
-                tools.showValidationErrorMessage(validation_message_container, contact_form_validation.message)
-                this.error_audio.play()
-                tools.set_button_ready(this.contact_submit_button)
+                const validationMessageContainer = document.getElementById('contact-validation-message')
+                tools.showValidationErrorMessage(validationMessageContainer, contactFormValidation.message)
+                this.errorAudio.play()
+                tools.setButtonReady(this.contactSubmitButton)
             }
         }
 
-        this.status_form.onsubmit = (event) => {
+        this.statusForm.onsubmit = (event) => {
             debugger
             event.preventDefault();
-            tools.set_button_loading(this.status_submit_button)
-            const status_form_validaton = tools.validate_status_form(this.status_form)
-            if (status_form_validaton.is_valid) {
-                const status_input = document.getElementById('id_text')
-                const image_container = this.status_image_preview_container
-                const image = image_container !== null ? image_container.firstElementChild : null
-                const color_field = document.getElementById('id_color')
-                this.status_websocket.send_status(
-                    user_id,
-                    user_phone_number,
-                    status_input.value,
+            tools.setButtonLoading(this.statusSubmitButton)
+            const statusFormValidaton = tools.validateStatusForm(this.statusForm)
+            if (statusFormValidaton.isValid) {
+                const statusInput = document.getElementById('id_text')
+                const imageContainer = this.statusImagePreviewContainer
+                const image = imageContainer !== null ? imageContainer.firstElementChild : null
+                const colorField = document.getElementById('id_color')
+                this.statusWebSocket.sendStatus(
+                    userId,
+                    userPhoneNumber,
+                    statusInput.value,
                     image !== null ? image.src : null,
-                    color_field.value
+                    colorField.value
                 )
-                this.timeout_id = setTimeout (() => {
-                    tools.notify_form_submission_timeout(this.status_submit_button, this.error_audio)
-                }, this.timeout_length)
+                this.timeoutId = setTimeout (() => {
+                    tools.notifyFormSubmissionTimeout(this.statusSubmitButton, this.errorAudio)
+                }, this.timeoutLength)
             } 
             else {
-                const validation_message_container = document.getElementById('status-validation-message')
-                tools.showValidationErrorMessage(validation_message_container, status_form_validaton.message)
-                this.error_audio.play()
-                tools.set_button_ready(this.status_submit_button)
+                const validationMessageContainer = document.getElementById('status-validation-message')
+                tools.showValidationErrorMessage(validationMessageContainer, statusFormValidaton.message)
+                this.errorAudio.play()
+                tools.setButtonReady(this.statusSubmitButton)
             }
             
 
         }
         // gets the image preview div and updates it on input.
-        this.status_image_input.oninput = () => {
+        this.statusImageInput.oninput = () => {
             debugger
-            const input_was_cleaned = this.status_image_input.files.length === 0
-            if (input_was_cleaned) {
-                const image = this.status_image_preview_container
+            const inputWasCleaned = this.statusImageInput.files.length === 0
+            if (inputWasCleaned) {
+                const image = this.statusImagePreviewContainer
                 image.remove()
-                this.status_image_preview_container = null
+                this.statusImagePreviewContainer = null
             }
             else {
-                tools.previewImage(this.status_image_input, this.status_image_preview_container)
-                this.status_image_preview_container = document.getElementById('status-imagePreview')
+                tools.previewImage(this.statusImageInput, this.statusImagePreviewContainer)
+                this.statusImagePreviewContainer = document.getElementById('status-imagePreview')
             }
         }
 
         // resets the chat form values and validation errors when the modal is closed.
-        this.chat_modal.addEventListener('hidden.bs.modal', () => {
-            tools.reset_chat_form(this.chat_form)
+        this.chatModal.addEventListener('hidden.bs.modal', () => {
+            tools.resetChatForm(this.chatForm)
         })
         // resets the contact form values and validation errors when the modal is closed.
-        this.contact_modal.addEventListener('hidden.bs.modal', () => {
-            tools.reset_contact_form(this.contact_form)
+        this.contactModal.addEventListener('hidden.bs.modal', () => {
+            tools.resetContactForm(this.contactForm)
         })
 
         // same for the status modal.
-        this.status_modal.addEventListener('hidden.bs.modal', () => {
-            tools.reset_status_form(this.status_form, this.status_image_preview_container)
+        this.statusModal.addEventListener('hidden.bs.modal', () => {
+            tools.resetStatusForm(this.statusForm, this.statusImagePreviewContainer)
         })
 
         window.addEventListener('keydown', (event) => {
             if (event.key === 'Escape') {
-                tools.close_chat()
+                tools.closeChat()
             }
         })
     }
@@ -493,46 +493,46 @@ class App {
  * Tells the websocket to reconnect to the provided chat channel.
  * @param {HTMLElement} chat 
  */
-window.summon_chat = function(chat, chat_websocket){
-    const chat_members_phones_container = document.getElementById(chat.dataset.chatMembersPhonesDataId)
-    const chat_members_phones = JSON.parse(chat_members_phones_container.firstChild.textContent)
-    tools.send_to_websocket(chat_websocket, {
+window.summonChat = function(chat, chatWebSocket){
+    const chatMembersPhonesContainer = document.getElementById(chat.dataset.chatMembersPhonesDataId)
+    const chatMembersPhones = JSON.parse(chatMembersPhonesContainer.firstChild.textContent)
+    tools.sendToWebsocket(chatWebSocket, {
         'type':'reconnect',
         'reconnect_to': chat.dataset.chat
     })
-    sessionStorage.setItem('receiver_username', chat.dataset.contact)
-    sessionStorage.setItem('chat_id', chat.dataset.chat)
-    sessionStorage.setItem('chat_members_phones', chat_members_phones)
+    sessionStorage.setItem('receiverUsername', chat.dataset.contact)
+    sessionStorage.setItem('chatId', chat.dataset.chat)
+    sessionStorage.setItem('chatMembersPhones', chatMembersPhones)
     // clears this key to avoid bugs
-    sessionStorage.removeItem('reply_to')
+    sessionStorage.removeItem('replyTo')
 
 }
 
 /**
  * Notifies to the websocket that the user is opening a chat.
  * @param {HTMLElement} chat 
- * @param {WebSocket} chat_websocket 
+ * @param {WebSocket} chatWebSocket 
  */
-window.notifyChatOpening = function(chat, chat_websocket){
+window.notifyChatOpening = function(chat, chatWebSocket){
     debugger
-    tools.send_to_websocket(chat_websocket, {
+    tools.sendToWebsocket(chatWebSocket, {
         'type': 'chat_opening',
-        'chat_opener_id': user_id,
+        'chat_opener_id': userId,
         'chat_id': chat.id,
-        'chat_members_phones': sessionStorage.getItem('chat_members_phones'),
+        'chat_members_phones': sessionStorage.getItem('chatMembersPhones'),
     })
 }
 
 
-tools.load_global_doc_functions()
+tools.loadGlobalDocFunctions()
 
 document.addEventListener('DOMContentLoaded', () => {
     const main = new App()
     window.cleanupFunctions = new Map();
-    main.load_event_listeners()
-    window.chat_websocket = main.chat_websocket.client_websocket
+    main.loadEventListeners()
+    window.chatWebSocket = main.chatWebSocket.clientWebSocket
     // Callback function to execute when mutations are observed
-    const chat_mutation_callback = function(mutationsList, observer) {
+    const chatMutationCallback = function(mutationsList, observer) {
         for (const mutation of mutationsList) {
             if (mutation.type === 'childList') {
                 // Check if a new element is added
@@ -540,9 +540,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 for (const addedNode of addedNodes) {
                     // Check if it's a footer element node
                     if (addedNode.nodeType === 1 && addedNode.tagName === 'FOOTER'){ 
-                        window.new_message_input = document.getElementById('new-message')
-                        window.new_message_button = document.getElementById('send-message-button')
-                        window.delete_message_option_buttons = document.querySelectorAll('.delete-message')
+                        window.newMessageInput = document.getElementById('new-message')
+                        window.newMessageButton = document.getElementById('send-message-button')
+                        window.deleteMessageOptionButtons = document.querySelectorAll('.delete-message')
                         const imageInputCaller = document.getElementById('imageInputCaller')
                         const imageInput = document.getElementById('imageInput')
                         const imagePreview = document.getElementById('imagePreview')
@@ -551,10 +551,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         });
 
                         
-                        delete_message_option_buttons.forEach( button => {
+                        deleteMessageOptionButtons.forEach( button => {
                             button.onclick = function() {
                                 // scroll to bottom after deleting the message
-                                setTimeout(tools.scroll_to_bottom, 1000)
+                                setTimeout(tools.scrollToBottom, 1000)
                             }})
                         
                         imageInputCaller.addEventListener('click', (event) => {
@@ -563,12 +563,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         })
                         
                         
-                        new_message_input.addEventListener('keypress', (event) => {
-                            if (event.key === 'Enter' && (new_message_input.value !== '' || imageInput.value !== '')){
+                        newMessageInput.addEventListener('keypress', (event) => {
+                            if (event.key === 'Enter' && (newMessageInput.value !== '' || imageInput.value !== '')){
                                 let image = document.getElementById('imagePreview').firstElementChild
-                                main.chat_websocket.send_message('message', new_message_input.value, imageInput.value !== '' ? image.src : '', user_id)
+                                main.chatWebSocket.sendMessage('message', newMessageInput.value, imageInput.value !== '' ? image.src : '', userId)
                                 
-                                new_message_input.value = ''
+                                newMessageInput.value = ''
                                 //deletes the selected image
                                 if (imageInput.value != ''){
                                     imageInput.value = ''
@@ -577,42 +577,42 @@ document.addEventListener('DOMContentLoaded', () => {
                             }})
                         
                     
-                        new_message_button.onclick = () => {
-                            if (new_message_input.value !== '' || imageInput.value !== ''){
+                        newMessageButton.onclick = () => {
+                            if (newMessageInput.value !== '' || imageInput.value !== ''){
                                 let image = document.getElementById('imagePreview').firstElementChild    
-                                main.chat_websocket.send_message('message', new_message_input.value, imageInput.value !== '' ? image.src : '', user_id)
+                                main.chatWebSocket.sendMessage('message', newMessageInput.value, imageInput.value !== '' ? image.src : '', userId)
                                 
-                                new_message_input.value = ''
+                                newMessageInput.value = ''
                                 //deletes the selected image
                                 if (imageInput.value != ''){
                                     imageInput.value = ''
                                     image.remove()
                                 }}}
-                            tools.scroll_to_bottom()
+                            tools.scrollToBottom()
 
                     }}}}};
 
-    const general_mutations_callback = function(mutationsList, observer) {
+    const generalMutationsCallback = function(mutationsList, observer) {
         for (let index = 0; index < mutationsList.length; index++) {
             // only trigger all the tooltips if the last mutation
             // has been made
             if (index + 1 === mutationsList.length){
-                tools.trigger_tooltips()
+                tools.triggerTooltips()
             }
             
         }
 
     };
     // Create a MutationObserver with the callback
-    const chat_observer = new MutationObserver(chat_mutation_callback)
-    const general_observer = new MutationObserver(general_mutations_callback)
+    const chatObserver = new MutationObserver(chatMutationCallback)
+    const generalObserver = new MutationObserver(generalMutationsCallback)
 
     // Configure the observer to watch for changes in the container's children
     const observerConfig = { childList: true };
 
     // Start observing the target container
-    chat_observer.observe(main.chat_display, observerConfig);
-    general_observer.observe(main.chats_and_more, observerConfig)
+    chatObserver.observe(main.chatDisplay, observerConfig);
+    generalObserver.observe(main.chatsAndMore, observerConfig)
     /**
      * Log htmx events in a comprehensive way.
      * @param {HTMLElement} elt 
@@ -621,18 +621,18 @@ document.addEventListener('DOMContentLoaded', () => {
      */
     htmx.logger = async function(elt, event, data) {
         // debugging :)
-        if (main.debugging_mode && data){
-            let previous_event = data
-            if (main.debug_logs === 'issues'){
+        if (main.debuggingMode && data){
+            let previousEvent = data
+            if (main.debugLogs === 'issues'){
                 if(data.pathInfo){
                     if(!data.pathInfo.responsePath && !data.successful){
                         console.log('AN ERROR HAS OCURRED')
-                        console.log("PREVIOUS EVENT DATA:\n", previous_event)
+                        console.log("PREVIOUS EVENT DATA:\n", previousEvent)
                         console.log("ACTUAL EVENT:\n", data)
                     }
                 }
             }
-            else if (main.debug_logs === 'relevant'){
+            else if (main.debugLogs === 'relevant'){
                 console.log('EVENT CALLED:', event)
                 console.log('ELEMENT THAT ISSUED THE REQUEST:', elt)
                 if(data.pathInfo){
@@ -649,20 +649,20 @@ document.addEventListener('DOMContentLoaded', () => {
         // sets a global variable with the 'scrollable view' height before loaidng the messages
         if(event.detail.pathInfo.requestPath.includes('previous_messages')){
             const messages = document.getElementById('chat-messages')
-            window.previous_scrollable_view = messages.scrollHeight - messages.clientHeight
+            window.previousScrollableView = messages.scrollHeight - messages.clientHeight
         }
     })
     htmx.on('htmx:afterSettle', (event) => {
         // scroll to the previous scroll height before loading older messages
         if(event.detail.pathInfo.requestPath.includes('previous_messages')){
             const messages = document.getElementById('chat-messages')
-            const actual_scrollable_view = messages.scrollHeight - messages.clientHeight
-            messages.scroll(0, actual_scrollable_view - previous_scrollable_view)
+            const actualScrollableView = messages.scrollHeight - messages.clientHeight
+            messages.scroll(0, actualScrollableView - previousScrollableView)
         }
         else if(event.detail.pathInfo.requestPath.includes('edit_message') && event.detail.requestConfig.verb !== 'get'){
             // same logic as real-time message deletion
             // but this is due to a message edition
-            main.chat_websocket.send_message('message_edition', '', '', user_id)
+            main.chatWebSocket.sendMessage('message_edition', '', '', userId)
         }
         else if(event.detail.pathInfo.requestPath.includes('delete_message')){
             /**
@@ -672,42 +672,42 @@ document.addEventListener('DOMContentLoaded', () => {
              * and then decides whether or not to update the UI using
              * a HTMX.ajax request.
              */
-            main.chat_websocket.send_message('message_deletion', '', '', user_id)
+            main.chatWebSocket.sendMessage('message_deletion', '', '', userId)
         }
         else if (event.detail.pathInfo.requestPath === '/statuses/'){
-            window.user_statuses_caller = document.querySelector('#user-status-caller')
-            window.user_status_modal = document.querySelector(`#user-status-modal${user_id}`)
-            window.contacts_status_modals = document.querySelectorAll('.contact-status-modal')
-            window.status_deletion_buttons = document.querySelectorAll('.status-deletion')
-            window.contacts_with_statuses_caller = document.querySelectorAll('.contact-status-caller')
+            window.userStatusesCaller = document.querySelector('#user-status-caller')
+            window.userStatusModal = document.querySelector(`#user-status-modal${userId}`)
+            window.contactsStatusModals = document.querySelectorAll('.contact-status-modal')
+            window.statusDeletionButtons = document.querySelectorAll('.status-deletion')
+            window.contactsWithStatusesCaller = document.querySelectorAll('.contact-status-caller')
             window.carousel = null
         }
         // loads the default emojis
         if (event.detail.pathInfo.requestPath.includes('display_chat')){
-            const emoji_container = document.getElementById('emojis-container')
-            const emoji_class = document.querySelector('.emoji-class-active')
-            tools.load_emojis(emoji_class.dataset.emojiPack, emoji_container)
+            const emojiContainer = document.getElementById('emojis-container')
+            const emojiClass = document.querySelector('.emoji-class-active')
+            tools.loadEmojis(emojiClass.dataset.emojiPack, emojiContainer)
             // UPDATE THE CHAT LIST IF THERE WERE UNREAD MESSAGES
-            const unread_messages_counter = document.getElementById(`chat-${sessionStorage.getItem('chat_id')}unread-counter`)
-            if (unread_messages_counter){
-                tools.update_chat_list()
+            const unreadMessagesCounter = document.getElementById(`chat-${sessionStorage.getItem('chatId')}unread-counter`)
+            if (unreadMessagesCounter){
+                tools.updateChatList()
             }
         }
     })
     htmx.on('htmx:beforeRequest', (event) => {
         // cancel the request if the requested chats is already displayed.
         if(event.detail.pathInfo.requestPath.includes('display_chat')){
-            if(main.new_message){
-                main.new_message = false
+            if(main.newMessage){
+                main.newMessage = false
                 return
             }
-            const displayed_chat =  document.getElementById('displayed-chat-info')
-            if(displayed_chat){
-                const url_params = event.detail.pathInfo.requestPath.split('/')
-                const chat_id = displayed_chat.dataset.displayedChat
+            const displayedChat =  document.getElementById('displayed-chat-info')
+            if(displayedChat){
+                const urlParams = event.detail.pathInfo.requestPath.split('/')
+                const chatId = displayedChat.dataset.displayedChat
                 // if the id of the displayed chat is the same as requested chat id
                 // abort the request
-                if(chat_id === url_params[url_params.length - 1]){
+                if(chatId === urlParams[urlParams.length - 1]){
                     event.preventDefault()
                 }
             }

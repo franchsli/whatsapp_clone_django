@@ -1,4 +1,4 @@
-const dark_theme = () => {
+const darkTheme = () => {
     const html = document.querySelector('html')
     html.setAttribute('data-bs-theme', 'dark')
     const icon = document.getElementById('theme-icon')
@@ -7,7 +7,7 @@ const dark_theme = () => {
         icon.classList.add('bi-sun-fill')
         localStorage.setItem('theme', 'dark')}
 }
-const light_theme = () => {
+const lightTheme = () => {
     const html = document.querySelector('html')
     html.setAttribute('data-bs-theme', 'light')
     const icon = document.getElementById('theme-icon')
@@ -16,20 +16,20 @@ const light_theme = () => {
         icon.classList.add('bi-moon-fill')
         localStorage.setItem('theme', 'light')}
 }
-const switch_theme = () => {
-    const actual_theme = localStorage.getItem('theme')
-    actual_theme === 'light' ? dark_theme(): light_theme()
+const switchTheme = () => {
+    const actualTheme = localStorage.getItem('theme')
+    actualTheme === 'light' ? darkTheme(): lightTheme()
 
 
 }
 
-const apply_current_theme = () => {
-    const actual_theme = localStorage.getItem('theme')
-    actual_theme === 'light' ? light_theme(): dark_theme()
+const applyCurrentTheme = () => {
+    const actualTheme = localStorage.getItem('theme')
+    actualTheme === 'light' ? lightTheme(): darkTheme()
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    apply_current_theme()
+    applyCurrentTheme()
 })
 
 htmx.on('htmx:afterSettle', (event) => {
@@ -38,6 +38,6 @@ htmx.on('htmx:afterSettle', (event) => {
      * matches the icon with the actual theme.
      */
     if (event.detail.pathInfo.requestPath === '/display_user_ui/'){
-        apply_current_theme()
+        applyCurrentTheme()
     }
 })
