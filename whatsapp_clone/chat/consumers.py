@@ -162,6 +162,32 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
             }
         )
 
+    # These 3 methods below are used to send a
+    # confirmation to the request user
+    async def send_chat_creation(self, contact_name: str):
+        await self.send_json(
+            content={
+                "type": "chat_creation",
+                "contact_name": contact_name,
+            }
+        )
+
+    async def send_contact_creation(self, contact_name: str):
+        await self.send_json(
+            content={
+                "type": "contact_creation",
+                "contact_name": contact_name,
+            }
+        )
+
+    async def send_group_creation(self, group_name: str):
+        await self.send_json(
+            content={
+                "type": "group_creation",
+                "group_name": group_name,
+            }
+        )
+
     async def send_message_notifications(self, message_data: dict):
         for message_receiver_phone in message_data["chat_members_phones"].split(","):
             logger.debug(message_receiver_phone)
@@ -236,30 +262,6 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
                 "sender_contact_name": self.sender_contact_name,
                 "chat_id": message_data["chat_id"],
             },
-        )
-
-    async def send_chat_creation(self, contact_name: str):
-        await self.send_json(
-            content={
-                "type": "chat_creation",
-                "contact_name": contact_name,
-            }
-        )
-
-    async def send_contact_creation(self, contact_name: str):
-        await self.send_json(
-            content={
-                "type": "contact_creation",
-                "contact_name": contact_name,
-            }
-        )
-
-    async def send_group_creation(self, group_name: str):
-        await self.send_json(
-            content={
-                "type": "group_creation",
-                "group_name": group_name,
-            }
         )
 
     async def send_chat_opening(self, data: dict):
