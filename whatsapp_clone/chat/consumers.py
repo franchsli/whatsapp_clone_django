@@ -160,9 +160,7 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
         )
 
     async def send_message_notifications(self, message_data: dict):
-        for message_receiver_phone in message_data[
-            "chat_members_phones"
-        ].split(","):
+        for message_receiver_phone in message_data["chat_members_phones"].split(","):
             logger.debug(message_receiver_phone)
             logger.debug(f"user_group_{message_receiver_phone}")
             receiver_instance = await database_sync_to_async(get_user_by_phone)(
