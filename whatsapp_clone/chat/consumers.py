@@ -41,6 +41,16 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
         # a message needs to be created in the database with the dictionary data.
         if content_type == "message":
             logger.debug(self.user_instance.username)
+            await self.create_message(
+                content["sender_id"],
+                content["chat_id"],
+                content["message"],
+                content["image"],
+                content["reply_to"],
+            )
+            self.chat_instance = await database_sync_to_async(get_object_by_id)(
+                Chat, content["chat_id"]
+            )
             await self.channel_layer.group_send(
                 self.room_group_name,
                 {
@@ -50,19 +60,9 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
                     "image": content["image"],
                 },
             )
-            self.chat_instance = await database_sync_to_async(get_object_by_id)(
-                Chat, content["chat_id"]
-            )
             logger.debug(content["chat_members_phones"])
             logger.debug(type(content["chat_members_phones"]))
             await self.send_message_notifications(content)
-            await self.create_message(
-                content["sender_id"],
-                content["chat_id"],
-                content["message"],
-                content["image"],
-                content["reply_to"],
-            )
 
         # if the type of the 'request' is 'reconnect'
         # connect this consumer to another group
@@ -100,6 +100,9 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
             )
             await self.send_contact_creation(content["contact_name"])
 
+        # these two statements below don't update the database since
+        # the web API already does that before sending these type of
+        # messages
         elif content_type == "message_deletion":
             await self.send_message_deletion(content)
 
@@ -159,10 +162,34 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
             }
         )
 
+    # These 3 methods below are used to send a
+    # confirmation to the request user
+    async def send_chat_creation(self, contact_name: str):
+        await self.send_json(
+            content={
+                "type": "chat_creation",
+                "contact_name": contact_name,
+            }
+        )
+
+    async def send_contact_creation(self, contact_name: str):
+        await self.send_json(
+            content={
+                "type": "contact_creation",
+                "contact_name": contact_name,
+            }
+        )
+
+    async def send_group_creation(self, group_name: str):
+        await self.send_json(
+            content={
+                "type": "group_creation",
+                "group_name": group_name,
+            }
+        )
+
     async def send_message_notifications(self, message_data: dict):
-        for message_receiver_phone in message_data[
-            "chat_members_phones"
-        ].split(","):
+        for message_receiver_phone in message_data["chat_members_phones"].split(","):
             logger.debug(message_receiver_phone)
             logger.debug(f"user_group_{message_receiver_phone}")
             receiver_instance = await database_sync_to_async(get_user_by_phone)(
@@ -235,30 +262,6 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
                 "sender_contact_name": self.sender_contact_name,
                 "chat_id": message_data["chat_id"],
             },
-        )
-
-    async def send_chat_creation(self, contact_name: str):
-        await self.send_json(
-            content={
-                "type": "chat_creation",
-                "contact_name": contact_name,
-            }
-        )
-
-    async def send_contact_creation(self, contact_name: str):
-        await self.send_json(
-            content={
-                "type": "contact_creation",
-                "contact_name": contact_name,
-            }
-        )
-
-    async def send_group_creation(self, group_name: str):
-        await self.send_json(
-            content={
-                "type": "group_creation",
-                "group_name": group_name,
-            }
         )
 
     async def send_chat_opening(self, data: dict):
