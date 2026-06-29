@@ -159,8 +159,8 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
             }
         )
 
-    async def send_message_notifications(self, websocket_message_data: dict):
-        for message_receiver_phone in websocket_message_data[
+    async def send_message_notifications(self, message_data: dict):
+        for message_receiver_phone in message_data[
             "chat_members_phones"
         ].split(","):
             logger.debug(message_receiver_phone)
@@ -178,18 +178,18 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
                 f"user_group_{message_receiver_phone}",
                 {
                     "type": "chat_notification",
-                    "sender_id": websocket_message_data["sender_id"],
-                    "message": f"{websocket_message_data['message'] if len(websocket_message_data['message']) > 0 else 'Photo 📷'}",
+                    "sender_id": message_data["sender_id"],
+                    "message": f"{message_data['message'] if len(message_data['message']) > 0 else 'Photo 📷'}",
                     "sender_contact_name": f"{sender_contact_instance.name if sender_contact_instance else self.user_instance.phone_number}",
                     "chat_is_archived": chat_is_archived,
                 },
             )
 
-    async def send_message_edition(self, websocket_message_data: dict):
-        phones_in_chat = websocket_message_data["chat_members_phones"].split(",")
+    async def send_message_edition(self, message_data: dict):
+        phones_in_chat = message_data["chat_members_phones"].split(",")
         if len(phones_in_chat) > 1:
             self.chat_instance = await database_sync_to_async(get_object_by_id)(
-                Chat, websocket_message_data["chat_id"]
+                Chat, message_data["chat_id"]
             )
             self.sender_contact_name = self.chat_instance.name
         else:
@@ -205,17 +205,17 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
             self.room_group_name,
             {
                 "type": "chat_message_edition",
-                "sender_id": websocket_message_data["sender_id"],
+                "sender_id": message_data["sender_id"],
                 "sender_contact_name": self.sender_contact_name,
-                "chat_id": websocket_message_data["chat_id"],
+                "chat_id": message_data["chat_id"],
             },
         )
 
-    async def send_message_deletion(self, websocket_message_data: dict):
-        phones_in_chat = websocket_message_data["chat_members_phones"].split(",")
+    async def send_message_deletion(self, message_data: dict):
+        phones_in_chat = message_data["chat_members_phones"].split(",")
         if len(phones_in_chat) > 1:
             self.chat_instance = await database_sync_to_async(get_object_by_id)(
-                Chat, websocket_message_data["chat_id"]
+                Chat, message_data["chat_id"]
             )
             self.sender_contact_name = self.chat_instance.name
         else:
@@ -231,9 +231,9 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
             self.room_group_name,
             {
                 "type": "chat_message_deletion",
-                "sender_id": websocket_message_data["sender_id"],
+                "sender_id": message_data["sender_id"],
                 "sender_contact_name": self.sender_contact_name,
-                "chat_id": websocket_message_data["chat_id"],
+                "chat_id": message_data["chat_id"],
             },
         )
 
@@ -261,14 +261,14 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
             }
         )
 
-    async def send_chat_opening(self, content: dict):
-        for message_receiver_phone in content["chat_members_phones"].split(","):
+    async def send_chat_opening(self, data: dict):
+        for message_receiver_phone in data["chat_members_phones"].split(","):
             await self.channel_layer.group_send(
                 f"user_group_{message_receiver_phone}",
                 {
                     "type": "chat_opening",
-                    "chat_opener_id": content["chat_opener_id"],
-                    "chat_id": content["chat_id"],
+                    "chat_opener_id": data["chat_opener_id"],
+                    "chat_id": data["chat_id"],
                 },
             )
 
