@@ -41,6 +41,16 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
         # a message needs to be created in the database with the dictionary data.
         if content_type == "message":
             logger.debug(self.user_instance.username)
+            await self.create_message(
+                content["sender_id"],
+                content["chat_id"],
+                content["message"],
+                content["image"],
+                content["reply_to"],
+            )
+            self.chat_instance = await database_sync_to_async(get_object_by_id)(
+                Chat, content["chat_id"]
+            )
             await self.channel_layer.group_send(
                 self.room_group_name,
                 {
@@ -50,19 +60,9 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
                     "image": content["image"],
                 },
             )
-            self.chat_instance = await database_sync_to_async(get_object_by_id)(
-                Chat, content["chat_id"]
-            )
             logger.debug(content["chat_members_phones"])
             logger.debug(type(content["chat_members_phones"]))
             await self.send_message_notifications(content)
-            await self.create_message(
-                content["sender_id"],
-                content["chat_id"],
-                content["message"],
-                content["image"],
-                content["reply_to"],
-            )
 
         # if the type of the 'request' is 'reconnect'
         # connect this consumer to another group
@@ -100,6 +100,9 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
             )
             await self.send_contact_creation(content["contact_name"])
 
+        # these two statements below don't update the database since
+        # the web API already does that before sending these type of
+        # messages
         elif content_type == "message_deletion":
             await self.send_message_deletion(content)
 
