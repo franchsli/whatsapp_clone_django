@@ -914,6 +914,16 @@ function showValidationErrorMessage(container, message){
     container.innerText = message
 }
 
+/**
+ * Toggles the muted statuses list's display
+ * and the text of the given toggle button.
+ * @param {HTMLButtonElement} toggleButton
+ */
+function toggleMutedStatuses(toggleButton){
+    const mutedContactsStatuses = document.getElementById("muted-statuses-contact-list") 
+    toggleElementInnerText(toggleButton, 'Show', 'Hide') 
+    toggleElementDisplay(mutedContactsStatuses) 
+}
 
 /**
  * Loads many functions so they can be used
@@ -1072,6 +1082,10 @@ function loadDomFunctions(){
 
     window.handleArchiveFormSubmission = function(form){
         handleArchiveFormSubmission(form)
+    }
+
+    window.toggleMutedStatuses = function(toggleButton){
+        toggleMutedStatuses(toggleButton)
     }
 
 }
