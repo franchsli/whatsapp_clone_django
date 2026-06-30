@@ -1,8 +1,6 @@
 {% load static %}
 {% load filters %}
 {% load crispy_forms_tags %}
-<script type="text/javascript" src="{% static 'colorfield/colorfield.js' %}"></script>
-<script type="text/javascript" src="{% static 'colorfield/jscolor/jscolor.js' %}"></script>
 <nav class="d-flex align-items-center justify-content-between">
     <div class="row d-flex align-items-center p-3">
         <button class="arrow action btn col-auto ms-2" hx-get="{% url 'display_user_ui' %}" 
