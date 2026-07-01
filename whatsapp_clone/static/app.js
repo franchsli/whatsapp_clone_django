@@ -365,7 +365,7 @@ class App {
         this.newMessage = false
         this.timeoutId = null
         this.timeoutLength = 5000
-        this.debugLogs = 'relevant'
+        this.debugLogs = 'issues'
         this.debuggingMode = true
         this.eventDataBeforeIssue = null
         this.eventElementBeforeIssue = null
