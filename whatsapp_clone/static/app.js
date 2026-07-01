@@ -367,6 +367,8 @@ class App {
         this.timeoutLength = 5000
         this.debugLogs = 'relevant'
         this.debuggingMode = true
+        this.eventDataBeforeIssue = null
+        this.eventElementBeforeIssue = null
         
     }
 
@@ -619,19 +621,26 @@ document.addEventListener('DOMContentLoaded', () => {
      * @param {String} event 
      * @param {Object} data 
      */
-    htmx.logger = async function(elt, event, data) {
+    htmx.logger = function(elt, event, data) {
         // debugging :)
         if (main.debuggingMode && data){
-            let previousEvent = data
+            // logs all of the app request's issues 
             if (main.debugLogs === 'issues'){
                 if(data.pathInfo){
                     if(!data.pathInfo.responsePath && !data.successful){
                         console.log('AN ERROR HAS OCURRED')
-                        console.log("PREVIOUS EVENT DATA:\n", previousEvent)
-                        console.log("ACTUAL EVENT:\n", data)
+                        console.log("PREVIOUS EVENT DATA:\n", main.eventDataBeforeIssue)
+                        console.log("PREVIOUS EVENT ELEMENT:\n", main.eventElementBeforeIssue)
+                        console.log("CURRENT EVENT:\n", data)
+                        console.log("CURRENT ELEMENT:\n", elt)
+                    }
+                    else if (data.successful){
+                        main.eventDataBeforeIssue = data
+                        main.eventElementBeforeIssue = elt
                     }
                 }
             }
+            // logs all HTMX request events
             else if (main.debugLogs === 'relevant'){
                 console.log('EVENT CALLED:', event)
                 console.log('ELEMENT THAT ISSUED THE REQUEST:', elt)
