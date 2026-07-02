@@ -628,7 +628,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (main.debugLogs === 'issues'){
                 if(data.pathInfo){
                     if(!data.pathInfo.responsePath && !data.successful){
-                        console.log('AN ERROR HAS OCURRED')
+                        console.log('AN ERROR HAS OCCURRED')
                         console.log("PREVIOUS EVENT DATA:\n", main.eventDataBeforeIssue)
                         console.log("PREVIOUS EVENT ELEMENT:\n", main.eventElementBeforeIssue)
                         console.log("CURRENT EVENT:\n", data)
