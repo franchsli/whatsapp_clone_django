@@ -1,6 +1,71 @@
 
 # Whatsapp clone
 
+## Quickstart
+
+0.- Set up the database:
+
+Since this project uses PostgreSQL by default you should create a new db instance called "django_whatsapp".
+If you don't want to use PostgreSQL you need to reconfigure this project in settings.py after cloning it.
+
+1.- Clone this repository:
+
+                        git clone https://github.com/franchsli/whatsapp_clone_django.git
+
+2.- Create a virtual environment:
+
+                        python -m venv venv
+
+3.- Activate virtual environment.
+
+                        .\venv\Scripts\activate
+
+4.- Open the main directory:
+
+                        cd whatsapp_clone
+
+5.- Install dependencies:
+
+                        pip install -r requirements.txt
+                    
+6.- Create a .env file:
+
+Since this project reads from there by default, you need to create a file called .env inside the whatsapp_clone directory (the one you are right now)
+and you'll write your DATABASE_URL there. Since this project uses postgres by default, your DATABASE_URL should look like this:
+
+``` .env
+DATABASE_URL="postgres://postgres:password@:5432/django_whatsapp"
+```
+
+However, if you changed the settings the url will depend on your used db.
+
+7.- Migrate all the tables to your db:
+
+                        python manage.py migrate
+
+8.- Start the server:
+
+                        python manage.py runserver
+                      
+If no error raised, you're good to go!
+
+## Features
+
+Users can:
+
+- Manage contacts.
+- Manage chats.
+- Chat in 1 to 1 chats or in groups.
+- Archive chats.
+- Filter chats by "all", "unread" or "groups".
+- Filter chats by name (name of the contact or the group).
+- Customize their chat backgrounds.
+- Star messages.
+- Upload statuses.
+- Mute contacts' statuses.
+- Customize their profile.
+- Change the app's theme (dark or light).
+
 ## SCREENSHOTS
 
 ![chats and opened chat](https://github.com/user-attachments/assets/afc004af-5634-4ed7-9a3e-dce90b94e799)
