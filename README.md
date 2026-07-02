@@ -1,6 +1,10 @@
 
 # Whatsapp clone
 
+## Overview
+
+A real-time messaging app inspired by whatsapp and built in Django.
+
 ## Quickstart
 
 0.- Set up the database:
