@@ -37,7 +37,7 @@ and you'll write your DATABASE_URL there. Since this project uses postgres by de
 DATABASE_URL="postgres://postgres:password@:5432/django_whatsapp"
 ```
 
-However, if you changed the settings the url will depend on your used db. 
+However, if you changed the settings the url will depend on your used db.
 
 7.- Migrate all the tables to your db:
 
@@ -48,6 +48,23 @@ However, if you changed the settings the url will depend on your used db.
                         python manage.py runserver
                       
 If no error raised, you're good to go!
+
+## Features
+
+Users can:
+
+- Manage contacts.
+- Manage chats.
+- Chat in 1 to 1 chats or in groups.
+- Archive chats.
+- Filter chats by "all", "unread" or "groups".
+- Filter chats by name (name of the contact or the group).
+- Customize their chat backgrounds.
+- Star messages.
+- Upload statuses.
+- Mute contacts' statuses.
+- Customize their profile.
+- Change the app's theme (dark or light).
 
 ## SCREENSHOTS
 
