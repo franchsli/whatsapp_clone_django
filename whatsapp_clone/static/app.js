@@ -625,7 +625,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // debugging :)
         if (main.debuggingMode && data){
             // logs all of the app request's issues 
-            if (main.debugLogs === 'issues'){
+            if (main.debugLogs === 'issues' && event === 'htmx:afterRequest'){
                 if(data.pathInfo){
                     if(!data.pathInfo.responsePath && !data.successful){
                         console.log('AN ERROR HAS OCCURRED')
