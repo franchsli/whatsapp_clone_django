@@ -70,7 +70,11 @@ Users can:
 - Customize their profile.
 - Change the app's theme (dark or light).
 
-## SCREENSHOTS
+## Demo video
+
+https://github.com/user-attachments/assets/410656a5-6d72-44b2-9d0f-c45552c94200
+
+## Screenshots
 
 ![chats and opened chat](https://github.com/user-attachments/assets/afc004af-5634-4ed7-9a3e-dce90b94e799)
 ![statuses view 1](https://github.com/user-attachments/assets/2c3eae1f-6946-41cf-9825-31c9642227cd)
