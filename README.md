@@ -5,7 +5,7 @@
 
 A real-time messaging app inspired by whatsapp and built in Django.
 
-<video src="https://github.com/user-attachments/assets/c4e24a8f-8da3-440a-a679-df4793961a16" autoplay loop muted playsinline width="100%"></video>
+<img width="800" height="430" alt="WHATSAPP_CLONE GIF" src="https://github.com/user-attachments/assets/217983a7-81bf-4f81-b898-a82e5755e2eb" />
 
 ## Quickstart
 
