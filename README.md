@@ -5,6 +5,8 @@
 
 A real-time messaging app inspired by whatsapp and built in Django.
 
+<video src="https://github.com/user-attachments/assets/c4e24a8f-8da3-440a-a679-df4793961a16" autoplay loop muted playsinline width="100%"></video>
+
 ## Quickstart
 
 0.- Set up the database:
