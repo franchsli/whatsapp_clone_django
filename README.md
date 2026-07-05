@@ -42,10 +42,16 @@ Since this project reads from there by default, you need to create a file called
 and you'll write your DATABASE_URL there. Since this project uses postgres by default, your DATABASE_URL should look like this:
 
 ``` .env
+DATABASE_URL="postgres://postgres:password@:5432/your_database_name"
+```
+
+If you called the db instance "django_whatsapp", it may look like this:
+
+``` .env
 DATABASE_URL="postgres://postgres:password@:5432/django_whatsapp"
 ```
 
-However, if you changed the settings the url will depend on your used db.
+However, if you changed the settings (e.g. to use SQLite) the url will depend on your used db.
 
 7.- Migrate all the tables to your db:
 
