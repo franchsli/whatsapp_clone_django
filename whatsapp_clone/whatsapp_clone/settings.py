@@ -1,8 +1,9 @@
-from pathlib import Path
-import os
-import dj_database_url
 import logging
+import os
+from pathlib import Path
 from urllib.parse import urlparse
+
+import dj_database_url
 from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -126,9 +127,7 @@ WSGI_APPLICATION = "whatsapp_clone.wsgi.application"
 
 DATABASES = {
     "default": dj_database_url.config(
-        default=(
-            os.environ.get("DATABASE_URL")
-        ),
+        default=(os.environ.get("DATABASE_URL")),
         conn_max_age=600,
     )
 }
@@ -171,9 +170,7 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 MEDIA_ROOT = BASE_DIR / "static/images/"
 MEDIA_URL = "/images/"
 
-if (
-    not DEBUG
-):  # Tell Django to copy static assets into a path called `staticfiles` (this is specific to Render)
+if not DEBUG:  # Tell Django to copy static assets into a path called `staticfiles` (this is specific to Render)
     STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
     # Enable the WhiteNoise storage backend, which compresses static files to reduce disk use
     # and renames the files with unique names for each version to support long-term caching
