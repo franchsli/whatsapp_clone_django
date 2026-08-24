@@ -1,8 +1,8 @@
 from django.test import TestCase
-from .models import User, Status, Message, Chat
+from .models import User, Status, Message, Chat, Contact
 from django.utils import timezone
 from django.core.files.base import ContentFile
-from .tools import ENCODED_IMAGE
+from .tools import ENCODED_IMAGE, contact_from_user
 from .templatetags.filters import replies_to
 import base64
 
@@ -222,3 +222,25 @@ class StatusTest(TestCase):
         self.create_status(6, self.user, "TEST", ENCODED_IMAGE)
         status_instance = Status.objects.get(id=6)
         self.assertTrue(status_instance.has_image and status_instance.has_text)
+
+class ContactTest(TestCase):
+    def setUp(self) -> None:
+        self.user = User.objects.create(
+            id=1, phone_number="3145538787", username="testfranch"
+        )
+        self.another_user = User.objects.create(
+            id=2, phone_number="3145538788", username="anotheruser"
+        )
+        self.contact = Contact.objects.create(
+            name="Another User",
+            phone_number=self.another_user.phone_number,
+            created_by=self.user,
+        )
+
+    def test_contact_from_user_returns_none_if_contact_does_not_exist(self):
+        result = contact_from_user(self.user, "3145538799")
+        self.assertIsNone(result)
+
+    def test_contact_from_user_returns_contact_if_it_exists(self):
+        result = contact_from_user(self.user, self.another_user.phone_number)
+        self.assertEqual(result, self.contact)
