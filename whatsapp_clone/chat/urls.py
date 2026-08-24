@@ -1,4 +1,4 @@
-import whatsapp_clone.settings as settings  # noqa: PLR0402
+from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
 
