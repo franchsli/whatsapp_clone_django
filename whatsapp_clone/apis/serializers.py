@@ -1,5 +1,5 @@
+from chat.models import Chat, Contact, Message, Status, User
 from rest_framework.serializers import ModelSerializer
-from chat.models import Message, Chat, User, Contact, Status
 
 
 class UserSerializer(ModelSerializer):

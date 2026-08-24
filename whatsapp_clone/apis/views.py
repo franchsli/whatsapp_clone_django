@@ -1,14 +1,15 @@
+from chat.models import Chat, Contact, Message, Status, User
 from django.db.models import Count
 from django_filters.rest_framework import DjangoFilterBackend
-from chat.models import Message, Chat, User, Contact, Status
+from rest_framework.viewsets import ModelViewSet
+
 from .serializers import (
-    UserSerializer,
-    MessageSerializer,
     ChatSerializer,
     ContactSerializer,
+    MessageSerializer,
     StatusSerializer,
+    UserSerializer,
 )
-from rest_framework.viewsets import ModelViewSet
 
 
 # Create your views here.
