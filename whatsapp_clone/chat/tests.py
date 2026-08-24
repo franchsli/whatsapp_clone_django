@@ -1,8 +1,9 @@
 from django.test import TestCase
-from .models import User, Status, Message, Chat
+from .models import User, Status, Message, Chat, Contact
 from django.utils import timezone
 from django.core.files.base import ContentFile
-from .tools import ENCODED_IMAGE
+from .tools import ENCODED_IMAGE, contact_from_user
+from .templatetags.filters import replies_to
 import base64
 
 
@@ -32,6 +33,9 @@ class MessageTest(TestCase):
         self.user = User.objects.create(
             id=1, phone_number="3145538787", username="testfranch"
         )
+        self.another_user = User.objects.create(
+            id=2, phone_number="3145538788", username="anotheruser"
+        )
         self.chat = Chat.objects.create()
         self.chat.users.add(self.user)
         self.message = Message.objects.create(
@@ -41,6 +45,14 @@ class MessageTest(TestCase):
         self.another_chat.users.add(self.user)
         self.another_message = Message.objects.create(
             id=2, sender_user=self.user, chat=self.another_chat
+        )
+
+        # Original messages to be replied to
+        self.user_original_message = Message.objects.create(
+            id=3, sender_user=self.user, chat=self.chat
+        )
+        self.another_user_original_message = Message.objects.create(
+            id=4, sender_user=self.another_user, chat=self.chat
         )
 
     def test_message_has_not_image(self):
@@ -62,6 +74,46 @@ class MessageTest(TestCase):
 
     def test_message_is_not_starred(self):
         self.assertFalse(self.another_message.starred_by_user(self.user))
+
+    def test_replies_to_when_user_replies_to_own_message(self):
+        self.user_replies_self = Message.objects.create(
+            id=5,
+            sender_user=self.user,
+            chat=self.chat,
+            reply_to=self.user_original_message,
+        )
+        result = replies_to(self.user_replies_self, self.user)
+        self.assertEqual(result, f"{self.user.username} (You)")
+
+    def test_replies_to_when_another_user_replies_to_own_message(self):
+        self.another_user_replies_self = Message.objects.create(
+            id=6,
+            sender_user=self.another_user,
+            chat=self.chat,
+            reply_to=self.another_user_original_message,
+        )
+        result = replies_to(self.another_user_replies_self, self.another_user)
+        self.assertEqual(result, f"{self.another_user.username} (You)")
+
+    def test_replies_to_when_user_replies_to_another_user(self):
+        self.user_replies_another_user = Message.objects.create(
+            id=7,
+            sender_user=self.user,
+            chat=self.chat,
+            reply_to=self.another_user_original_message,
+        )
+        result = replies_to(self.user_replies_another_user, self.user)
+        self.assertEqual(result, self.another_user.username)
+
+    def test_replies_to_when_another_user_replies_to_user(self):
+        self.another_user_replies_user = Message.objects.create(
+            id=8,
+            sender_user=self.another_user,
+            chat=self.chat,
+            reply_to=self.user_original_message,
+        )
+        result = replies_to(self.another_user_replies_user, self.another_user)
+        self.assertEqual(result, self.user.username)
 
 
 class ChatTest(TestCase):
@@ -170,3 +222,25 @@ class StatusTest(TestCase):
         self.create_status(6, self.user, "TEST", ENCODED_IMAGE)
         status_instance = Status.objects.get(id=6)
         self.assertTrue(status_instance.has_image and status_instance.has_text)
+
+class ContactTest(TestCase):
+    def setUp(self) -> None:
+        self.user = User.objects.create(
+            id=1, phone_number="3145538787", username="testfranch"
+        )
+        self.another_user = User.objects.create(
+            id=2, phone_number="3145538788", username="anotheruser"
+        )
+        self.contact = Contact.objects.create(
+            name="Another User",
+            phone_number=self.another_user.phone_number,
+            created_by=self.user,
+        )
+
+    def test_contact_from_user_returns_none_if_contact_does_not_exist(self):
+        result = contact_from_user(self.user, "3145538799")
+        self.assertIsNone(result)
+
+    def test_contact_from_user_returns_contact_if_it_exists(self):
+        result = contact_from_user(self.user, self.another_user.phone_number)
+        self.assertEqual(result, self.contact)

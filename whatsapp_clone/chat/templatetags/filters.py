@@ -1,7 +1,7 @@
 from django import template
 from django.db.models import QuerySet, Q
 from chat.models import User, Chat, Message, Contact
-from chat.tools import get_contact_in_chat, object_photo
+from chat.tools import get_contact_in_chat, object_photo, contact_from_user
 from re import match
 import logging
 
@@ -264,12 +264,10 @@ def replies_to(message: Message, auth_user: User) -> str:
     that is being replied.
     If no contact is found, return User instance username
     """
-    try:
-        return Contact.objects.get(
-            phone_number=message.sender_user.phone_number, created_by=auth_user
-        ).name
-    except Contact.DoesNotExist:
-        username = User.objects.get(
-            phone_number=message.sender_user.phone_number
-        ).username
+    original_sender: User = message.reply_to.sender_user
+    contact: Contact = contact_from_user(auth_user, original_sender.phone_number)
+    if contact:
+        return contact.name
+    else:
+        username = original_sender.username
         return f"{username} (You)" if username == auth_user.username else username
