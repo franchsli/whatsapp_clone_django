@@ -1,8 +1,8 @@
-from django.urls import path
-from . import views
+import whatsapp_clone.settings as settings  # noqa: PLR0402
 from django.conf.urls.static import static
-import whatsapp_clone.settings as settings
+from django.urls import path
 
+from . import views
 
 urlpatterns = [
     path("", views.chat, name="chat"),
@@ -49,9 +49,15 @@ urlpatterns = [
     path("edit_user_info/", views.edit_user_info, name="edit_user_info"),
     path("chats_selection/", views.chats_selection, name="chats_selection"),
     path("leave_group/<str:pk>/<str:archived>", views.leave_group, name="leave_group"),
-    path("delete_group/<str:pk>/<str:archived>", views.delete_group, name="delete_group"),
+    path(
+        "delete_group/<str:pk>/<str:archived>", views.delete_group, name="delete_group"
+    ),
     path("chats_background/", views.chats_background, name="chats_background"),
-    path("edit_chat_background/", views.edit_chats_background, name="edit_chats_background"),
+    path(
+        "edit_chat_background/",
+        views.edit_chats_background,
+        name="edit_chats_background",
+    ),
 ]
 
 if settings.DEBUG:

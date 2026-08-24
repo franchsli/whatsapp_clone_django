@@ -1,15 +1,17 @@
 """Functions and variables for global use."""
 
-from django.core.files.base import ContentFile
-from .models import User, Chat, Contact, Status, Message
-from phonenumber_field.phonenumber import PhoneNumber
-from django.core.exceptions import ObjectDoesNotExist
-from django.db.models import Model
+import logging
 from base64 import b64decode
+
+from django.core.exceptions import ObjectDoesNotExist
+from django.core.files.base import ContentFile
+from django.db.models import Model
 from django.http import QueryDict
 from django.http.multipartparser import MultiPartParser
 from django.utils.datastructures import MultiValueDict
-import logging
+from phonenumber_field.phonenumber import PhoneNumber
+
+from .models import Chat, Contact, Message, Status, User
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -18,6 +20,7 @@ logger.setLevel(logging.DEBUG)
 DEFAULT_USER_PHOTO_URL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNBNdcMDNS2r9df1IWFVc8AY0QNtfNhEJv7fGS5TdhUWrlBqfGu1PCCn9lKpL-FqF9dWc&usqp=CAU"
 
 ENCODED_IMAGE = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
+
 
 def get_user_by_id(user_id: str | int) -> User:
     """Returns the user in the database found with the given id,
@@ -158,7 +161,6 @@ def get_contacts_statuses(user: User, muted: bool) -> dict:
         contacts_with_statuses[contact] = contact_statuses
 
     return contacts_with_statuses
-
 
 
 def object_photo(object: User | Chat) -> str:

@@ -1,10 +1,12 @@
-from django.test import TestCase
-from .models import User, Status, Message, Chat, Contact
-from django.utils import timezone
-from django.core.files.base import ContentFile
-from .tools import ENCODED_IMAGE, contact_from_user
-from .templatetags.filters import replies_to
 import base64
+
+from django.core.files.base import ContentFile
+from django.test import TestCase
+from django.utils import timezone
+
+from .models import Chat, Contact, Message, Status, User
+from .templatetags.filters import replies_to
+from .tools import ENCODED_IMAGE, contact_from_user
 
 
 # Create your tests here.
@@ -222,6 +224,7 @@ class StatusTest(TestCase):
         self.create_status(6, self.user, "TEST", ENCODED_IMAGE)
         status_instance = Status.objects.get(id=6)
         self.assertTrue(status_instance.has_image and status_instance.has_text)
+
 
 class ContactTest(TestCase):
     def setUp(self) -> None:

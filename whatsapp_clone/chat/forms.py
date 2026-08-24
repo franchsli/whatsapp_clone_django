@@ -1,6 +1,7 @@
-from .models import Chat, Contact, Message, Status, User, ChatBackground
-from django.forms import ModelForm, HiddenInput, Textarea
 from colorfield.widgets import ColorWidget
+from django.forms import HiddenInput, ModelForm, Textarea
+
+from .models import Chat, ChatBackground, Contact, Message, Status, User
 
 
 class UserForm(ModelForm):

@@ -1,19 +1,20 @@
-from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.utils import timezone
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Max
 from django.http import HttpResponseNotAllowed
-from .models import Chat, Contact, Message, Status, ChatBackground
+from django.shortcuts import redirect, render
+from django.utils import timezone
+
 from .forms import (
-    UserForm,
+    ChatBackgroundForm,
     ChatForm,
     ContactForm,
     MessageForm,
     StatusForm,
-    ChatBackgroundForm,
+    UserForm,
 )
-from .tools import get_contacts_statuses, chat_is_unread_by_user, get_patch_data
+from .models import Chat, ChatBackground, Contact, Message, Status
+from .tools import chat_is_unread_by_user, get_contacts_statuses, get_patch_data
 
 
 @login_required

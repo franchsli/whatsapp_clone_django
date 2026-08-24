@@ -1,8 +1,8 @@
+from colorfield.fields import ColorField
+from django.contrib.auth.models import AbstractUser, UserManager
 from django.db import models
 from django.utils import timezone
-from django.contrib.auth.models import AbstractUser, UserManager
 from phonenumber_field.modelfields import PhoneNumberField
-from colorfield.fields import ColorField
 
 
 # Create your models here.
