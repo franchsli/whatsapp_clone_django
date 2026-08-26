@@ -149,7 +149,7 @@ class Status(models.Model):
 class ChatBackground(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(blank=True, null=True, upload_to="backgrounds/")
-    color = ColorField(default="#ffffff")
+    color = ColorField(default="#FFFFFF")
     BACKGROUNDS = [("IMG", "IMAGE"), ("CLR", "COLOR")]
     preferred_background = models.CharField(
         blank=False, null=False, max_length=3, default="CLR", choices=BACKGROUNDS
@@ -164,4 +164,4 @@ class ChatBackground(models.Model):
 
     @property
     def default_color_set(self) -> bool:
-        return self.color == "#ffffff"
+        return self.color.upper() == "#FFFFFF"
