@@ -54,7 +54,7 @@ urlpatterns = [
     ),
     path("chats_background/", views.chats_background, name="chats_background"),
     path(
-        "edit_chat_background/",
+        "edit_chats_background/",
         views.edit_chats_background,
         name="edit_chats_background",
     ),

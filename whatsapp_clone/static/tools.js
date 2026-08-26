@@ -419,15 +419,6 @@ function removeDuplicates(className){
 }
 
 /**
- * Changes the color (hex value) of the given input with the desired one.
- * @param {String} desiredColor The new color (hex value) for the the input.
- * @param {HTMLInputElement} input The input that will be altered.
- */
-function changeInputColor(desiredColor, input){
-    input.value = desiredColor
-}
-
-/**
  * Hides all the list items in the given list
  * that don't contain the given value.
  * @param {String} value Value to search for in the
@@ -985,10 +976,6 @@ function loadDomFunctions(){
         removeDuplicates(className)
     }
 
-    window.changeInputColor = function(desiredColor, targetElementId){
-        changeInputColor(desiredColor, targetElementId)
-    }
-
     window.filterByValue = function(value, elementList){
         filterByValue(value, elementList)
     }
@@ -1103,7 +1090,7 @@ export {
     switchChatFormPurpose, toggleElementDisplay, previewImage, 
     updateChatList, updateContactList, atLeastOneAttr, 
     exchangeElementsClass, loadMoreMessages, 
-    loadOlderMessages, removeDuplicates, changeInputColor, 
+    loadOlderMessages, removeDuplicates, 
     filterByValue, spaceText, splitWord, triggerTooltips, 
     createChatViaConsumer, createGroupViaConsumer, 
     createContactViaConsumer, validateChatForm,
