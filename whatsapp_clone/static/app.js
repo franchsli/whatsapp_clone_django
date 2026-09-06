@@ -709,13 +709,13 @@ document.addEventListener('DOMContentLoaded', () => {
             window.contactsWithStatusesCaller = document.querySelectorAll('.contact-status-caller')
             window.carousel = null
         }
-        if (event.detail.pathInfo.requestPath === '/edit_chats_background/'){
+        else if (event.detail.pathInfo.requestPath === '/edit_chats_background/'){
             // create a new color picker programmatically
             // for the color field in the form inside this view
             new JSColor(document.getElementById('id_color'))
         }
         // loads the default emojis
-        if (event.detail.pathInfo.requestPath.includes('display_chat')){
+        else if (event.detail.pathInfo.requestPath.includes('display_chat')){
             const emojiContainer = document.getElementById('emojis-container')
             const emojiClass = document.querySelector('.emoji-class-active')
             tools.loadEmojis(emojiClass.dataset.emojiPack, emojiContainer)
