@@ -655,15 +655,32 @@ document.addEventListener('DOMContentLoaded', () => {
     htmx.logger()
 
     htmx.on('htmx:beforeRequest', (event) => {
-        // sets a global variable with the 'scrollable view' height before loaidng the messages
+        // sets a global variable with the 'scrollable view' height before loading the messages
         if(event.detail.pathInfo.requestPath.includes('previous_messages')){
             const messages = document.getElementById('chat-messages')
             window.previousScrollableView = messages.scrollHeight - messages.clientHeight
         }
+        // cancel the display request if the requested chat is already displayed.
+        else if(event.detail.pathInfo.requestPath.includes('display_chat')){
+            if(main.newMessage){
+                main.newMessage = false
+                return
+            }
+            const displayedChat =  document.getElementById('displayed-chat-info')
+            if(displayedChat){
+                const urlParams = event.detail.pathInfo.requestPath.split('/')
+                const chatId = displayedChat.dataset.displayedChat
+                // if the id of the displayed chat is the same as requested chat id
+                // abort the request
+                if(chatId === urlParams[urlParams.length - 1]){
+                    event.preventDefault()
+                }
+            }
+        }
     })
     htmx.on('htmx:afterSettle', (event) => {
         debugger
-        // scroll to the previous scroll height before loading older messages
+        // scroll to the previous scroll height after loading older messages
         if(event.detail.pathInfo.requestPath.includes('previous_messages')){
             const messages = document.getElementById('chat-messages')
             const actualScrollableView = messages.scrollHeight - messages.clientHeight
@@ -692,13 +709,13 @@ document.addEventListener('DOMContentLoaded', () => {
             window.contactsWithStatusesCaller = document.querySelectorAll('.contact-status-caller')
             window.carousel = null
         }
-        if (event.detail.pathInfo.requestPath === '/edit_chats_background/'){
+        else if (event.detail.pathInfo.requestPath === '/edit_chats_background/'){
             // create a new color picker programmatically
             // for the color field in the form inside this view
             new JSColor(document.getElementById('id_color'))
         }
         // loads the default emojis
-        if (event.detail.pathInfo.requestPath.includes('display_chat')){
+        else if (event.detail.pathInfo.requestPath.includes('display_chat')){
             const emojiContainer = document.getElementById('emojis-container')
             const emojiClass = document.querySelector('.emoji-class-active')
             tools.loadEmojis(emojiClass.dataset.emojiPack, emojiContainer)
@@ -706,25 +723,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const unreadMessagesCounter = document.getElementById(`chat-${sessionStorage.getItem('chatId')}unread-counter`)
             if (unreadMessagesCounter){
                 tools.updateChatList()
-            }
-        }
-    })
-    htmx.on('htmx:beforeRequest', (event) => {
-        // cancel the request if the requested chats is already displayed.
-        if(event.detail.pathInfo.requestPath.includes('display_chat')){
-            if(main.newMessage){
-                main.newMessage = false
-                return
-            }
-            const displayedChat =  document.getElementById('displayed-chat-info')
-            if(displayedChat){
-                const urlParams = event.detail.pathInfo.requestPath.split('/')
-                const chatId = displayedChat.dataset.displayedChat
-                // if the id of the displayed chat is the same as requested chat id
-                // abort the request
-                if(chatId === urlParams[urlParams.length - 1]){
-                    event.preventDefault()
-                }
             }
         }
     })
