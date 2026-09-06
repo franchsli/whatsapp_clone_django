@@ -680,7 +680,7 @@ document.addEventListener('DOMContentLoaded', () => {
     })
     htmx.on('htmx:afterSettle', (event) => {
         debugger
-        // scroll to the previous scroll height before loading older messages
+        // scroll to the previous scroll height after loading older messages
         if(event.detail.pathInfo.requestPath.includes('previous_messages')){
             const messages = document.getElementById('chat-messages')
             const actualScrollableView = messages.scrollHeight - messages.clientHeight
