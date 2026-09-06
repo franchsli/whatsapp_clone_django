@@ -661,7 +661,7 @@ document.addEventListener('DOMContentLoaded', () => {
             window.previousScrollableView = messages.scrollHeight - messages.clientHeight
         }
         // cancel the display request if the requested chat is already displayed.
-        if(event.detail.pathInfo.requestPath.includes('display_chat')){
+        else if(event.detail.pathInfo.requestPath.includes('display_chat')){
             if(main.newMessage){
                 main.newMessage = false
                 return
