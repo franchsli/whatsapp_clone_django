@@ -655,12 +655,12 @@ document.addEventListener('DOMContentLoaded', () => {
     htmx.logger()
 
     htmx.on('htmx:beforeRequest', (event) => {
-        // sets a global variable with the 'scrollable view' height before loaidng the messages
+        // sets a global variable with the 'scrollable view' height before loading the messages
         if(event.detail.pathInfo.requestPath.includes('previous_messages')){
             const messages = document.getElementById('chat-messages')
             window.previousScrollableView = messages.scrollHeight - messages.clientHeight
         }
-        // cancel the request if the requested chats is already displayed.
+        // cancel the display request if the requested chat is already displayed.
         if(event.detail.pathInfo.requestPath.includes('display_chat')){
             if(main.newMessage){
                 main.newMessage = false
