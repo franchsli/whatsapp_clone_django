@@ -139,7 +139,6 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
             content={
                 "type": "chat_message_edition",
                 "sender_id": event["sender_id"],
-                "sender_contact_name": self.sender_contact_name,
                 "chat_id": event["chat_id"],
             },
         )
@@ -229,13 +228,14 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
                 receiver_instance, self.user_instance.phone_number
             )
 
-            self.sender_contact_name = sender_contact_instance.name
+            if sender_contact_instance:
+                self.sender_contact_name = sender_contact_instance.name
+
         await self.channel_layer.group_send(
             self.room_group_name,
             {
                 "type": "chat_message_edition",
                 "sender_id": message_data["sender_id"],
-                "sender_contact_name": self.sender_contact_name,
                 "chat_id": message_data["chat_id"],
             },
         )
