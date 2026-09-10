@@ -19,36 +19,41 @@ class ChatWebSocket{
             this.image = data.image
             this.senderContactName = data.sender_contact_name
             this.chatIsArchived = data.chat_is_archived === 'True' ? true : false
-            if (data.type === 'chat_message'){
-                this.handleChatMessage()
-            }
-        
-            else if (data.type === 'chat_notification'){
-                this.handleChatNotification()
-            }
-        
-            else if (data.type === 'chat_message_deletion'){
-                this.handleMessageDeletion()
-            }
-        
-            else if (data.type === 'chat_message_edition'){
-                this.handleMessageEdition()
-            }
-
-            else if (data.type === 'chat_creation'){
-                this.handleChatCreation(data.contact_name)
-            }
-
-            else if (data.type === 'chat_opening'){
-                this.handleChatOpening(data.chat_opener_id, data.chat_id)
-            }
-
-            else if (data.type === 'contact_creation'){
-                this.handleContactCreation(data.contact_name)
-            }
-
-            else if (data.type === 'group_creation') {
-                this.handleGroupCreation(data.group_name)
+            switch (data.type) {
+                case 'chat_message':
+                    this.handleChatMessage()
+                    break;
+                
+                case 'chat_notification':
+                    this.handleChatNotification()
+                    break;
+                
+                case 'chat_message_deletion':
+                    this.handleMessageDeletion()
+                    break;
+                
+                case 'chat_message_edition':
+                    this.handleMessageEdition()
+                    break;
+                
+                case 'chat_creation':
+                    this.handleChatCreation(data.contact_name)
+                    break;
+                
+                case 'chat_opening':
+                    this.handleChatMessage(data.chat_opener_id, data.chat_id)
+                    break;
+                
+                case 'contact_creation':
+                    this.handleContactCreation(data.contact_name)
+                    break;
+                
+                case 'group_creation':
+                    this.handleGroupCreation(data.group_name)
+                    break;
+                
+                default:
+                    console.error('UNKNOWN WEBSOCKET DATA TYPE:', data.type)
             }
 
         }
