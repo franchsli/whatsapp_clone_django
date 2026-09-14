@@ -129,7 +129,6 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
             content={
                 "type": "chat_message_deletion",
                 "sender_id": event["sender_id"],
-                "sender_contact_name": self.sender_contact_name,
                 "chat_id": event["chat_id"],
             },
         )
@@ -214,23 +213,6 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
             )
 
     async def send_message_edition(self, message_data: dict):
-        phones_in_chat = message_data["chat_members_phones"].split(",")
-        if len(phones_in_chat) > 1:
-            self.chat_instance = await database_sync_to_async(get_object_by_id)(
-                Chat, message_data["chat_id"]
-            )
-            self.sender_contact_name = self.chat_instance.name
-        else:
-            receiver_instance = await database_sync_to_async(get_user_by_phone)(
-                f"user_group_{phones_in_chat[0]}"
-            )
-            sender_contact_instance = await database_sync_to_async(contact_from_user)(
-                receiver_instance, self.user_instance.phone_number
-            )
-
-            if sender_contact_instance:
-                self.sender_contact_name = sender_contact_instance.name
-
         await self.channel_layer.group_send(
             self.room_group_name,
             {
@@ -241,27 +223,11 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
         )
 
     async def send_message_deletion(self, message_data: dict):
-        phones_in_chat = message_data["chat_members_phones"].split(",")
-        if len(phones_in_chat) > 1:
-            self.chat_instance = await database_sync_to_async(get_object_by_id)(
-                Chat, message_data["chat_id"]
-            )
-            self.sender_contact_name = self.chat_instance.name
-        else:
-            receiver_instance = await database_sync_to_async(get_user_by_phone)(
-                f"user_group_{phones_in_chat[0]}"
-            )
-            sender_contact_instance = await database_sync_to_async(contact_from_user)(
-                receiver_instance, self.user_instance.phone_number
-            )
-
-            self.sender_contact_name = sender_contact_instance.name
         await self.channel_layer.group_send(
             self.room_group_name,
             {
                 "type": "chat_message_deletion",
                 "sender_id": message_data["sender_id"],
-                "sender_contact_name": self.sender_contact_name,
                 "chat_id": message_data["chat_id"],
             },
         )
