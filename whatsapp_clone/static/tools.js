@@ -75,6 +75,35 @@ function toggleReadMore(textId) {
 }
 
 /**
+ * Calculates a dropdown's position, clamped so it stays within the viewport.
+ * @param {MouseEvent} event The mouse event that triggered the dropdown.
+ * @param {HTMLElement} dropdown The dropdown element (must already be measurable, 
+ * e.g. visibility: hidden + displayed).
+ * @returns {{left: number, top: number}} The coordinates to apply to the dropdown.
+ */
+function calculateDropdownPosition(event, dropdown) {
+    const menuWidth = dropdown.offsetWidth;
+    const menuHeight = dropdown.offsetHeight;
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+
+    let left = event.clientX;
+    let top = event.clientY;
+
+    // Flip horizontally if it would overflow the right edge
+    if (left + menuWidth > viewportWidth) {
+        left = Math.max(0, event.clientX - menuWidth);
+    }
+
+    // Flip vertically if it would overflow the bottom edge
+    if (top + menuHeight > viewportHeight) {
+        top = Math.max(0, event.clientY - menuHeight);
+    }
+
+    return { left, top };
+}
+
+/**
  * Shows the dropdown  in the same place where it was called.
  * @param {MouseEvent} event The mouse event (right click).
  * @param {String} dropdownId The id of the dropdown that was called.
@@ -82,14 +111,20 @@ function toggleReadMore(textId) {
 function showDropdown(event, dropdownId) {
     event.preventDefault();
 
-    // Set the position of the dropdown
     const dropdown = document.getElementById(dropdownId);
+    // Set the position of the dropdown and
+    // Make it visible first (but invisible to the eye) so we can measure it
     dropdown.style.position = 'fixed';
-    dropdown.style.left = `${event.clientX}px`;
-    dropdown.style.top = `${event.clientY}px`;
+    dropdown.style.visibility = 'hidden';
+    dropdown.classList.add('show');
 
-    // Display the dropdown
-    dropdown.classList.toggle('show')
+    const {left, top} = calculateDropdownPosition(event, dropdown)
+
+    // place the dropdown without screen overflow
+    dropdown.style.left = `${left}px`;
+    dropdown.style.top = `${top}px`;
+    dropdown.style.visibility = 'visible';
+
     // runs the dropdown animation
     runElementAnimation(dropdown)
     
