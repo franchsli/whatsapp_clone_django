@@ -111,8 +111,8 @@ function calculateDropdownPosition(event, dropdown) {
 function showDropdown(event, dropdownId) {
     event.preventDefault();
 
-    // Set the position of the dropdown
     const dropdown = document.getElementById(dropdownId);
+    // Set the position of the dropdown and
     // Make it visible first (but invisible to the eye) so we can measure it
     dropdown.style.position = 'fixed';
     dropdown.style.visibility = 'hidden';
