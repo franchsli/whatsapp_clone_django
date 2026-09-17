@@ -84,12 +84,34 @@ function showDropdown(event, dropdownId) {
 
     // Set the position of the dropdown
     const dropdown = document.getElementById(dropdownId);
+    // Make it visible first (but invisible to the eye) so we can measure it
     dropdown.style.position = 'fixed';
-    dropdown.style.left = `${event.clientX}px`;
-    dropdown.style.top = `${event.clientY}px`;
+    dropdown.style.visibility = 'hidden';
+    dropdown.classList.toggle('show');
 
-    // Display the dropdown
-    dropdown.classList.toggle('show')
+    const menuWidth = dropdown.offsetWidth;
+    const menuHeight = dropdown.offsetHeight;
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+
+    let left = event.clientX;
+    let top = event.clientY;
+
+    // Flip horizontally if it would overflow the right edge
+    if (left + menuWidth > viewportWidth) {
+        left = Math.max(0, event.clientX - menuWidth);
+    }
+
+    // Flip vertically if it would overflow the bottom edge
+    if (top + menuHeight > viewportHeight) {
+        top = Math.max(0, event.clientY - menuHeight);
+    }
+
+    // place the dropdown without screen overflow
+    dropdown.style.left = `${left}px`;
+    dropdown.style.top = `${top}px`;
+    dropdown.style.visibility = 'visible';
+
     // runs the dropdown animation
     runElementAnimation(dropdown)
     
