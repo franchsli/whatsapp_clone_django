@@ -116,7 +116,7 @@ function showDropdown(event, dropdownId) {
     // Make it visible first (but invisible to the eye) so we can measure it
     dropdown.style.position = 'fixed';
     dropdown.style.visibility = 'hidden';
-    dropdown.classList.toggle('show');
+    dropdown.classList.add('show');
 
     const {left, top} = calculateDropdownPosition(event, dropdown)
 
